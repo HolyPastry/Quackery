@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f881b1fca65a448c5b04453fdf3a1234, type: 3}
-  m_Name: Sheep
+  m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
+  m_Name: Circle
   m_EditorClassIdentifier: 
-  MasterText: 
-  HideName: 1
-  ActorName: 
+  MasterText: Circle
+  Icon: {fileID: 21300000, guid: 9ca1a6b9e6daa4c188da78892879bf36, type: 3}

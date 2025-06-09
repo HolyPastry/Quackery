@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
-  m_Name: ItemDataTest1
+  m_Name: Square
   m_EditorClassIdentifier: 
-  MasterText: Item Data Test 1
-  ItemIcon: {fileID: 0}
-  ItemID: 0
-  Description: 
+  MasterText: Square
+  Icon: {fileID: 21300000, guid: b6035478f58d94e1981f2ceb9e8e1ffb, type: 3}

@@ -504,7 +504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inkJSON: {fileID: 4900000, guid: ef0197e784e784fa48e8ccfcb4cbd168, type: 3}
-  _collectionFolder: Characters
+  _collectionFolder: TestCharacters
   _charPerSeconds: 20
   _defaultDelayBefore: 0
   _defaultDelayAfter: 1

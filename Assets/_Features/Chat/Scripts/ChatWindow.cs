@@ -129,6 +129,8 @@ namespace Quackery.ChatApp
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (_typingSign.gameObject.activeSelf) return;
+
             if (_lastBubble != null)
                 _lastBubble.FinishTyping();
 

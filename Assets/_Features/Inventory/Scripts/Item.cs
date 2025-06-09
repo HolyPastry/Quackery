@@ -1,17 +1,22 @@
 using System;
 
-[Serializable]
-public class Item
+namespace Quackery.Inventories
 {
-    [NonSerialized]
-    public ItemData Data;
-    public string Key;
-    public int Quantity;
-
-    public Item(ItemData data, int quantity)
+    [Serializable]
+    public class Item
     {
-        Data = data;
-        Quantity = quantity;
-        Key = Data.name;
+        [NonSerialized]
+        public ItemData Data;
+        public string Key;
+        public int Quantity;
+
+        public Item(ItemData data, int quantity)
+        {
+            Data = data;
+            Quantity = quantity;
+            Key = Data.name;
+        }
+
+        public string Name => Data.MasterText;
     }
 }

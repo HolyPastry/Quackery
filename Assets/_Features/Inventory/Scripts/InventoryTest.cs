@@ -1,49 +1,49 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.VersionControl;
+
 using UnityEngine;
 using UnityEngine.Assertions;
 
-
-public class InventoryTest : MonoBehaviour
+namespace Quackery.Inventories
 {
-    public ItemData itemDataTest1;
-    public ItemData itemDataTest2;
-
-    IEnumerator Start()
+    public class InventoryTest : MonoBehaviour
     {
-        yield return FlowServices.WaitUntilReady();
-        RunTestSequence();
-    }
+        public ItemData itemDataTest1;
+        public ItemData itemDataTest2;
 
-    private void RunTestSequence()
-    {
-        Debug.Log("Starting Inventory Test Sequence...");
+        IEnumerator Start()
+        {
+            yield return FlowServices.WaitUntilReady();
+            RunTestSequence();
+        }
 
-        // Add items to inventory
-        InventoryServices.AddItem(itemDataTest1, 1);
+        private void RunTestSequence()
+        {
+            Debug.Log("Starting Inventory Test Sequence...");
+
+            // Add items to inventory
+            InventoryServices.AddItem(itemDataTest1, 1);
 
 
-        Assert.IsTrue(InventoryServices.HasItem(itemDataTest1),
-            $"Item {itemDataTest1.name} should be in the inventory after adding.");
+            Assert.IsTrue(InventoryServices.HasItem(itemDataTest1),
+                $"Item {itemDataTest1.name} should be in the inventory after adding.");
 
-        InventoryServices.RemoveItem(itemDataTest1, 1);
-        Assert.IsFalse(InventoryServices.HasItem(itemDataTest1),
-            $"Item {itemDataTest1.name} should not be in the inventory after removing.");
+            InventoryServices.RemoveItem(itemDataTest1, 1);
+            Assert.IsFalse(InventoryServices.HasItem(itemDataTest1),
+                $"Item {itemDataTest1.name} should not be in the inventory after removing.");
 
-        InventoryServices.AddItem(itemDataTest2, 2);
-        Assert.IsTrue(InventoryServices.HasItem(itemDataTest2),
-            $"Item {itemDataTest2.name} should be in the inventory after adding.");
+            InventoryServices.AddItem(itemDataTest2, 2);
+            Assert.IsTrue(InventoryServices.HasItem(itemDataTest2),
+                $"Item {itemDataTest2.name} should be in the inventory after adding.");
 
-        var retrievedItem = InventoryServices.GetItem(itemDataTest2);
+            var retrievedItem = InventoryServices.GetItem(itemDataTest2);
 
-        Assert.IsNotNull(retrievedItem, $"Retrieved item should not be null for {itemDataTest2.name}.");
-        Assert.AreEqual(itemDataTest2, retrievedItem.Data,
-            $"Retrieved item data should match {itemDataTest2.name}.");
-        Assert.IsTrue(retrievedItem.Quantity == 2,
-            $"Retrieved item quantity should be 2 for {itemDataTest2.name}.");
-        Debug.Log("Inventory Test Sequence completed successfully.");
+            Assert.IsNotNull(retrievedItem, $"Retrieved item should not be null for {itemDataTest2.name}.");
+            Assert.AreEqual(itemDataTest2, retrievedItem.Data,
+                $"Retrieved item data should match {itemDataTest2.name}.");
+            Assert.IsTrue(retrievedItem.Quantity == 2,
+                $"Retrieved item quantity should be 2 for {itemDataTest2.name}.");
+            Debug.Log("Inventory Test Sequence completed successfully.");
 
+        }
     }
 }
