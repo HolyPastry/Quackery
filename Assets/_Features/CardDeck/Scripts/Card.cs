@@ -12,6 +12,8 @@ namespace Quackery.Decks
     {
         [SerializeField] private Image _cardBackground;
         [SerializeField] private Image _cardForeground;
+        [SerializeField] private Image _PriceBackground;
+        [SerializeField] private Image _RatingBackground;
         [SerializeField] private TextMeshProUGUI _cardName;
         [SerializeField] private TextMeshProUGUI _cardPrice;
         [SerializeField] private TextMeshProUGUI _cardRating;
@@ -25,7 +27,7 @@ namespace Quackery.Decks
                 _item = value;
                 if (_item != null)
                 {
-                    _cardBackground.color = Color.clear;
+                    _cardBackground.color = Colors.instance.GetCategoryColor(_item.Data.Category);
                     _cardForeground.sprite = _item.Data.Icon;
                     _cardName.text = _item.Data.name;
                     _cardPrice.text = _item.Price.ToString();
@@ -45,6 +47,8 @@ namespace Quackery.Decks
         public string Name => _item.Name;
 
         public EnumItemCategory Category => _item.Data.Category;
+
+        public List<Power> Powers => _item.Data.Powers;
 
         public Item _item;
 

@@ -54,7 +54,7 @@ namespace Quackery.Decks
         {
             yield return new WaitForSeconds(0.5f);
 
-            List<CardReward> cardRewards = DeckServices.EvaluatePileValue(type);
+            List<CardReward> cardRewards = DeckServices.GetPileRewards(type);
             //  _cashInCart += DeckServices.EvaluatePileValue(type);
             var pileUI = _cardPileUIs.Find(p => p.Type == type);
             foreach (CardReward cardReward in cardRewards)

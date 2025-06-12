@@ -24,6 +24,8 @@ namespace Quackery.Decks
 
         public List<Card> Cards => new(GetComponentsInChildren<Card>());
 
+        public object StackSize => GetComponentsInChildren<Card>().Length;
+
         public event System.Action<CardPileUI> OnClicked;
         private readonly Queue<RectTransform> _moveQueue = new();
 
@@ -123,12 +125,12 @@ namespace Quackery.Decks
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            //noop
+            TooltipManager.ShowTooltipRequest(gameObject);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            //noop
+            TooltipManager.HideTooltipRequest();
         }
 
         public void OnPointerUp(PointerEventData eventData)

@@ -20,27 +20,19 @@ namespace Quackery
         public static Action DiscardHand = () => { };
         public static Action<List<Card>> AddToCart = (card) => { };
         public static Action<List<ItemData>> AddToDeck = (cards) => { };
-
         public static Action<EnumPileType> DestroyPile = (pileType) => { };
-
         public static Action ResetDeck = () => { };
-
         internal static Action<Card> DestroyCard = (card) => { };
-
         internal static Func<List<CardPile>> GetTablePile = () => new();
-
         internal static Action<Card, Card> MovetoCardInCart = (card, targetCard) => { };
-
         internal static Action<EnumPileType> PileClicked = (pileType) => { };
-
         internal static Func<int> GetTotalCashInCart = () => 0;
-
         internal static Action ShuffleDiscardIn = () => { };
-
-        internal static Func<EnumPileType, List<CardReward>> EvaluatePileValue = (pileType) => new();
+        internal static Func<EnumPileType, List<CardReward>> GetPileRewards = (pileType) => new();
         public static Func<bool> IsCartFull = () => false;
         public static Func<EnumPileType, CardPile> GetPile;
-
         internal static Action<CardPile, CardPile> MovePileTo = (sourcePile, targetPile) => { };
+        internal static Func<EnumPileType, Card> GetTopCard = (pileType) => null;
+        internal static Func<EnumPileType, int> EvaluatePileValue = (pileType) => 0;
     }
 }

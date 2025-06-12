@@ -1,8 +1,7 @@
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using Holypastry.Bakery;
-using Ink.Parsed;
 using Quackery.Decks;
 using UnityEngine;
 
@@ -16,7 +15,6 @@ namespace Quackery.Inventories
     public class ItemData : ContentTag
     {
         public Sprite Icon;
-        public Color BackgroundColor = Color.white;
 
         public int StartPrice = 1;
         public int StartRating = 0;

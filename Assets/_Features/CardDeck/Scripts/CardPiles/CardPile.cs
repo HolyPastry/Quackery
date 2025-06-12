@@ -123,5 +123,10 @@ namespace Quackery.Decks
             return TopCard.CalculateCardReward(allCards, otherPiles);
 
         }
+
+        internal void ShowReward(CardReward cardReward)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
