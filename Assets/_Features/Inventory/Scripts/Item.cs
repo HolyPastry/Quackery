@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Quackery.Decks;
 
 namespace Quackery.Inventories
 {
@@ -8,15 +10,25 @@ namespace Quackery.Inventories
         [NonSerialized]
         public ItemData Data;
         public string Key;
-        public int Quantity;
 
-        public Item(ItemData data, int quantity)
+        public Item(ItemData data)
         {
             Data = data;
-            Quantity = quantity;
             Key = Data.name;
+
         }
 
         public string Name => Data.MasterText;
+
+        public int Price;
+
+        public int Rating;
+
+        public int RatedPrice => Price * (Rating == 0 ? 1 : Rating);
+
+        internal List<CardReward> CalculateCardRewards(List<Item> subItems, List<CardPile> otherPiles)
+        {
+            return Data.CalculateCardRewards(this, subItems, otherPiles);
+        }
     }
 }

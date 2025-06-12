@@ -8,8 +8,9 @@ public class SceneSetupPurse : SceneSetupScript
 
     protected override IEnumerator Routine()
     {
+        yield return PurseServices.WaitUntilReady();
         PurseServices.Modify(_initialAmount);
         EndScript();
-        yield return null;
+
     }
 }

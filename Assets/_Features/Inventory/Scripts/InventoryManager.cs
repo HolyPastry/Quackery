@@ -31,7 +31,8 @@ namespace Quackery.Inventories
         void OnDisable()
         {
             InventoryServices.WaitUntilReady = () => new WaitUntil(() => true);
-            InventoryServices.AddItem = delegate { };
+            InventoryServices.AddNewItem = (data) => null;
+            InventoryServices.AddItem = item => { };
             InventoryServices.RemoveItem = delegate { };
             InventoryServices.GetItem = data => null;
             InventoryServices.HasItem = data => false;
@@ -41,11 +42,24 @@ namespace Quackery.Inventories
         void OnEnable()
         {
             InventoryServices.WaitUntilReady = () => WaitUntilReady;
+            InventoryServices.AddNewItem = AddItem;
             InventoryServices.AddItem = AddItem;
             InventoryServices.RemoveItem = RemoveItem;
             InventoryServices.GetItem = GetItem;
             InventoryServices.HasItem = HasItem;
             InventoryServices.GetAllItems = () => _inventory.Items;
+        }
+
+        private void AddItem(Item item)
+        {
+            if (item == null || item.Data == null)
+            {
+                Debug.LogWarning("Cannot add null item or item with null data to inventory.");
+                return;
+            }
+            _inventory.Items.Add(item);
+            Save();
+
         }
 
         protected override IEnumerator Start()
@@ -73,50 +87,34 @@ namespace Quackery.Inventories
             _isReady = true;
         }
 
-        private void AddItem(ItemData data, int arg2)
+        private Item AddItem(ItemData data)
         {
             if (data == null)
             {
                 Debug.LogWarning("Cannot add null item data to inventory.");
-                return;
+                return null;
             }
 
-            var item = GetItem(data);
-            if (item != null)
+            var item = new Item(data)
             {
-                item.Quantity += arg2;
-            }
-            else
-            {
-                item = new Item(data, arg2);
-                _inventory.Items.Add(item);
-            }
+                Price = data.StartPrice,
+                Rating = data.StartRating
+            };
+
+            _inventory.Items.Add(new Item(data));
+
+
 
             Save();
+            return item;
         }
 
-        private void RemoveItem(ItemData data, int arg2)
+        private void RemoveItem(Item item)
         {
-            if (data == null)
-            {
-                Debug.LogWarning("Cannot remove null item data from inventory.");
-                return;
-            }
 
-            var item = GetItem(data);
-            if (item != null)
-            {
-                item.Quantity -= arg2;
-                if (item.Quantity <= 0)
-                {
-                    _inventory.Items.Remove(item);
-                }
-                Save();
-            }
-            else
-            {
-                Debug.LogWarning($"Item {data.MasterText} not found in inventory.");
-            }
+            _inventory.Items.Remove(item);
+            Save();
+
         }
 
         private void Save()
@@ -124,6 +122,7 @@ namespace Quackery.Inventories
             foreach (var item in _inventory.Items)
             {
                 item.Key = item.Data.name;
+
             }
             SaveServices.Save(SaveKey, _inventory);
         }

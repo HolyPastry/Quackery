@@ -15,8 +15,6 @@ namespace Quackery.Inventories
         {
             _item = item;
             _itemNameText.text = item.Name;
-
-            _itemCountText.text = item.Quantity.ToString();
             _itemIcon.sprite = item.Data.Icon;
         }
 

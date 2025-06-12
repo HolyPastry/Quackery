@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 
 using Bakery.Saves;
+using Holypastry.Bakery.Flow;
 using UnityEngine;
-public class PurseManager : MonoBehaviour
+public class PurseManager : Service
 {
     private const string SaveKey = "Purse";
     [Serializable]
@@ -17,6 +18,18 @@ public class PurseManager : MonoBehaviour
     void OnEnable()
     {
         PurseServices.Modify = Modify;
+        PurseServices.GetString = () => MoneyFormat(_purse?.Amount ?? 0f);
+        PurseServices.WaitUntilReady = () => WaitUntilReady;
+    }
+
+    private string MoneyFormat(float v)
+    {
+        var dollar = Mathf.Floor(v);
+        var cents = Mathf.Floor((v - dollar) * 100);
+        if (dollar > 0)
+            return $"{dollar}.{cents:00}$";
+        return $"{cents:00}¢";
+
     }
 
     void OnDisable()
@@ -24,18 +37,20 @@ public class PurseManager : MonoBehaviour
         PurseServices.Modify = delegate { };
     }
 
-    IEnumerator Start()
+    protected override IEnumerator Start()
     {
         yield return FlowServices.WaitUntilReady();
 
         _purse = SaveServices.Load<SerialPurse>(SaveKey);
         _purse ??= new SerialPurse();
+        _isReady = true;
     }
 
     private void Modify(float amount)
     {
         _purse.Amount += amount;
         SaveServices.Save(SaveKey, _purse);
+        PurseEvents.OnPurseUpdated?.Invoke(_purse.Amount);
     }
 
 }
