@@ -67,10 +67,12 @@ namespace Quackery.Decks
 
             // DeckServices.GetTotalCashInCart = () => 0;
             DeckServices.ShuffleDiscardIn = () => { };
-            DeckServices.EvaluatePileValue = (pileType) => new();
+            DeckServices.GetPileRewards = (pileType) => new();
             DeckServices.IsCartFull = () => false;
             DeckServices.GetPile = (pileType) => null;
             DeckServices.MovePileTo = (sourcePile, targetPile) => { };
+            DeckServices.GetTopCard = (pileType) => null;
+            DeckServices.EvaluatePileValue = (pileType) => 0;
         }
 
         void OnEnable()
@@ -91,11 +93,13 @@ namespace Quackery.Decks
             DeckServices.MovetoCardInCart = MoveToCardInCart;
             // DeckServices.GetTotalCashInCart = GetTotalCashInCart;
             DeckServices.ShuffleDiscardIn = ShuffleDiscardPileIn;
-            DeckServices.EvaluatePileValue = EvaluatePileValue;
+            DeckServices.GetPileRewards = GetPileRewards;
             DeckServices.IsCartFull = () => CartIsFull;
             DeckServices.GetPile = (pileType) => _piles.Find(p => p.Type == pileType);
             DeckServices.GetTablePile = () => _tablePiles;
             DeckServices.MovePileTo = MovePileTo;
+            DeckServices.GetTopCard = (pileType) => _piles.Find(p => p.Type == pileType)?.TopCard;
+            DeckServices.EvaluatePileValue = (pileType) => GetPileRewards(pileType).Sum(r => r.Value);
 
         }
 
@@ -107,7 +111,7 @@ namespace Quackery.Decks
             DeckEvents.OnPileMoved(pile2.Type);
         }
 
-        private List<CardReward> EvaluatePileValue(EnumPileType type)
+        private List<CardReward> GetPileRewards(EnumPileType type)
         {
             var pile = _piles.Find(p => p.Type == type);
             if (pile == null || pile.IsEmpty) return new();
