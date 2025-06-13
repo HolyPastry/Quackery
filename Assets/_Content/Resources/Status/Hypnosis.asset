@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67a0ec115048043bebf24a60e8d9f57f, type: 3}
-  m_Name: HypnosisPower
+  m_Script: {fileID: 11500000, guid: d9d94ccfeae9a4190849f79158ff3d0d, type: 3}
+  m_Name: Hypnosis
   m_EditorClassIdentifier: 
   MasterText: Hypnosis
-  Trigger: 3
-  StatusData: {fileID: 11400000, guid: 1b062ec142be7426aa81e7dfd283ce78, type: 2}
+  Icon: {fileID: 21300000, guid: 04f1d24123ba9404782f25c0079f6acf, type: 3}
+  StartValue: 0
+  UseValue: 0
+  Description: '"<b>Hypnosis</b>: <b>Activated</b> - The Client forgets one of their
+    ailments.";'
