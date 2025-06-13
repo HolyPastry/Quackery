@@ -27,7 +27,7 @@ namespace Quackery.Decks
                 _item = value;
                 if (_item != null)
                 {
-                    _cardBackground.color = Colors.instance.GetCategoryColor(_item.Data.Category);
+                    _cardBackground.color = ColorManager.Category(_item.Data.Category);
                     _cardForeground.sprite = _item.Data.Icon;
                     _cardName.text = _item.Data.name;
                     _cardPrice.text = _item.Price.ToString();
@@ -50,23 +50,65 @@ namespace Quackery.Decks
 
         public List<Power> Powers => _item.Data.Powers;
 
+        public bool HasActivatablePowers
+        {
+            get
+            {
+                if (_item == null || _item.Data == null || _item.Data.Powers == null)
+                    return false;
+
+                foreach (var power in _item.Data.Powers)
+                {
+                    if (power.Trigger == EnumPowerTrigger.Activated
+                    && !_activatedPowers.Contains(power))
+                        return true;
+                }
+                return false;
+            }
+        }
+
         public Item _item;
+
+        private List<PowerIcon> _powerIcons = new();
+        private readonly List<Power> _activatedPowers = new();
+
+        void Awake()
+        {
+            GetComponentsInChildren(true, _powerIcons);
+        }
+
+        void Start()
+        {
+            _powerIcons.ForEach(icon => icon.Show(_item.Data.Powers));
+        }
 
         internal List<CardReward> CalculateCardReward(List<Card> allCards, List<CardPile> otherPiles)
         {
             return _item.CalculateCardRewards(allCards.ConvertAll(c => c.Item), otherPiles);
         }
 
-        internal void ExecutePower(EnumPowerTrigger onCardMoveToCart, CardPile pile)
+        public void Discard()
+        {
+
+            _activatedPowers.Clear();
+            _powerIcons.ForEach(icon => icon.Reset());
+        }
+
+        internal void ExecutePower(EnumPowerTrigger trigger, CardPile pile)
         {
             if (_item == null || _item.Data == null || _item.Data.Powers == null)
                 return;
 
             foreach (var power in _item.Data.Powers)
             {
-                if (power.Trigger == onCardMoveToCart)
+                if (power.Trigger == trigger)
                 {
                     power.Execute(pile);
+                    if (power.Trigger == EnumPowerTrigger.Activated)
+                    {
+                        _activatedPowers.Add(power);
+                        _powerIcons.ForEach(icon => icon.SetActive(power, true));
+                    }
                 }
             }
         }

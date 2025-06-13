@@ -110,7 +110,7 @@ namespace Quackery.Decks
                 if (card != null)
                 {
                     AddAtTheBottom(card);
-                    DeckEvents.OnCardMovedTo(card, Type);
+                    DeckEvents.OnCardMovedTo(card, Type, false);
                 }
             }
             pile.Clear();
@@ -124,9 +124,6 @@ namespace Quackery.Decks
 
         }
 
-        internal void ShowReward(CardReward cardReward)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

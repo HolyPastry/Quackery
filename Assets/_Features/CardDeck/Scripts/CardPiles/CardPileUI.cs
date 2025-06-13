@@ -109,11 +109,11 @@ namespace Quackery.Decks
             }
         }
 
-        private void OnCardMoved(Card card, EnumPileType type)
+        private void OnCardMoved(Card card, EnumPileType type, bool atTheTop)
         {
             if (type != _pileType) return;
 
-            MoveCardToPile(card);
+            MoveCardToPile(card, atTheTop);
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -136,10 +136,19 @@ namespace Quackery.Decks
             DeckServices.PileClicked(_pileType);
         }
 
-        internal void MoveCardToPile(Card card)
+        internal void MoveCardToPile(Card card, bool atTheTop)
         {
             card.transform.SetParent(transform);
             card.transform.localScale = Vector3.one;
+            if (atTheTop)
+            {
+                card.transform.SetAsLastSibling();
+
+            }
+            else
+            {
+                card.transform.SetAsFirstSibling();
+            }
             _moveQueue.Enqueue(card.transform as RectTransform);
         }
 

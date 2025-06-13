@@ -12,7 +12,7 @@ namespace Quackery
         fileName = "CategoryColors",
         menuName = "Quackery/CategoryColors",
         order = 1)]
-    public class Colors : ScriptableSingleton<Colors>
+    public class Colors : ScriptableObject
     {
         [Serializable]
         public struct CategoryColor
@@ -22,12 +22,6 @@ namespace Quackery
         }
         public List<CategoryColor> CategoryColorsList;
 
-        public Color GetCategoryColor(EnumItemCategory category)
-        {
-            var color = CategoryColorsList.Find(c => c.Category == category);
-
-            return color.Color;
-        }
 
     }
 }

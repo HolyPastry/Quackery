@@ -139,14 +139,13 @@ namespace Quackery.Decks
         }
 
 
-
         private void MergePileToCart(EnumPileType type)
         {
             var pile = _piles.Find(p => p.Type == type);
             if (pile == null || pile.IsEmpty) return;
 
             if (_lastCartPile != null && !_lastCartPile.IsEmpty &&
-                pile.TopCard.Powers.Any(power => power.Trigger == EnumPowerTrigger.Activated) &&
+                _lastCartPile.TopCard.HasActivatablePowers &&
                 _lastCartPile.Category == pile.TopCard.Category)
             {
                 // If the last cart pile is not empty and has the same category, merge into it
@@ -237,7 +236,7 @@ namespace Quackery.Decks
                 var card = Instantiate(_cardPrefab, transform);
                 card.Item = item;
                 _drawPile.AddAtTheBottom(card);
-                DeckEvents.OnCardMovedTo(card, EnumPileType.DrawPile);
+                DeckEvents.OnCardMovedTo(card, EnumPileType.DrawPile, false);
             }
 
         }
@@ -258,7 +257,7 @@ namespace Quackery.Decks
                 if (pile.IsEmpty)
                 {
                     pile.AddAtTheTop(card);
-                    DeckEvents.OnCardMovedTo(card, pile.Type);
+                    DeckEvents.OnCardMovedTo(card, pile.Type, true);
                     return; // Exit after adding to the first empty cart pile
                 }
             }
@@ -269,7 +268,7 @@ namespace Quackery.Decks
         {
             RemoveFromAllPiles(card);
             _discardPile.AddAtTheTop(card);
-            DeckEvents.OnCardMovedTo(card, EnumPileType.DiscardPile);
+            DeckEvents.OnCardMovedTo(card, EnumPileType.DiscardPile, true);
         }
 
         private void RemoveFromAllPiles(Card card)
@@ -313,7 +312,7 @@ namespace Quackery.Decks
                 if (pile.IsEmpty)
                 {
                     pile.AddAtTheTop(card);
-                    DeckEvents.OnCardMovedTo(card, pile.Type);
+                    DeckEvents.OnCardMovedTo(card, pile.Type, true);
                     return; // Exit after adding to the first empty table pile
                 }
             }
@@ -330,7 +329,7 @@ namespace Quackery.Decks
                 if (card == null) continue;
                 _drawPile.AddAtTheBottom(card);
                 _discardPile.RemoveCard(card);
-                DeckEvents.OnCardMovedTo(card, EnumPileType.DrawPile);
+                DeckEvents.OnCardMovedTo(card, EnumPileType.DrawPile, false);
             }
             _drawPile.Shuffle();
         }
