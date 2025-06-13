@@ -13,7 +13,6 @@ namespace Quackery
     public class TooltipManager : MonoBehaviour
     {
         [SerializeField] private InputActionReference _mousePoint;
-        [SerializeField] private float _followSpeed = 10f;
         public static Action<GameObject> ShowTooltipRequest = delegate { };
         public static Action HideTooltipRequest = delegate { };
 

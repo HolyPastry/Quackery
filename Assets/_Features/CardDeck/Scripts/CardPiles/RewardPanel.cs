@@ -23,7 +23,7 @@ namespace Quackery.Decks
             _rectTransform.localScale = Vector3.zero;
 
             _rewardPanelUI.text = $"{cardReward.Type}: {cardReward.Value}$";
-            _rectTransform.DOScale(Vector3.one, _easeDuration).SetEase(Ease.OutBack).OnComplete(() =>
+            _rectTransform.DOScale(Vector3.one, _easeDuration).SetEase(_easeType).OnComplete(() =>
             {
                 // Optionally, you can add a delay before hiding the panel
                 StartCoroutine(HideAfterDelay(_duration));

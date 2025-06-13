@@ -40,6 +40,7 @@ namespace Quackery.Decks
             EnumPileType.InCart2,
             EnumPileType.InCart3
         };
+        private CardPile _lastCartPile;
 
         private CardPile _drawPile => _piles.Find(p => p.Type == EnumPileType.DrawPile);
         private CardPile _discardPile => _piles.Find(p => p.Type == EnumPileType.DiscardPile);
@@ -107,7 +108,7 @@ namespace Quackery.Decks
         {
             if (pile1 == null || pile2 == null || pile1.IsEmpty) return;
 
-            pile2.MergeIn(pile1);
+            pile2.MergeBelow(pile1);
             DeckEvents.OnPileMoved(pile2.Type);
         }
 
@@ -144,13 +145,24 @@ namespace Quackery.Decks
             var pile = _piles.Find(p => p.Type == type);
             if (pile == null || pile.IsEmpty) return;
 
+            if (_lastCartPile != null && !_lastCartPile.IsEmpty &&
+                pile.TopCard.Powers.Any(power => power.Trigger == EnumPowerTrigger.Activated) &&
+                _lastCartPile.Category == pile.TopCard.Category)
+            {
+                // If the last cart pile is not empty and has the same category, merge into it
+                _lastCartPile.MergeBelow(pile);
+                DeckEvents.OnPileMoved(_lastCartPile.Type);
+                _lastCartPile.TopCard.ExecutePower(EnumPowerTrigger.Activated, _lastCartPile);
+                return; // Exit after merging to the last cart pile
+            }
+
             foreach (var cartPile in _cartPiles)
             {
                 if (cartPile.IsEmpty)
                 {
                     var topCard = pile.TopCard;
-                    cartPile.MergeIn(pile);
-
+                    cartPile.MergeBelow(pile);
+                    _lastCartPile = cartPile;
                     topCard.ExecutePower(EnumPowerTrigger.OnCardMoveToCart, cartPile);
                     DeckEvents.OnPileMoved(cartPile.Type);
                     return; // Exit after merging to the first empty cart pile
@@ -273,7 +285,7 @@ namespace Quackery.Decks
 
         private void ShuffleDiscardPileIn()
         {
-            _drawPile.MergeIn(_discardPile);
+            _drawPile.MergeBelow(_discardPile);
             _drawPile.Shuffle();
             DeckEvents.OnShuffle(EnumPileType.DrawPile, _drawPile.Cards);
         }

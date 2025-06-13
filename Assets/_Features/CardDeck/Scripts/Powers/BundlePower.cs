@@ -5,13 +5,13 @@ namespace Quackery.Decks
 {
     [CreateAssetMenu(
          fileName = "BundlePower",
-         menuName = "Quackery/Powers/BundlePower",
+         menuName = "Quackery/Powers/Bundle",
          order = 1)]
     public class BundlePower : Power
     {
         public int maxNumberOfCards = 3;
 
-        public override string Description => "Bundle Power: Allows you to bundle up to " + maxNumberOfCards + " cards together.";
+        public override string Description => "<b>Bundle:</b> Allows you to bundle up to " + maxNumberOfCards + " cards together.";
         public override void Execute(CardPile owningPile)
         {
             List<CardPile> piles = DeckServices.GetTablePile();

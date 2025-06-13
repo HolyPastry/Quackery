@@ -2,12 +2,6 @@ using Holypastry.Bakery;
 
 namespace Quackery.Decks
 {
-    public enum EnumPowerTrigger
-    {
-        OnCardMoveToCart,
-        OnCardDrawn,
-        OnCardDiscarded,
-    }
     public abstract class Power : ContentTag
     {
         public EnumPowerTrigger Trigger;

@@ -101,7 +101,7 @@ namespace Quackery.Decks
             Cards.Add(card);
         }
 
-        internal void MergeIn(CardPile pile)
+        internal void MergeBelow(CardPile pile)
         {
             if (pile == null || pile.IsEmpty) return;
 
