@@ -16,11 +16,13 @@ namespace Quackery.Decks
 
         public EnumItemCategory Category => IsEmpty ? EnumItemCategory.Unset : TopCard.Category;
 
+        public bool Enabled;
+
         private bool ValidityCheck()
         {
             if (Cards.Count == 0)
             {
-                Debug.LogWarning($"{Type} Deck is empty");
+                //Debug.LogWarning($"{Type} Deck is empty");
                 return false;
             }
             return true;

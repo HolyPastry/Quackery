@@ -6,9 +6,15 @@ namespace Quackery.Decks
     {
         public static Action<Card, EnumPileType, bool> OnCardMovedTo = (card, pileType, placeOnTop) => { };
         public static Action<EnumPileType> OnPileMoved = (destinationPile) => { };
+        public static Action<EnumPileType> OnPileMovedToCart = (destinationPile) => { };
         public static Action<EnumPileType> OnPileDestroyed = (pileType) => { };
 
         public static Action<EnumPileType, List<Card>> OnShuffle = (pileType, cards) => { };
 
+        public static Action OnCardsMovingToSelectPile = () => { };
+
+        public static Action<Card, List<Card>> OnCardSelected = (selectedCard, otherCards) => { };
+
+        internal static Action<int> OnCartSizeUpdated = (size) => { };
     }
 }

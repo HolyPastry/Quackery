@@ -10,6 +10,12 @@ namespace Quackery.Decks
         OnTable4,
         InCart1,
         InCart2,
-        InCart3
+        InCart3,
+        InCart4,
+        InCart5,
+        SelectPile1,
+        SelectPile2,
+        SelectPile3,
+        SelectPile4,
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Holypastry.Bakery;
 using Quackery.Decks;
+using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery.Inventories
@@ -21,11 +22,11 @@ namespace Quackery.Inventories
 
         public EnumItemCategory Category;
 
-        public List<Power> Powers;
+        public List<EffectData> Effects = new();
 
         public ValueEvaluator ValueEvaluator;
 
-        internal List<CardReward> CalculateCardRewards(Item mainItem, List<Item> subItems, List<CardPile> otherPiles)
+        internal List<CardReward> CalculateCardRewards(Card topCard, List<Item> subItems, List<CardPile> otherPiles)
         {
 
             List<CardReward> rewards = new()
@@ -33,15 +34,15 @@ namespace Quackery.Inventories
                 new()
                 {
                     Type = EnumCardReward.BaseReward,
-                    Value = mainItem.Price
+                    Value = topCard.Price
                 }
             };
 
-            if (mainItem.Rating > 0)
+            if (topCard.Rating > 0)
                 rewards.Add(new()
                 {
                     Type = EnumCardReward.RatingReward,
-                    Value = mainItem.Rating
+                    Value = topCard.Rating
                 });
             if (subItems.Count > 0)
             {
@@ -54,7 +55,7 @@ namespace Quackery.Inventories
             int numSameCategory = 0;
             foreach (var pile in otherPiles)
             {
-                if (pile.Category == mainItem.Data.Category)
+                if (pile.Category == topCard.Item.Data.Category)
                 {
                     numSameCategory++;
                 }
@@ -71,7 +72,7 @@ namespace Quackery.Inventories
 
             if (ValueEvaluator != null)
             {
-                rewards.AddRange(ValueEvaluator.Evaluate(mainItem, subItems, otherPiles));
+                rewards.AddRange(ValueEvaluator.Evaluate(topCard, subItems, otherPiles));
             }
             return rewards;
         }

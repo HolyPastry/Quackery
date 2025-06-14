@@ -19,6 +19,11 @@ namespace Quackery.Decks
 
         [SerializeField] private List<CardPileUI> _cardPileUIs;
 
+        [SerializeField] private GameObject _cardSelectPanel;
+        [SerializeField] private int _cartSize = 2;
+
+
+
         private int _cashInCart = 0;
 
 
@@ -28,24 +33,39 @@ namespace Quackery.Decks
             _EndTheDayButton.onClick.AddListener(EndTheDay);
             _StartTheDayButton.onClick.AddListener(() => StartRound());
 
-            DeckEvents.OnPileMoved += OnPileMoved;
+            DeckEvents.OnCardsMovingToSelectPile += OnCardsMovingToSelectPile;
+            DeckEvents.OnPileMovedToCart += OnPileMovedToCart;
+            DeckEvents.OnCardSelected += OnCardSelected;
         }
-
-
 
         void OnDisable()
         {
             _EndTheDayButton.onClick.RemoveListener(EndTheDay);
             _StartTheDayButton.onClick.RemoveAllListeners();
+            DeckEvents.OnCardsMovingToSelectPile -= OnCardsMovingToSelectPile;
+            DeckEvents.OnCardSelected -= OnCardSelected;
 
-            DeckEvents.OnPileMoved -= OnPileMoved;
+            DeckEvents.OnPileMoved -= OnPileMovedToCart;
         }
 
-        private void OnPileMoved(EnumPileType type)
+        private void OnCardSelected(Card card, List<Card> list)
         {
-            if (type != EnumPileType.InCart1 && type != EnumPileType.InCart2 && type != EnumPileType.InCart3)
-                return;
+            StartCoroutine(DelayedSwitchOffSelectPanel());
+        }
 
+        private IEnumerator DelayedSwitchOffSelectPanel()
+        {
+            yield return null;
+            _cardSelectPanel.SetActive(false);
+        }
+
+        private void OnCardsMovingToSelectPile()
+        {
+            _cardSelectPanel.SetActive(true);
+        }
+
+        private void OnPileMovedToCart(EnumPileType type)
+        {
 
             StartCoroutine(CartRewardRoutine(type));
         }
@@ -62,7 +82,6 @@ namespace Quackery.Decks
                 pileUI.ShowReward(cardReward);
                 yield return new WaitForSeconds(0.8f);
                 _cashInCart += cardReward.Value;
-                Debug.Log($"Card Reward: {cardReward.Type}, Price: {cardReward.Value}");
             }
 
             _CashInCartText.text = $"Cash in Cart: {_cashInCart}";
@@ -75,7 +94,7 @@ namespace Quackery.Decks
             }
             else
             {
-                DeckServices.DrawOne();
+                DeckServices.DrawBackToFull();
             }
         }
 
@@ -95,9 +114,8 @@ namespace Quackery.Decks
             }
             yield return new WaitForSeconds(1f);
 
-            DeckServices.DestroyPile(EnumPileType.InCart1);
-            DeckServices.DestroyPile(EnumPileType.InCart2);
-            DeckServices.DestroyPile(EnumPileType.InCart3);
+
+            DeckServices.DiscardCart();
 
             yield return new WaitForSeconds(1f);
             DeckServices.DiscardHand();
@@ -112,15 +130,14 @@ namespace Quackery.Decks
         internal void StartRound()
         {
             StartCoroutine(StartRoundRoutine());
-
         }
 
         private IEnumerator StartRoundRoutine()
         {
-
+            DeckServices.SetCartSize(_cartSize);
             DeckServices.Shuffle();
             yield return new WaitForSeconds(2f);
-            DeckServices.DrawMany(4);
+            DeckServices.DrawBackToFull();
         }
     }
 

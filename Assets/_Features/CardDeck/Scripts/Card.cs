@@ -5,6 +5,10 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
+using Quackery.Effects;
+using System.Collections;
+using DG.Tweening;
+using UnityEngine.Assertions;
 
 namespace Quackery.Decks
 {
@@ -24,93 +28,137 @@ namespace Quackery.Decks
             get => _item;
             set
             {
+                Assert.IsNotNull(value, "Item cannot be null");
                 _item = value;
-                if (_item != null)
-                {
-                    _cardBackground.color = ColorManager.Category(_item.Data.Category);
-                    _cardForeground.sprite = _item.Data.Icon;
-                    _cardName.text = _item.Data.name;
-                    _cardPrice.text = _item.Price.ToString();
-                    _cardRating.text = _item.Rating.ToString();
-                }
-                else
-                {
-                    _cardBackground.color = Color.clear;
-                    _cardForeground.sprite = null;
-                    _cardName.text = string.Empty;
-                    _cardPrice.text = string.Empty;
-                    _cardRating.text = string.Empty;
+                Price = _item.Price;
+                Rating = _item.Rating;
+                UpdateEffects();
 
-                }
+                _cardBackground.color = ColorManager.Category(_item.Data.Category);
+                _cardForeground.sprite = _item.Data.Icon;
+                _cardName.text = _item.Data.name;
+                _cardPrice.text = Price.ToString();
+                _cardRating.text = Rating.ToString();
             }
         }
         public string Name => _item.Name;
 
         public EnumItemCategory Category => _item.Data.Category;
 
-        public List<Power> Powers => _item.Data.Powers;
+        public List<Effect> Effects { get; private set; }
 
-        public bool HasActivatablePowers
+        public bool HasActivatableEffects
         {
             get
             {
-                if (_item == null || _item.Data == null || _item.Data.Powers == null)
-                    return false;
 
-                foreach (var power in _item.Data.Powers)
+                foreach (var effect in Effects)
                 {
-                    if (power.Trigger == EnumPowerTrigger.Activated
-                    && !_activatedPowers.Contains(power))
+                    if (effect.Trigger == EnumEffectTrigger.Activated
+                    && !_activatedEffects.Contains(effect))
                         return true;
                 }
                 return false;
             }
         }
 
-        public Item _item;
+        private Item _item;
 
-        private List<PowerIcon> _powerIcons = new();
-        private readonly List<Power> _activatedPowers = new();
+        public int Price { get; private set; }
+        public int Rating { get; private set; }
+
+
+        private List<EffectIcon> _effectIconPool = new();
+        private EffectIcon _activatedEffectIcon;
+        private readonly List<Effect> _activatedEffects = new();
 
         void Awake()
         {
-            GetComponentsInChildren(true, _powerIcons);
+            GetComponentsInChildren(true, _effectIconPool);
         }
 
-        void Start()
+
+
+        private void CheckEffects(Effect effect)
         {
-            _powerIcons.ForEach(icon => icon.Show(_item.Data.Powers));
+            CheckEffects();
+        }
+
+        private void UpdateEffects()
+        {
+            Effects = new();
+            foreach (var data in _item.Data.Effects)
+            {
+                Effects.Add(new Effect(data));
+            }
+            for (int i = 0; i < _effectIconPool.Count; i++)
+            {
+                var icon = _effectIconPool[i];
+                if (i < Effects.Count)
+                {
+                    icon.gameObject.SetActive(true);
+                    icon.Effect = Effects[i];
+
+                }
+                else
+                {
+                    icon.gameObject.SetActive(false);
+                }
+
+            }
         }
 
         internal List<CardReward> CalculateCardReward(List<Card> allCards, List<CardPile> otherPiles)
         {
-            return _item.CalculateCardRewards(allCards.ConvertAll(c => c.Item), otherPiles);
+            return _item.CalculateCardRewards(this, allCards.ConvertAll(c => c.Item), otherPiles);
         }
 
         public void Discard()
         {
-
-            _activatedPowers.Clear();
-            _powerIcons.ForEach(icon => icon.Reset());
+            Price = _item.Price;
+            Rating = _item.Rating;
+            _activatedEffects.Clear();
+            _effectIconPool.ForEach(icon => icon.Activated = false);
         }
 
-        internal void ExecutePower(EnumPowerTrigger trigger, CardPile pile)
+        public void CheckEffects()
         {
-            if (_item == null || _item.Data == null || _item.Data.Powers == null)
-                return;
+            int priceModifier = EffectServices.GetPriceModifier(this);
+            int ratingModifier = EffectServices.GetRatingModifier(this);
+            Price = _item.Price + priceModifier;
+            Rating = _item.Rating + ratingModifier;
+            _cardPrice.text = Price.ToString();
+            _cardRating.text = Rating.ToString();
+        }
 
-            foreach (var power in _item.Data.Powers)
+        internal void ExecutePower(EnumEffectTrigger trigger, CardPile pile)
+        {
+
+            foreach (var effect in Effects)
             {
-                if (power.Trigger == trigger)
+                if (effect.Trigger != trigger) continue;
+
+                if (effect.Type == EnumEffectType.Instant)
                 {
-                    power.Execute(pile);
-                    if (power.Trigger == EnumPowerTrigger.Activated)
-                    {
-                        _activatedPowers.Add(power);
-                        _powerIcons.ForEach(icon => icon.SetActive(power, true));
-                    }
+                    effect.Execute(trigger, pile);
+                }
+
+                if (effect.Trigger == EnumEffectTrigger.Activated)
+                {
+                    _activatedEffects.Add(effect);
+                    var effectIcon = _effectIconPool.Find(icon => icon.Effect == effect);
+                    effectIcon.Activated = true;
                 }
             }
+        }
+
+        internal void Destroy()
+        {
+            transform.SetParent(null);
+            transform.DOMoveX(Screen.width * 2, 0.5f).OnComplete(() =>
+            {
+                Destroy(gameObject, 1f);
+            });
         }
     }
 }

@@ -17,6 +17,6 @@ MonoBehaviour:
   StartPrice: 1
   StartRating: 0
   Category: 2
-  Powers:
+  Effects:
   - {fileID: 11400000, guid: 53df411a229dc4b3099f67613085035d, type: 2}
   ValueEvaluator: {fileID: 0}

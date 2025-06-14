@@ -32,20 +32,20 @@ namespace Quackery.Decks
             DeckEvents.OnCardMovedTo += OnCardMoved;
             DeckEvents.OnShuffle += OnShuffle;
             DeckEvents.OnPileDestroyed += OnPileDestroyed;
+
+
+            StartCoroutine(StaggeredMoveRoutine());
+
         }
         void OnDisable()
         {
             DeckEvents.OnCardMovedTo -= OnCardMoved;
             DeckEvents.OnShuffle -= OnShuffle;
             DeckEvents.OnPileDestroyed -= OnPileDestroyed;
+
+            StopAllCoroutines(); // Stop all coroutines when disabled
         }
 
-
-
-        void Start()
-        {
-            StartCoroutine(StaggeredMoveRoutine());
-        }
 
         private void OnPileDestroyed(EnumPileType type)
         {
@@ -61,9 +61,6 @@ namespace Quackery.Decks
 
 
             StartCoroutine(ShuffleCardRoutine(cards));
-
-
-
         }
 
         private IEnumerator ShuffleCardRoutine(List<Card> cards)

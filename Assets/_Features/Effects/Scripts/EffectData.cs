@@ -1,0 +1,23 @@
+using System;
+using Holypastry.Bakery;
+using Quackery.Decks;
+using UnityEngine;
+
+namespace Quackery.Effects
+{
+    public abstract class EffectData : ContentTag
+    {
+        public Sprite Icon;
+        public EnumEffectTrigger Trigger;
+        public EnumEffectType Type;
+        public int StartValue;
+        public bool UseValue;
+        public abstract void Execute(Effect effect, CardPile pile);
+
+        public virtual int RatingModifier(Effect effect, Card card) => 0;
+
+        public virtual int PriceModifier(Effect effect, Card card) => 0;
+        public string Description;
+
+    }
+}

@@ -24,11 +24,11 @@ namespace Quackery.Inventories
 
         public int Rating;
 
-        public int RatedPrice => Price * (Rating == 0 ? 1 : Rating);
-
-        internal List<CardReward> CalculateCardRewards(List<Item> subItems, List<CardPile> otherPiles)
+        internal List<CardReward> CalculateCardRewards(Card card, List<Item> subItems, List<CardPile> otherPiles)
         {
-            return Data.CalculateCardRewards(this, subItems, otherPiles);
+            return Data.CalculateCardRewards(card, subItems, otherPiles);
         }
+
+
     }
 }

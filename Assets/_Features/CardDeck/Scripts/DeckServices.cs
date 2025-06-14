@@ -13,20 +13,18 @@ namespace Quackery
     public static class DeckServices
     {
         public static Func<WaitUntil> WaitUntilReady = () => new WaitUntil(() => true);
-        public static Func<Card> DrawOne = () => null;
-        public static Func<int, List<Card>> DrawMany = (numberCards) => new();
+
+
         public static Action Shuffle = () => { };
-        public static Action<Card> Discard = (card) => { };
+        public static Action<List<Card>> Discard = (card) => { };
         public static Action DiscardHand = () => { };
-        public static Action<List<Card>> AddToCart = (card) => { };
         public static Action<List<ItemData>> AddToDeck = (cards) => { };
-        public static Action<EnumPileType> DestroyPile = (pileType) => { };
-        public static Action ResetDeck = () => { };
-        internal static Action<Card> DestroyCard = (card) => { };
+
+
         internal static Func<List<CardPile>> GetTablePile = () => new();
-        internal static Action<Card, Card> MovetoCardInCart = (card, targetCard) => { };
+
         internal static Action<EnumPileType> PileClicked = (pileType) => { };
-        internal static Func<int> GetTotalCashInCart = () => 0;
+
         internal static Action ShuffleDiscardIn = () => { };
         internal static Func<EnumPileType, List<CardReward>> GetPileRewards = (pileType) => new();
         public static Func<bool> IsCartFull = () => false;
@@ -34,5 +32,17 @@ namespace Quackery
         internal static Action<CardPile, CardPile> MovePileTo = (sourcePile, targetPile) => { };
         internal static Func<EnumPileType, Card> GetTopCard = (pileType) => null;
         internal static Func<EnumPileType, int> EvaluatePileValue = (pileType) => 0;
+
+        internal static Action DiscardCart = delegate { };
+        internal static Action<List<Card>> MoveToCardSelect = (cards) => { };
+        internal static Action InterruptDraw = delegate { };
+        internal static Action<Card> MoveToTable = delegate { };
+
+        internal static Action DrawBackToFull = delegate { };
+        public static Func<int, List<Card>> Draw = (numberCards) => new();
+
+        internal static Action<Card> Destroy = (cards) => { };
+
+        internal static Action<int> SetCartSize = (newSize) => { };
     }
 }

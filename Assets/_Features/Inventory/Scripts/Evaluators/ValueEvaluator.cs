@@ -6,7 +6,7 @@ namespace Quackery.Inventories
 {
     public abstract class ValueEvaluator : ScriptableObject
     {
-        public abstract List<CardReward> Evaluate(Item item, List<Item> subItems, List<CardPile> otherPiles);
+        public abstract List<CardReward> Evaluate(Card topCard, List<Item> subItems, List<CardPile> otherPiles);
 
     }
 

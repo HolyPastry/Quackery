@@ -19,7 +19,7 @@ namespace Quackery
             _tooltipManager.AddTooltip($"Stack: {cardPileUI.StackSize}, Value: {DeckServices.EvaluatePileValue(cardPileUI.Type)}");
 
 
-            foreach (var power in card.Powers)
+            foreach (var power in card.Effects)
                 _tooltipManager.AddTooltip(power.Description);
 
             _tooltipManager.RefreshLayout();
