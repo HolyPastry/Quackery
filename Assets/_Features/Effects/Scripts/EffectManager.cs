@@ -11,6 +11,8 @@ namespace Quackery.Effects
 
         private int _nextId = 0;
 
+        private int _stackRewardMultiplier = 1;
+
         void OnDisable()
         {
             EffectServices.Add = (effectData) => -1;
@@ -24,6 +26,11 @@ namespace Quackery.Effects
             EffectServices.RemoveEffectsLinkedToPiles = delegate { };
             EffectServices.GetPriceModifier = (card) => 0;
             EffectServices.GetRatingModifier = (card) => 0;
+
+            EffectServices.CleanEffects = delegate { _effects.Clear(); _nextId = 0; };
+
+            EffectServices.IncreaseStackReward = delegate { };
+            EffectServices.GetStarkMultiplier = () => 1;
 
 
         }
@@ -41,6 +48,34 @@ namespace Quackery.Effects
             EffectServices.RemoveEffectsLinkedToPiles = RemoveEffectsLinkedToPiles;
             EffectServices.GetPriceModifier = GetPriceModifier;
             EffectServices.GetRatingModifier = GetRatingModifier;
+
+            EffectServices.CleanEffects = CleanEffect;
+            EffectServices.IncreaseStackReward = IncreaseStackReward;
+            EffectServices.GetStarkMultiplier = () => _stackRewardMultiplier;
+        }
+
+        private void IncreaseStackReward(int increase)
+        {
+            _stackRewardMultiplier += increase;
+            EffectEvents.OnStackMultiplerUpdate?.Invoke(_stackRewardMultiplier);
+        }
+
+        private void CleanEffect()
+        {
+            var keysToRemove = new List<int>();
+
+            foreach (var (key, effect) in _effects)
+            {
+                if (effect.Data.Tags.Contains(EnumEffectTag.Activated))
+                    keysToRemove.Add(key);
+            }
+
+            _stackRewardMultiplier = 1;
+            EffectEvents.OnStackMultiplerUpdate?.Invoke(_stackRewardMultiplier);
+            foreach (var key in keysToRemove)
+            {
+                RemoveById(key);
+            }
         }
 
         private int GetRatingModifier(Card card)

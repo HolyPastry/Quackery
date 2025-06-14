@@ -30,17 +30,23 @@ namespace Quackery.Decks
             {
                 Assert.IsNotNull(value, "Item cannot be null");
                 _item = value;
-                Price = _item.Price;
-                Rating = _item.Rating;
-                UpdateEffects();
 
-                _cardBackground.color = ColorManager.Category(_item.Data.Category);
+                UpdateEffects();
                 _cardForeground.sprite = _item.Data.Icon;
                 _cardName.text = _item.Data.name;
+
+                if (IsSkill) return;
+
+                Price = _item.Price;
+                Rating = _item.Rating;
+                _cardBackground.color = ColorManager.Category(_item.Data.Category);
+
                 _cardPrice.text = Price.ToString();
                 _cardRating.text = Rating.ToString();
             }
         }
+
+        private bool IsSkill => _item.Data.Category == EnumItemCategory.Skills;
         public string Name => _item.Name;
 
         public EnumItemCategory Category => _item.Data.Category;
@@ -51,7 +57,6 @@ namespace Quackery.Decks
         {
             get
             {
-
                 foreach (var effect in Effects)
                 {
                     if (effect.Data.Tags.Contains(EnumEffectTag.Activated)
@@ -69,19 +74,12 @@ namespace Quackery.Decks
 
 
         private List<EffectIcon> _effectIconPool = new();
-        private EffectIcon _activatedEffectIcon;
+
         private readonly List<Effect> _activatedEffects = new();
 
         void Awake()
         {
             GetComponentsInChildren(true, _effectIconPool);
-        }
-
-
-
-        private void CheckEffects(Effect effect)
-        {
-            CheckEffects();
         }
 
         private void UpdateEffects()
@@ -115,8 +113,11 @@ namespace Quackery.Decks
 
         public void Discard()
         {
+            if (IsSkill) return;
             Price = _item.Price;
             Rating = _item.Rating;
+            _cardPrice.text = Price.ToString();
+            _cardRating.text = Rating.ToString();
             _activatedEffects.Clear();
             _effectIconPool.ForEach(icon => icon.Activated = false);
         }
@@ -135,9 +136,11 @@ namespace Quackery.Decks
         {
             foreach (var effect in Effects)
             {
+                if (effect.Data.Tags.Contains(EnumEffectTag.Activated)) continue;
                 if (effect.Trigger == EnumEffectTrigger.OnCardMoveToCart)
                     effect.Execute(pile);
-                if (effect.Trigger == EnumEffectTrigger.OnDraw)
+                if (effect.Trigger == EnumEffectTrigger.OnDraw ||
+                     effect.Trigger == EnumEffectTrigger.Continous)
                     EffectServices.Add(effect);
             }
         }
@@ -165,7 +168,6 @@ namespace Quackery.Decks
                 effectIcon.Activated = true;
                 if (effect.Trigger == EnumEffectTrigger.OnActivated)
                     effect.Execute(lastCartPile);
-
             }
         }
     }

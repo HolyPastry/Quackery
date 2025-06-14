@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Quackery
@@ -10,6 +10,8 @@ namespace Quackery
 
         private readonly List<EffectUI> _statusUIPool = new();
 
+        private StackMultiplierUI _stackMultiplierUI;
+
         void Awake()
         {
             GetComponentsInChildren(_statusUIPool);
@@ -17,10 +19,13 @@ namespace Quackery
             {
                 _statusUIPool[i].gameObject.SetActive(false);
             }
+            _stackMultiplierUI = GetComponentInChildren<StackMultiplierUI>(true);
+            _stackMultiplierUI.gameObject.SetActive(false);
         }
 
         void OnEnable()
         {
+            EffectEvents.OnStackMultiplerUpdate += UpdateStackMultiplierUI;
             EffectEvents.OnUpdated += UpdateStatusUI;
             EffectEvents.OnAdded += AddStatusUI;
             EffectEvents.OnRemoved += RemoveStatusUI;
@@ -28,9 +33,21 @@ namespace Quackery
 
         void OnDisable()
         {
+            EffectEvents.OnStackMultiplerUpdate -= UpdateStackMultiplierUI;
             EffectEvents.OnUpdated -= UpdateStatusUI;
             EffectEvents.OnAdded -= AddStatusUI;
             EffectEvents.OnRemoved -= RemoveStatusUI;
+        }
+
+        private void UpdateStackMultiplierUI(int multiplier)
+        {
+            if (multiplier <= 1)
+            {
+                _stackMultiplierUI.gameObject.SetActive(false);
+                return;
+            }
+            _stackMultiplierUI.gameObject.SetActive(true);
+            _stackMultiplierUI.UpdateMultipler(multiplier);
         }
 
         private void RemoveStatusUI(Effect effect)

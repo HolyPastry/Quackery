@@ -63,5 +63,10 @@ namespace Quackery
         {
             LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
         }
+
+        internal void AddTooltip(object multiplierText)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

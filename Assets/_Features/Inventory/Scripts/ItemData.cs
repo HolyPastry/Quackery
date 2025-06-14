@@ -49,7 +49,7 @@ namespace Quackery.Inventories
                 rewards.Add(new()
                 {
                     Type = EnumCardReward.StackReward,
-                    Value = subItems.Sum(subItem => subItem.Price)
+                    Value = subItems.Sum(subItem => subItem.Price) * EffectServices.GetStarkMultiplier()
                 });
             }
             int numSameCategory = 0;

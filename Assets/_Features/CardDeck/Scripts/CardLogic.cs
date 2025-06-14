@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 namespace Quackery.Decks
 {
-
     public class CardLogic : MonoBehaviour
     {
 
@@ -34,19 +33,21 @@ namespace Quackery.Decks
             _StartTheDayButton.onClick.AddListener(() => StartRound());
 
             DeckEvents.OnCardsMovingToSelectPile += OnCardsMovingToSelectPile;
-            DeckEvents.OnPileMovedToCart += OnPileMovedToCart;
+            DeckEvents.OnCachingTheCart += OnPileMovedToCart;
             DeckEvents.OnCardSelected += OnCardSelected;
         }
 
         void OnDisable()
         {
+
             _EndTheDayButton.onClick.RemoveListener(EndTheDay);
             _StartTheDayButton.onClick.RemoveAllListeners();
 
             DeckEvents.OnCardsMovingToSelectPile -= OnCardsMovingToSelectPile;
             DeckEvents.OnCardSelected -= OnCardSelected;
-            DeckEvents.OnPileMoved -= OnPileMovedToCart;
+            DeckEvents.OnCachingTheCart -= OnPileMovedToCart;
             StopAllCoroutines();
+
         }
 
         private void OnCardSelected(Card card, List<Card> list)
@@ -117,11 +118,12 @@ namespace Quackery.Decks
 
             DeckServices.DiscardCart();
 
+
             yield return new WaitForSeconds(1f);
             DeckServices.DiscardHand();
             yield return new WaitForSeconds(1f);
             DeckServices.ShuffleDiscardIn();
-
+            EffectServices.CleanEffects();
             yield return new WaitForSeconds(1f);
 
             StartRound();

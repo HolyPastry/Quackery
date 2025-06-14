@@ -8,23 +8,13 @@ using UnityEngine.UI;
 
 namespace Quackery
 {
-    public class EffectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class EffectUI : MonoBehaviour
     {
         [SerializeField] private Image _icon;
         [SerializeField] private TextMeshProUGUI _valueText;
         [SerializeField] private GameObject _shortBg;
         [SerializeField] private GameObject _longBg;
         public Effect Effect { get; private set; }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            TooltipManager.ShowTooltipRequest.Invoke(gameObject);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            TooltipManager.HideTooltipRequest.Invoke();
-        }
 
         internal void UpdateStatus(Effect status, bool animate)
         {

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Quackery
 {
+
     [RequireComponent(typeof(TooltipManager))]
     public abstract class TooltipExtension : ValidatedMonoBehaviour
     {

@@ -23,6 +23,11 @@ namespace Quackery
         internal static Func<Card, int> GetPriceModifier = (card) => 0;
         internal static Func<Card, int> GetRatingModifier = (card) => 0;
 
+        internal static Action CleanEffects = delegate { };
 
+
+        internal static Action<int> IncreaseStackReward = (amount) => { };
+
+        public static Func<int> GetStarkMultiplier = () => 1;
     }
 }
