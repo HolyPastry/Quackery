@@ -2905,7 +2905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c671c4fbf30034f4d953b46d04e42f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pileType: 9
+  _pileType: 11
   _moveSpeed: 0.5
   _easeType: 27
   _staggerDelay: 0.1
@@ -5001,7 +5001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c671c4fbf30034f4d953b46d04e42f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pileType: 12
+  _pileType: 14
   _moveSpeed: 0.5
   _easeType: 27
   _staggerDelay: 0.1
@@ -6092,7 +6092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c671c4fbf30034f4d953b46d04e42f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pileType: 10
+  _pileType: 12
   _moveSpeed: 0.5
   _easeType: 27
   _staggerDelay: 0.1
@@ -6185,7 +6185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c671c4fbf30034f4d953b46d04e42f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pileType: 11
+  _pileType: 13
   _moveSpeed: 0.5
   _easeType: 27
   _staggerDelay: 0.1

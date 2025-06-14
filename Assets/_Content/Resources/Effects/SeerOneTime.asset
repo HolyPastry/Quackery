@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Seer OneTime
   Icon: {fileID: 21300000, guid: e91ecd5a31d884d218667bc183f78463, type: 3}
-  Trigger: 1
-  Type: 2
+  Trigger: 2
   StartValue: 2
   UseValue: 1
   Description: Pick #Value cards, draw one, discard the other
+  Tags: 01000000

@@ -7,11 +7,11 @@ namespace Quackery
 {
     public class CartUI : MonoBehaviour
     {
-        private List<CardPileUI> cardPiles;
+        private List<CardPileUI> _cardPiles = new();
         void Awake()
         {
-            GetComponentsInChildren(true, cardPiles);
-            cardPiles.ForEach(pile => pile.gameObject.SetActive(false));
+            GetComponentsInChildren(true, _cardPiles);
+            _cardPiles.ForEach(pile => pile.gameObject.SetActive(false));
         }
 
         void OnEnable()
@@ -26,9 +26,9 @@ namespace Quackery
 
         private void OnCartSizeUpdated(int cartSize)
         {
-            for (int i = 0; i < cardPiles.Count; i++)
+            for (int i = 0; i < _cardPiles.Count; i++)
             {
-                cardPiles[i].gameObject.SetActive(i < cartSize);
+                _cardPiles[i].gameObject.SetActive(i < cartSize);
             }
         }
 

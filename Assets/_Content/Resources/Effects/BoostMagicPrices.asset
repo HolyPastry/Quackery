@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: 
   Icon: {fileID: 21300000, guid: 0f0429db3974ca149a66c3a6d218974f, type: 3}
-  Trigger: 3
-  Type: 1
+  Trigger: 4
   StartValue: 1
   UseValue: 0
   Description: Boost All Magic Item Prices
+  Tags: 00000000
   Category: 2

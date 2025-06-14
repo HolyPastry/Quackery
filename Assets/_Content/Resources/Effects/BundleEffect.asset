@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Bundle Power
   Icon: {fileID: 21300000, guid: 2f9af5381a2fd47cba56fab4a1dfe95f, type: 3}
-  Trigger: 0
-  Type: 0
+  Trigger: 1
   StartValue: 3
   UseValue: 1
   Description: Stack #Value cards from your hand.
+  Tags: 

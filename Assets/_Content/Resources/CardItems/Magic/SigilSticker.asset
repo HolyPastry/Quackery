@@ -18,5 +18,5 @@ MonoBehaviour:
   StartRating: 0
   Category: 2
   Effects:
-  - {fileID: 11400000, guid: 180f6e1ee89274327a43628518546204, type: 2}
+  - {fileID: 11400000, guid: da18516747cf443f3918d3bb8b47f66c, type: 2}
   ValueEvaluator: {fileID: 0}

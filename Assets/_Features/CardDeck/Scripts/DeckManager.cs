@@ -74,35 +74,37 @@ namespace Quackery.Decks
         {
             DeckServices.WaitUntilReady = () => new WaitUntil(() => true);
 
-            //  DeckServices.Draw = (numberCards) => new();
-            DeckServices.Shuffle = () => { };
-            DeckServices.Discard = (card) => { };
 
             DeckServices.AddToDeck = (itemData) => { };
-            DeckServices.DiscardHand = () => { };
-            DeckServices.Destroy = (cards) => { };
 
-            DeckServices.GetTablePile = () => new();
-            DeckServices.PileClicked = (pileType) => { };
-
-
+            DeckServices.Shuffle = () => { };
             DeckServices.ShuffleDiscardIn = () => { };
-            DeckServices.GetPileRewards = (pileType) => new();
-            DeckServices.IsCartFull = () => false;
-            DeckServices.GetPile = (pileType) => null;
-            DeckServices.MovePileTo = (sourcePile, targetPile) => { };
-            DeckServices.GetTopCard = (pileType) => null;
-            DeckServices.EvaluatePileValue = (pileType) => 0;
-            DeckServices.DiscardCart = () => { };
-            DeckServices.InterruptDraw = () => { };
-            DeckServices.MoveToCardSelect = (cards) => { };
-            DeckServices.MoveToTable = (card) => { };
 
             DeckServices.DrawBackToFull = () => { };
             DeckServices.Draw = (numberCards) => new List<Card>();
+            DeckServices.InterruptDraw = () => { };
+
+            DeckServices.DiscardHand = () => { };
+            DeckServices.Discard = (card) => { };
+            DeckServices.DiscardCart = () => { };
+            DeckServices.Destroy = (cards) => { };
 
 
+            DeckServices.GetPileRewards = (pileType) => new();
+            DeckServices.GetTablePile = () => new();
+            DeckServices.PileClicked = (pileType) => { };
+            DeckServices.MovePileTo = (sourcePile, targetPile) => { };
+            DeckServices.GetTopCard = (pileType) => null;
+            DeckServices.EvaluatePileValue = (pileType) => 0;
+
+
+            DeckServices.MoveToCardSelect = (cards) => { };
+            DeckServices.MoveToTable = (card) => { };
+
+
+            DeckServices.IsCartFull = () => false;
             DeckServices.SetCartSize = (newSize) => { };
+            DeckServices.ExpandCart = (amount) => { };
 
 
             EffectEvents.OnAdded -= CheckEffects;
@@ -116,34 +118,38 @@ namespace Quackery.Decks
         {
             DeckServices.WaitUntilReady = () => new WaitUntil(() => _isReady);
 
+            DeckServices.AddToDeck = AddToDeck;
 
             DeckServices.Shuffle = ShuffleDiscardPileIn;
-            DeckServices.Discard = Discard;
+            DeckServices.ShuffleDiscardIn = ShuffleDiscardPileIn;
 
-            DeckServices.AddToDeck = AddToDeck;
+            DeckServices.DrawBackToFull = DrawBackToFull;
+            DeckServices.Draw = DrawMany;
+            DeckServices.InterruptDraw = () => _interruptDraw = true;
+
+            DeckServices.Discard = Discard;
             DeckServices.DiscardHand = DiscardHand;
+            DeckServices.DiscardCart = DiscardCart;
             DeckServices.Destroy = DestroyCard;
 
+
+
             DeckServices.PileClicked = PileClicked;
-
-
-            DeckServices.ShuffleDiscardIn = ShuffleDiscardPileIn;
             DeckServices.GetPileRewards = GetPileRewards;
-            DeckServices.IsCartFull = () => CartIsFull;
-            DeckServices.GetPile = (pileType) => _piles.Find(p => p.Type == pileType);
             DeckServices.GetTablePile = () => _tablePiles;
             DeckServices.MovePileTo = MovePileTo;
             DeckServices.GetTopCard = (pileType) => _piles.Find(p => p.Type == pileType)?.TopCard;
             DeckServices.EvaluatePileValue = (pileType) => GetPileRewards(pileType).Sum(r => r.Value);
-            DeckServices.DiscardCart = DiscardCart;
 
-            DeckServices.InterruptDraw = () => _interruptDraw = true;
+
             DeckServices.MoveToCardSelect = MoveToCardSelectionPile;
             DeckServices.MoveToTable = MoveToTable;
-            DeckServices.DrawBackToFull = DrawBackToFull;
-            DeckServices.Draw = DrawMany;
+
 
             DeckServices.SetCartSize = (newSize) => UpdateCartSize(newSize);
+            DeckServices.ExpandCart = (amount) => UpdateCartSize(CartSize + amount);
+            DeckServices.IsCartFull = () => CartIsFull;
+
 
             EffectEvents.OnAdded += CheckEffects;
             EffectEvents.OnRemoved += CheckEffects;
@@ -286,7 +292,7 @@ namespace Quackery.Decks
                     var topCard = pile.TopCard;
                     cartPile.MergeBelow(pile);
                     _lastCartPile = cartPile;
-                    topCard.ExecutePower(EnumEffectTrigger.OnCardMoveToCart, cartPile);
+                    topCard.ExecutePowerInCart(cartPile);
                     DeckEvents.OnPileMoved(cartPile.Type);
                     DeckEvents.OnPileMovedToCart(cartPile.Type);
                     return; // Exit after merging to the first empty cart pile
@@ -305,7 +311,7 @@ namespace Quackery.Decks
                 _lastCartPile.MergeBelow(pile);
                 DeckEvents.OnPileMoved(_lastCartPile.Type);
                 DeckEvents.OnPileMovedToCart(_lastCartPile.Type);
-                _lastCartPile.TopCard.ExecutePower(EnumEffectTrigger.Activated, _lastCartPile);
+                _lastCartPile.TopCard.ActivatePower(_lastCartPile);
                 return true; // Exit after merging to the last cart pile
             }
 

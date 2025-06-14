@@ -1,18 +1,17 @@
 namespace Quackery.Effects
 {
 
-    public enum EnumEffectType
+    public enum EnumEffectTag
     {
-        Instant,
-        Continuous,
+        Activated,
         OneTime,
     }
     public enum EnumEffectTrigger
     {
+        OnActivated,
         OnCardMoveToCart,
         OnDraw,
         OnCardDiscarded,
-        Activated,
-
+        Continous
     }
 }

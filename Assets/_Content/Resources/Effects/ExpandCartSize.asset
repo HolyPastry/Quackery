@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
-  m_Name: VoodooDoll
+  m_Script: {fileID: 11500000, guid: be27fb51dba2a453d935213998b9e72b, type: 3}
+  m_Name: ExpandCartSize
   m_EditorClassIdentifier: 
   MasterText: 
-  Icon: {fileID: 21300000, guid: 58bf81e7156904712bf08c51bc1c07e6, type: 3}
-  StartPrice: 1
-  StartRating: 0
-  Category: 2
-  Effects: []
-  ValueEvaluator: {fileID: 0}
+  Icon: {fileID: 21300000, guid: de4f3fcd32c5c8b43ad52b9a043b4ce5, type: 3}
+  Trigger: 0
+  StartValue: 1
+  UseValue: 0
+  Description: Expand Cart by #Value
+  Tags: 00000000

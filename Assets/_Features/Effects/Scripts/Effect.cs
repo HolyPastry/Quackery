@@ -18,7 +18,6 @@ namespace Quackery
         public string Description => Data.Description.Replace("{#Value}", Value.ToString());
 
         public EnumEffectTrigger Trigger => Data.Trigger;
-        public EnumEffectType Type => Data.Type;
         public Sprite Icon => Data.Icon;
 
         public Effect(EffectData data)
@@ -27,11 +26,9 @@ namespace Quackery
             Value = data.StartValue;
         }
 
-        internal void Execute(EnumEffectTrigger trigger, CardPile pile)
+        internal void Execute(CardPile pile)
         {
 
-            if (trigger != Data.Trigger)
-                return;
             if (!pile.IsEmpty) LinkedCard = pile.TopCard;
             Data.Execute(this, pile);
         }

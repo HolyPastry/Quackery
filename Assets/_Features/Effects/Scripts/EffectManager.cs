@@ -16,9 +16,11 @@ namespace Quackery.Effects
             EffectServices.Add = (effectData) => -1;
             EffectServices.Remove = delegate { };
             EffectServices.RemoveById = delegate { };
+
             EffectServices.UpdateValue = delegate { };
             EffectServices.Execute = delegate { };
             EffectServices.GetCurrent = () => new();
+
             EffectServices.RemoveEffectsLinkedToPiles = delegate { };
             EffectServices.GetPriceModifier = (card) => 0;
             EffectServices.GetRatingModifier = (card) => 0;
@@ -31,9 +33,11 @@ namespace Quackery.Effects
             EffectServices.Add = Add;
             EffectServices.Remove = Remove;
             EffectServices.RemoveById = RemoveById;
+
             EffectServices.UpdateValue = UpdateValue;
             EffectServices.Execute = Execute;
             EffectServices.GetCurrent = () => new List<Effect>(_effects.Values);
+
             EffectServices.RemoveEffectsLinkedToPiles = RemoveEffectsLinkedToPiles;
             EffectServices.GetPriceModifier = GetPriceModifier;
             EffectServices.GetRatingModifier = GetRatingModifier;
@@ -45,11 +49,7 @@ namespace Quackery.Effects
             int ratingModifier = 0;
             foreach (var effect in _effects.Values)
             {
-                if (effect.Type == EnumEffectType.Continuous ||
-                     effect.Trigger == EnumEffectTrigger.Activated)
-                {
-                    ratingModifier += effect.RatingModifier(card);
-                }
+                ratingModifier += effect.RatingModifier(card);
             }
             return ratingModifier;
         }
@@ -59,11 +59,7 @@ namespace Quackery.Effects
             int priceModifier = 0;
             foreach (var effect in _effects.Values)
             {
-                if (effect.Type == EnumEffectType.Continuous ||
-                     effect.Trigger == EnumEffectTrigger.Activated)
-                {
-                    priceModifier += effect.PriceModifier(card);
-                }
+                priceModifier += effect.PriceModifier(card);
             }
             return priceModifier;
         }
@@ -79,7 +75,7 @@ namespace Quackery.Effects
                 {
                     if (effect.LinkedCard != null &&
                         !pile.IsEmpty &&
-                        effect.Data.Trigger == EnumEffectTrigger.Activated &&
+                        effect.Data.Tags.Contains(EnumEffectTag.Activated) &&
                         effect.LinkedCard == pile.TopCard)
                     {
                         idsToRemove.Add(id);
@@ -134,8 +130,9 @@ namespace Quackery.Effects
             List<int> _effectToRemove = new();
             foreach (var (key, effect) in _effects)
             {
-                effect.Execute(trigger, pile);
-                if (effect.Data.Type == EnumEffectType.OneTime)
+                if (effect.Trigger != trigger) continue;
+                effect.Execute(pile);
+                if (effect.Data.Tags.Contains(EnumEffectTag.OneTime))
                     _effectToRemove.Add(key);
             }
             foreach (var id in _effectToRemove)

@@ -5,7 +5,6 @@ using UnityEngine;
 namespace Quackery.Effects
 {
 
-
     [CreateAssetMenu(fileName = "SeerEffect", menuName = "Quackery/Effects/Seer", order = 1)]
     public class SeerEffect : EffectData
     {

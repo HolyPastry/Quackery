@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Hypnotise
   Icon: {fileID: 21300000, guid: 04f1d24123ba9404782f25c0079f6acf, type: 3}
-  Trigger: 3
-  Type: 1
+  Trigger: 0
   StartValue: 0
   UseValue: 0
   Description: Make Customer Forget one of his ailments
+  Tags: 00000000

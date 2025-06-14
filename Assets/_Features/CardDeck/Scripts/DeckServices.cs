@@ -27,11 +27,13 @@ namespace Quackery
 
         internal static Action ShuffleDiscardIn = () => { };
         internal static Func<EnumPileType, List<CardReward>> GetPileRewards = (pileType) => new();
+        internal static Func<EnumPileType, int> EvaluatePileValue = (pileType) => 0;
+
         public static Func<bool> IsCartFull = () => false;
-        public static Func<EnumPileType, CardPile> GetPile;
+
         internal static Action<CardPile, CardPile> MovePileTo = (sourcePile, targetPile) => { };
         internal static Func<EnumPileType, Card> GetTopCard = (pileType) => null;
-        internal static Func<EnumPileType, int> EvaluatePileValue = (pileType) => 0;
+
 
         internal static Action DiscardCart = delegate { };
         internal static Action<List<Card>> MoveToCardSelect = (cards) => { };
@@ -44,5 +46,7 @@ namespace Quackery
         internal static Action<Card> Destroy = (cards) => { };
 
         internal static Action<int> SetCartSize = (newSize) => { };
+
+        internal static Action<int> ExpandCart = (amount) => { };
     }
 }

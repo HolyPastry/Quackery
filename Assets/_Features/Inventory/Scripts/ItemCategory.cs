@@ -1,5 +1,4 @@
-using Holypastry.Bakery;
-using UnityEngine;
+
 
 namespace Quackery.Inventories
 {
@@ -12,5 +11,6 @@ namespace Quackery.Inventories
         Crystals,
         Energy,
         ChineseMedicine,
+        Skills
     }
 }

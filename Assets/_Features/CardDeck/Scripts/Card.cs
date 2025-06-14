@@ -54,7 +54,7 @@ namespace Quackery.Decks
 
                 foreach (var effect in Effects)
                 {
-                    if (effect.Trigger == EnumEffectTrigger.Activated
+                    if (effect.Data.Tags.Contains(EnumEffectTag.Activated)
                     && !_activatedEffects.Contains(effect))
                         return true;
                 }
@@ -131,24 +131,14 @@ namespace Quackery.Decks
             _cardRating.text = Rating.ToString();
         }
 
-        internal void ExecutePower(EnumEffectTrigger trigger, CardPile pile)
+        internal void ExecutePowerInCart(CardPile pile)
         {
-
             foreach (var effect in Effects)
             {
-                if (effect.Trigger != trigger) continue;
-
-                if (effect.Type == EnumEffectType.Instant)
-                {
-                    effect.Execute(trigger, pile);
-                }
-
-                if (effect.Trigger == EnumEffectTrigger.Activated)
-                {
-                    _activatedEffects.Add(effect);
-                    var effectIcon = _effectIconPool.Find(icon => icon.Effect == effect);
-                    effectIcon.Activated = true;
-                }
+                if (effect.Trigger == EnumEffectTrigger.OnCardMoveToCart)
+                    effect.Execute(pile);
+                if (effect.Trigger == EnumEffectTrigger.OnDraw)
+                    EffectServices.Add(effect);
             }
         }
 
@@ -159,6 +149,24 @@ namespace Quackery.Decks
             {
                 Destroy(gameObject, 1f);
             });
+        }
+
+        internal void ActivatePower(CardPile lastCartPile)
+        {
+            foreach (var effect in Effects)
+            {
+                if (!effect.Data.Tags.Contains(EnumEffectTag.Activated)) continue;
+                if (_activatedEffects.Contains(effect)) continue;
+
+                effect.LinkedCard = lastCartPile.TopCard;
+                EffectServices.Add(effect);
+                _activatedEffects.Add(effect);
+                var effectIcon = _effectIconPool.Find(icon => icon.Effect == effect);
+                effectIcon.Activated = true;
+                if (effect.Trigger == EnumEffectTrigger.OnActivated)
+                    effect.Execute(lastCartPile);
+
+            }
         }
     }
 }

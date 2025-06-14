@@ -42,10 +42,11 @@ namespace Quackery.Decks
         {
             _EndTheDayButton.onClick.RemoveListener(EndTheDay);
             _StartTheDayButton.onClick.RemoveAllListeners();
+
             DeckEvents.OnCardsMovingToSelectPile -= OnCardsMovingToSelectPile;
             DeckEvents.OnCardSelected -= OnCardSelected;
-
             DeckEvents.OnPileMoved -= OnPileMovedToCart;
+            StopAllCoroutines();
         }
 
         private void OnCardSelected(Card card, List<Card> list)
@@ -66,7 +67,6 @@ namespace Quackery.Decks
 
         private void OnPileMovedToCart(EnumPileType type)
         {
-
             StartCoroutine(CartRewardRoutine(type));
         }
 
