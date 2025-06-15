@@ -46,7 +46,7 @@ namespace Quackery
             CustomerPanel panel = _panels.Find(p => p.CurrentState == CustomerPanelState.Active);
             if (panel == null)
             {
-                Debug.LogError("No active customer panel found!");
+                Debug.LogWarning("No active customer panel found!");
                 return;
             }
             panel.SlideToPosition(CustomerPanelState.Exited);

@@ -131,12 +131,11 @@ namespace Quackery.Decks
                     });
             }
             yield return DialogQueueServices.WaitUntilAllDialogEnds();
-            _customerPanelTransform.ClientExit();
+
             DeckServices.DiscardCart();
             yield return new WaitForSeconds(2f);
 
-
-            yield return new WaitForSeconds(1f);
+            _customerPanelTransform.ClientExit();
             DeckServices.DiscardHand();
             yield return new WaitForSeconds(1f);
 

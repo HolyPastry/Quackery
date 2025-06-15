@@ -66,11 +66,11 @@ namespace Quackery
             if (_currentState == state)
                 return;
             IsPanelMoving = true;
-            _currentState = state;
             _rectTransform.DOAnchorPosX(PanelPositions[state], 0.5f)
                 .SetEase(_easeType)
                 .OnComplete(() =>
                 {
+                    _currentState = state;
                     if (state == CustomerPanelState.Active)
                         EnableChat();
                     else
