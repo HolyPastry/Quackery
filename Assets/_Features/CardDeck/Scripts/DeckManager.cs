@@ -308,8 +308,15 @@ namespace Quackery.Decks
 
         private void ClickOnTablePile(EnumPileType type)
         {
+
             var pile = _piles.Find(p => p.Type == type);
             if (pile == null || pile.IsEmpty) return;
+
+            var meDialog = pile.TopCard.Item.Data.name + "Me";
+            string clientResponse = "ClientAnswer";
+            DialogQueueServices.QueueDialog(meDialog);
+            DialogQueueServices.QueueDialog(clientResponse);
+
             if (pile.TopCard.Category == EnumItemCategory.Skills)
             {
                 pile.TopCard.ExecutePowerInCart(pile);

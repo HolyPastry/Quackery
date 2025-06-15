@@ -138,5 +138,29 @@ namespace Quackery.ChatApp
                 DialogServices.SkipOneLine();
 
         }
+
+        internal void ClearChat()
+        {
+            _lastSpeaker = null;
+            _lastBubble = null;
+
+            foreach (Transform child in _chatContent)
+            {
+                if (child.TryGetComponent<ChatBubble>(out var chatBubble))
+                {
+                    Destroy(chatBubble.gameObject);
+                }
+            }
+
+            while (_choiceButtons.Count > 0)
+            {
+                var choiceButton = _choiceButtons[0];
+                _choiceButtons.RemoveAt(0);
+                choiceButton.OnChoiceSelected -= MakeChoice;
+                Destroy(choiceButton.gameObject);
+            }
+
+            _typingSign.gameObject.SetActive(false);
+        }
     }
 }

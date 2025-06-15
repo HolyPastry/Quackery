@@ -18,7 +18,7 @@ public class PurseManager : Service
     void OnEnable()
     {
         PurseServices.Modify = Modify;
-        PurseServices.GetString = () => MoneyFormat(_purse?.Amount ?? 0f);
+        PurseServices.GetString = () => Mathf.Floor(_purse.Amount).ToString(); //MoneyFormat(_purse?.Amount ?? 0f);
         PurseServices.WaitUntilReady = () => WaitUntilReady;
     }
 

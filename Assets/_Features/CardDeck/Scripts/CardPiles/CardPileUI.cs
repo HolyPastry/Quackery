@@ -22,7 +22,11 @@ namespace Quackery.Decks
 
         public List<Card> Cards => new(GetComponentsInChildren<Card>());
 
-        public object StackSize => GetComponentsInChildren<Card>().Length;
+        public int StackSize => GetComponentsInChildren<Card>().Length;
+
+        public float Height => (transform as RectTransform).sizeDelta.y;
+
+        public const float CardOriginalHeight = 512;
 
         // public event System.Action<CardPileUI> OnClicked;
         private readonly Queue<RectTransform> _moveQueue = new();
@@ -59,12 +63,17 @@ namespace Quackery.Decks
         {
             if (type != _pileType) return;
 
-
-            StartCoroutine(ShuffleCardRoutine(cards));
+            foreach (var card in GetComponentsInChildren<Card>())
+            {
+                if (!cards.Contains(card)) continue;
+                card.transform.SetSiblingIndex(cards.IndexOf(card));
+            }
+            // StartCoroutine(ShuffleCardRoutine(cards));
         }
 
         private IEnumerator ShuffleCardRoutine(List<Card> cards)
         {
+
             foreach (var card in GetComponentsInChildren<Card>())
             {
                 if (!cards.Contains(card)) continue;
@@ -88,6 +97,7 @@ namespace Quackery.Decks
 
         private IEnumerator StaggeredMoveRoutine()
         {
+            var scaleRatio = Height / CardOriginalHeight;
             while (true)
             {
                 if (_moveQueue.Count > 0)
@@ -95,7 +105,7 @@ namespace Quackery.Decks
                     var cardTransform = _moveQueue.Dequeue();
                     if (cardTransform == null)
                         continue; // Skip if the card transform is null
-
+                    cardTransform.DOScale(scaleRatio, _moveSpeed);
                     cardTransform.DOAnchorPos(Vector3.zero, _moveSpeed).SetEase(_easeType);
                     yield return new WaitForSeconds(_staggerDelay); // Stagger the movement of cards
                 }

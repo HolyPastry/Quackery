@@ -6,5 +6,7 @@ namespace Quackery
     {
         internal static Action ForgetAilment = delegate { };
 
+        internal static Func<bool> HasNextClient = () => true;
+
     }
 }
