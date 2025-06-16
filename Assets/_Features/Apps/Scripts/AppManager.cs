@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -12,12 +13,34 @@ public class AppManager : MonoBehaviour
     {
         AppServices.OpenApp = OpenApp;
         AppServices.CloseApp = CloseApp;
+        AppServices.RegisterAppScreen = RegisterAppScreen;
+        AppServices.UnregisterAppScreen = UnregisterAppScreen;
+        AppServices.IsAppSelected = (appData) => _currentApp != null && _currentApp.AppData == appData;
     }
+
 
     void OnDisable()
     {
         AppServices.OpenApp = delegate { };
         AppServices.CloseApp = delegate { };
+        AppServices.RegisterAppScreen = delegate { };
+        AppServices.UnregisterAppScreen = delegate { };
+        AppServices.IsAppSelected = delegate { return false; };
+    }
+
+    private void RegisterAppScreen(AppScreen screen)
+    {
+        if (_loadedApps.ContainsKey(screen.AppData))
+        {
+            Debug.LogWarning($"AppScreen for {screen.AppData} is already registered.");
+            return;
+        }
+        _loadedApps.Add(screen.AppData, screen);
+    }
+
+    private void UnregisterAppScreen(AppScreen screen)
+    {
+        _loadedApps.Remove(screen.AppData);
     }
 
     private void CloseApp()
@@ -51,15 +74,15 @@ public class AppManager : MonoBehaviour
 
         if (!_loadedApps.TryGetValue(data, out var appScreen))
         {
-            appScreen = Instantiate(data.AppScreenPrefab, transform);
-            _loadedApps.Add(data, appScreen);
+            Debug.LogError($"AppScreen for {data} is not loaded.");
+            yield break;
         }
-        appScreen.gameObject.SetActive(false);
-        appScreen.transform.localScale = Vector3.zero;
-        appScreen.transform.position = position;
-        appScreen.gameObject.SetActive(true);
-        appScreen.transform.DOScale(Vector3.one, _openAppDuration).SetEase(Ease.OutBack);
-        appScreen.transform.DOLocalMove(Vector3.zero, _openAppDuration).SetEase(Ease.OutBack);
+        appScreen.Hide();
+        appScreen.Animatable.localScale = Vector3.zero;
+        appScreen.Animatable.position = position;
+        appScreen.Show();
+        appScreen.Animatable.DOScale(Vector3.one, _openAppDuration).SetEase(Ease.OutBack);
+        appScreen.Animatable.DOLocalMove(Vector3.zero, _openAppDuration).SetEase(Ease.OutBack);
 
         _currentApp = appScreen;
     }

@@ -29,6 +29,15 @@ namespace Quackery.ChatApp
 
         private readonly List<ChoiceButton> _choiceButtons = new();
 
+        public float BottomMargin
+        {
+            set
+            {
+                var rectTransform = transform as RectTransform;
+                rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, value);
+            }
+        }
+
         void Awake()
         {
             _chatContentLayoutGroup = _chatContent.GetComponent<VerticalLayoutGroup>();
@@ -161,6 +170,11 @@ namespace Quackery.ChatApp
             }
 
             _typingSign.gameObject.SetActive(false);
+        }
+
+        internal void SetChatHistory(string chatHistory)
+        {
+            //noop
         }
     }
 }

@@ -1,4 +1,5 @@
 using KBCore.Refs;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,8 +7,14 @@ using UnityEngine.UI;
 public class AppButton : ValidatedMonoBehaviour
 {
     [SerializeField, Self] private Button _button;
+    [SerializeField, Child] private TextMeshProUGUI _label;
     [SerializeField] private AppData _appData;
     public AppData AppData => _appData;
+
+    void Awake()
+    {
+        _label.text = _appData.MasterText;
+    }
 
     void OnEnable()
     {
@@ -17,6 +24,8 @@ public class AppButton : ValidatedMonoBehaviour
     {
         _button.onClick.RemoveListener(OnClick);
     }
+
+
 
     private void OnClick()
     {

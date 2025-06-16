@@ -8,5 +8,4 @@ using UnityEngine;
     order = 1)]
 public class AppData : ContentTag
 {
-    public AppScreen AppScreenPrefab;
 }

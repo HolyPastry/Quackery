@@ -15,7 +15,7 @@ namespace Quackery.Effects
         public EffectData EffectData;
         public override void Execute(Effect effect, CardPile pile)
         {
-            Effect newEffect = new(EffectData);
+            Effect newEffect = new(EffectData, initValue: true);
             if (!pile.IsEmpty)
             {
                 newEffect.LinkedCard = pile.TopCard;

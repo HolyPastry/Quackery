@@ -15,6 +15,7 @@ namespace Quackery.Decks
         [SerializeField] private Ease _easeType = Ease.OutBack;
         [SerializeField] private float _staggerDelay = 0.1f;
         [SerializeField] private RewardPanel _rewardPanel;
+        private bool _activated;
 
         public EnumPileType Type => _pileType;
 
@@ -36,6 +37,7 @@ namespace Quackery.Decks
             DeckEvents.OnCardMovedTo += OnCardMoved;
             DeckEvents.OnShuffle += OnShuffle;
             DeckEvents.OnPileDestroyed += OnPileDestroyed;
+            DeckEvents.OnActivatePile += OnActivatePile;
 
 
             StartCoroutine(StaggeredMoveRoutine());
@@ -46,8 +48,16 @@ namespace Quackery.Decks
             DeckEvents.OnCardMovedTo -= OnCardMoved;
             DeckEvents.OnShuffle -= OnShuffle;
             DeckEvents.OnPileDestroyed -= OnPileDestroyed;
+            DeckEvents.OnActivatePile -= OnActivatePile;
 
             StopAllCoroutines(); // Stop all coroutines when disabled
+        }
+
+        private void OnActivatePile(EnumPileType type, bool activated)
+        {
+            if (type != _pileType || IsEmpty) return;
+
+            _activated = activated;
         }
 
 
@@ -140,6 +150,7 @@ namespace Quackery.Decks
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (!_activated || IsEmpty) return;
             DeckServices.PileClicked(_pileType);
         }
 

@@ -1,12 +1,29 @@
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace Quackery
+namespace Quackery.Clients
 {
     public static class ClientServices
     {
         internal static Action ForgetAilment = delegate { };
-
         internal static Func<bool> HasNextClient = () => true;
+        internal static Action<ClientData> AddClient = delegate { };
+        internal static Action<ClientData> RemoveClient = delegate { };
+        public static Func<List<Client>> GetClients = () => new();
+
+        public static Func<Client> GetNextClient = () => null;
+        public static Action<ClientData> ClientServed = delegate { };
+
+        public static Action GenerateDailyQueue = delegate { };
+
+        internal static Func<WaitUntil> WaitUntilReady = () => new WaitUntil(() => true);
+
+        internal static Action<Client> SelectClient = (client) => { };
+        public static Func<Client> SelectedClient = () => null;
+
+        internal static Action ClientLeaves = () => { };
+
 
     }
 }
