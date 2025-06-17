@@ -1,63 +1,75 @@
 
+using System;
+using System.Collections;
 using DG.Tweening;
+using KBCore.Refs;
 using TMPro;
 
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Quackery
 {
-    public class EffectUI : MonoBehaviour
+    public class EffectUI : ValidatedMonoBehaviour
     {
         [SerializeField] private Image _icon;
         [SerializeField] private TextMeshProUGUI _valueText;
-        [SerializeField] private GameObject _shortBg;
-        [SerializeField] private GameObject _longBg;
+
+        [SerializeField] private RectTransform _longBg;
+        [SerializeField, Self] private AnimatedRect _animatedRect;
+
+        [SerializeField] private float _extend = -58f;
+        [SerializeField] private float _retracted = 0f;
         public Effect Effect { get; private set; }
+
+        bool _useValue = false;
 
         internal void UpdateStatus(Effect status, bool animate)
         {
+            gameObject.SetActive(true);
+            _useValue = status.Data.UseValue;
             UpdateStatus(status);
+
             if (animate)
-                MakeIconFlyToPosition(status.Origin);
+                StartCoroutine(MakeIconFlyToPosition(status.Origin));
+            else
+            if (_useValue)
+                _longBg.anchoredPosition = new Vector2(_longBg.anchoredPosition.x, _extend);
         }
 
-        internal void UpdateStatus(Effect status)
+        public void Hide()
         {
-            if (status.Data == null)
+            _longBg.anchoredPosition = new Vector2(_longBg.anchoredPosition.x, _retracted);
+            gameObject.SetActive(false);
+        }
+
+        internal void UpdateStatus(Effect effect)
+        {
+
+
+            if (effect.Data == null)
             {
                 Debug.LogWarning("StatusData is null. Cannot update StatusUI.");
                 return;
             }
+            _longBg.anchoredPosition = new Vector2(_longBg.anchoredPosition.x, _retracted);
 
-            Effect = status;
-            _icon.sprite = status.Data.Icon;
+            Effect = effect;
+            _icon.sprite = effect.Data.Icon;
+            _valueText.text = effect.Value.ToString();
 
-            if (status.Data.UseValue == false)
-            {
-                _valueText.text = string.Empty;
-                _shortBg.SetActive(true);
-                _longBg.SetActive(false);
-            }
-            else
-            {
-                _valueText.text = status.Value.ToString();
-                _shortBg.SetActive(false);
-                _longBg.SetActive(true);
-            }
             gameObject.SetActive(true);
         }
 
-        private void MakeIconFlyToPosition(Vector2 originPosition)
+        private IEnumerator MakeIconFlyToPosition(Vector2 originPosition)
         {
-            var originalPosition = _icon.transform.position;
-            _icon.transform.position = originPosition;
-            _icon.transform.localScale = Vector3.zero;
-            _icon.transform.DOMove(originalPosition, 0.5f);
-            _icon.transform.DOScale(Vector3.one, 0.5f)
-                .SetEase(Ease.OutBack)
-                .OnComplete(() => _icon.transform.localScale = Vector3.one);
+            yield return null;
+            _animatedRect.SlideIn(originPosition);
+            if (!_useValue) yield break;
+
+            yield return new WaitForSeconds(0.5f);
+            _longBg.DOAnchorPosY(_extend, 0.2f).SetEase(Ease.OutBack);
         }
     }
 }
+

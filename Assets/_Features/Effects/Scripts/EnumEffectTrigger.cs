@@ -5,6 +5,7 @@ namespace Quackery.Effects
     {
         Activated,
         OneTime,
+        Client,
     }
     public enum EnumEffectTrigger
     {
@@ -12,6 +13,8 @@ namespace Quackery.Effects
         OnCardMoveToCart,
         OnDraw,
         OnCardDiscarded,
-        Continous
+        Continous,
+        OnCartCalculated
+
     }
 }

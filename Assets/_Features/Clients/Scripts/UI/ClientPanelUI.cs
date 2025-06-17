@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Quackery.Clients;
 using TMPro;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -35,8 +35,8 @@ namespace Quackery
         void Awake()
         {
             _badge.SetActive(false);
-            _background.color = ColorLibrary.instance.Get("ClientPanelBackgroundAway");
-            _nameText.color = ColorLibrary.instance.Get("ClientPanelNameAway");
+            _background.color = Colors.Get("ClientPanelBackgroundAway");
+            _nameText.color = Colors.Get("ClientPanelNameAway");
         }
 
         private void UpdateUI()
@@ -49,13 +49,13 @@ namespace Quackery
 
             if (_client.IsInQueue)
             {
-                _background.color = ColorLibrary.instance.Get("ClientPanelBackgroundQueue");
-                _nameText.color = ColorLibrary.instance.Get("ClientPanelNameQueue");
+                _background.color = Colors.Get("ClientPanelBackgroundQueue");
+                _nameText.color = Colors.Get("ClientPanelNameQueue");
             }
             else
             {
-                _background.color = ColorLibrary.instance.Get("ClientPanelBackgroundAway");
-                _nameText.color = ColorLibrary.instance.Get("ClientPanelNameAway");
+                _background.color = Colors.Get("ClientPanelBackgroundAway");
+                _nameText.color = Colors.Get("ClientPanelNameAway");
             }
         }
 

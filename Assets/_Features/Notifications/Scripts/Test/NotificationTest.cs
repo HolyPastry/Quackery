@@ -43,8 +43,6 @@ namespace Quackery.Notifications
             yield return new WaitForSeconds(6f);
 
             NotificationServices.ShowNotification?.Invoke(info);
-
-
         }
 
         private void NotificationOnTapped(NotificationInfo info)

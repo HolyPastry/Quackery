@@ -11,5 +11,7 @@ namespace Quackery.Notifications
         public static Action<NotificationInfo> CloseNotification = delegate { };
 
         public static Action<NotificationInfo> ArchiveNotification = delegate { };
+
+        internal static Action<NotificationInfo, float> ShowNotificationWithDelay = delegate { };
     }
 }

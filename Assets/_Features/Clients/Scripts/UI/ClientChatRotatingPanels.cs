@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using Quackery.Clients;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 namespace Quackery
@@ -24,7 +24,7 @@ namespace Quackery
     public class ClientChatRotatingPanels : MonoBehaviour
     {
         [SerializeField] private Canvas _canvas;
-        [SerializeField] private Animatable _animatable;
+        [SerializeField] private AnimatedRect _animatable;
         private List<ClientChatInfo> _panels = new();
         private ClientChatInfo _enteringPanel;
 
@@ -68,16 +68,17 @@ namespace Quackery
 
         public void Show(CustomerPanelSize size)
         {
-            SetSize(size);
+
             _canvas.gameObject.SetActive(true);
-            _animatable.SlideIn();
+            _animatable.SlideIn(Direction.Right);
+            SetSize(size);
             ClientChatInfo panel = _panels.Find(p => p.CurrentState == CustomerPanelState.Active);
             panel.EnableChat();
             panel.SetClientInfo(ClientServices.SelectedClient());
         }
         public void Hide()
         {
-            _animatable.SlideOut().OnComplete(() =>
+            _animatable.SlideOut(Direction.Left).DoComplete(() =>
             {
                 _canvas.gameObject.SetActive(false);
             });

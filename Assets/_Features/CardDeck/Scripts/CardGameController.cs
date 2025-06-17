@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Quackery.Clients;
+using Quackery.Notifications;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,27 +16,57 @@ namespace Quackery.Decks
 
     public class CardGameController : MonoBehaviour
     {
+        [Header("References")]
         [SerializeField] private Canvas _canvas;
-        [SerializeField] private Animatable _animatable;
-        // [SerializeField] private Button _EndTheDayButton;
-        // [SerializeField] private Button _StartTheDayButton;
+        [SerializeField] private AnimatedRect _animatable;
         [SerializeField] private TextMeshProUGUI _CashInCartText;
         [SerializeField] private Transform _purseTransform;
         [SerializeField] private Transform _cartCashTransform;
-
         [SerializeField] private List<CardPileUI> _cardPileUIs;
-
         [SerializeField] private GameObject _cardSelectPanel;
+
+        [SerializeField] private EndDayScreen _endDayScreen;
+        [SerializeField] private EndOfRoundScreen _endRoundScreen;
+
+        [Header("Settings")]
         [SerializeField] private int _cartSize = 2;
 
         private int _cashInCart = 0;
-        private Vector3 _cartCashOriginalPosition;
+        private Vector3 _cartCashOriginalLocalPosition;
+        private Client _client;
+        public bool RoundInterrupted { get; private set; }
         private bool _roundInProgress;
+
+        public class GameStats
+        {
+            public int NumClientsServed;
+            public int AverageRating
+                    => NumClientsServed > 0 ? TotalRating / NumClientsServed : 0;
+            public int TotalRating;
+            public int AverageCashPerClient
+                => NumClientsServed > 0 ? DayYield / NumClientsServed : 0;
+            public int DayYield;
+            public int NumQuacks;
+
+            public void Reset()
+            {
+                NumClientsServed = 0;
+                TotalRating = 0;
+                DayYield = 0;
+                NumQuacks = 0;
+            }
+        }
+        private GameStats _gameStats;
+        private bool _endOfDay;
+
+        public static Func<int> GetClientCartValue = () => 0;
+        public static Action InterruptRoundRequest = delegate { };
 
         void Awake()
         {
-            _cartCashOriginalPosition = _cartCashTransform.position;
+            _cartCashOriginalLocalPosition = _cartCashTransform.localPosition;
             _cartCashTransform.gameObject.SetActive(false);
+            _gameStats = new GameStats();
         }
 
         void OnEnable()
@@ -44,28 +75,46 @@ namespace Quackery.Decks
             DeckEvents.OnCardsMovingToSelectPile += OnCardsMovingToSelectPile;
             DeckEvents.OnCachingTheCart += OnPileMovedToCart;
             DeckEvents.OnCardSelected += OnCardSelected;
+            _endDayScreen.OnCloseGame += EndTheDay;
+            GetClientCartValue = () => _cashInCart;
+            InterruptRoundRequest = InterruptRound;
         }
+
+
 
         void OnDisable()
         {
-
-
             DeckEvents.OnCardsMovingToSelectPile -= OnCardsMovingToSelectPile;
             DeckEvents.OnCardSelected -= OnCardSelected;
             DeckEvents.OnCachingTheCart -= OnPileMovedToCart;
+            _endDayScreen.OnCloseGame -= EndTheDay;
+            GetClientCartValue = delegate { return 0; };
+            InterruptRoundRequest = delegate { };
             StopAllCoroutines();
 
         }
 
         public void Show()
         {
+            _endOfDay = false;
+            _gameStats.Reset();
+            _endDayScreen.Hide();
+            _endRoundScreen.Hide(instant: true);
             _canvas.gameObject.SetActive(true);
-            _animatable.SlideIn();
+            _animatable.SlideIn(Direction.Right);
+
         }
+        private void InterruptRound()
+        {
+            RoundInterrupted = true;
+            _roundInProgress = false;
+        }
+        private void EndTheDay() => _endOfDay = true;
+
 
         public void Hide()
         {
-            _animatable.SlideOut().OnComplete(() =>
+            _animatable.SlideOut(Direction.Right).DoComplete(() =>
             {
                 _canvas.gameObject.SetActive(false);
             });
@@ -88,6 +137,7 @@ namespace Quackery.Decks
 
         private void OnPileMovedToCart(EnumPileType type)
         {
+
             StartCoroutine(CartRewardRoutine(type));
         }
 
@@ -105,9 +155,11 @@ namespace Quackery.Decks
                 _cashInCart += cardReward.Value;
                 _cartCashTransform.DOPunchScale(Vector3.one * 0.1f, 0.2f, 10, 0.1f);
             }
-
             _CashInCartText.text = _cashInCart.ToString("0");
 
+            EffectServices.Execute(Effects.EnumEffectTrigger.OnCartCalculated, null);
+            if (RoundInterrupted)
+                yield break;
 
             yield return new WaitForSeconds(0.5f);
             if (DeckServices.IsCartFull())
@@ -120,7 +172,12 @@ namespace Quackery.Decks
             }
         }
 
-        private void EndOfRound() => _roundInProgress = false;
+
+
+        private void EndOfRound()
+        {
+            _roundInProgress = false;
+        }
 
 
         public void ResetDeck()
@@ -134,40 +191,74 @@ namespace Quackery.Decks
         {
             if (_cashInCart <= 0) return;
 
+
             _cartCashTransform.DOMove(_purseTransform.position, 0.5f)
                 .OnComplete(() =>
                 {
                     PurseServices.Modify(_cashInCart);
                     _purseTransform.DOPunchScale(Vector3.one * 0.2f, 0.2f, 10, 0.1f);
                     _cartCashTransform.gameObject.SetActive(false);
+                    _gameStats.DayYield += _cashInCart;
                     _cashInCart = 0;
                     _CashInCartText.text = "0";
-                    _cartCashTransform.position = _cartCashOriginalPosition;
+
+                    _gameStats.TotalRating += 5; // Assuming each round gives a fixed rating of 5
+
+                    _cartCashTransform.localPosition = _cartCashOriginalLocalPosition;
                 });
 
         }
 
-        internal void StartNewRound()
+        internal void StartNewRound(Client client)
         {
+            RoundInterrupted = false;
+            _client = client;
             _roundInProgress = true;
             _cartCashTransform.gameObject.SetActive(true);
-            _cartCashTransform.position = _cartCashOriginalPosition;
+            _cartCashTransform.localPosition = _cartCashOriginalLocalPosition;
             StartCoroutine(StartRoundRoutine());
+            _gameStats.NumClientsServed++;
         }
 
         private IEnumerator StartRoundRoutine()
         {
             DeckServices.SetCartSize(_cartSize);
+            foreach (var effect in _client.Effects)
+                EffectServices.Add(effect);
+
             DeckServices.Shuffle();
             yield return new WaitForSeconds(0.2f);
             DeckServices.DrawBackToFull();
-
         }
 
         internal WaitUntil WaitUntilEndOfRound()
         {
             return new WaitUntil(() => !_roundInProgress);
         }
-    }
 
+        public void ShowEndRoundScreen(bool success)
+        {
+            _endRoundScreen.Show(_client, success);
+        }
+        public void HideEndRoundScreen()
+        {
+            _endRoundScreen.Hide(instant: false);
+        }
+
+        internal void ShowEndDayScreen()
+        {
+            _endDayScreen.Init(_gameStats);
+            _endDayScreen.Show();
+
+
+        }
+
+        internal object WaitUntilEndOfDayValidated()
+        {
+            return new WaitUntil(() => _endOfDay);
+        }
+
+
+
+    }
 }

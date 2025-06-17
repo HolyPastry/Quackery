@@ -9,6 +9,7 @@ using Quackery.Effects;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine.Assertions;
+using Holypastry.Bakery;
 
 namespace Quackery.Decks
 {
@@ -40,7 +41,7 @@ namespace Quackery.Decks
 
                 Price = _item.Price;
                 Rating = _item.Rating;
-                _cardBackground.color = ColorLibrary.instance.Get(_item.Data.Category.ToString());
+                _cardBackground.color = Colors.Get(_item.Data.Category.ToString());
 
                 _cardPrice.text = Price.ToString();
                 _cardRating.text = Rating.ToString();

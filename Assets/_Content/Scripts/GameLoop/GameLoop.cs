@@ -13,7 +13,7 @@ namespace Quackery
     public class GameLoop : StateMachine
     {
         public CardGameController CardGameController;
-        public ClientListUI ClientListUI;
+        //   public ClientListUI ClientListUI;
         public ClientChatRotatingPanels ClientTextChat;
 
         [SerializeField] private AppData _chatApp;

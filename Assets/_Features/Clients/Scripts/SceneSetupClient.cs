@@ -16,11 +16,9 @@ namespace Quackery.Clients
             foreach (var client in clients)
             {
                 ClientServices.AddClient(client);
-                yield return null;
             }
             if (GenerateDailyQueue)
             {
-                yield return new WaitForSeconds(2f);
                 ClientServices.GenerateDailyQueue();
             }
             EndScript();

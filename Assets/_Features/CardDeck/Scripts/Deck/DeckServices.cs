@@ -53,5 +53,9 @@ namespace Quackery
 
         internal static Action RecountCart = () => { };
 
+        internal static Action<ItemData> RemoveCard = (card) => { };
+
+        internal static Action RemoveCardRequest = delegate { };
+
     }
 }

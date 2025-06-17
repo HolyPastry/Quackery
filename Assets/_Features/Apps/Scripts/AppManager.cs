@@ -9,6 +9,8 @@ public class AppManager : MonoBehaviour
     [SerializeField] private float _closeAppDuration = 0.2f;
     private readonly Dictionary<AppData, AppScreen> _loadedApps = new();
     private AppScreen _currentApp = null;
+    private bool _appOpened;
+
     void OnEnable()
     {
         AppServices.OpenApp = OpenApp;
@@ -48,16 +50,20 @@ public class AppManager : MonoBehaviour
         if (_currentApp == null)
             return;
 
-        _currentApp.transform.DOScale(Vector3.zero, _closeAppDuration).SetEase(Ease.InBack)
+        _currentApp.Animatable.transform.DOScale(Vector3.zero, _closeAppDuration).SetEase(Ease.InBack)
             .OnComplete(() =>
             {
-                _currentApp.gameObject.SetActive(false);
+                _appOpened = false;
+                _currentApp.Hide();
                 _currentApp = null;
             });
     }
 
     private void OpenApp(AppData data, Vector2 position)
     {
+        if (_appOpened)
+            return;
+        _appOpened = true;
         StartCoroutine(OpenAppCoroutine(data, position));
 
     }

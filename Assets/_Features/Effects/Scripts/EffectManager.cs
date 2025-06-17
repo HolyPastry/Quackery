@@ -68,6 +68,8 @@ namespace Quackery.Effects
             {
                 if (effect.Data.Tags.Contains(EnumEffectTag.Activated))
                     keysToRemove.Add(key);
+                if (effect.Data.Tags.Contains(EnumEffectTag.Client))
+                    keysToRemove.Add(key);
             }
 
             _stackRewardMultiplier = 1;

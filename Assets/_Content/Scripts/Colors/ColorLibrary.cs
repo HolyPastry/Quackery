@@ -1,18 +1,17 @@
 
 using System;
 using System.Collections.Generic;
-using Quackery.Inventories;
-using UnityEditor;
 using UnityEngine;
 
 namespace Quackery
 {
 
+
     [CreateAssetMenu(
         fileName = "CategoryColors",
         menuName = "Quackery/ColorLibrary",
         order = 1)]
-    public class ColorLibrary : ScriptableSingleton<ColorLibrary>
+    public class ColorLibrary : ScriptableObject
     {
         [Serializable]
         public struct ColorEntry

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 namespace Quackery
@@ -56,7 +56,7 @@ namespace Quackery
             {
                 if (_statusUIPool[i].Effect == effect)
                 {
-                    _statusUIPool[i].gameObject.SetActive(false);
+                    _statusUIPool[i].Hide();
                     return;
                 }
             }
@@ -68,9 +68,8 @@ namespace Quackery
             foreach (var statusUI in _statusUIPool)
             {
                 if (statusUI.gameObject.activeSelf) continue;
-                statusUI.gameObject.SetActive(true);
-                statusUI.UpdateStatus(effect, animate: true);
 
+                statusUI.UpdateStatus(effect, animate: true);
                 return;
             }
         }
@@ -100,7 +99,7 @@ namespace Quackery
                    effects.Exists(s => s.Data == _statusUIPool[i].Effect.Data))
                     continue;
 
-                _statusUIPool[i].gameObject.SetActive(false);
+                _statusUIPool[i].Hide();
             }
         }
 

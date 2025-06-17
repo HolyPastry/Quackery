@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterData: {fileID: 11400000, guid: 029ff93a1af844f4787fb39e4da18011, type: 2}
   Icon: {fileID: 21300000, guid: f7d964dda318a45d0b09c871c6e7448f, type: 3}
-  Effects: []
+  Effects:
+  - {fileID: 11400000, guid: cb6f870e3f30941eaa24b653094b5f9d, type: 2}

@@ -16,6 +16,8 @@ namespace Quackery.Clients
         public Client(ClientData data)
         {
             Data = data;
+            foreach (var effectData in data.Effects)
+                Effects.Add(new Effect(effectData, true));
             Key = data.name;
         }
 
@@ -45,6 +47,21 @@ namespace Quackery.Clients
 
         public object DialogKey => Data.CharacterData.name;
 
+        public string LastReviewText = "";
+        public int LastRating = 0;
+
         public string ChatHistory;
+
+        internal void GoodReview()
+        {
+            LastReviewText = "Awesome, exactly what I needed";
+            LastRating = 5;
+        }
+
+        internal void BadReview()
+        {
+            LastReviewText = "What a Quacker, To avoid at all cost";
+            LastRating = 1;
+        }
     }
 }

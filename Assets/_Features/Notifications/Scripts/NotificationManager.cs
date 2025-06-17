@@ -29,6 +29,7 @@ namespace Quackery.Notifications
             NotificationServices.HideAllNotifications = delegate { };
             NotificationServices.CloseNotification = delegate { };
             NotificationServices.ArchiveNotification = delegate { };
+            NotificationServices.ShowNotificationWithDelay = delegate { };
 
         }
 
@@ -39,6 +40,15 @@ namespace Quackery.Notifications
             NotificationServices.HideAllNotifications = HideAllNotifications;
             NotificationServices.CloseNotification = CloseNotification;
             NotificationServices.ArchiveNotification = ArchiveNotification;
+            NotificationServices.ShowNotificationWithDelay = (info, delay) =>
+                StartCoroutine(DelayedShowNotification(info, delay));
+
+        }
+
+        private IEnumerator DelayedShowNotification(NotificationInfo info, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            ShowNotification(info);
         }
 
         void Start()

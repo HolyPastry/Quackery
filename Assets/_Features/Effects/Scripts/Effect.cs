@@ -49,8 +49,7 @@ namespace Quackery
 
         internal void Execute(CardPile pile)
         {
-
-            if (!pile.IsEmpty) LinkedCard = pile.TopCard;
+            if (pile != null && !pile.IsEmpty) LinkedCard = pile.TopCard;
             Data.Execute(this, pile);
         }
 

@@ -1,6 +1,6 @@
 using System.Collections;
 using Quackery.Clients;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 namespace Quackery
@@ -31,21 +31,37 @@ namespace Quackery
                     DialogQueueServices.QueueDialog("MeIntro");
                     yield return DialogQueueServices.WaitUntilAllDialogEnds();
 
+
                 }
                 firstTime = false;
-                controller.StartNewRound();
+                controller.StartNewRound(client);
 
                 yield return controller.WaitUntilEndOfRound();
 
-                DialogQueueServices.QueueDialog("MeConclusion");
-                DialogQueueServices.QueueDialog($"{client.DialogKey}Success");
+                if (controller.RoundInterrupted)
+                {
+                    client.BadReview();
+                    ClientServices.ClientServed(client.Data);
+                }
+                else
+                {
+                    DialogQueueServices.QueueDialog("MeConclusion");
+                    DialogQueueServices.QueueDialog($"{client.DialogKey}Success");
+                    controller.TransfertCartToPurse();
+                    client.GoodReview();
+                    ClientServices.ClientServed(client.Data);
+                    yield return DialogQueueServices.WaitUntilAllDialogEnds();
+                }
 
                 controller.ResetDeck();
-                yield return DialogQueueServices.WaitUntilAllDialogEnds();
-
-                controller.TransfertCartToPurse();
                 EffectServices.CleanEffects();
-                ClientServices.ClientServed(client.Data);
+
+                controller.ShowEndRoundScreen(!controller.RoundInterrupted);
+                yield return new WaitForSeconds(5f);
+                controller.HideEndRoundScreen();
+                yield return new WaitForSeconds(1f);
+
+
                 if (ClientServices.HasNextClient())
                 {
                     ClientServices.GetNextClient();
@@ -53,6 +69,8 @@ namespace Quackery
                 }
                 else
                 {
+                    controller.ShowEndDayScreen();
+                    yield return controller.WaitUntilEndOfDayValidated();
                     ClientServices.ClientLeaves();
                     break;
                 }
