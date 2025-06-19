@@ -5,7 +5,7 @@ using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Quackery.ChatApp
+namespace Quackery.Chats
 {
     internal class ChoiceButton : ValidatedMonoBehaviour
     {

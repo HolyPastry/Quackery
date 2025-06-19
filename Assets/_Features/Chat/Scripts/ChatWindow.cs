@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace Quackery.ChatApp
+namespace Quackery.Chats
 {
 
     public class ChatWindow : MonoBehaviour, IPointerClickHandler

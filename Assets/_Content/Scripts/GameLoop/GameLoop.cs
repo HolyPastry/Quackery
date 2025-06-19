@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using Quackery.Clients;
 using Quackery.Decks;
+using Quackery.Shops;
 using Quackery.StateMachines;
 using UnityEngine;
 
@@ -16,7 +17,8 @@ namespace Quackery
         //   public ClientListUI ClientListUI;
         public ClientChatRotatingPanels ClientTextChat;
 
-        [SerializeField] private AppData _chatApp;
+        public ShopApp ShopApp;
+        public App ChatApp;
 
         private Client SelectedClient => ClientServices.SelectedClient();
         private bool ActiveClientSelected => SelectedClient != null
@@ -24,6 +26,7 @@ namespace Quackery
         private bool PassiveClientSelected =>
                 SelectedClient != null &&
                 (!SelectedClient.IsInQueue || SelectedClient.Served);
+
 
 
         IEnumerator Start()
@@ -39,16 +42,17 @@ namespace Quackery
             var activeClientChatState = new ActiveClientChatState(this);
             var passiveClientChatState = new PassiveClientChatState(this);
             var mainMenuState = new MainScreenState(this);
-
-            At(mainMenuState, clientListState, () => AppServices.IsAppSelected(_chatApp));
+            var shopState = new ShopState(this);
+            var billState = new BillState(this);
 
             At(clientListState, activeClientChatState, () => ActiveClientSelected);
-            At(activeClientChatState, clientListState, () => SelectedClient == null);
+            At(activeClientChatState, shopState, () => SelectedClient == null);
+            At(shopState, billState, () => !ShopApp.IsOn);
 
             At(clientListState, passiveClientChatState, () => PassiveClientSelected);
             At(passiveClientChatState, clientListState, () => SelectedClient == null);
 
-            ChangeState(mainMenuState);
+            ChangeState(clientListState);
 
         }
     }

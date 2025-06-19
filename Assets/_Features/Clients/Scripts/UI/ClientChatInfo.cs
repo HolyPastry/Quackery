@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using Quackery.ChatApp;
+using Quackery.Chats;
 using Quackery.Clients;
 using UnityEngine;
 using UnityEngine.UI;

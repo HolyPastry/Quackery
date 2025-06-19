@@ -18,13 +18,17 @@ namespace Quackery.Inventories
         public Sprite Icon;
 
         public int StartPrice = 1;
-        public int StartRating = 0;
+
+        public string Description;
+        public int SubscriptionCost;
 
         public EnumItemCategory Category;
 
         public List<EffectData> Effects = new();
 
         public ValueEvaluator ValueEvaluator;
+
+
 
         internal List<CardReward> CalculateCardRewards(Card topCard, List<Item> subItems, List<CardPile> otherPiles)
         {

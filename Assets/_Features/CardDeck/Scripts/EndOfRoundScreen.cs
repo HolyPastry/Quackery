@@ -5,11 +5,12 @@ using KBCore.Refs;
 using Quackery.Clients;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Quackery
 {
-    public class EndOfRoundScreen : ValidatedMonoBehaviour
+    public class EndOfRoundScreen : ValidatedMonoBehaviour, IPointerDownHandler
     {
         [SerializeField] private TextMeshProUGUI _clientResult;
         [SerializeField, Self] private AnimatedRect _animatedRect;
@@ -38,6 +39,11 @@ namespace Quackery
             else
                 _animatedRect.ZoomOut(false)
                               .DoComplete(() => gameObject.SetActive(false));
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            Hide(instant: false);
         }
     }
 }

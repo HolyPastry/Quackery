@@ -83,10 +83,10 @@ namespace Quackery.Decks
         {
             GetComponentsInChildren(true, _effectIconPool);
 
-            SetInteractive(false);
+            SetOutline(false);
         }
 
-        public void SetInteractive(bool isOn)
+        public void SetOutline(bool isOn)
         {
             _outline.gameObject.SetActive(isOn);
         }

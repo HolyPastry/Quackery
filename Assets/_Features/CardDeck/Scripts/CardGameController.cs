@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Quackery.Clients;
-using Quackery.Notifications;
+
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+
 
 
 namespace Quackery.Decks
@@ -258,7 +257,14 @@ namespace Quackery.Decks
             return new WaitUntil(() => _endOfDay);
         }
 
+        internal WaitUntil WaitUntilEndOfRoundScreenClosed()
+        {
+            float time = Time.time;
 
+            return new WaitUntil(() =>
+                Time.time - time > 10f ||
+                !_endRoundScreen.gameObject.activeSelf);
 
+        }
     }
 }

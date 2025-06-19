@@ -19,12 +19,7 @@ namespace Quackery
 
         public override void Enter()
         {
-        }
-
-        public override void Exit()
-        {
-
-
+            _gameLoop.ChatApp.Show();
         }
 
 

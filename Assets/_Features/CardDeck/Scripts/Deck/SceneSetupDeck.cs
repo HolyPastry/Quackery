@@ -10,6 +10,7 @@ namespace Quackery.Decks
         [SerializeField] private List<ItemData> cards = new();
         protected override IEnumerator Routine()
         {
+            yield return InventoryServices.WaitUntilReady();
             yield return DeckServices.WaitUntilReady();
             DeckServices.AddToDeck(cards);
             EndScript();

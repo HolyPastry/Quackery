@@ -3,7 +3,7 @@ using System.Collections;
 using KBCore.Refs;
 using UnityEngine;
 
-namespace Quackery.ChatApp
+namespace Quackery.Chats
 {
     internal class ChatBubble : ValidatedMonoBehaviour
     {

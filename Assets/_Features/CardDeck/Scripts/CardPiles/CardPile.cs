@@ -129,7 +129,7 @@ namespace Quackery.Decks
         internal void Activate(bool activated)
         {
             if (IsEmpty) return;
-            TopCard.SetInteractive(activated);
+            TopCard.SetOutline(activated);
         }
     }
 }

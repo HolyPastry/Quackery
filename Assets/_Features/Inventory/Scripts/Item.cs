@@ -19,6 +19,7 @@ namespace Quackery.Inventories
         }
 
         public string Name => Data.MasterText;
+        public EnumItemCategory Category => Data.Category;
 
         public int Price;
 
