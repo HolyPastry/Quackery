@@ -7,6 +7,8 @@ public static class PurseServices
     public static Func<WaitUntil> WaitUntilReady = () => new WaitUntil(() => true);
     public static System.Action<float> Modify = delegate { };
     public static Func<string> GetString = () => string.Empty;
+
+    internal static Func<int, bool> CanAfford = (amount) => true;
 }
 
 

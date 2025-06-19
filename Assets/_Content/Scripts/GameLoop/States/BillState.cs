@@ -6,6 +6,8 @@ namespace Quackery
         { }
 
         public override void Enter()
-        { }
+        {
+            _gameLoop.BillApp.Show();
+        }
     }
 }

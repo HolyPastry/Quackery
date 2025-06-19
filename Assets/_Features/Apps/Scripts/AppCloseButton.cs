@@ -1,11 +1,13 @@
 using KBCore.Refs;
+using Quackery;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class BackButton : ValidatedMonoBehaviour
+public class AppCloseButton : ValidatedMonoBehaviour
 {
     [SerializeField, Self] private Button _button;
+    [SerializeField, Parent] private App _app;
 
     void OnEnable()
     {
@@ -17,6 +19,6 @@ public class BackButton : ValidatedMonoBehaviour
     }
     private void OnClick()
     {
-        AppServices.CloseApp?.Invoke();
+        _app.Hide();
     }
 }

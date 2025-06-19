@@ -70,14 +70,13 @@ namespace Quackery.Notifications
             _tapTimer.Start();
         }
 
-
-
         public void OnPointerUp(PointerEventData eventData)
         {
             _grabbed = false;
 
             if (!_tapTimer.IsRunning) return;
-            NotificationServices.CloseNotification?.Invoke(Info);
+            // NotificationServices.ShowExpandedPanel(Info);
+            //NotificationServices.CloseNotification?.Invoke(Info);
             Info.OnTapped?.Invoke(Info);
         }
 

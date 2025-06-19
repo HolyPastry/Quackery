@@ -32,6 +32,7 @@ namespace Quackery
                     continue;
 
                 clientPanel.OnSelected -= OnClientSelected;
+                child.gameObject.SetActive(false);
                 Destroy(child.gameObject);
 
             }

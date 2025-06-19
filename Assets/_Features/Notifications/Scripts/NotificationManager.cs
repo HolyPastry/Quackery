@@ -1,16 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace Quackery.Notifications
 {
+
+
     public class NotificationManager : MonoBehaviour
     {
+        [SerializeField] private TextMeshProUGUI _dayCountText; // Text to display the current day count
         [SerializeField] private float _notificationLifetime = 5f; // Lifetime of notifications in seconds
         [SerializeField] private GameObject _parentPanel;
         [SerializeField] private float _minimumDisplayInterval = 0.2f; // Minimum interval between notifications
         [SerializeField] private float _tapTimeOut = 0.5f; // Threshold for tap detection
+        [SerializeField] private Transform _expandedPanelParent;
+
+        [SerializeField] private List<NotificationInfo> _dailyNotificationInfos = new();
         private readonly List<Timer> _displayedNotifications = new();
 
         private readonly Queue<NotificationInfo> _notificationQueue = new();
@@ -21,27 +28,46 @@ namespace Quackery.Notifications
             public float CreationTime;
         }
 
-
         void OnDisable()
         {
             NotificationServices.ShowNotification = delegate { };
-            NotificationServices.ShowAllNotifications = delegate { };
-            NotificationServices.HideAllNotifications = delegate { };
+
+            NotificationServices.RemoveAllNotifications = delegate { };
             NotificationServices.CloseNotification = delegate { };
             NotificationServices.ArchiveNotification = delegate { };
             NotificationServices.ShowNotificationWithDelay = delegate { };
+            NotificationServices.ShowExpandedPanel = delegate { };
+            NotificationServices.GenerateDailyNotification = delegate { };
 
         }
 
         void OnEnable()
         {
             NotificationServices.ShowNotification = QueueNotification;
-            NotificationServices.ShowAllNotifications = ShowAllNotifications;
-            NotificationServices.HideAllNotifications = HideAllNotifications;
+            NotificationServices.RemoveAllNotifications = RemoveAllNotifications;
             NotificationServices.CloseNotification = CloseNotification;
             NotificationServices.ArchiveNotification = ArchiveNotification;
             NotificationServices.ShowNotificationWithDelay = (info, delay) =>
                 StartCoroutine(DelayedShowNotification(info, delay));
+            NotificationServices.ShowExpandedPanel = ShowExpandedPanel;
+            NotificationServices.GenerateDailyNotification = GenerateDailyNotification;
+
+        }
+
+        private void GenerateDailyNotification()
+        {
+            _dayCountText.text = $"Day {CalendarServices.Today()}";
+            foreach (var info in _dailyNotificationInfos)
+            {
+                ShowNotification(info);
+            }
+        }
+
+        private void ShowExpandedPanel(NotificationInfo info)
+        {
+
+            NotificationExpandedPanel panel
+                = Instantiate(info.ExpandedPanelPrefab, _expandedPanelParent);
 
         }
 
@@ -129,9 +155,17 @@ namespace Quackery.Notifications
             }
         }
 
-        private void HideAllNotifications()
+        private void RemoveAllNotifications()
         {
-            _parentPanel.SetActive(false);
+
+            while (_parentPanel.transform.childCount > 0)
+            {
+
+                var child = _parentPanel.transform.GetChild(0);
+                child.gameObject.SetActive(false);
+                child.SetParent(null);
+                Destroy(child.gameObject);
+            }
         }
 
         private void ShowAllNotifications()
@@ -155,7 +189,8 @@ namespace Quackery.Notifications
                 if (Time.time - timer.CreationTime > _notificationLifetime)
                 {
                     _displayedNotifications.RemoveAt(i);
-                    timer.instance.Bin();
+                    if (timer.instance != null)
+                        timer.instance.Bin();
                 }
                 else
                 {

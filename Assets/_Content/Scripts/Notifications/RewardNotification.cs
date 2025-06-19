@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 namespace Quackery
 {
+
     public record RewardNotificationInfo : NotificationInfo
     {
         public Sprite Portrait;

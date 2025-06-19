@@ -95,6 +95,8 @@ namespace Quackery.Decks
 
         public void Show()
         {
+            _cashInCart = 0;
+            _CashInCartText.text = "0";
             _endOfDay = false;
             _gameStats.Reset();
             _endDayScreen.Hide();
@@ -181,6 +183,8 @@ namespace Quackery.Decks
 
         public void ResetDeck()
         {
+            _cashInCart = 0;
+            _CashInCartText.text = "0";
             DeckServices.DiscardCart();
             DeckServices.DiscardHand();
             DeckServices.ShuffleDiscardIn();
