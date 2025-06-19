@@ -15,13 +15,23 @@ namespace Quackery.Decks
 {
     public class Card : MonoBehaviour
     {
+        [Serializable]
+        public struct CategoryIcons
+        {
+            public Sprite Icon;
+            public EnumItemCategory Category;
+        }
+        [Header("Catergory Icons")]
+        [SerializeField] private List<CategoryIcons> _categoryIcons;
+        [Header("Card Components")]
         [SerializeField] private Image _cardBackground;
         [SerializeField] private Image _cardForeground;
         [SerializeField] private Image _PriceBackground;
-        [SerializeField] private Image _RatingBackground;
+        [SerializeField] private Image _categoryIcon;
+        //[SerializeField] private Image _RatingBackground;
         [SerializeField] private TextMeshProUGUI _cardName;
         [SerializeField] private TextMeshProUGUI _cardPrice;
-        [SerializeField] private TextMeshProUGUI _cardRating;
+        //[SerializeField] private TextMeshProUGUI _cardRating;
         [SerializeField] private Image _outline;
 
         public Item Item
@@ -44,7 +54,16 @@ namespace Quackery.Decks
                 _cardBackground.color = Colors.Get(_item.Data.Category.ToString());
 
                 _cardPrice.text = Price.ToString();
-                _cardRating.text = Rating.ToString();
+                if (_item.Data.Category != EnumItemCategory.Unset || _item.Data.Category != EnumItemCategory.Skills)
+                {
+                    _categoryIcon.sprite = _categoryIcons.Find(icon => icon.Category == _item.Data.Category).Icon;
+                }
+                else
+                {
+                    if (_categoryIcon != null)
+                        _categoryIcon.gameObject.SetActive(false);
+                }
+
             }
         }
 
@@ -124,9 +143,9 @@ namespace Quackery.Decks
         {
             if (IsSkill) return;
             Price = _item.Price;
-            Rating = _item.Rating;
+            // Rating = _item.Rating;
             _cardPrice.text = Price.ToString();
-            _cardRating.text = Rating.ToString();
+            // _cardRating.text = Rating.ToString();
             _activatedEffects.Clear();
             _effectIconPool.ForEach(icon => icon.Activated = false);
         }
@@ -134,11 +153,11 @@ namespace Quackery.Decks
         public void CheckEffects()
         {
             int priceModifier = EffectServices.GetPriceModifier(this);
-            int ratingModifier = EffectServices.GetRatingModifier(this);
+            // int ratingModifier = EffectServices.GetRatingModifier(this);
             Price = _item.Price + priceModifier;
-            Rating = _item.Rating + ratingModifier;
+            //   Rating = _item.Rating + ratingModifier;
             _cardPrice.text = Price.ToString();
-            _cardRating.text = Rating.ToString();
+            //_cardRating.text = Rating.ToString();
         }
 
         internal void ExecutePowerInCart(CardPile pile)
