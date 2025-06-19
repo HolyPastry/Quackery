@@ -14,4 +14,6 @@ public static class InventoryServices
 
     internal static Func<List<Item>> GetAllItems = () => new();
 
+    internal static Func<ItemData> GetRandomItemData = () => null;
+
 }

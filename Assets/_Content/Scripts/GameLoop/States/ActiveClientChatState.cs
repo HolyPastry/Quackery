@@ -42,6 +42,7 @@ namespace Quackery
                 {
                     client.BadReview();
                     ClientServices.ClientServed(client.Data);
+
                 }
                 else
                 {
@@ -57,7 +58,7 @@ namespace Quackery
                 EffectServices.CleanEffects();
 
                 controller.ShowEndRoundScreen(!controller.RoundInterrupted);
-                yield return new WaitForSeconds(5f);
+                yield return controller.WaitUntilEndOfRoundScreenClosed();
                 controller.HideEndRoundScreen();
                 yield return new WaitForSeconds(1f);
 
@@ -80,8 +81,10 @@ namespace Quackery
         public override void Exit()
         {
             base.Exit();
+
             _gameLoop.CardGameController.Hide();
             _gameLoop.ClientTextChat.Hide();
+            _gameLoop.ChatApp.Hide();
         }
     }
 }

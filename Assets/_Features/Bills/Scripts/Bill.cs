@@ -1,0 +1,42 @@
+using System;
+
+namespace Quackery.Bills
+{
+    public record Bill
+    {
+        public BillData Data;
+        public string Key;
+        public int Price;
+
+        public int TotalPrice => Price * (NumMissedPayments + 1);
+        public bool Paid;
+        public int LastPaymentDay;
+
+        public int StartedData;
+
+        public string Title => Data.MasterText;
+
+        public int NumMissedPayments = 0;
+        public bool IsOverdue => NumMissedPayments > 0;
+
+        public Bill()
+        { }
+
+        public Bill(BillData data)
+        {
+            Data = data;
+            Key = Data.name;
+            Price = data.StartPrice;
+            Paid = false;
+
+        }
+
+        internal bool IsDueToday()
+        {
+            var daysPassed = CalendarServices.Today() - StartedData;
+            var daysSinceLastDueDate = daysPassed % Data.PaymentInterval;
+            var lastDueDate = daysPassed - daysSinceLastDueDate;
+            return lastDueDate == CalendarServices.Today();
+        }
+    }
+}

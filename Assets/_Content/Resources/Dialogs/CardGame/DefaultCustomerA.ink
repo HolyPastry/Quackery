@@ -9,15 +9,15 @@ Customer: {HerbalBundleQuack: ->HerbalQuack| {HerbalBundleHerbalist: ->HerbalHer
 
 
 =HerbalQuack
-{~Who knew plants could heal?!|I want to know more about plants now!}
+Me: {~Who knew plants could heal?!|I want to know more about plants now!}
 ->DONE
 
 =HerbalHerbalist
-{I didn't know plants could be so good for you!|I should have eaten more greens a kid!}
+Me: {I didn't know plants could be so good for you!|I should have eaten more greens a kid!}
 ->DONE
 
 =HerbalMasterHerbalist
-{Wow you are so knowledgeable about plants!|You make me want to study plants too!| How long did it take you to learn so much about plants?!| Wow! You're a plant genius!}
+Me: {Wow you are so knowledgeable about plants!|You make me want to study plants too!| How long did it take you to learn so much about plants?!| Wow! You're a plant genius!}
 ->DONE
 
 === DefaultCustomerFailure === 

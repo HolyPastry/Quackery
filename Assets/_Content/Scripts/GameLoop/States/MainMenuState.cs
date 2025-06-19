@@ -10,7 +10,7 @@ namespace Quackery
 
         public override void Enter()
         {
-            NotificationServices.ShowAllNotifications();
+            //  NotificationServices.ShowAllNotifications();
         }
 
     }

@@ -123,7 +123,7 @@ namespace Quackery.Decks
         {
             DeckServices.WaitUntilReady = () => new WaitUntil(() => _isReady);
 
-            DeckServices.AddToDeck = AddToDeck;
+            DeckServices.AddToDeck = AddNewCardToDeck;
 
             DeckServices.Shuffle = ShuffleDiscardPileIn;
             DeckServices.ShuffleDiscardIn = ShuffleDiscardPileIn;
@@ -178,7 +178,7 @@ namespace Quackery.Decks
             yield return FlowServices.WaitUntilReady();
             yield return InventoryServices.WaitUntilReady();
             var allItems = InventoryServices.GetAllItems();
-            AddToDeck(allItems);
+            PopulateDeck(allItems);
             _isReady = true;
         }
 
@@ -395,35 +395,30 @@ namespace Quackery.Decks
             }
         }
 
-        private void AddToDeck(List<Item> items)
+        private void PopulateDeck(List<Item> items)
         {
             foreach (var item in items)
-            {
-                var card = Instantiate(_itemCardPrefab, transform);
-                card.Item = item;
-                _drawPile.AddAtTheBottom(card);
-            }
+                AddToDeck(item);
+        }
+        private void AddToDeck(Item item)
+        {
+            Card card;
+            if (item.Data.Category == EnumItemCategory.Skills)
+                card = Instantiate(_skillCardPrefab, transform);
+            else
+                card = Instantiate(_itemCardPrefab, transform);
+            card.Item = item;
+            _drawPile.AddAtTheBottom(card);
+            DeckEvents.OnCardMovedTo(card, EnumPileType.DrawPile, false);
         }
 
-        private void AddToDeck(List<ItemData> list)
+        private void AddNewCardToDeck(List<ItemData> list)
         {
             foreach (var itemData in list)
             {
-                var item = new Item(itemData)
-                {
-                    Price = itemData.StartPrice,
-                    Rating = itemData.StartRating
-                };
-                Card card;
-                if (item.Data.Category == EnumItemCategory.Skills)
-                    card = Instantiate(_skillCardPrefab, transform);
-                else
-                    card = Instantiate(_itemCardPrefab, transform);
-                card.Item = item;
-                _drawPile.AddAtTheBottom(card);
-                DeckEvents.OnCardMovedTo(card, EnumPileType.DrawPile, false);
+                var item = InventoryServices.AddNewItem(itemData);
+                AddToDeck(item);
             }
-
         }
 
         private void Discard(List<Card> cards)

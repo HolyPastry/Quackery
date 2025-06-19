@@ -19,6 +19,7 @@ namespace Quackery.Clients
             foreach (var effectData in data.Effects)
                 Effects.Add(new Effect(effectData, true));
             Key = data.name;
+            IsNew = true;
         }
 
         public bool IsInQueue;
@@ -46,6 +47,8 @@ namespace Quackery.Clients
         public string LoginName => Data.CharacterData.MasterText;
 
         public object DialogKey => Data.CharacterData.name;
+
+        public bool IsNew;
 
         public string LastReviewText = "";
         public int LastRating = 0;

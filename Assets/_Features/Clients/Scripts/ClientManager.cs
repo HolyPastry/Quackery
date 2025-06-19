@@ -78,6 +78,7 @@ namespace Quackery.Clients
 
         private void GenerateDailyQueue()
         {
+            ResetClientQueue();
             if (_clientList.Clients.Count < _queueSize)
                 Debug.LogWarning("Not enough clients to generate a daily queue.");
 
@@ -90,10 +91,24 @@ namespace Quackery.Clients
             ClientEvents.ClientListUpdated?.Invoke();
         }
 
+        private void ResetClientQueue()
+        {
+            foreach (var client in _clientList.Clients)
+            {
+                client.IsInQueue = false;
+                client.Served = false;
+
+            }
+            _selectedClient = null;
+        }
+
         private void ClientServed(ClientData data)
         {
             if (_clientList.TryAndGet(data, out Client client))
+            {
+                client.IsNew = false;
                 client.Served = true;
+            }
             else
                 Debug.LogWarning($"Client {data.name} not found in the client list.");
             ClientEvents.ClientListUpdated?.Invoke();

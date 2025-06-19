@@ -26,6 +26,8 @@ namespace Quackery
 
         [Header("Animation Settings")]
         [SerializeField] private float _animationDuration = 0.5f;
+        [SerializeField] private float _scaleFactor = 1.1f;
+        [SerializeField] private float _scaleDuration = 0.2f;
         [SerializeField] private Ease _animationEaseIn = Ease.OutBack;
         [SerializeField] private Ease _animationEaseOut = Ease.InBack;
         [SerializeField] private bool _startHidden = true;
@@ -43,11 +45,7 @@ namespace Quackery
 
             if (_startHidden)
                 _rectTransform.gameObject.SetActive(false);
-
         }
-
-
-
         private Vector2 DirectionVector(Direction direction)
         {
             return direction switch
@@ -160,6 +158,16 @@ namespace Quackery
             _overridePosition = position;
             _overridePositionEnabled = true;
             return SlideIn(Direction.Right);
+        }
+
+        internal void ScaleUp()
+        {
+            _rectTransform.DOScale(_scaleFactor, _scaleDuration);
+        }
+
+        internal void ScaleDown()
+        {
+            _rectTransform.DOScale(Vector3.one, _scaleDuration);
         }
     }
 }

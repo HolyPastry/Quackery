@@ -37,6 +37,7 @@ namespace Quackery.Inventories
             InventoryServices.GetItem = data => null;
             InventoryServices.HasItem = data => false;
             InventoryServices.GetAllItems = () => new();
+            InventoryServices.GetRandomItemData = () => null;
         }
 
         void OnEnable()
@@ -48,6 +49,18 @@ namespace Quackery.Inventories
             InventoryServices.GetItem = GetItem;
             InventoryServices.HasItem = HasItem;
             InventoryServices.GetAllItems = () => _inventory.Items;
+            InventoryServices.GetRandomItemData = GetRandomItemData;
+        }
+
+        private ItemData GetRandomItemData()
+        {
+            if (_itemDataCollection == null || _itemDataCollection.Count == 0)
+            {
+                Debug.LogWarning("Item data collection is empty or not initialized.");
+                return null;
+            }
+            int randomIndex = UnityEngine.Random.Range(0, _itemDataCollection.Count);
+            return _itemDataCollection.Data[randomIndex];
         }
 
         private void AddItem(Item item)
@@ -98,13 +111,9 @@ namespace Quackery.Inventories
             var item = new Item(data)
             {
                 Price = data.StartPrice,
-                Rating = data.StartRating
             };
 
-            _inventory.Items.Add(new Item(data));
-
-
-
+            _inventory.Items.Add(item);
             Save();
             return item;
         }
