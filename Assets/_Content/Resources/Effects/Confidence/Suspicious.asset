@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a61d5f4b4d6487dad4cbe930ac768a, type: 3}
   m_Name: Suspicious
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Suspicious
   Icon: {fileID: 0}
-  Trigger: 0
-  StartValue: 0
-  UseValue: 0
-  Description: 
+  Trigger: 1
+  StartValue: 1
+  UseValue: 1
+  Description: Lower Confidence
   Tags: 
