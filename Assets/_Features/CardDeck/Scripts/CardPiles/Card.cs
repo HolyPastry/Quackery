@@ -22,7 +22,7 @@ namespace Quackery.Decks
             public EnumItemCategory Category;
         }
         [Header("Catergory Icons")]
-        [SerializeField] private List<CategoryIcons> _categoryIcons;
+        [SerializeField] private List<CategoryIcons> _categoryIcons = new();
         [Header("Card Components")]
         [SerializeField] private Image _cardBackground;
         [SerializeField] private Image _cardForeground;
@@ -54,14 +54,34 @@ namespace Quackery.Decks
                 _cardBackground.color = Colors.Get(_item.Data.Category.ToString());
 
                 _cardPrice.text = Price.ToString();
-                if (_item.Data.Category != EnumItemCategory.Unset || _item.Data.Category != EnumItemCategory.Skills)
+
+                SetCategoryIcon();
+
+            }
+        }
+
+        private void SetCategoryIcon()
+        {
+            if (_categoryIcon == null) return;
+
+            if (
+                _item.Data.Category == EnumItemCategory.Unset ||
+                 _item.Data.Category == EnumItemCategory.Skills)
+            {
+                _categoryIcon.gameObject.SetActive(false);
+            }
+            else
+            {
+
+                if (_categoryIcons.Exists(icon => icon.Category == _item.Data.Category))
                 {
+                    _categoryIcon.gameObject.SetActive(true);
                     _categoryIcon.sprite = _categoryIcons.Find(icon => icon.Category == _item.Data.Category).Icon;
                 }
                 else
                 {
-                    if (_categoryIcon != null)
-                        _categoryIcon.gameObject.SetActive(false);
+                    _categoryIcon.gameObject.SetActive(false);
+                    Debug.LogWarning($"No icon found for category: {_item.Data.Category}");
                 }
 
             }
