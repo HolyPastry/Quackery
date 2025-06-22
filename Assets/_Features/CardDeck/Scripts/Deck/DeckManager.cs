@@ -307,6 +307,7 @@ namespace Quackery.Decks
                     otherCards.Add(otherPile.TopCard);
             }
             DeckEvents.OnCardSelected(pile.TopCard, otherCards);
+            SetPileActivation(_tablePiles, true);
 
         }
 

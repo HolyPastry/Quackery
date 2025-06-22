@@ -14,7 +14,7 @@ namespace Quackery.Effects
         OnDraw,
         OnCardDiscarded,
         Continous,
-        OnCartCalculated
-
+        OnCartCalculated,
+        OnEffectApplied,
     }
 }

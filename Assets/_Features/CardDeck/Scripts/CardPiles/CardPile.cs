@@ -16,8 +16,7 @@ namespace Quackery.Decks
 
         public EnumItemCategory Category => IsEmpty ? EnumItemCategory.Unset : TopCard.Category;
 
-        public bool Enabled;
-
+        public bool Enabled = true;
         private bool ValidityCheck()
         {
             if (Cards.Count == 0)

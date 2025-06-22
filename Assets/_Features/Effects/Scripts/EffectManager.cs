@@ -32,6 +32,12 @@ namespace Quackery.Effects
             EffectServices.IncreaseStackReward = delegate { };
             EffectServices.GetStarkMultiplier = () => 1;
 
+            EffectServices.ModifyConfidence = (value) => { };
+
+            EffectEvents.OnAdded -= ExecuteOnAppliedEffect;
+            EffectEvents.OnRemoved -= ExecuteOnAppliedEffect;
+            EffectEvents.OnUpdated -= ExecuteOnAppliedEffect;
+
 
         }
 
@@ -52,6 +58,36 @@ namespace Quackery.Effects
             EffectServices.CleanEffects = CleanEffect;
             EffectServices.IncreaseStackReward = IncreaseStackReward;
             EffectServices.GetStarkMultiplier = () => _stackRewardMultiplier;
+
+
+            EffectServices.ModifyConfidence = (value) => ModifyConfidence(value);
+
+            EffectEvents.OnAdded += ExecuteOnAppliedEffect;
+            EffectEvents.OnRemoved += ExecuteOnAppliedEffect;
+            EffectEvents.OnUpdated += ExecuteOnAppliedEffect;
+        }
+
+        private void ExecuteOnAppliedEffect(Effect _)
+        {
+            foreach (var effect in _effects.Values)
+            {
+                if (effect.Data.Trigger == EnumEffectTrigger.OnEffectApplied)
+                {
+                    effect.Execute(null);
+                }
+            }
+        }
+
+        private void ModifyConfidence(int value)
+        {
+            foreach (var effect in _effects.Values)
+            {
+                if (effect.Data is not ConfidenceEffect) return;
+                {
+                    effect.Value += value;
+                    EffectEvents.OnUpdated?.Invoke(effect);
+                }
+            }
         }
 
         private void IncreaseStackReward(int increase)
