@@ -29,5 +29,9 @@ namespace Quackery
         internal static Action<int> IncreaseStackReward = (amount) => { };
 
         public static Func<int> GetStarkMultiplier = () => 1;
+
+
+        internal static Action<int> ModifyConfidence = (value) => { };
+
     }
 }
