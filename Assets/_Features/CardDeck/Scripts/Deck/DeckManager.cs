@@ -6,6 +6,8 @@ using Quackery.Inventories;
 using System.Linq;
 using Quackery.Effects;
 using Quackery.Clients;
+using UnityEngine.Rendering.UI;
+using System;
 
 namespace Quackery.Decks
 {
@@ -169,7 +171,7 @@ namespace Quackery.Decks
             foreach (var pile in _cartPiles)
             {
                 if (pile.IsEmpty || !pile.Enabled) continue;
-                DeckEvents.OnCachingTheCart(pile.Type);
+                DeckEvents.OnCashingTheCart(pile.Type);
             }
         }
 
@@ -277,7 +279,7 @@ namespace Quackery.Decks
             if (index == -1 || index == 0) return; // No last cart pile to merge into
 
             MovePileTo(_lastCartPile, _cartPiles[index - 1]);
-            DeckEvents.OnCachingTheCart(_lastCartPile.Type);
+            DeckEvents.OnCashingTheCart(_lastCartPile.Type);
         }
 
         private void PileClicked(EnumPileType type)
@@ -322,24 +324,64 @@ namespace Quackery.Decks
             DialogQueueServices.QueueDialog(meDialog);
             DialogQueueServices.QueueDialog(clientResponse);
 
-            if (pile.TopCard.Category == EnumItemCategory.Skills)
-            {
-                pile.TopCard.ExecutePowerInCart(pile);
-                Discard(pile.TopCard);
-                DeckServices.DrawBackToFull();
-                return;
-            }
-
-            MergePileToCart(type);
-        }
-
-        private void MergePileToCart(EnumPileType type)
-        {
-            var pile = _piles.Find(p => p.Type == type);
-            if (pile == null || pile.IsEmpty) return;
+            if (ExecuteSkills(pile)) return;
 
             if (ActivatePreviousCard(pile)) return;
 
+            if (MergeWithPrevious(pile)) return;
+
+            MergePileToCart(pile);
+        }
+
+        private bool MergeWithPrevious(CardPile pile)
+        {
+            var topCard = pile.TopCard;
+            if (_lastCartPile == null ||
+                 _lastCartPile.IsEmpty ||
+                  !topCard.Effects.Exists(effect => effect.Data is MergeWithPreviousPileEffect))
+                return false;
+            var effect = topCard.Effects.Find(effect => effect.Data is MergeWithPreviousPileEffect);
+            var effectData = effect.Data as MergeWithPreviousPileEffect;
+
+            if (effectData.Category != EnumItemCategory.Unset &&
+               effectData.Category != _lastCartPile.Category)
+                return false;
+
+            if (effectData.Location == EnumPileLocation.AtTheBottom)
+            {
+                DeckEvents.OnPileMoved(pile.Type);
+                DeckEvents.OnCashingPile(pile);
+                _lastCartPile.MergeBelow(pile);
+                return true;
+            }
+            else if (effectData.Location == EnumPileLocation.OnTop)
+            {
+                _lastCartPile.AddAtTheTop(pile.TopCard);
+                DeckEvents.OnPileMoved(_lastCartPile.Type);
+                DeckEvents.OnCashingTheCart(_lastCartPile.Type);
+                _lastCartPile.TopCard.ActivatePower(_lastCartPile);
+                return true; // Exit after merging to the last cart pile
+            }
+            else
+            {
+                Debug.LogWarning($"MergeWithPreviousPileEffect: Unknown location {effectData.Location} for card {topCard.Item.Data.name}");
+            }
+
+            return false;
+        }
+
+        private bool ExecuteSkills(CardPile pile)
+        {
+            if (pile.TopCard.Category != EnumItemCategory.Skills) return false;
+            pile.TopCard.ExecutePowerInCart(pile);
+            Discard(pile.TopCard);
+            DeckServices.DrawBackToFull();
+
+            return true;
+        }
+
+        private void MergePileToCart(CardPile pile)
+        {
             foreach (var cartPile in _cartPiles)
             {
                 if (cartPile.IsEmpty && cartPile.Enabled)
@@ -349,7 +391,7 @@ namespace Quackery.Decks
                     _lastCartPile = cartPile;
                     topCard.ExecutePowerInCart(cartPile);
                     DeckEvents.OnPileMoved(cartPile.Type);
-                    DeckEvents.OnCachingTheCart(cartPile.Type);
+                    DeckEvents.OnCashingTheCart(cartPile.Type);
                     return; // Exit after merging to the first empty cart pile
                 }
             }
@@ -365,7 +407,7 @@ namespace Quackery.Decks
                 // If the last cart pile is not empty and has the same category, merge into it
                 _lastCartPile.MergeBelow(pile);
                 DeckEvents.OnPileMoved(_lastCartPile.Type);
-                DeckEvents.OnCachingTheCart(_lastCartPile.Type);
+                DeckEvents.OnCashingTheCart(_lastCartPile.Type);
                 _lastCartPile.TopCard.ActivatePower(_lastCartPile);
                 return true; // Exit after merging to the last cart pile
             }

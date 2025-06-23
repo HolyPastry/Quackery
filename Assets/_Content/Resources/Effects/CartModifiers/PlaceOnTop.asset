@@ -9,13 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceda0686caa624e98b9b453651a84fdf, type: 3}
-  m_Name: HypnotiseEffect
+  m_Script: {fileID: 11500000, guid: 50b2da8377b6447b9bc029c4a540911a, type: 3}
+  m_Name: PlaceOnTop
   m_EditorClassIdentifier: 
-  MasterText: Hypnotise
-  Icon: {fileID: 21300000, guid: 04f1d24123ba9404782f25c0079f6acf, type: 3}
+  MasterText: 
+  Icon: {fileID: 0}
   Trigger: 1
   StartValue: 0
   UseValue: 0
-  Description: Remove all Status
+  Description: Place Card OnTop Of Herbs Card
   Tags: 
+  Location: 0
+  Category: 1

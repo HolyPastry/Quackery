@@ -18,7 +18,7 @@ namespace Quackery.Clients
             ClientServices.WaitUntilReady = () => WaitUntilReady;
             ClientServices.AddClient = AddClient;
             ClientServices.RemoveClient = RemoveClient;
-            ClientServices.ForgetAilment = ForgetAilment;
+
             ClientServices.HasNextClient = HasNextClient;
             ClientServices.GetNextClient = GetNextClient;
             ClientServices.GetClients = () => _clientList?.Clients;
@@ -27,8 +27,6 @@ namespace Quackery.Clients
 
             ClientServices.SelectClient = SelectClient;
             ClientServices.SelectedClient = () => _selectedClient;
-
-
             ClientServices.ClientLeaves = ClientLeaves;
 
         }
@@ -39,7 +37,7 @@ namespace Quackery.Clients
             ClientServices.WaitUntilReady = () => new WaitUntil(() => true);
             ClientServices.AddClient = delegate { };
             ClientServices.RemoveClient = delegate { };
-            ClientServices.ForgetAilment = delegate { };
+
             ClientServices.HasNextClient = () => true;
             ClientServices.GetNextClient = () => null;
             ClientServices.GetClients = () => new();
@@ -62,18 +60,9 @@ namespace Quackery.Clients
             _selectedClient = client;
         }
 
-        // private IEnumerator BringClientIn(Client client)
-        // {
-        //     // DialogQueueServices.QueueDialog($"{client.Data.CharacterData.name}Intro");
-        //     // DialogQueueServices.QueueDialog("MeIntro");
-        //     // yield return DialogQueueServices.WaitUntilAllDialogEnds();
-        // }
-        // 
         private void ClientLeaves()
         {
             _selectedClient = null;
-
-
         }
 
         private void GenerateDailyQueue()
@@ -126,11 +115,6 @@ namespace Quackery.Clients
         private bool HasNextClient()
         {
             return _clientList.Clients.Exists(c => c.IsInQueue && !c.Served);
-        }
-
-        private void ForgetAilment()
-        {
-            //noop
         }
 
         private void RemoveClient(ClientData data)

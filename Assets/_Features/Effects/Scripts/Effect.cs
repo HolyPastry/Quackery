@@ -56,6 +56,10 @@ namespace Quackery
         public int RatingModifier(Card card) => Data.RatingModifier(this, card);
         public int PriceModifier(Card card) => Data.PriceModifier(this, card);
 
-
+        internal bool ContainsTag(EnumEffectTag effectTag)
+        {
+            if (Data == null) return false;
+            return Data.Tags.Contains(effectTag);
+        }
     }
 }

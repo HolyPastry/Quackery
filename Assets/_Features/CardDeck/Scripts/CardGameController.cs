@@ -72,8 +72,9 @@ namespace Quackery.Decks
         {
 
             DeckEvents.OnCardsMovingToSelectPile += OnCardsMovingToSelectPile;
-            DeckEvents.OnCachingTheCart += OnPileMovedToCart;
+            DeckEvents.OnCashingTheCart += OnPileMovedToCart;
             DeckEvents.OnCardSelected += OnCardSelected;
+            DeckEvents.OnCashingPile += OnCashingPile;
             _endDayScreen.OnCloseGame += EndTheDay;
             GetClientCartValue = () => _cashInCart;
             InterruptRoundRequest = InterruptRound;
@@ -85,7 +86,8 @@ namespace Quackery.Decks
         {
             DeckEvents.OnCardsMovingToSelectPile -= OnCardsMovingToSelectPile;
             DeckEvents.OnCardSelected -= OnCardSelected;
-            DeckEvents.OnCachingTheCart -= OnPileMovedToCart;
+            DeckEvents.OnCashingTheCart -= OnPileMovedToCart;
+            DeckEvents.OnCashingPile -= OnCashingPile;
             _endDayScreen.OnCloseGame -= EndTheDay;
             GetClientCartValue = delegate { return 0; };
             InterruptRoundRequest = delegate { };
@@ -93,10 +95,16 @@ namespace Quackery.Decks
 
         }
 
+        private void OnCashingPile(CardPile pile)
+        {
+            if (pile == null || pile.IsEmpty) return;
+            AddCashToCart(pile.TopCard.Price);
+
+        }
+
         public void Show()
         {
-            _cashInCart = 0;
-            _CashInCartText.text = "0";
+            ResetCart();
             _endOfDay = false;
             _gameStats.Reset();
             _endDayScreen.Hide();
@@ -138,7 +146,6 @@ namespace Quackery.Decks
 
         private void OnPileMovedToCart(EnumPileType type)
         {
-
             StartCoroutine(CartRewardRoutine(type));
         }
 
@@ -153,10 +160,9 @@ namespace Quackery.Decks
             {
                 pileUI.ShowReward(cardReward);
                 yield return new WaitForSeconds(0.8f);
-                _cashInCart += cardReward.Value;
-                _cartCashTransform.DOPunchScale(Vector3.one * 0.1f, 0.2f, 10, 0.1f);
+                AddCashToCart(cardReward.Value);
             }
-            _CashInCartText.text = _cashInCart.ToString("0");
+
 
             EffectServices.Execute(Effects.EnumEffectTrigger.OnCartCalculated, null);
             if (RoundInterrupted)
@@ -173,7 +179,17 @@ namespace Quackery.Decks
             }
         }
 
-
+        private void AddCashToCart(int amount)
+        {
+            _cashInCart += amount;
+            _cartCashTransform.DOPunchScale(Vector3.one * 0.1f, 0.2f, 10, 0.1f);
+            _CashInCartText.text = _cashInCart.ToString("0");
+        }
+        private void ResetCart()
+        {
+            _cashInCart = 0;
+            _CashInCartText.text = "0";
+        }
 
         private void EndOfRound()
         {
@@ -183,8 +199,7 @@ namespace Quackery.Decks
 
         public void ResetDeck()
         {
-            _cashInCart = 0;
-            _CashInCartText.text = "0";
+            ResetCart();
             DeckServices.DiscardCart();
             DeckServices.DiscardHand();
             DeckServices.ShuffleDiscardIn();
@@ -202,9 +217,7 @@ namespace Quackery.Decks
                     _purseTransform.DOPunchScale(Vector3.one * 0.2f, 0.2f, 10, 0.1f);
                     _cartCashTransform.gameObject.SetActive(false);
                     _gameStats.DayYield += _cashInCart;
-                    _cashInCart = 0;
-                    _CashInCartText.text = "0";
-
+                    ResetCart();
                     _gameStats.TotalRating += 5; // Assuming each round gives a fixed rating of 5
 
                     _cartCashTransform.localPosition = _cartCashOriginalLocalPosition;

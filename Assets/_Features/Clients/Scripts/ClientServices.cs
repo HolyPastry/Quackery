@@ -6,7 +6,7 @@ namespace Quackery.Clients
 {
     public static class ClientServices
     {
-        internal static Action ForgetAilment = delegate { };
+
         internal static Func<bool> HasNextClient = () => true;
         internal static Action<ClientData> AddClient = delegate { };
         internal static Action<ClientData> RemoveClient = delegate { };

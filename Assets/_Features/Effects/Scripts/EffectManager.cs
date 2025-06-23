@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Holypastry.Bakery;
 using Quackery.Decks;
+using Quackery.Inventories;
 using UnityEngine;
 
 namespace Quackery.Effects
@@ -9,9 +11,16 @@ namespace Quackery.Effects
     {
         private readonly Dictionary<int, Effect> _effects = new();
 
+        private DataCollection<EffectData> _effectCollection;
+
         private int _nextId = 0;
 
         private int _stackRewardMultiplier = 1;
+
+        void Awake()
+        {
+            _effectCollection = new("Effects");
+        }
 
         void OnDisable()
         {
@@ -30,9 +39,11 @@ namespace Quackery.Effects
             EffectServices.CleanEffects = delegate { _effects.Clear(); _nextId = 0; };
 
             EffectServices.IncreaseStackReward = delegate { };
-            EffectServices.GetStarkMultiplier = () => 1;
+            EffectServices.GetStackMultiplier = () => 1;
 
             EffectServices.ModifyConfidence = (value) => { };
+            EffectServices.RemoveAllEffects = delegate { };
+            EffectServices.ChangePreference = (category) => { };
 
             EffectEvents.OnAdded -= ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved -= ExecuteOnAppliedEffect;
@@ -57,14 +68,42 @@ namespace Quackery.Effects
 
             EffectServices.CleanEffects = CleanEffect;
             EffectServices.IncreaseStackReward = IncreaseStackReward;
-            EffectServices.GetStarkMultiplier = () => _stackRewardMultiplier;
-
+            EffectServices.GetStackMultiplier = () => _stackRewardMultiplier;
 
             EffectServices.ModifyConfidence = (value) => ModifyConfidence(value);
+            EffectServices.RemoveAllEffects = RemoveAllEffects;
+            EffectServices.ChangePreference = ChangePreference;
 
             EffectEvents.OnAdded += ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved += ExecuteOnAppliedEffect;
             EffectEvents.OnUpdated += ExecuteOnAppliedEffect;
+        }
+
+        private void ChangePreference(EnumItemCategory category)
+        {
+            if (_effects.RemoveValue(effect => effect.Data is BoostPriceEffect boostPrice &&
+                    effect.ContainsTag(EnumEffectTag.Client), out var removed))
+                EffectEvents.OnRemoved?.Invoke(removed);
+
+
+            var effectData = _effectCollection.Find(effectData =>
+            effectData is BoostPriceEffect boostPriceEffect &&
+            boostPriceEffect.Category == category &&
+            effectData.Tags.Contains(EnumEffectTag.Client));
+
+            Add(new Effect(effectData, true));
+        }
+
+        private void RemoveAllEffects()
+        {
+
+            _stackRewardMultiplier = 1;
+            EffectEvents.OnStackMultiplerUpdate?.Invoke(_stackRewardMultiplier);
+
+            foreach (var key in _effects.Keys)
+            {
+                RemoveById(key);
+            }
         }
 
         private void ExecuteOnAppliedEffect(Effect _)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Quackery.Decks;
 using Quackery.Effects;
+using Quackery.Inventories;
 using UnityEngine;
 
 namespace Quackery
@@ -28,10 +29,13 @@ namespace Quackery
 
         internal static Action<int> IncreaseStackReward = (amount) => { };
 
-        public static Func<int> GetStarkMultiplier = () => 1;
+        public static Func<int> GetStackMultiplier = () => 1;
 
 
         internal static Action<int> ModifyConfidence = (value) => { };
 
+        internal static Action RemoveAllEffects = delegate { };
+
+        internal static Action<EnumItemCategory> ChangePreference = (category) => { };
     }
 }

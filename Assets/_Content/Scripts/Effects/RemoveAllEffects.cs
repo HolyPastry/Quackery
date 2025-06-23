@@ -7,15 +7,15 @@ using UnityEngine;
 namespace Quackery.Effects
 {
     [CreateAssetMenu(
-        fileName = "HypnotiseEffect",
-        menuName = "Quackery/Effects/Hypnotise",
+        fileName = "RemoveAllEffects",
+        menuName = "Quackery/Effects/RemoveAllEffects",
         order = 1)]
-    public class HypnotiseEffect : EffectData
+    public class RemoveAllEffects : EffectData
     {
         public override void Execute(Effect effect, CardPile pile)
         {
-            ClientServices.ForgetAilment();
-            Debug.Log("Hypnotise effect executed.");
+            EffectServices.RemoveAllEffects();
+
 
         }
     }
