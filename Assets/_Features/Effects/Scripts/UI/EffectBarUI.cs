@@ -10,17 +10,13 @@ namespace Quackery
 
         private readonly List<EffectUI> _statusUIPool = new();
 
-        private StackMultiplierUI _stackMultiplierUI;
-
         void Awake()
         {
-            GetComponentsInChildren(_statusUIPool);
+            GetComponentsInChildren(true, _statusUIPool);
             for (int i = 0; i < _statusUIPool.Count; i++)
             {
                 _statusUIPool[i].gameObject.SetActive(false);
             }
-            _stackMultiplierUI = GetComponentInChildren<StackMultiplierUI>(true);
-            _stackMultiplierUI.gameObject.SetActive(false);
         }
 
         void OnEnable()
@@ -41,13 +37,13 @@ namespace Quackery
 
         private void UpdateStackMultiplierUI(int multiplier)
         {
-            if (multiplier <= 1)
-            {
-                _stackMultiplierUI.gameObject.SetActive(false);
-                return;
-            }
-            _stackMultiplierUI.gameObject.SetActive(true);
-            _stackMultiplierUI.UpdateMultipler(multiplier);
+            // if (multiplier <= 1)
+            // {
+            //     _stackMultiplierUI.gameObject.SetActive(false);
+            //     return;
+            // }
+            // _stackMultiplierUI.gameObject.SetActive(true);
+            // _stackMultiplierUI.UpdateMultipler(multiplier);
         }
 
         private void RemoveStatusUI(Effect effect)

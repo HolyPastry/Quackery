@@ -16,6 +16,7 @@ namespace Quackery.Decks
 
         public EnumItemCategory Category => IsEmpty ? EnumItemCategory.Unset : TopCard.Category;
 
+        public bool Playable = true;
         public bool Enabled = true;
         private bool ValidityCheck()
         {
@@ -102,6 +103,21 @@ namespace Quackery.Decks
             Cards.Add(card);
         }
 
+        public void MergeOnTop(CardPile pile)
+        {
+            if (pile == null || pile.IsEmpty) return;
+
+            foreach (var card in pile.Cards)
+            {
+                if (card != null)
+                {
+                    AddAtTheTop(card);
+                    DeckEvents.OnCardMovedTo(card, Type, true);
+                }
+            }
+            pile.Clear();
+        }
+
         internal void MergeBelow(CardPile pile)
         {
             if (pile == null || pile.IsEmpty) return;
@@ -123,12 +139,6 @@ namespace Quackery.Decks
             allCards.Remove(TopCard);
             return TopCard.CalculateCardReward(allCards, otherPiles);
 
-        }
-
-        internal void Activate(bool activated)
-        {
-            if (IsEmpty) return;
-            TopCard.SetOutline(activated);
         }
     }
 }

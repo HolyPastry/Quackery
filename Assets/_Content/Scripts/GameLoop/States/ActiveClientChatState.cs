@@ -83,7 +83,7 @@ namespace Quackery
             base.Exit();
 
             _gameLoop.CardGameController.Hide();
-            _gameLoop.ClientTextChat.Hide();
+            //  _gameLoop.ClientTextChat.Hide();
             _gameLoop.ChatApp.Hide();
         }
     }

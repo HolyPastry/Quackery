@@ -10,6 +10,11 @@ namespace Quackery.Effects
     {
         public EnumItemCategory Category;
 
+        public override string GetDescription()
+        {
+            return Sprites.Replace(Category, Description);
+        }
+
         public override void Execute(Effect effect, CardPile pile)
         {
             //noop

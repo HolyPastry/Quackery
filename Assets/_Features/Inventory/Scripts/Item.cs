@@ -19,7 +19,10 @@ namespace Quackery.Inventories
         }
 
         public string Name => Data.MasterText;
-        public EnumItemCategory Category => Data.Category;
+        public EnumItemCategory Category => OverrideCategory == EnumItemCategory.Unset ?
+                                            Data.Category : OverrideCategory;
+
+        public EnumItemCategory OverrideCategory = EnumItemCategory.Unset;
 
         public int Price;
 

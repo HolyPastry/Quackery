@@ -15,7 +15,7 @@ MonoBehaviour:
   MasterText: Suspicious
   Icon: {fileID: 0}
   Trigger: 1
-  StartValue: 1
+  StartValue: -1
   UseValue: 1
-  Description: Lower Confidence
+  Description: <b>Suspicion</b> Reduce confidence by #Value.
   Tags: 

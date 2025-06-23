@@ -16,5 +16,7 @@ namespace Quackery.Effects
         Continous,
         OnCartCalculated,
         OnEffectApplied,
+        Passive,
+        OnTable
     }
 }

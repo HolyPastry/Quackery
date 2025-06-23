@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Holypastry.Bakery;
@@ -59,7 +60,7 @@ namespace Quackery.Inventories
             int numSameCategory = 0;
             foreach (var pile in otherPiles)
             {
-                if (pile.Category == topCard.Item.Data.Category)
+                if (pile.Category == topCard.Item.Category)
                 {
                     numSameCategory++;
                 }
@@ -79,6 +80,11 @@ namespace Quackery.Inventories
                 rewards.AddRange(ValueEvaluator.Evaluate(topCard, subItems, otherPiles));
             }
             return rewards;
+        }
+
+        internal string GetDescription()
+        {
+            return Sprites.ReplaceCategories(Description);
         }
     }
 }

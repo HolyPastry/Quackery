@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12323, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Presets:
+  - m_Name: Background
+    m_Color: {r: 0.19215687, g: 0.30980393, b: 0.40784314, a: 1}
+  - m_Name: ChatBackground
+    m_Color: {r: 0.8901961, g: 0.78431374, b: 0.3764706, a: 1}
+  - m_Name: Chat
+    m_Color: {r: 0.16470589, g: 0.44313726, b: 0.4745098, a: 1}
+  - m_Name: TableBackground
+    m_Color: {r: 0.20392157, g: 0.1882353, b: 0.1882353, a: 1}
+  - m_Name: TooltipBackground
+    m_Color: {r: 0.627451, g: 0.62352943, b: 0.63529414, a: 1}
+  - m_Name: DarkGrey
+    m_Color: {r: 0.20392157, g: 0.1882353, b: 0.1882353, a: 0.8352941}

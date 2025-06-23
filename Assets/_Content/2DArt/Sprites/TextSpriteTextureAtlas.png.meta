@@ -144,7 +144,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crystal
+      name: Crystals
       rect:
         serializedVersion: 2
         x: 64
@@ -189,7 +189,7 @@ TextureImporter:
       name: Herbs
       rect:
         serializedVersion: 2
-        x: 192
+        x: 191
         y: 448
         width: 64
         height: 64
@@ -231,7 +231,7 @@ TextureImporter:
       name: Chinese
       rect:
         serializedVersion: 2
-        x: 320
+        x: 321
         y: 448
         width: 64
         height: 64
@@ -261,7 +261,7 @@ TextureImporter:
     nameFileIdTable:
       Ayurveda: 797473383
       Chinese: -203676584
-      Crystal: -1127092780
+      Crystals: -1127092780
       Energy: 329415838
       Herbs: 1902273417
       Magic: -56568269

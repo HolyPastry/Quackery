@@ -8,6 +8,11 @@ namespace Quackery.Effects
     public class ChangePreferenceEffect : EffectData
     {
         public EnumItemCategory Category;
+
+        public override string GetDescription()
+        {
+            return Sprites.Replace(Category, Description);
+        }
         public override void Execute(Effect effect, CardPile pile)
         {
             EffectServices.ChangePreference(Category);

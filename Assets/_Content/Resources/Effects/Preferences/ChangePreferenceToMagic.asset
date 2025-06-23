@@ -17,6 +17,6 @@ MonoBehaviour:
   Trigger: 1
   StartValue: 0
   UseValue: 0
-  Description: 
+  Description: Change client preference to #Category
   Tags: 
   Category: 2

@@ -45,13 +45,13 @@ namespace Quackery.Decks
 
                 UpdateEffects();
                 _cardForeground.sprite = _item.Data.Icon;
-                _cardName.text = _item.Data.name;
+                _cardName.text = _item.Data.GetDescription();
 
                 if (IsSkill) return;
 
                 Price = _item.Price;
                 Rating = _item.Rating;
-                _cardBackground.color = Colors.Get(_item.Data.Category.ToString());
+                _cardBackground.color = Colors.Get(_item.Category.ToString());
 
                 _cardPrice.text = Price.ToString();
 
@@ -65,32 +65,32 @@ namespace Quackery.Decks
             if (_categoryIcon == null) return;
 
             if (
-                _item.Data.Category == EnumItemCategory.Unset ||
-                 _item.Data.Category == EnumItemCategory.Skills)
+                _item.Category == EnumItemCategory.Unset ||
+                 _item.Category == EnumItemCategory.Skills)
             {
                 _categoryIcon.gameObject.SetActive(false);
             }
             else
             {
 
-                if (_categoryIcons.Exists(icon => icon.Category == _item.Data.Category))
+                if (_categoryIcons.Exists(icon => icon.Category == _item.Category))
                 {
                     _categoryIcon.gameObject.SetActive(true);
-                    _categoryIcon.sprite = _categoryIcons.Find(icon => icon.Category == _item.Data.Category).Icon;
+                    _categoryIcon.sprite = _categoryIcons.Find(icon => icon.Category == _item.Category).Icon;
                 }
                 else
                 {
                     _categoryIcon.gameObject.SetActive(false);
-                    Debug.LogWarning($"No icon found for category: {_item.Data.Category}");
+                    Debug.LogWarning($"No icon found for category: {_item.Category}", this);
                 }
 
             }
         }
 
-        private bool IsSkill => _item.Data.Category == EnumItemCategory.Skills;
+        private bool IsSkill => _item.Category == EnumItemCategory.Skills;
         public string Name => _item.Name;
 
-        public EnumItemCategory Category => _item.Data.Category;
+        public EnumItemCategory Category => _item.Category;
 
         public List<Effect> Effects { get; private set; }
 
@@ -103,6 +103,7 @@ namespace Quackery.Decks
                     if (effect.Data.Tags.Contains(EnumEffectTag.Activated)
                     && !_activatedEffects.Contains(effect))
                         return true;
+
                 }
                 return false;
             }
@@ -112,7 +113,13 @@ namespace Quackery.Decks
 
         public int Price { get; private set; }
         public int Rating { get; private set; }
-
+        public bool CannotBeCovered
+        {
+            get
+            {
+                return Effects.Exists(e => e.Data is CoverProtection);
+            }
+        }
 
         private List<EffectIcon> _effectIconPool = new();
         private Material _material;
@@ -217,6 +224,13 @@ namespace Quackery.Decks
                 if (effect.Trigger == EnumEffectTrigger.OnActivated)
                     effect.Execute(lastCartPile);
             }
+        }
+
+        internal void OverrideCategory(EnumItemCategory category)
+        {
+            _item.OverrideCategory = category;
+            _cardBackground.color = Colors.Get(category.ToString());
+            SetCategoryIcon();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Quackery.Clients
         private ClientList _clientList;
         [SerializeField] private int _queueSize = 5;
         private Client _selectedClient;
-
+        private bool _infiniteQueue;
 
         void OnEnable()
         {
@@ -29,6 +29,8 @@ namespace Quackery.Clients
             ClientServices.SelectedClient = () => _selectedClient;
             ClientServices.ClientLeaves = ClientLeaves;
 
+            ClientServices.SetInfiniteQueue = (infinite) => { };
+
         }
 
 
@@ -43,8 +45,13 @@ namespace Quackery.Clients
             ClientServices.GetClients = () => new();
             ClientServices.GenerateDailyQueue = delegate { };
             ClientServices.ClientServed = delegate { };
+
             ClientServices.SelectClient = (client) => { };
             ClientServices.SelectedClient = () => null;
+            ClientServices.ClientLeaves = () => { };
+
+            ClientServices.SetInfiniteQueue = (isOn) => _infiniteQueue = isOn;
+
         }
 
         protected override IEnumerator Start()
@@ -106,7 +113,18 @@ namespace Quackery.Clients
         private Client GetNextClient()
         {
             var clients = _clientList.Clients.FindAll(c => c.IsInQueue && !c.Served);
-            if (clients.Count == 0) return null;
+            if (clients.Count == 0)
+            {
+                if (!_infiniteQueue)
+                    return null;
+                GenerateDailyQueue();
+                clients = _clientList.Clients.FindAll(c => c.IsInQueue && !c.Served);
+                if (clients.Count == 0)
+                {
+                    Debug.LogWarning("No clients available in INFINITE queue.");
+                    return null;
+                }
+            }
             _selectedClient = clients[0];
             ClientEvents.OnClientSwap?.Invoke(clients[0]);
             return clients[0];
@@ -114,7 +132,7 @@ namespace Quackery.Clients
 
         private bool HasNextClient()
         {
-            return _clientList.Clients.Exists(c => c.IsInQueue && !c.Served);
+            return _clientList.Clients.Exists(c => (c.IsInQueue && !c.Served) || _infiniteQueue);
         }
 
         private void RemoveClient(ClientData data)

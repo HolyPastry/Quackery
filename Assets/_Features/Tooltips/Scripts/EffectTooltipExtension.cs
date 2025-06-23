@@ -14,23 +14,21 @@ namespace Quackery
             if (hoveredObject.TryGetComponent(out StackMultiplierUI stackMultiplierUI))
                 _tooltipManager.AddTooltip($"Stack Multiplier: x{stackMultiplierUI.MultiplierText}");
 
-            ShowNextToStatus(hoveredObject.transform);
+            // ShowNextToStatus(hoveredObject.transform);
         }
 
         private void AddEffectTooltip(EffectUI effectUI)
         {
+            //string description = effectUI.Effect.Description;
 
             _tooltipManager.AddTooltip(effectUI.Effect.Description);
-
-            _tooltipManager.RefreshLayout();
-
         }
 
-        private void ShowNextToStatus(Transform objectTransform)
-        {
-            Canvas canvas = _tooltipManager.GetComponentInParent<Canvas>();
+        // private void ShowNextToStatus(Transform objectTransform)
+        // {
+        //     Canvas canvas = _tooltipManager.GetComponentInParent<Canvas>();
 
-            transform.position = objectTransform.position + new Vector3((objectTransform as RectTransform).rect.width / 2 * canvas.scaleFactor, 0);
-        }
+        //     transform.position = objectTransform.position + new Vector3((objectTransform as RectTransform).rect.width / 2 * canvas.scaleFactor, 0);
+        // }
     }
 }

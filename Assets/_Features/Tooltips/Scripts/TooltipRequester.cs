@@ -7,12 +7,12 @@ namespace Quackery
     {
         public void OnPointerEnter(PointerEventData eventData)
         {
-            TooltipManager.ShowTooltipRequest(gameObject);
+            TooltipUI.ShowTooltipRequest(gameObject);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            TooltipManager.HideTooltipRequest();
+            TooltipUI.HideTooltipRequest();
         }
     }
 }

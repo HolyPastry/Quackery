@@ -3,27 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 
 namespace Quackery.Decks
 {
-    public class CardPileUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+
+
+    public class CardPileUI : MonoBehaviour
     {
         [SerializeField] EnumPileType _pileType;
         [SerializeField] private float _moveSpeed = 0.5f;
         [SerializeField] private Ease _easeType = Ease.OutBack;
         [SerializeField] private float _staggerDelay = 0.1f;
         [SerializeField] private RewardPanel _rewardPanel;
-        private bool _activated;
+
+
+        public bool Activated { get; private set; }
 
         public EnumPileType Type => _pileType;
 
         public bool IsEmpty => transform.childCount == 0;
+        public Card TopCard => IsEmpty ? null : GetComponentsInChildren<Card>()[^1];
 
-        public List<Card> Cards => new(GetComponentsInChildren<Card>());
-
-        public int StackSize => GetComponentsInChildren<Card>().Length;
+        //  public List<Card> Cards => new(GetComponentsInChildren<Card>());
 
         public float Height => (transform as RectTransform).sizeDelta.y;
 
@@ -39,16 +41,17 @@ namespace Quackery.Decks
             DeckEvents.OnPileDestroyed += OnPileDestroyed;
             DeckEvents.OnActivatePile += OnActivatePile;
 
-
             StartCoroutine(StaggeredMoveRoutine());
 
         }
+
         void OnDisable()
         {
             DeckEvents.OnCardMovedTo -= OnCardMoved;
             DeckEvents.OnShuffle -= OnShuffle;
             DeckEvents.OnPileDestroyed -= OnPileDestroyed;
             DeckEvents.OnActivatePile -= OnActivatePile;
+
 
             StopAllCoroutines(); // Stop all coroutines when disabled
         }
@@ -57,7 +60,8 @@ namespace Quackery.Decks
         {
             if (type != _pileType || IsEmpty) return;
 
-            _activated = activated;
+            Activated = activated;
+            TopCard.SetOutline(activated);
         }
 
 
@@ -117,6 +121,8 @@ namespace Quackery.Decks
                         continue; // Skip if the card transform is null
                     cardTransform.DOScale(scaleRatio, _moveSpeed);
                     cardTransform.DOAnchorPos(Vector3.zero, _moveSpeed).SetEase(_easeType);
+                    cardTransform.DOLocalRotate(Vector3.zero, _moveSpeed);
+
                     yield return new WaitForSeconds(_staggerDelay); // Stagger the movement of cards
                 }
                 else
@@ -133,27 +139,6 @@ namespace Quackery.Decks
             MoveCardToPile(card, atTheTop);
         }
 
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            //noop
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            TooltipManager.ShowTooltipRequest(gameObject);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            TooltipManager.HideTooltipRequest();
-        }
-
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            if (!_activated || IsEmpty) return;
-            DeckServices.PileClicked(_pileType);
-        }
-
         internal void MoveCardToPile(Card card, bool atTheTop)
         {
             card.transform.SetParent(transform);
@@ -161,7 +146,6 @@ namespace Quackery.Decks
             if (atTheTop)
             {
                 card.transform.SetAsLastSibling();
-
             }
             else
             {

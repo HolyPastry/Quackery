@@ -34,8 +34,11 @@ namespace Quackery
 
         internal static Action<int> ModifyConfidence = (value) => { };
 
-        internal static Action RemoveAllEffects = delegate { };
+        internal static Action<List<EffectData>> RemoveAllEffects = delegate { };
 
         internal static Action<EnumItemCategory> ChangePreference = (category) => { };
+
+        internal static Action<int> SetConfidence = (value) => { };
+
     }
 }

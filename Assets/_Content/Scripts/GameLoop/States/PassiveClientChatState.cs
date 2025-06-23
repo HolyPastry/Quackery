@@ -15,7 +15,7 @@ namespace Quackery
         public override void Exit()
         {
             _gameLoop.ClientTextChat.OnExitingChat -= OnBackButtonPressed;
-            _gameLoop.ClientTextChat.Hide();
+            // _gameLoop.ClientTextChat.Hide();
         }
 
         private void OnBackButtonPressed()

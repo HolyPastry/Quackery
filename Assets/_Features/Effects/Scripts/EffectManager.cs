@@ -42,6 +42,7 @@ namespace Quackery.Effects
             EffectServices.GetStackMultiplier = () => 1;
 
             EffectServices.ModifyConfidence = (value) => { };
+            EffectServices.SetConfidence = (value) => { };
             EffectServices.RemoveAllEffects = delegate { };
             EffectServices.ChangePreference = (category) => { };
 
@@ -71,6 +72,7 @@ namespace Quackery.Effects
             EffectServices.GetStackMultiplier = () => _stackRewardMultiplier;
 
             EffectServices.ModifyConfidence = (value) => ModifyConfidence(value);
+            EffectServices.SetConfidence = (value) => SetConfidence(value);
             EffectServices.RemoveAllEffects = RemoveAllEffects;
             EffectServices.ChangePreference = ChangePreference;
 
@@ -78,6 +80,8 @@ namespace Quackery.Effects
             EffectEvents.OnRemoved += ExecuteOnAppliedEffect;
             EffectEvents.OnUpdated += ExecuteOnAppliedEffect;
         }
+
+
 
         private void ChangePreference(EnumItemCategory category)
         {
@@ -94,14 +98,15 @@ namespace Quackery.Effects
             Add(new Effect(effectData, true));
         }
 
-        private void RemoveAllEffects()
+        private void RemoveAllEffects(List<EffectData> whiteList)
         {
 
             _stackRewardMultiplier = 1;
             EffectEvents.OnStackMultiplerUpdate?.Invoke(_stackRewardMultiplier);
-
-            foreach (var key in _effects.Keys)
+            var keysToRemove = new List<int>(_effects.Keys);
+            foreach (var key in keysToRemove)
             {
+                if (whiteList.Contains(_effects[key].Data)) continue;
                 RemoveById(key);
             }
         }
@@ -124,6 +129,17 @@ namespace Quackery.Effects
                 if (effect.Data is not ConfidenceEffect) return;
                 {
                     effect.Value += value;
+                    EffectEvents.OnUpdated?.Invoke(effect);
+                }
+            }
+        }
+        private void SetConfidence(int value)
+        {
+            foreach (var effect in _effects.Values)
+            {
+                if (effect.Data is not ConfidenceEffect) return;
+                {
+                    effect.Value = value;
                     EffectEvents.OnUpdated?.Invoke(effect);
                 }
             }
@@ -215,6 +231,13 @@ namespace Quackery.Effects
 
         public int Add(Effect effect)
         {
+
+            if (effect.Data.UseValue && _effects.FindValue(e => e.Data == effect.Data, out var existingEffect))
+            {
+                existingEffect.Value += effect.Value;
+                EffectEvents.OnUpdated?.Invoke(existingEffect);
+                return -1;
+            }
 
             int effectId = _nextId++;
             _effects.Add(effectId, effect);

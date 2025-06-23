@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
   m_Name: SigilSticker
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Sigil Stickers
   Icon: {fileID: 21300000, guid: 4593331b4e2cc4ae9b71a59d6197da2a, type: 3}
   StartPrice: 1
-  StartRating: 0
+  Description: <b>Transmute</b> a card in your hand to #Magic
+  SubscriptionCost: 1
   Category: 2
   Effects:
-  - {fileID: 11400000, guid: da18516747cf443f3918d3bb8b47f66c, type: 2}
+  - {fileID: 11400000, guid: cf284c9b1fcb94478b1e6d01394c1cbf, type: 2}
   ValueEvaluator: {fileID: 0}

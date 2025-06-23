@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using Quackery.Decks;
 
 using UnityEngine;
@@ -16,23 +17,31 @@ namespace Quackery
             var card = DeckServices.GetTopCard(cardPileUI.Type);
             if (card == null) return;
 
-            _tooltipManager.AddTooltip($"Stack: {cardPileUI.StackSize}, Value: {DeckServices.EvaluatePileValue(cardPileUI.Type)}");
+            string tooltip = FormatTooltip(card);
 
-
-            foreach (var power in card.Effects)
-                _tooltipManager.AddTooltip(power.Description);
-
-            _tooltipManager.RefreshLayout();
-            ShowNextToCard(hoveredObject.transform);
+            _tooltipManager.AddTooltip(tooltip);
 
         }
 
-        private void ShowNextToCard(Transform objectTransform)
+        private string FormatTooltip(Card card)
         {
-            Canvas canvas = _tooltipManager.GetComponentInParent<Canvas>();
+            string text = "";
 
-            transform.position = objectTransform.position + new Vector3((objectTransform as RectTransform).rect.width / 2 * canvas.scaleFactor, 0);
+            foreach (var effect in card.Effects)
+            {
+                text += effect.Description + "\n";
+            }
+
+
+            return text;
         }
+
+        // private void ShowNextToCard(Transform objectTransform)
+        // {
+        //     Canvas canvas = _tooltipManager.GetComponentInParent<Canvas>();
+
+        //     transform.position = objectTransform.position + new Vector3((objectTransform as RectTransform).rect.width / 2 * canvas.scaleFactor, 0);
+        // }
 
 
     }

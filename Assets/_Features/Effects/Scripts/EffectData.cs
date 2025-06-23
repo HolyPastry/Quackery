@@ -18,6 +18,9 @@ namespace Quackery.Effects
         public virtual int RatingModifier(Effect effect, Card card) => 0;
 
         public virtual int PriceModifier(Effect effect, Card card) => 0;
+
+        public virtual string GetDescription() => Description;
+
         public string Description;
 
         public List<EnumEffectTag> Tags = new();

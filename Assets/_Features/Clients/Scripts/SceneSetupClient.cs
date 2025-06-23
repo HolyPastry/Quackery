@@ -9,10 +9,12 @@ namespace Quackery.Clients
     {
         [SerializeField] private List<ClientData> clients;
         [SerializeField] private bool GenerateDailyQueue = true;
+        [SerializeField] private bool InfiniteQueue = false;
         protected override IEnumerator Routine()
         {
             yield return FlowServices.WaitUntilReady();
             yield return ClientServices.WaitUntilReady();
+            ClientServices.SetInfiniteQueue(InfiniteQueue);
             foreach (var client in clients)
             {
                 ClientServices.AddClient(client);

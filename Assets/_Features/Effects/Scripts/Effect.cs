@@ -32,7 +32,13 @@ namespace Quackery
         [NonSerialized]
         public Vector2 Origin;
 
-        public string Description => Data.Description.Replace("{#Value}", Value.ToString());
+        public string Description
+        {
+            get
+            {
+                return Data.GetDescription().Replace("#Value", Value.ToString());
+            }
+        }
 
         public EnumEffectTrigger Trigger => Data.Trigger;
         public Sprite Icon => Data.Icon;

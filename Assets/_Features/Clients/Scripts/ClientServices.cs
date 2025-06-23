@@ -24,6 +24,6 @@ namespace Quackery.Clients
 
         internal static Action ClientLeaves = () => { };
 
-
+        internal static Action<bool> SetInfiniteQueue = (infinite) => { };
     }
 }

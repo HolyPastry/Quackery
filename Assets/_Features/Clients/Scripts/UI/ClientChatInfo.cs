@@ -15,7 +15,6 @@ namespace Quackery
         [SerializeField] private Ease _easeType;
         [SerializeField] private float _transitionDuration = 1f;
         [SerializeField] private CustomerPanelState _currentState;
-        [SerializeField] private Button _backButton;
         private ChatWindow _chatWindow;
 
         public bool IsPanelMoving = false;
@@ -48,18 +47,6 @@ namespace Quackery
         {
             _chatWindow = GetComponentInChildren<ChatWindow>(true);
             _chatWindow.enabled = false;
-        }
-        void OnEnable()
-        {
-            _backButton.onClick.AddListener(() =>
-            {
-                OnBackButtonPressed?.Invoke();
-            });
-        }
-
-        void OnDisable()
-        {
-            _backButton.onClick.RemoveAllListeners();
         }
 
         public void SetClientInfo(Client client)

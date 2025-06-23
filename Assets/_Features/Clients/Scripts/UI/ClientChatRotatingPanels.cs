@@ -23,8 +23,6 @@ namespace Quackery
     }
     public class ClientChatRotatingPanels : MonoBehaviour
     {
-        [SerializeField] private Canvas _canvas;
-        [SerializeField] private AnimatedRect _animatable;
         private List<ClientChatInfo> _panels = new();
         private ClientChatInfo _enteringPanel;
 
@@ -36,8 +34,6 @@ namespace Quackery
         void Awake()
         {
             GetComponentsInChildren(true, _panels);
-
-            // _panels.ForEach(p => p.TeleportToPosition(CustomerPanelState.ReadyToEnter));
 
         }
 
@@ -68,20 +64,10 @@ namespace Quackery
 
         public void Show(CustomerPanelSize size)
         {
-
-            _canvas.gameObject.SetActive(true);
-            _animatable.SlideIn(Direction.Right);
             SetSize(size);
             ClientChatInfo panel = _panels.Find(p => p.CurrentState == CustomerPanelState.Active);
             panel.EnableChat();
             panel.SetClientInfo(ClientServices.SelectedClient());
-        }
-        public void Hide()
-        {
-            _animatable.SlideOut(Direction.Left).DoComplete(() =>
-            {
-                _canvas.gameObject.SetActive(false);
-            });
         }
 
         public void SetSize(CustomerPanelSize size)
