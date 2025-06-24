@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Bakery.Saves;
 using Holypastry.Bakery;
 using Quackery.Effects;
+using UnityEditor;
 
 namespace Quackery.Clients
 {
@@ -48,8 +49,6 @@ namespace Quackery.Clients
             foreach (var client in Clients)
             {
                 client.Data = Collection.GetFromName(client.Key);
-                foreach (var effect in client.Effects)
-                    effect.Data = EffectCollection.GetFromName(effect.Key);
             }
         }
 

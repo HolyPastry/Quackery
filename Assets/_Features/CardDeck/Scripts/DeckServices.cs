@@ -47,7 +47,7 @@ namespace Quackery
 
         internal static Action<int> SetCartSize = (newSize) => { };
 
-        internal static Action<int> ExpandCart = (amount) => { };
+        internal static Action<int> ModifyCartSize = (amount) => { };
 
         internal static Action<int> MergeCart = (amount) => { };
 
@@ -63,5 +63,6 @@ namespace Quackery
 
         internal static Action<int> DiscardCards = (amount) => { };
 
+        internal static Action RestoreCardCategories = () => { };
     }
 }

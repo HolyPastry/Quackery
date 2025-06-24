@@ -17,7 +17,7 @@ namespace Quackery.Effects
         [SerializeField] private List<EffectData> _whiteList;
         public override void Execute(Effect effect, CardPile pile)
         {
-            EffectServices.RemoveAllEffects(_whiteList);
+            EffectServices.CancelAllEffects(_whiteList);
         }
     }
 }

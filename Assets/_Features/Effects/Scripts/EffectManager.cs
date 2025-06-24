@@ -3,19 +3,15 @@ using System.Collections.Generic;
 using Holypastry.Bakery;
 using Quackery.Decks;
 using Quackery.Inventories;
+using Quackery.Ratings;
 using UnityEngine;
 
 namespace Quackery.Effects
 {
     public class EffectManager : MonoBehaviour
     {
-        private readonly Dictionary<int, Effect> _effects = new();
-
+        private readonly List<Effect> _effects = new();
         private DataCollection<EffectData> _effectCollection;
-
-        private int _nextId = 0;
-
-        private int _stackRewardMultiplier = 1;
 
         void Awake()
         {
@@ -24,26 +20,23 @@ namespace Quackery.Effects
 
         void OnDisable()
         {
-            EffectServices.Add = (effectData) => -1;
-            EffectServices.Remove = delegate { };
-            EffectServices.RemoveById = delegate { };
+            EffectServices.Add = (effectData) => { };
+            EffectServices.Cancel = delegate { };
 
-            EffectServices.UpdateValue = delegate { };
             EffectServices.Execute = delegate { };
             EffectServices.GetCurrent = () => new();
 
+            EffectServices.ModifyValue = (effectData, value) => { };
+            EffectServices.SetValue = (effectData, value) => { };
+            EffectServices.GetValue = (effectData) => 1;
+
+
             EffectServices.RemoveEffectsLinkedToPiles = delegate { };
-            EffectServices.GetPriceModifier = (card) => 0;
-            EffectServices.GetRatingModifier = (card) => 0;
+            EffectServices.GetCardPrice = (card) => 0;
 
-            EffectServices.CleanEffects = delegate { _effects.Clear(); _nextId = 0; };
+            EffectServices.CleanEffects = delegate { _effects.Clear(); };
 
-            EffectServices.IncreaseStackReward = delegate { };
-            EffectServices.GetStackMultiplier = () => 1;
-
-            EffectServices.ModifyConfidence = (value) => { };
-            EffectServices.SetConfidence = (value) => { };
-            EffectServices.RemoveAllEffects = delegate { };
+            EffectServices.CancelAllEffects = delegate { };
             EffectServices.ChangePreference = (category) => { };
 
             EffectEvents.OnAdded -= ExecuteOnAppliedEffect;
@@ -56,24 +49,24 @@ namespace Quackery.Effects
         void OnEnable()
         {
             EffectServices.Add = Add;
-            EffectServices.Remove = Remove;
-            EffectServices.RemoveById = RemoveById;
-
-            EffectServices.UpdateValue = UpdateValue;
+            EffectServices.Cancel = Cancel;
             EffectServices.Execute = Execute;
-            EffectServices.GetCurrent = () => new List<Effect>(_effects.Values);
+            EffectServices.GetCurrent = () => new List<Effect>(_effects);
+
+
+            EffectServices.ModifyValue = ModifyValue;
+            EffectServices.SetValue = SetValue;
+            EffectServices.GetValue = GetValue;
+
+
 
             EffectServices.RemoveEffectsLinkedToPiles = RemoveEffectsLinkedToPiles;
-            EffectServices.GetPriceModifier = GetPriceModifier;
-            EffectServices.GetRatingModifier = GetRatingModifier;
-
             EffectServices.CleanEffects = CleanEffect;
-            EffectServices.IncreaseStackReward = IncreaseStackReward;
-            EffectServices.GetStackMultiplier = () => _stackRewardMultiplier;
 
-            EffectServices.ModifyConfidence = (value) => ModifyConfidence(value);
-            EffectServices.SetConfidence = (value) => SetConfidence(value);
-            EffectServices.RemoveAllEffects = RemoveAllEffects;
+            EffectServices.GetCardPrice = GetCardPrice;
+
+
+            EffectServices.CancelAllEffects = CancelAllEffects;
             EffectServices.ChangePreference = ChangePreference;
 
             EffectEvents.OnAdded += ExecuteOnAppliedEffect;
@@ -83,113 +76,157 @@ namespace Quackery.Effects
 
 
 
-        private void ChangePreference(EnumItemCategory category)
+        private int GetCardPrice(Card card)
         {
-            if (_effects.RemoveValue(effect => effect.Data is BoostPriceEffect boostPrice &&
-                    effect.ContainsTag(EnumEffectTag.Client), out var removed))
-                EffectEvents.OnRemoved?.Invoke(removed);
+            if (card == null) return 0;
 
+            int priceModifier = GetPriceModifier(card);
+            float ratioModifier = GetPriceRatioModifier(card);
 
-            var effectData = _effectCollection.Find(effectData =>
-            effectData is BoostPriceEffect boostPriceEffect &&
-            boostPriceEffect.Category == category &&
-            effectData.Tags.Contains(EnumEffectTag.Client));
+            int basePrice = card.Item.Price;
 
-            Add(new Effect(effectData, true));
+            if (_effects.Exists(effect => effect.Data is PriceIsRatingEffect))
+                basePrice = RatingServices.GetRating();
+
+            int finalPrice = Mathf.RoundToInt((basePrice + priceModifier) * ratioModifier);
+
+            return Mathf.Max(finalPrice, 0); // Ensure price is not negative
         }
 
-        private void RemoveAllEffects(List<EffectData> whiteList)
+        private void ChangePreference(EnumItemCategory category)
         {
-
-            _stackRewardMultiplier = 1;
-            EffectEvents.OnStackMultiplerUpdate?.Invoke(_stackRewardMultiplier);
-            var keysToRemove = new List<int>(_effects.Keys);
-            foreach (var key in keysToRemove)
+            var effect = _effects.Find(effect => effect.Data is ValuePriceEffect boostPrice &&
+                    effect.ContainsTag(EnumEffectTag.Client));
+            if (effect != null)
             {
-                if (whiteList.Contains(_effects[key].Data)) continue;
-                RemoveById(key);
+                _effects.Remove(effect);
+                EffectEvents.OnRemoved?.Invoke(effect);
             }
+
+            var effectData = _effectCollection.Find(effectData =>
+            effectData is ValuePriceEffect boostPriceEffect &&
+            boostPriceEffect.Category == category
+            );
+            var newEffect = new Effect(effectData);
+            newEffect.Tags.Add(EnumEffectTag.Client);
+            Add(newEffect);
+        }
+
+        private int GetValue(EffectData data)
+        {
+            var existingEffect = _effects.Find(e
+                => e.Data == data);
+            if (existingEffect != null)
+            {
+                return existingEffect.Value;
+            }
+            return 0;
+        }
+
+        private void SetValue(EffectData data, int value)
+        {
+            var existingEffect = _effects.Find(e
+                => e.Data == data);
+            if (existingEffect != null)
+            {
+                existingEffect.Value = value;
+                EffectEvents.OnUpdated?.Invoke(existingEffect);
+            }
+            else
+            {
+                var newEffect = new Effect(data) { Value = value };
+                _effects.Add(newEffect);
+                EffectEvents.OnAdded?.Invoke(newEffect);
+            }
+        }
+
+        private void ModifyValue(EffectData data, int arg2)
+        {
+            var existingEffect = _effects.Find(e
+                => e.Data == data);
+            if (existingEffect != null)
+            {
+                existingEffect.Value += arg2;
+                EffectEvents.OnUpdated?.Invoke(existingEffect);
+            }
+            else
+            {
+                var newEffect = new Effect(data) { Value = arg2 };
+                _effects.Add(newEffect);
+                EffectEvents.OnAdded?.Invoke(newEffect);
+            }
+        }
+
+        private int GetValue()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CancelAllEffects(List<EffectData> whiteList)
+        {
+            var effectToCancel = _effects.FindAll(effect => !whiteList.Contains(effect.Data));
+
+            foreach (var effect in effectToCancel)
+                Cancel(effect.Data);
         }
 
         private void ExecuteOnAppliedEffect(Effect _)
         {
-            foreach (var effect in _effects.Values)
-            {
-                if (effect.Data.Trigger == EnumEffectTrigger.OnEffectApplied)
-                {
+            foreach (var effect in _effects)
+                if (effect.Trigger == EnumEffectTrigger.OnEffectApplied)
                     effect.Execute(null);
-                }
-            }
+
         }
 
         private void ModifyConfidence(int value)
         {
-            foreach (var effect in _effects.Values)
-            {
-                if (effect.Data is not ConfidenceEffect) return;
-                {
-                    effect.Value += value;
-                    EffectEvents.OnUpdated?.Invoke(effect);
-                }
-            }
+            var confidenceEffect = _effects.Find(effect => effect.Data is ConfidenceEffect);
+            if (confidenceEffect == null) return;
+
+            confidenceEffect.Value += value;
+            EffectEvents.OnUpdated?.Invoke(confidenceEffect);
+
         }
         private void SetConfidence(int value)
         {
-            foreach (var effect in _effects.Values)
-            {
-                if (effect.Data is not ConfidenceEffect) return;
-                {
-                    effect.Value = value;
-                    EffectEvents.OnUpdated?.Invoke(effect);
-                }
-            }
-        }
+            var confidenceEffect = _effects.Find(effect => effect.Data is ConfidenceEffect);
+            if (confidenceEffect == null) return;
 
-        private void IncreaseStackReward(int increase)
-        {
-            _stackRewardMultiplier += increase;
-            EffectEvents.OnStackMultiplerUpdate?.Invoke(_stackRewardMultiplier);
+            confidenceEffect.Value = value;
+            EffectEvents.OnUpdated?.Invoke(confidenceEffect);
         }
 
         private void CleanEffect()
         {
-            var keysToRemove = new List<int>();
+            var effectToClean = _effects.FindAll(effect =>
+                effect.Tags.Contains(EnumEffectTag.Activated) ||
+                effect.Tags.Contains(EnumEffectTag.Client));
 
-            foreach (var (key, effect) in _effects)
+            foreach (var effect in effectToClean)
             {
-                if (effect.Data.Tags.Contains(EnumEffectTag.Activated))
-                    keysToRemove.Add(key);
-                if (effect.Data.Tags.Contains(EnumEffectTag.Client))
-                    keysToRemove.Add(key);
+                _effects.Remove(effect);
+                EffectEvents.OnRemoved?.Invoke(effect);
             }
-
-            _stackRewardMultiplier = 1;
-            EffectEvents.OnStackMultiplerUpdate?.Invoke(_stackRewardMultiplier);
-            foreach (var key in keysToRemove)
-            {
-                RemoveById(key);
-            }
-        }
-
-        private int GetRatingModifier(Card card)
-        {
-
-            int ratingModifier = 0;
-            foreach (var effect in _effects.Values)
-            {
-                ratingModifier += effect.RatingModifier(card);
-            }
-            return ratingModifier;
         }
 
         private int GetPriceModifier(Card card)
         {
             int priceModifier = 0;
-            foreach (var effect in _effects.Values)
+            foreach (var effect in _effects)
             {
                 priceModifier += effect.PriceModifier(card);
             }
             return priceModifier;
+        }
+
+        private float GetPriceRatioModifier(Card card)
+        {
+            float priceRatioModifier = 1.0f;
+            foreach (var effect in _effects)
+            {
+                priceRatioModifier += effect.PriceRatioModifier(card);
+            }
+            return priceRatioModifier;
         }
 
         private void RemoveEffectsLinkedToPiles(List<CardPile> list)
@@ -199,94 +236,65 @@ namespace Quackery.Effects
             {
                 if (pile == null) continue;
                 List<int> idsToRemove = new();
-                foreach (var (id, effect) in _effects)
+                var effectToRemove = _effects.FindAll(effect =>
+                    effect.LinkedCard != null &&
+                    effect.Tags.Contains(EnumEffectTag.Activated) &&
+                    effect.LinkedCard == pile.TopCard);
+
+                foreach (var effect in effectToRemove)
                 {
-                    if (effect.LinkedCard != null &&
-                        !pile.IsEmpty &&
-                        effect.Data.Tags.Contains(EnumEffectTag.Activated) &&
-                        effect.LinkedCard == pile.TopCard)
-                    {
-                        idsToRemove.Add(id);
-                    }
-                }
-                foreach (var id in idsToRemove)
-                {
-                    RemoveById(id);
+                    _effects.Remove(effect);
+                    EffectEvents.OnRemoved?.Invoke(effect);
                 }
             }
         }
 
-        private void RemoveById(int id)
-        {
-            if (!_effects.ContainsKey(id))
-            {
-                Debug.LogWarning($"Status with ID {id} not found.");
-                return;
-            }
-
-            var effect = _effects[id];
-            _effects.Remove(id);
-            EffectEvents.OnRemoved?.Invoke(effect);
-        }
-
-        public int Add(Effect effect)
+        public void Add(Effect effect)
         {
 
-            if (effect.Data.UseValue && _effects.FindValue(e => e.Data == effect.Data, out var existingEffect))
+            var existingEffect = _effects.Find(e
+                => e.Data == effect.Data &&
+                     e.Trigger == effect.Trigger);
+
+            if (existingEffect != null)
             {
                 existingEffect.Value += effect.Value;
                 EffectEvents.OnUpdated?.Invoke(existingEffect);
-                return -1;
+                return;
             }
-
-            int effectId = _nextId++;
-            _effects.Add(effectId, effect);
-
+            _effects.Add(effect);
             EffectEvents.OnAdded?.Invoke(effect);
-            return effectId;
+
         }
 
-        public void Remove(Effect effectToRemove)
+
+        private void Cancel(EffectData effectData)
         {
-            if (!_effects.ContainsValue(effectToRemove)) return;
-            foreach (var (key, effect) in _effects)
-            {
-                if (effect == effectToRemove)
-                {
-                    _effects.Remove(key);
-                    EffectEvents.OnRemoved?.Invoke(effect);
-                    return;
-                }
-            }
+            if (effectData == null) return;
+
+            var effect = _effects.Find(e => e.Data == effectData);
+            if (effect == null) return;
+            effect.Data.Cancel(effect);
+            _effects.Remove(effect);
+            EffectEvents.OnRemoved?.Invoke(effect);
         }
 
         private void Execute(EnumEffectTrigger trigger, CardPile pile)
         {
             List<int> _effectToRemove = new();
-            foreach (var (key, effect) in _effects)
+            var effectToExecute = _effects.FindAll(effect => effect.Trigger == trigger);
+
+
+            foreach (var effect in effectToExecute)
             {
                 if (effect.Trigger != trigger) continue;
                 effect.Execute(pile);
-                if (effect.Data.Tags.Contains(EnumEffectTag.OneTime))
-                    _effectToRemove.Add(key);
+                if (effect.Tags.Contains(EnumEffectTag.OneTime))
+                {
+                    _effects.Remove(effect);
+                    EffectEvents.OnRemoved?.Invoke(effect);
+                }
             }
-            foreach (var id in _effectToRemove)
-            {
-                RemoveById(id);
-            }
-        }
-
-        public void UpdateValue(int effectId, int value)
-        {
-            if (!_effects.ContainsKey(effectId))
-            {
-                Debug.LogWarning($"Effect with ID {effectId} not found.");
-                return;
-            }
-            _effects[effectId].Value = value;
-
-            EffectEvents.OnUpdated?.Invoke(_effects[effectId]);
-
         }
     }
 }

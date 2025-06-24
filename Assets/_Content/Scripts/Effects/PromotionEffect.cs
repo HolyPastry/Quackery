@@ -8,7 +8,7 @@ namespace Quackery.Effects
     {
         public override void Execute(Effect effect, CardPile pile)
         {
-            EffectServices.IncreaseStackReward(effect.Value);
+            //EffectServices.IncreaseStackReward(effect.Value);
         }
     }
 }

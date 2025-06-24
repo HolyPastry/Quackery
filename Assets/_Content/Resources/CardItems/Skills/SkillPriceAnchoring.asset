@@ -15,8 +15,8 @@ MonoBehaviour:
   MasterText: Price Anchoring
   Icon: {fileID: 21300000, guid: 69b5dc94bed67f7429ce84b86739e2fe, type: 3}
   StartPrice: 1
-  StartRating: 0
+  Description: 
+  SubscriptionCost: 0
   Category: 6
-  Effects:
-  - {fileID: 11400000, guid: ff2a485e2010f4606b382f0e07d18097, type: 2}
+  Effects: []
   ValueEvaluator: {fileID: 0}

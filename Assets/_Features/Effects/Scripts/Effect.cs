@@ -1,56 +1,35 @@
 using System;
-
+using System.Collections.Generic;
 using Quackery.Decks;
 using Quackery.Effects;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace Quackery
 {
+
+
+    [Serializable]
     public class Effect
     {
-
-        public EffectData Data
-        {
-            get => _data;
-            set
-            {
-                _data = value;
-                if (_data != null)
-                {
-                    Key = _data.name;
-                }
-            }
-        }
-        private EffectData _data;
-        public string Key;
+        public EffectData Data;
         public int Value;
+        public EnumEffectTrigger Trigger;
+        public List<EnumEffectTag> Tags = new();
 
-        [NonSerialized]
-        public Card LinkedCard;
-
-        [NonSerialized]
-        public Vector2 Origin;
-
-        public string Description
-        {
-            get
-            {
-                return Data.GetDescription().Replace("#Value", Value.ToString());
-            }
-        }
-
-        public EnumEffectTrigger Trigger => Data.Trigger;
         public Sprite Icon => Data.Icon;
+
+        public Card LinkedCard { get; set; }
+
+        public string Description => Data == null ?
+                         "No Effect Data Assigned" :
+                 Data.GetDescription().Replace("#Value", Value.ToString());
 
         public Effect()
         { }
 
-        public Effect(EffectData data, bool initValue)
+        public Effect(EffectData data)
         {
             Data = data;
-            if (initValue)
-                Value = Data.StartValue;
         }
 
         internal void Execute(CardPile pile)
@@ -59,13 +38,12 @@ namespace Quackery
             Data.Execute(this, pile);
         }
 
-        public int RatingModifier(Card card) => Data.RatingModifier(this, card);
         public int PriceModifier(Card card) => Data.PriceModifier(this, card);
+        public float PriceRatioModifier(Card card) => Data.RatioPriceModifier(this, card);
 
         internal bool ContainsTag(EnumEffectTag effectTag)
         {
-            if (Data == null) return false;
-            return Data.Tags.Contains(effectTag);
+            return Tags.Contains(effectTag);
         }
     }
 }

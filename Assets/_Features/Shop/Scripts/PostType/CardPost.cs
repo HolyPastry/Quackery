@@ -31,7 +31,6 @@ namespace Quackery.Shops
             Assert.IsNotNull(cardReward, "CardPost can only handle CardReward types.");
 
             SetCard(cardReward.ItemData);
-
         }
 
         public void SetCard(ItemData itemData)

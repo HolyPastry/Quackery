@@ -15,8 +15,8 @@ MonoBehaviour:
   MasterText: TechnicalGlitch
   Icon: {fileID: 21300000, guid: becafd84bad54f947a752f021dfe1623, type: 3}
   StartPrice: 1
-  StartRating: 0
+  Description: 
+  SubscriptionCost: 0
   Category: 6
-  Effects:
-  - {fileID: 11400000, guid: 03be1d03f54764c1eb89214c16e83ba5, type: 2}
+  Effects: []
   ValueEvaluator: {fileID: 0}

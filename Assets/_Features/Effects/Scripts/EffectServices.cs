@@ -9,10 +9,12 @@ namespace Quackery
 {
     public static class EffectServices
     {
-        public static Func<Effect, int> Add = (data) => -1;
-        public static Action<Effect> Remove = delegate { };
-        public static Action<int> RemoveById = delegate { };
-        public static Action<int, int> UpdateValue = delegate { };
+        public static Action<Effect> Add = (data) => { };
+        public static Action<EffectData> Cancel = delegate { };
+
+        // public static Action<int> RemoveById = delegate { };
+
+        // public static Action<int, int> UpdateValue = delegate { };
 
         public static Func<List<Effect>> GetCurrent = () => new();
 
@@ -21,24 +23,27 @@ namespace Quackery
         internal static Action<List<CardPile>> RemoveEffectsLinkedToPiles = delegate { };
 
 
-        internal static Func<Card, int> GetPriceModifier = (card) => 0;
-        internal static Func<Card, int> GetRatingModifier = (card) => 0;
+        // internal static Func<Card, int> GetPriceModifier = (card) => 0;
+        // internal static Func<Card, int> GetRatingModifier = (card) => 0;
 
         internal static Action CleanEffects = delegate { };
 
 
-        internal static Action<int> IncreaseStackReward = (amount) => { };
-
-        public static Func<int> GetStackMultiplier = () => 1;
+        public static Func<EffectData, int> GetValue = (effectData) => 1;
 
 
-        internal static Action<int> ModifyConfidence = (value) => { };
+        internal static Action<EffectData, int> ModifyValue = (effectData, value) => { };
+        internal static Action<EffectData, int> SetValue = (effectData, value) => { };
 
-        internal static Action<List<EffectData>> RemoveAllEffects = delegate { };
+        internal static Action<List<EffectData>> CancelAllEffects = delegate { };
 
         internal static Action<EnumItemCategory> ChangePreference = (category) => { };
 
-        internal static Action<int> SetConfidence = (value) => { };
+
+
+
+
+        internal static Func<Card, int> GetCardPrice = (card) => 0;
 
     }
 }

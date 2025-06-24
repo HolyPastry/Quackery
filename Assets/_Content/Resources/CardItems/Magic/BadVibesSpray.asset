@@ -15,10 +15,16 @@ MonoBehaviour:
   MasterText: 
   Icon: {fileID: 21300000, guid: 5382d34bc060d46718ac124080b204fe, type: 3}
   StartPrice: 1
-  Description: Remove all customer status. Reduce confidence to 0
+  Description: Remove all customer status. -1 Rating
   SubscriptionCost: 0
   Category: 2
   Effects:
-  - {fileID: 11400000, guid: fa5ae57cd5de542419740c4385d93a0c, type: 2}
-  - {fileID: 11400000, guid: c35569a1e9f264b2397d4e7a8fa631f8, type: 2}
+  - Data: {fileID: 11400000, guid: fa5ae57cd5de542419740c4385d93a0c, type: 2}
+    Value: 0
+    Trigger: 1
+    Tags: 
+  - Data: {fileID: 11400000, guid: e70add7ad83d1426fbc50047ea4b68de, type: 2}
+    Value: -1
+    Trigger: 1
+    Tags: 
   ValueEvaluator: {fileID: 0}

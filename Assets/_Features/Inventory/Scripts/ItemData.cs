@@ -25,7 +25,7 @@ namespace Quackery.Inventories
 
         public EnumItemCategory Category;
 
-        public List<EffectData> Effects = new();
+        public List<Effect> Effects = new();
 
         public ValueEvaluator ValueEvaluator;
 
@@ -43,18 +43,15 @@ namespace Quackery.Inventories
                 }
             };
 
-            if (topCard.Rating > 0)
-                rewards.Add(new()
-                {
-                    Type = EnumCardReward.RatingReward,
-                    Value = topCard.Rating
-                });
+
             if (subItems.Count > 0)
             {
                 rewards.Add(new()
                 {
                     Type = EnumCardReward.StackReward,
-                    Value = subItems.Sum(subItem => subItem.Price) * EffectServices.GetStackMultiplier()
+                    Value = subItems.Count
+                    //TODO: Count the stacks properly using Effects
+                    //Value = EffectServices.GetValue(topCard, subItems)
                 });
             }
             int numSameCategory = 0;

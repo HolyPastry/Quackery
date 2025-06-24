@@ -35,7 +35,6 @@ namespace Quackery.Decks
         [SerializeField] private Image _outline;
 
         public Item Item
-
         {
             get => _item;
             set
@@ -43,14 +42,12 @@ namespace Quackery.Decks
                 Assert.IsNotNull(value, "Item cannot be null");
                 _item = value;
 
-                UpdateEffects();
+
+                //  UpdateEffects();
                 _cardForeground.sprite = _item.Data.Icon;
                 _cardName.text = _item.Data.GetDescription();
 
                 if (IsSkill) return;
-
-                Price = _item.Price;
-                Rating = _item.Rating;
                 _cardBackground.color = Colors.Get(_item.Category.ToString());
 
                 _cardPrice.text = Price.ToString();
@@ -92,7 +89,7 @@ namespace Quackery.Decks
 
         public EnumItemCategory Category => _item.Category;
 
-        public List<Effect> Effects { get; private set; }
+        public List<Effect> Effects => _item.Data.Effects;
 
         public bool HasActivatableEffects
         {
@@ -100,7 +97,7 @@ namespace Quackery.Decks
             {
                 foreach (var effect in Effects)
                 {
-                    if (effect.Data.Tags.Contains(EnumEffectTag.Activated)
+                    if (effect.Tags.Contains(EnumEffectTag.Activated)
                     && !_activatedEffects.Contains(effect))
                         return true;
 
@@ -111,8 +108,8 @@ namespace Quackery.Decks
 
         private Item _item;
 
-        public int Price { get; private set; }
-        public int Rating { get; private set; }
+        public int Price => EffectServices.GetCardPrice(this);
+
         public bool CannotBeCovered
         {
             get
@@ -122,7 +119,6 @@ namespace Quackery.Decks
         }
 
         private List<EffectIcon> _effectIconPool = new();
-        private Material _material;
         private readonly List<Effect> _activatedEffects = new();
 
         void Awake()
@@ -137,29 +133,28 @@ namespace Quackery.Decks
             _outline.gameObject.SetActive(isOn);
         }
 
-        private void UpdateEffects()
-        {
-            Effects = new();
-            foreach (var data in _item.Data.Effects)
-            {
-                Effects.Add(new Effect(data, initValue: true));
-            }
-            for (int i = 0; i < _effectIconPool.Count; i++)
-            {
-                var icon = _effectIconPool[i];
-                if (i < Effects.Count)
-                {
-                    icon.gameObject.SetActive(true);
-                    icon.Effect = Effects[i];
+        // private void UpdateEffects()
+        // {
+        //     Effects = new();
+        //     foreach (var data in _item.Data.Effects)
+        //     {
+        //         Effects.Add(new Effect(data, initValue: true));
+        //     }
+        //     for (int i = 0; i < _effectIconPool.Count; i++)
+        //     {
+        //         var icon = _effectIconPool[i];
+        //         if (i < Effects.Count)
+        //         {
+        //             icon.gameObject.SetActive(true);
+        //             icon.Effect = Effects[i];
+        //         }
+        //         else
+        //         {
+        //             icon.gameObject.SetActive(false);
+        //         }
 
-                }
-                else
-                {
-                    icon.gameObject.SetActive(false);
-                }
-
-            }
-        }
+        //     }
+        // }
 
         internal List<CardReward> CalculateCardReward(List<Card> allCards, List<CardPile> otherPiles)
         {
@@ -169,7 +164,6 @@ namespace Quackery.Decks
         public void Discard()
         {
             if (IsSkill) return;
-            Price = _item.Price;
             // Rating = _item.Rating;
             _cardPrice.text = Price.ToString();
             // _cardRating.text = Rating.ToString();
@@ -177,26 +171,21 @@ namespace Quackery.Decks
             _effectIconPool.ForEach(icon => icon.Activated = false);
         }
 
-        public void CheckEffects()
+        public void UpdateUI()
         {
-            int priceModifier = EffectServices.GetPriceModifier(this);
-            // int ratingModifier = EffectServices.GetRatingModifier(this);
-            Price = _item.Price + priceModifier;
-            //   Rating = _item.Rating + ratingModifier;
             _cardPrice.text = Price.ToString();
-            //_cardRating.text = Rating.ToString();
         }
 
         internal void ExecutePowerInCart(CardPile pile)
         {
             foreach (var effect in Effects)
             {
-                if (effect.Data.Tags.Contains(EnumEffectTag.Activated)) continue;
+                if (effect.Tags.Contains(EnumEffectTag.Activated)) continue;
                 if (effect.Trigger == EnumEffectTrigger.OnCardMoveToCart)
                     effect.Execute(pile);
-                if (effect.Trigger == EnumEffectTrigger.OnDraw ||
-                     effect.Trigger == EnumEffectTrigger.Continous)
-                    EffectServices.Add(effect);
+                // if (effect.Trigger == EnumEffectTrigger.OnDraw ||
+                //      effect.Trigger == EnumEffectTrigger.Continous)
+                //     EffectServices.Add(effect);
             }
         }
 
@@ -213,7 +202,7 @@ namespace Quackery.Decks
         {
             foreach (var effect in Effects)
             {
-                if (!effect.Data.Tags.Contains(EnumEffectTag.Activated)) continue;
+                if (!effect.Tags.Contains(EnumEffectTag.Activated)) continue;
                 if (_activatedEffects.Contains(effect)) continue;
 
                 effect.LinkedCard = lastCartPile.TopCard;
@@ -231,6 +220,17 @@ namespace Quackery.Decks
             _item.OverrideCategory = category;
             _cardBackground.color = Colors.Get(category.ToString());
             SetCategoryIcon();
+        }
+
+
+        internal void RemoveCategoryOverride()
+        {
+            _item.OverrideCategory = EnumItemCategory.Unset;
+        }
+
+        public override string ToString()
+        {
+            return $"{_item.Name} - {_item.Price} ";
         }
     }
 }

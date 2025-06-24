@@ -140,5 +140,16 @@ namespace Quackery.Decks
             return TopCard.CalculateCardReward(allCards, otherPiles);
 
         }
+
+        internal void RestoreCategory()
+        {
+            foreach (var card in Cards)
+            {
+                if (card != null)
+                {
+                    card.RemoveCategoryOverride();
+                }
+            }
+        }
     }
 }

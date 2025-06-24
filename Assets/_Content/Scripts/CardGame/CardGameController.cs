@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Quackery.Clients;
-
+using Quackery.Ratings;
 using TMPro;
 using UnityEngine;
 
@@ -11,6 +11,8 @@ using UnityEngine;
 
 namespace Quackery.Decks
 {
+
+
     public class CardGameController : MonoBehaviour
     {
         [Header("References")]
@@ -21,6 +23,7 @@ namespace Quackery.Decks
         [SerializeField] private Transform _cartCashTransform;
         [SerializeField] private List<CardPileUI> _cardPileUIs;
         [SerializeField] private GameObject _cardSelectPanel;
+        [SerializeField] private GameObject _cardBonusRealization;
 
         [SerializeField] private EndDayScreen _endDayScreen;
         [SerializeField] private EndOfRoundScreen _endRoundScreen;
@@ -225,6 +228,7 @@ namespace Quackery.Decks
 
         internal void StartNewRound(Client client)
         {
+            DeckServices.Shuffle();
             RoundInterrupted = false;
             _client = client;
             _roundInProgress = true;
@@ -236,12 +240,37 @@ namespace Quackery.Decks
 
         private IEnumerator StartRoundRoutine()
         {
-            DeckServices.SetCartSize(_cartSize);
-            foreach (var effect in _client.Effects)
-                EffectServices.Add(effect);
+            var cardBonus = RatingServices.GetCardBonus();
 
-            DeckServices.Shuffle();
+            if (cardBonus == -1)
+            {
+                DeckServices.SetCartSize(_cartSize + cardBonus);
+                _cardBonusRealization.SetActive(true);
+                yield return new WaitForSeconds(1f);
+                _cardBonusRealization.SetActive(false);
+            }
+            else if (cardBonus >= 1)
+            {
+                DeckServices.SetCartSize(_cartSize);
+                _cardBonusRealization.SetActive(true);
+                yield return new WaitForSeconds(1f);
+                _cardBonusRealization.SetActive(false);
+                DeckServices.SetCartSize(_cartSize + cardBonus);
+            }
+            else
+                DeckServices.SetCartSize(_cartSize + cardBonus);
+
+            foreach (var effect in _client.Effects)
+            {
+                yield return new WaitForSeconds(0.2f);
+                EffectServices.Add(effect);
+                if (effect.Trigger == Effects.EnumEffectTrigger.OnRoundStart)
+                    effect.Execute(null);
+            }
+
             yield return new WaitForSeconds(0.2f);
+
+            yield return new WaitForSeconds(1);
             DeckServices.DrawBackToFull();
         }
 

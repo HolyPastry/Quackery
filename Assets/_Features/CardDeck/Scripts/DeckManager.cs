@@ -113,13 +113,14 @@ namespace Quackery.Decks
 
             DeckServices.IsCartFull = () => false;
             DeckServices.SetCartSize = (newSize) => { };
-            DeckServices.ExpandCart = (amount) => { };
+            DeckServices.ModifyCartSize = (amount) => { };
 
             DeckServices.MergeCart = (amount) => { };
             DeckServices.RecountCart = () => { };
 
 
             DeckServices.ChangeRandomgTableCardCategory = (category) => { };
+            DeckServices.RestoreCardCategories = () => { };
 
 
             EffectEvents.OnAdded -= CheckEffects;
@@ -162,7 +163,7 @@ namespace Quackery.Decks
             DeckServices.MoveToTable = MoveToTable;
 
             DeckServices.SetCartSize = (newSize) => UpdateCartSize(newSize);
-            DeckServices.ExpandCart = (amount) => UpdateCartSize(CartSize + amount);
+            DeckServices.ModifyCartSize = (amount) => UpdateCartSize(Mathf.Max(2, CartSize + amount));
             DeckServices.IsCartFull = () => CartIsFull;
 
             DeckServices.MergeCart = MergeCart;
@@ -170,6 +171,7 @@ namespace Quackery.Decks
 
 
             DeckServices.ChangeRandomgTableCardCategory = ChangeCardCategory;
+            DeckServices.RestoreCardCategories = RestoreCardCategories;
 
 
             EffectEvents.OnAdded += CheckEffects;
@@ -194,6 +196,20 @@ namespace Quackery.Decks
         {
             RemoveFromAllPiles(card);
             card.Destroy();
+        }
+
+        private void RestoreCardCategories()
+        {
+            foreach (var pile in _tablePiles)
+            {
+                if (pile.IsEmpty || !pile.Enabled) continue;
+                pile.RestoreCategory();
+            }
+            foreach (var pile in _cartPiles)
+            {
+                if (pile.IsEmpty || !pile.Enabled) continue;
+                pile.RestoreCategory();
+            }
         }
         private void ChangeCardCategory(EnumItemCategory category)
         {
@@ -245,17 +261,17 @@ namespace Quackery.Decks
             _cartPiles.ForEach(pile =>
             {
                 if (pile.IsEmpty || !pile.Enabled) return;
-                pile.TopCard.CheckEffects();
+                pile.TopCard.UpdateUI();
             });
             _tablePiles.ForEach(pile =>
             {
                 if (pile.IsEmpty || !pile.Enabled) return;
-                pile.TopCard.CheckEffects();
+                pile.TopCard.UpdateUI();
             });
             _selectPiles.ForEach(pile =>
             {
                 if (pile.IsEmpty || !pile.Enabled) return;
-                pile.TopCard.CheckEffects();
+                pile.TopCard.UpdateUI();
             });
         }
 
@@ -504,6 +520,7 @@ namespace Quackery.Decks
 
         private void ShuffleDiscardPileIn()
         {
+            SetPileActivation(_tablePiles, false);
             _drawPile.MergeBelow(_discardPile);
             _drawPile.Shuffle();
             DeckEvents.OnShuffle(EnumPileType.DrawPile, _drawPile.Cards);

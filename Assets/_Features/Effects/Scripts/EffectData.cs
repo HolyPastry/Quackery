@@ -1,28 +1,28 @@
-using System;
+
 using System.Collections.Generic;
 using Holypastry.Bakery;
-using Ink.Parsed;
+
 using Quackery.Decks;
 using UnityEngine;
+
 
 namespace Quackery.Effects
 {
     public abstract class EffectData : ContentTag
     {
         public Sprite Icon;
-        public EnumEffectTrigger Trigger;
-        public int StartValue;
-        public bool UseValue;
-        public abstract void Execute(Effect effect, CardPile pile);
 
-        public virtual int RatingModifier(Effect effect, Card card) => 0;
+        public abstract void Execute(Effect effect, CardPile pile);
+        public virtual void Cancel(Effect effect) { }
 
         public virtual int PriceModifier(Effect effect, Card card) => 0;
 
-        public virtual string GetDescription() => Description;
+        public virtual float RatioPriceModifier(Effect effect, Card card) => 0f;
+
+        public virtual string GetDescription() => Sprites.ReplaceCategories(Description);
 
         public string Description;
 
-        public List<EnumEffectTag> Tags = new();
+
     }
 }

@@ -18,12 +18,11 @@ namespace Quackery
 
         public Effect Effect { get; private set; }
 
-        bool _useValue = false;
+
 
         internal void UpdateStatus(Effect status, bool animate)
         {
             gameObject.SetActive(true);
-            _useValue = status.Data.UseValue;
             UpdateStatus(status);
             if (animate)
                 _animatedRect.Punch();
@@ -52,7 +51,10 @@ namespace Quackery
 
             Effect = effect;
             _icon.sprite = effect.Data.Icon;
-            _valueText.text = effect.Value.ToString();
+            if (effect.Value == 0)
+                _valueText.text = string.Empty;
+            else
+                _valueText.text = Mathf.Abs(effect.Value).ToString();
 
             gameObject.SetActive(true);
         }

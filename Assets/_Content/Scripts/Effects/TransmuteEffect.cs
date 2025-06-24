@@ -18,5 +18,10 @@ namespace Quackery.Effects
         {
             DeckServices.ChangeRandomgTableCardCategory(_newCategory);
         }
+
+        public override void Cancel(Effect effect)
+        {
+            DeckServices.RestoreCardCategories();
+        }
     }
 }

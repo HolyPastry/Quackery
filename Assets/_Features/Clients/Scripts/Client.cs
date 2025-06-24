@@ -16,8 +16,7 @@ namespace Quackery.Clients
         public Client(ClientData data)
         {
             Data = data;
-            foreach (var effectData in data.Effects)
-                Effects.Add(new Effect(effectData, true));
+
             Key = data.name;
             IsNew = true;
         }
@@ -25,7 +24,7 @@ namespace Quackery.Clients
         public bool IsInQueue;
         public bool Served;
 
-        public List<Effect> Effects = new();
+        public List<Effect> Effects => Data.Effects;
 
         public string ChatLastLine
         {
