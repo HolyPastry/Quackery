@@ -15,8 +15,12 @@ MonoBehaviour:
   MasterText: 
   Icon: {fileID: 21300000, guid: 5ca93228bcaf34c9db0ff0d4ead910d4, type: 3}
   StartPrice: 1
-  StartRating: 0
+  Description: Price is based on your rating.
+  SubscriptionCost: 0
   Category: 2
   Effects:
-  - {fileID: 11400000, guid: da18516747cf443f3918d3bb8b47f66c, type: 2}
+  - Data: {fileID: 11400000, guid: 9d4da65b8ceea4bedbcbd4e1a5a84962, type: 2}
+    Value: 0
+    Trigger: 4
+    Tags: 02000000
   ValueEvaluator: {fileID: 0}

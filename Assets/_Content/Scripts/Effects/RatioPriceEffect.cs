@@ -12,7 +12,7 @@ namespace Quackery.Effects
 
         public override string GetDescription()
         {
-            return Sprites.Replace(Category, Description);
+            return Sprites.Replace(Category, Description).Replace("#Ratio", (Ratio * 100).ToString("F0") + "%");
         }
 
         public override void Execute(Effect effect, CardPile pile)

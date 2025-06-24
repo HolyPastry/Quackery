@@ -729,7 +729,7 @@ namespace Quackery.Decks
                 ShuffleDiscardIntoDrawPile();
                 return DrawOne();
             }
-
+            card.UpdateUI();
             return card;
         }
         #endregion

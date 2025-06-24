@@ -183,9 +183,9 @@ namespace Quackery.Decks
                 if (effect.Tags.Contains(EnumEffectTag.Activated)) continue;
                 if (effect.Trigger == EnumEffectTrigger.OnCardMoveToCart)
                     effect.Execute(pile);
-                // if (effect.Trigger == EnumEffectTrigger.OnDraw ||
-                //      effect.Trigger == EnumEffectTrigger.Continous)
-                //     EffectServices.Add(effect);
+                if (effect.Trigger == EnumEffectTrigger.OnDraw ||
+                     effect.Trigger == EnumEffectTrigger.Continous)
+                    EffectServices.Add(effect);
             }
         }
 
