@@ -18,6 +18,5 @@ MonoBehaviour:
   Description: 
   SubscriptionCost: 0
   Category: 2
-  Effects:
-  - {fileID: 11400000, guid: 16ff1d03f389f413aabf4ff0ac81f70c, type: 2}
+  Effects: []
   ValueEvaluator: {fileID: 0}

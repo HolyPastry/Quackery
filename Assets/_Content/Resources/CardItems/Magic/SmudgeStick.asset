@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
   m_Name: SmudgeStick
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Smudge Stick
   Icon: {fileID: 21300000, guid: 88e6d1260908e4d749b51e6a255ba295, type: 3}
-  StartPrice: 1
+  StartPrice: 9
   Description: Discard and redraw your hand
-  SubscriptionCost: 0
+  SubscriptionCost: 2
   Category: 2
   Effects:
   - Data: {fileID: 11400000, guid: 24cbe2973429146c782ff147d747f9d2, type: 2}

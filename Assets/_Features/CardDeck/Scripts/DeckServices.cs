@@ -4,6 +4,7 @@ using System;
 using Quackery.Decks;
 using UnityEngine;
 using Quackery.Inventories;
+using Quackery.Effects;
 
 
 
@@ -18,7 +19,7 @@ namespace Quackery
         public static Action Shuffle = () => { };
         public static Action<List<Card>> Discard = (card) => { };
         public static Action DiscardHand = () => { };
-        public static Action<List<ItemData>> AddToDeck = (cards) => { };
+        public static Action<List<ItemData>> AddToDrawPile = (cards) => { };
 
 
         internal static Func<List<CardPile>> GetTablePile = () => new();
@@ -31,7 +32,7 @@ namespace Quackery
 
         public static Func<bool> IsCartFull = () => false;
 
-        internal static Action<CardPile, CardPile> MovePileTo = (sourcePile, targetPile) => { };
+        internal static Action<EnumPileType, EnumPileType> MovePileTo = (sourcePile, targetPile) => { };
         internal static Func<EnumPileType, Card> GetTopCard = (pileType) => null;
 
 
@@ -43,13 +44,13 @@ namespace Quackery
         internal static Action DrawBackToFull = delegate { };
         public static Func<int, List<Card>> Draw = (numberCards) => new();
 
-        internal static Action<Card> Destroy = (cards) => { };
+        internal static Action<Card> DestroyCard = (cards) => { };
 
         internal static Action<int> SetCartSize = (newSize) => { };
 
         internal static Action<int> ModifyCartSize = (amount) => { };
 
-        internal static Action<int> MergeCart = (amount) => { };
+        internal static Action<int, EnumItemCategory> MergeCart = (amount, category) => { };
 
         internal static Action RecountCart = () => { };
 
@@ -58,11 +59,30 @@ namespace Quackery
         internal static Action RemoveCardRequest = delegate { };
         internal static Action<List<ItemData>> DrawSpecificCards = (cards) => { };
 
+        public static Func<WaitUntil> WaitUntilCardStopMoving = () => new WaitUntil(() => true);
 
-        internal static Action<EnumItemCategory> ChangeRandomgTableCardCategory = (category) => { };
+        internal static Action<EnumItemCategory, EnumCardSelection> ChangeCardCategory = delegate { };
 
         internal static Action<int> DiscardCards = (amount) => { };
 
         internal static Action RestoreCardCategories = () => { };
+
+        internal static Func<EnumItemCategory, int> GetNumCardInCart = (category) => 0;
+
+        internal static Action<CardPile> RecountPile = (pile) => { };
+
+        internal static Action<CardPile> ReplaceTopCard = (pile) => { };
+
+        internal static Func<EnumItemCategory, Card> DrawCategory = (category) => null;
+
+        public static Action ActivateTableCards = delegate { };
+
+        internal static Func<List<EnumItemCategory>> GetCategoriesInCard = () => new();
+
+        internal static Func<Card, Card> DuplicateCard = (card) => null;
+
+        internal static Action<ItemData, int> AddNewToDiscard = (card, amount) => { };
+
+        internal static Action<ItemData, int> AddNewToDrawDeck = (card, amount) => { };
     }
 }

@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -17,22 +18,19 @@ namespace Quackery.Decks
         [SerializeField] private float _staggerDelay = 0.1f;
         [SerializeField] private RewardPanel _rewardPanel;
 
-
         public bool Activated { get; private set; }
 
         public EnumPileType Type => _pileType;
-
         public bool IsEmpty => transform.childCount == 0;
         public Card TopCard => IsEmpty ? null : GetComponentsInChildren<Card>()[^1];
 
-        //  public List<Card> Cards => new(GetComponentsInChildren<Card>());
-
         public float Height => (transform as RectTransform).sizeDelta.y;
-
         public const float CardOriginalHeight = 512;
-
-        // public event System.Action<CardPileUI> OnClicked;
         private readonly Queue<RectTransform> _moveQueue = new();
+
+        public event Action OnCardMovedIn = delegate { };
+        public event Action OnCardMovedOut = delegate { };
+        public event Action OnPileUpdated = delegate { };
 
         void OnEnable()
         {
@@ -40,6 +38,8 @@ namespace Quackery.Decks
             DeckEvents.OnShuffle += OnShuffle;
             DeckEvents.OnPileDestroyed += OnPileDestroyed;
             DeckEvents.OnActivatePile += OnActivatePile;
+
+            DeckEvents.OnPileUpdated += OnPilesUpdated;
 
             StartCoroutine(StaggeredMoveRoutine());
 
@@ -51,9 +51,17 @@ namespace Quackery.Decks
             DeckEvents.OnShuffle -= OnShuffle;
             DeckEvents.OnPileDestroyed -= OnPileDestroyed;
             DeckEvents.OnActivatePile -= OnActivatePile;
+            DeckEvents.OnPileUpdated -= OnPilesUpdated;
 
 
             StopAllCoroutines(); // Stop all coroutines when disabled
+        }
+
+        private void OnPilesUpdated(EnumPileType type)
+        {
+            if (type != _pileType) return;
+            OnPileUpdated?.Invoke();
+
         }
 
         private void OnActivatePile(EnumPileType type, bool activated)
@@ -70,6 +78,7 @@ namespace Quackery.Decks
             if (type != _pileType) return;
 
             DestroyCards();
+            OnCardMovedOut?.Invoke();
 
         }
 
@@ -152,6 +161,7 @@ namespace Quackery.Decks
                 card.transform.SetAsFirstSibling();
             }
             _moveQueue.Enqueue(card.transform as RectTransform);
+            OnCardMovedIn?.Invoke();
         }
 
         internal void DestroyCards()

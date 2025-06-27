@@ -14,7 +14,7 @@ namespace Quackery.Decks
         {
             yield return InventoryServices.WaitUntilReady();
             yield return DeckServices.WaitUntilReady();
-            DeckServices.AddToDeck(cards);
+            DeckServices.AddToDrawPile(cards);
             yield return null;
             DeckServices.DrawSpecificCards(_cardInHands);
             yield return null;

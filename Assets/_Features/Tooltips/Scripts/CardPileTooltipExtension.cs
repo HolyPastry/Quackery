@@ -25,12 +25,12 @@ namespace Quackery
 
         private string FormatTooltip(Card card)
         {
-            string text = "";
+            string text = card.Item.Data.GetDescription();
 
-            foreach (var effect in card.Effects)
-            {
-                text += effect.Description + "\n";
-            }
+            // foreach (var effect in card.Effects)
+            // {
+            //     text += effect.Description + "\n";
+            // }
 
 
             return text;

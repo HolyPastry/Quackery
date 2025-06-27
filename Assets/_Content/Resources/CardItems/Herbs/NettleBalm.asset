@@ -12,11 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
   m_Name: NettleBalm
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Nettle Balm
   Icon: {fileID: 21300000, guid: f7bc33e903af643e183bcdf0ce96481c, type: 3}
-  StartPrice: 1
-  StartRating: 0
+  StartPrice: 6
+  Description: -1 #Rating
+  SubscriptionCost: 3
   Category: 1
   Effects:
-  - {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}
+  - Data: {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}
+    Value: 4
+    Trigger: 1
+    Tags: 
+  - Data: {fileID: 11400000, guid: e70add7ad83d1426fbc50047ea4b68de, type: 2}
+    Value: -1
+    Trigger: 1
+    Tags: 
   ValueEvaluator: {fileID: 0}

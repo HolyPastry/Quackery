@@ -6,12 +6,13 @@ using Quackery.Clients;
 using Quackery.Ratings;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.UI;
 
 
 
 namespace Quackery.Decks
 {
-
 
     public class CardGameController : MonoBehaviour
     {
@@ -24,6 +25,8 @@ namespace Quackery.Decks
         [SerializeField] private List<CardPileUI> _cardPileUIs;
         [SerializeField] private GameObject _cardSelectPanel;
         [SerializeField] private GameObject _cardBonusRealization;
+
+        [SerializeReference] private Button _EndRoundButton;
 
         [SerializeField] private EndDayScreen _endDayScreen;
         [SerializeField] private EndOfRoundScreen _endRoundScreen;
@@ -71,6 +74,8 @@ namespace Quackery.Decks
 
         void OnEnable()
         {
+            CardGameContollerServices.CanCartAfford = (value) => _cashInCart >= value;
+            CardGameContollerServices.ModifyCartCash = (amount) => AddCashToCart(amount);
 
             DeckEvents.OnCardsMovingToSelectPile += OnCardsMovingToSelectPile;
             DeckEvents.OnCashingTheCart += OnPileMovedToCart;
@@ -79,12 +84,16 @@ namespace Quackery.Decks
             _endDayScreen.OnCloseGame += EndTheDay;
             GetClientCartValue = () => _cashInCart;
             InterruptRoundRequest = InterruptRound;
+            _EndRoundButton.onClick.AddListener(EndOfRound);
         }
 
 
 
         void OnDisable()
         {
+            CardGameContollerServices.CanCartAfford = (value) => true;
+
+
             DeckEvents.OnCardsMovingToSelectPile -= OnCardsMovingToSelectPile;
             DeckEvents.OnCardSelected -= OnCardSelected;
             DeckEvents.OnCashingTheCart -= OnPileMovedToCart;
@@ -92,16 +101,12 @@ namespace Quackery.Decks
             _endDayScreen.OnCloseGame -= EndTheDay;
             GetClientCartValue = delegate { return 0; };
             InterruptRoundRequest = delegate { };
+            _EndRoundButton.onClick.RemoveAllListeners();
             StopAllCoroutines();
 
         }
 
-        private void OnCashingPile(CardPile pile)
-        {
-            if (pile == null || pile.IsEmpty) return;
-            AddCashToCart(pile.TopCard.Price);
 
-        }
 
         public void Show()
         {
@@ -111,8 +116,6 @@ namespace Quackery.Decks
             _endDayScreen.Hide();
             _endRoundScreen.Hide(instant: true);
             _canvas.gameObject.SetActive(true);
-            //_animatable.SlideIn(Direction.Right);
-
         }
         private void InterruptRound()
         {
@@ -145,6 +148,13 @@ namespace Quackery.Decks
             _cardSelectPanel.SetActive(true);
         }
 
+        private void OnCashingPile(CardPile pile)
+        {
+            if (pile == null || pile.IsEmpty) return;
+            AddCashToCart(pile.TopCard.Price);
+            DeckServices.DrawBackToFull();
+        }
+
         private void OnPileMovedToCart(EnumPileType type)
         {
             StartCoroutine(CartRewardRoutine(type));
@@ -165,7 +175,7 @@ namespace Quackery.Decks
             }
 
 
-            EffectServices.Execute(Effects.EnumEffectTrigger.OnCartCalculated, null);
+            EffectServices.Execute(Effects.EnumEffectTrigger.AfterCartCalculation, null);
             if (RoundInterrupted)
                 yield break;
 
@@ -234,8 +244,9 @@ namespace Quackery.Decks
             _roundInProgress = true;
             _cartCashTransform.gameObject.SetActive(true);
             _cartCashTransform.localPosition = _cartCashOriginalLocalPosition;
-            StartCoroutine(StartRoundRoutine());
             _gameStats.NumClientsServed++;
+            StartCoroutine(StartRoundRoutine());
+
         }
 
         private IEnumerator StartRoundRoutine()
@@ -307,6 +318,15 @@ namespace Quackery.Decks
                 Time.time - time > 10f ||
                 !_endRoundScreen.gameObject.activeSelf);
 
+        }
+
+        internal void ApplyEndRoundEffects()
+        {
+            var tablepiles = DeckServices.GetTablePile();
+            foreach (var pile in tablepiles)
+            {
+                EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundEnd, pile);
+            }
         }
     }
 }

@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
   m_Name: Pendulum
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Pendulum
   Icon: {fileID: 21300000, guid: 0df76ccc6d3d64d5f97d071acecdb6d6, type: 3}
   StartPrice: 1
-  Description: 
+  Description: Increase Price by 50%
   SubscriptionCost: 0
   Category: 2
   Effects:
   - Data: {fileID: 11400000, guid: 746333e0c8b1f43fb89965db33b5507d, type: 2}
-    Value: 2
-    Trigger: 4
+    Value: 0
+    Trigger: 6
     Tags: 02000000
   ValueEvaluator: {fileID: 0}

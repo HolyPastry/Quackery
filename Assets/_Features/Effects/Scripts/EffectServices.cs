@@ -39,11 +39,13 @@ namespace Quackery
 
         internal static Action<EnumItemCategory> ChangePreference = (category) => { };
 
-
-
-
-
         internal static Func<Card, int> GetCardPrice = (card) => 0;
+
+        internal static Func<Card, List<Item>, int> GetStackPrice = (topCard, subItems) => 0;
+
+        internal static Func<Card, bool> IsCardPlayable = (card) => true;
+
+        internal static Func<EffectData, int, int> CounterEffect = (counterEffect, value) => 0;
 
     }
 }

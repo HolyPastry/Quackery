@@ -35,14 +35,11 @@ namespace Quackery.Shops
 
         public void SetCard(ItemData itemData)
         {
-            var item = new Item(itemData)
-            {
-                Price = itemData.StartPrice
-            };
+            var item = new Item(itemData);
             _banner.sprite = _categoryBanners.Find(x => x.Category == item.Category).Banner;
             _card.Item = item;
             _description.text = item.Data.Description;
-            _price.text = item.Price.ToString("0");
+            _price.text = item.BasePrice.ToString("0");
         }
     }
 }

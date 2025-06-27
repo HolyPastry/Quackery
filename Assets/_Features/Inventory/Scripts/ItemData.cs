@@ -1,10 +1,10 @@
 
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
+
 using Holypastry.Bakery;
 using Quackery.Decks;
-using Quackery.Effects;
+
 using UnityEngine;
 
 namespace Quackery.Inventories
@@ -42,14 +42,12 @@ namespace Quackery.Inventories
                     Value = topCard.Price
                 }
             };
-
-
             if (subItems.Count > 0)
             {
                 rewards.Add(new()
                 {
                     Type = EnumCardReward.StackReward,
-                    Value = subItems.Count
+                    Value = EffectServices.GetStackPrice(topCard, subItems)
                     //TODO: Count the stacks properly using Effects
                     //Value = EffectServices.GetValue(topCard, subItems)
                 });

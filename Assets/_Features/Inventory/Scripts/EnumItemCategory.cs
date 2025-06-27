@@ -12,6 +12,7 @@ namespace Quackery.Inventories
         Energy,
         Ayurveda,
         Chinese,
-        Skills
+        Skills,
+        Fatigues
     }
 }

@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
   m_Name: EvilEye
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Evil Eye
   Icon: {fileID: 21300000, guid: 9c357dc86f50441f1a1e708594283d44, type: 3}
   StartPrice: 1
-  Description: 
+  Description: Remove #Fear
   SubscriptionCost: 0
   Category: 2
   Effects:
-  - {fileID: 11400000, guid: 42788c6724d43495681beaad0f4a2af0, type: 2}
+  - Data: {fileID: 11400000, guid: 61364d07abb8c40f6a4949b235d0d1cb, type: 2}
+    Value: 0
+    Trigger: 1
+    Tags: 
   ValueEvaluator: {fileID: 0}

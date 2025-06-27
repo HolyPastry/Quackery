@@ -15,7 +15,7 @@ MonoBehaviour:
   MasterText: Sigil Stickers
   Icon: {fileID: 21300000, guid: 4593331b4e2cc4ae9b71a59d6197da2a, type: 3}
   StartPrice: 1
-  Description: <b>Transmute</b> a card in your hand to #Category
+  Description: Transform a card in your hand to #Magic
   SubscriptionCost: 1
   Category: 2
   Effects:

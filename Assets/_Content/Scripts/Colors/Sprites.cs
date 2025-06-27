@@ -24,6 +24,7 @@ namespace Quackery
                 string textInsert = $"<sprite name={category.ToString()}>";
                 text = text.Replace($"#{category.ToString()}", textInsert);
             }
+            text = text.Replace("#Coin", "<sprite name=Coin>");
 
             return text;
         }

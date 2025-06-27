@@ -24,9 +24,7 @@ namespace Quackery.Inventories
 
         public EnumItemCategory OverrideCategory = EnumItemCategory.Unset;
 
-        public int Price;
-
-        public int Rating;
+        public int BasePrice => Data.StartPrice;
 
         internal List<CardReward> CalculateCardRewards(Card card, List<Item> subItems, List<CardPile> otherPiles)
         {

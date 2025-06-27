@@ -12,11 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
   m_Name: ElderberryJam
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Tasty Elderberry jam
   Icon: {fileID: 21300000, guid: 5d5ba604b2dca47fe866e12044587027, type: 3}
-  StartPrice: 1
-  StartRating: 0
+  StartPrice: 4
+  Description: Add 1 Rating
+  SubscriptionCost: 1
   Category: 1
   Effects:
-  - {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}
+  - Data: {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}
+    Value: 4
+    Trigger: 1
+    Tags: 
+  - Data: {fileID: 11400000, guid: da18516747cf443f3918d3bb8b47f66c, type: 2}
+    Value: 1
+    Trigger: 1
+    Tags: 
   ValueEvaluator: {fileID: 0}

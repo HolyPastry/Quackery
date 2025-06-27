@@ -108,10 +108,7 @@ namespace Quackery.Inventories
                 return null;
             }
 
-            var item = new Item(data)
-            {
-                Price = data.StartPrice,
-            };
+            var item = new Item(data);
 
             _inventory.Items.Add(item);
             Save();

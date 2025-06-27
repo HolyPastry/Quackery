@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
   m_Name: TarotDeck
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Tarot Card
   Icon: {fileID: 21300000, guid: 67af1f2cf55ad4208837e7aa3cf47711, type: 3}
-  StartPrice: 1
-  Description: Draw 4 cards and pick one. Rise 1 Suspicion
-  SubscriptionCost: 0
+  StartPrice: 9
+  Description: Draw 4 cards and pick one. Add 1 Suspicion Card to the discard
+  SubscriptionCost: 1
   Category: 2
   Effects:
   - Data: {fileID: 11400000, guid: f37afcb2051834735b52b1b8f77631b2, type: 2}
     Value: 4
     Trigger: 1
     Tags: 
-  - Data: {fileID: 11400000, guid: 439147fb6e99c4b818ec0e217e90b608, type: 2}
-    Value: -1
+  - Data: {fileID: 11400000, guid: b3e36b4054e034bbab0d80b1adc033e3, type: 2}
+    Value: 1
     Trigger: 1
     Tags: 
   ValueEvaluator: {fileID: 0}

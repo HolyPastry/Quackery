@@ -17,5 +17,7 @@ namespace Quackery.Decks
         SelectPile2,
         SelectPile3,
         SelectPile4,
+        OnTable,
+        InCart
     }
 }

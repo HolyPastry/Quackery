@@ -20,6 +20,6 @@ namespace Quackery.Decks
         public static Action<EnumPileType, bool> OnActivatePile { get; internal set; }
 
         internal static Action<CardPile> OnCashingPile = (pile) => { };
-
+        internal static Action<EnumPileType> OnPileUpdated = (pileType) => { };
     }
 }

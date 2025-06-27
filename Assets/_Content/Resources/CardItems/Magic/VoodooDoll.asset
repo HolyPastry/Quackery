@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
   m_Name: VoodooDoll
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Voodoo Doll
   Icon: {fileID: 21300000, guid: 58bf81e7156904712bf08c51bc1c07e6, type: 3}
-  StartPrice: 1
-  Description: 
+  StartPrice: 10
+  Description: Reduce Rating by 1
   SubscriptionCost: 0
   Category: 2
   Effects:
-  - {fileID: 11400000, guid: 16ff1d03f389f413aabf4ff0ac81f70c, type: 2}
+  - Data: {fileID: 11400000, guid: e70add7ad83d1426fbc50047ea4b68de, type: 2}
+    Value: -1
+    Trigger: 1
+    Tags: 
   ValueEvaluator: {fileID: 0}

@@ -15,15 +15,11 @@ MonoBehaviour:
   CharacterData: {fileID: 11400000, guid: d630d646cf2d345d9a14bdd876c3b213, type: 2}
   Icon: {fileID: 21300000, guid: 4b9bca51f96039d4d8605b53309d2310, type: 3}
   Effects:
-  - Data: {fileID: 11400000, guid: 0efb1bb5a0fe24d2e9a540c5bbc4b250, type: 2}
-    Value: 5
-    Trigger: 4
-    Tags: 02000000
   - Data: {fileID: 11400000, guid: 20ce1060ae6814fe092e901535c4d6be, type: 2}
     Value: 1
     Trigger: 4
     Tags: 02000000
   - Data: {fileID: 11400000, guid: 288c7482b65634ba0b357db9bef530a9, type: 2}
     Value: -1
-    Trigger: 9
+    Trigger: 3
     Tags: 02000000

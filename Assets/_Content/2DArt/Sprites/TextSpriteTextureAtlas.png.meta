@@ -248,6 +248,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Coin
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 751458318279144e9982d3f1cdf65170
+      internalID: -1950653382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -261,6 +282,7 @@ TextureImporter:
     nameFileIdTable:
       Ayurveda: 797473383
       Chinese: -203676584
+      Coin: -1950653382
       Crystals: -1127092780
       Energy: 329415838
       Herbs: 1902273417

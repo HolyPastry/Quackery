@@ -12,11 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
   m_Name: MagicMushrooms
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Magic Mushroom
   Icon: {fileID: 21300000, guid: d136a5748f04548d8936bc4edf153594, type: 3}
-  StartPrice: 1
-  StartRating: 0
+  StartPrice: 8
+  Description: "Convert preference to Herbalism.\LCannot be covered"
+  SubscriptionCost: 1
   Category: 1
   Effects:
-  - {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}
+  - Data: {fileID: 11400000, guid: adebfe52fa3534da98d932315d404ff1, type: 2}
+    Value: 1
+    Trigger: 6
+    Tags: 
+  - Data: {fileID: 11400000, guid: 7817bd02af1de410dafe2284bf88fa54, type: 2}
+    Value: 0
+    Trigger: 1
+    Tags: 
+  - Data: {fileID: 11400000, guid: 20ce1060ae6814fe092e901535c4d6be, type: 2}
+    Value: 1
+    Trigger: 3
+    Tags: 02000000
   ValueEvaluator: {fileID: 0}

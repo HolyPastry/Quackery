@@ -16,6 +16,8 @@ namespace Quackery.Decks
 
         public EnumItemCategory Category => IsEmpty ? EnumItemCategory.Unset : TopCard.Category;
 
+        public int Count => Cards.Count;
+
         public bool Playable = true;
         public bool Enabled = true;
         private bool ValidityCheck()
@@ -150,6 +152,15 @@ namespace Quackery.Decks
                     card.RemoveCategoryOverride();
                 }
             }
+        }
+
+        internal void OverrideStackCategory(EnumItemCategory category)
+        {
+            for (int i = 1; i < Cards.Count; i++)
+            {
+                Cards[i].OverrideCategory(category);
+            }
+
         }
     }
 }

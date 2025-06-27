@@ -12,11 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
   m_Name: CrystalBracelet
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Crystal Bracelet
   Icon: {fileID: 21300000, guid: bacc1733b4e994cd4bce074c80a513c5, type: 3}
-  StartPrice: 1
-  Description: 
-  SubscriptionCost: 0
+  StartPrice: 8
+  Description: "Change preference to Crystals.\LCannot be covered"
+  SubscriptionCost: 1
   Category: 3
-  Effects: []
+  Effects:
+  - Data: {fileID: 11400000, guid: 7817bd02af1de410dafe2284bf88fa54, type: 2}
+    Value: 0
+    Trigger: 1
+    Tags: 
+  - Data: {fileID: 11400000, guid: 0c626a7a36b8a460b8d88aab4412ca1c, type: 2}
+    Value: 1
+    Trigger: 3
+    Tags: 02000000
   ValueEvaluator: {fileID: 0}

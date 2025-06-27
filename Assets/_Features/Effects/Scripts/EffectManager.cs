@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Holypastry.Bakery;
 using Quackery.Decks;
 using Quackery.Inventories;
-using Quackery.Ratings;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Quackery.Effects
 {
@@ -30,19 +31,23 @@ namespace Quackery.Effects
             EffectServices.SetValue = (effectData, value) => { };
             EffectServices.GetValue = (effectData) => 1;
 
+            EffectServices.IsCardPlayable = (card) => true;
+
+
 
             EffectServices.RemoveEffectsLinkedToPiles = delegate { };
             EffectServices.GetCardPrice = (card) => 0;
+            EffectServices.GetStackPrice = (topCard, subItems) => 0;
 
             EffectServices.CleanEffects = delegate { _effects.Clear(); };
 
             EffectServices.CancelAllEffects = delegate { };
             EffectServices.ChangePreference = (category) => { };
+            EffectServices.CounterEffect = (itemData, numCard) => 0;
 
             EffectEvents.OnAdded -= ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved -= ExecuteOnAppliedEffect;
             EffectEvents.OnUpdated -= ExecuteOnAppliedEffect;
-
 
         }
 
@@ -53,28 +58,82 @@ namespace Quackery.Effects
             EffectServices.Execute = Execute;
             EffectServices.GetCurrent = () => new List<Effect>(_effects);
 
-
             EffectServices.ModifyValue = ModifyValue;
             EffectServices.SetValue = SetValue;
             EffectServices.GetValue = GetValue;
 
+            EffectServices.IsCardPlayable = IsCardPlayable;
 
 
             EffectServices.RemoveEffectsLinkedToPiles = RemoveEffectsLinkedToPiles;
             EffectServices.CleanEffects = CleanEffect;
 
             EffectServices.GetCardPrice = GetCardPrice;
+            EffectServices.GetStackPrice = GetStackPrice;
 
 
             EffectServices.CancelAllEffects = CancelAllEffects;
             EffectServices.ChangePreference = ChangePreference;
+            EffectServices.CounterEffect = CounterEffect;
 
             EffectEvents.OnAdded += ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved += ExecuteOnAppliedEffect;
             EffectEvents.OnUpdated += ExecuteOnAppliedEffect;
         }
 
+        private int CounterEffect(EffectData data, int valueToCounter)
+        {
+            var counterEffect = _effects.Find(effect => effect.Data == data);
+            if (counterEffect != null)
+            {
+                var counteredValue = Math.Min(0, counterEffect.Value - valueToCounter);
+                counterEffect.Value -= counteredValue;
+                EffectEvents.OnUpdated?.Invoke(counterEffect);
+                return counteredValue;
+            }
+            return 0;
 
+        }
+
+        private bool IsCardPlayable(Card card)
+        {
+            if (card == null) return false;
+
+            var requirements = card.Effects.FindAll(effect => effect.Data is RequirementEffectData);
+
+            requirements.AddRange(_effects.FindAll(effect => effect.Data is RequirementEffectData));
+
+            return requirements.TrueForAll(r => (r.Data as RequirementEffectData).IsFulfilled(r, card));
+        }
+
+        private int GetStackPrice(Card topCard, List<Item> list)
+        {
+            if (topCard == null || list == null || list.Count == 0) return 0;
+
+
+            var stackMultiplierEffects = _effects.FindAll(effect => effect.Data is StackMultiplierEffect);
+            if (stackMultiplierEffects.Count == 0)
+                return list.Count;
+
+            int stackPrice = 0;
+
+            //TODO:: Finalize the Top Card Stack multiplier effects
+            topCard.Effects.FindAll(effect => effect.Data is StackMultiplierEffect stackEffect &&
+                                       (effect.Trigger == EnumEffectTrigger.Passive));
+
+
+
+            foreach (var item in list)
+            {
+                var category = item.Category;
+                stackPrice += stackMultiplierEffects
+                    .FindAll(effect => effect.Data is StackMultiplierEffect stackEffect &&
+                                       (stackEffect.Category == category || stackEffect.Category == EnumItemCategory.Unset))
+                    .Sum<Effect>(effect => effect.Value);
+
+            }
+            return stackPrice;
+        }
 
         private int GetCardPrice(Card card)
         {
@@ -83,14 +142,19 @@ namespace Quackery.Effects
             int priceModifier = GetPriceModifier(card);
             float ratioModifier = GetPriceRatioModifier(card);
 
-            int basePrice = card.Item.Price;
+            int basePrice = card.Item.BasePrice;
 
-            if (_effects.Exists(effect => effect.Data is PriceIsRatingEffect))
-                basePrice = RatingServices.GetRating();
+            if (card.Effects.Exists(e => e.Data is CategoryInCartPriceEffect))
+            {
+                var effect = card.Effects.Find(e => e.Data is CategoryInCartPriceEffect);
+
+                int numCards = DeckServices.GetNumCardInCart((effect.Data as CategoryInCartPriceEffect).Category);
+                basePrice = numCards * effect.Value;
+            }
 
             int finalPrice = Mathf.RoundToInt((basePrice + priceModifier) * ratioModifier);
 
-            return Mathf.Max(finalPrice, 0); // Ensure price is not negative
+            return finalPrice;
         }
 
         private void ChangePreference(EnumItemCategory category)
@@ -127,6 +191,16 @@ namespace Quackery.Effects
         {
             var existingEffect = _effects.Find(e
                 => e.Data == data);
+
+            if (value == 0)
+            {
+                if (existingEffect != null)
+                {
+                    _effects.Remove(existingEffect);
+                    EffectEvents.OnRemoved?.Invoke(existingEffect);
+                }
+                return;
+            }
             if (existingEffect != null)
             {
                 existingEffect.Value = value;
@@ -151,15 +225,17 @@ namespace Quackery.Effects
             }
             else
             {
-                var newEffect = new Effect(data) { Value = arg2 };
+                var newEffect = new Effect(data)
+                {
+                    Value = arg2,
+                    Trigger = EnumEffectTrigger.Continous
+
+                };
+                newEffect.Tags.Add(EnumEffectTag.Activated);
+
                 _effects.Add(newEffect);
                 EffectEvents.OnAdded?.Invoke(newEffect);
             }
-        }
-
-        private int GetValue()
-        {
-            throw new NotImplementedException();
         }
 
         private void CancelAllEffects(List<EffectData> whiteList)
@@ -178,24 +254,6 @@ namespace Quackery.Effects
 
         }
 
-        private void ModifyConfidence(int value)
-        {
-            var confidenceEffect = _effects.Find(effect => effect.Data is ConfidenceEffect);
-            if (confidenceEffect == null) return;
-
-            confidenceEffect.Value += value;
-            EffectEvents.OnUpdated?.Invoke(confidenceEffect);
-
-        }
-        private void SetConfidence(int value)
-        {
-            var confidenceEffect = _effects.Find(effect => effect.Data is ConfidenceEffect);
-            if (confidenceEffect == null) return;
-
-            confidenceEffect.Value = value;
-            EffectEvents.OnUpdated?.Invoke(confidenceEffect);
-        }
-
         private void CleanEffect()
         {
             var effectToClean = _effects.FindAll(effect =>
@@ -212,10 +270,41 @@ namespace Quackery.Effects
         private int GetPriceModifier(Card card)
         {
             int priceModifier = 0;
+            Assert.IsNotNull(card, "Card cannot be null when calculating price modifier.");
+
             foreach (var effect in _effects)
             {
-                priceModifier += effect.PriceModifier(card);
+                //Look for all possible amplifiers for this effect
+                int effectAmplifiers = _effects.FindAll(e => e.Data is EffectAmplifierEffect amplifierEffect &&
+                                           amplifierEffect.EffectToAmplify == effect.Data).Sum<Effect>(e => e.Value);
+                effectAmplifiers += card.Effects.FindAll(e => e.Data is EffectAmplifierEffect amplifierEffect &&
+               amplifierEffect.EffectToAmplify == effect.Data).Sum<Effect>(e => e.Value);
+
+                if (effectAmplifiers <= 0)
+                    effectAmplifiers = 1; // Ensure at least one multiplier is applied
+
+                priceModifier += effect.PriceModifier(card) * effectAmplifiers;
             }
+
+            foreach (var effect in card.Effects)
+            {
+                if (effect.Data == null)
+                {
+                    Debug.LogWarning($"Effect is null when calculating price modifier: {card.Item.Data.name}");
+                    continue;
+                }
+                int effectAmplifiers = _effects.FindAll(e => e.Data is EffectAmplifierEffect amplifierEffect &&
+                                                        amplifierEffect.EffectToAmplify == effect.Data).Sum<Effect>(e => e.Value);
+                effectAmplifiers += card.Effects.FindAll(e => e.Data is EffectAmplifierEffect amplifierEffect &&
+                        amplifierEffect.EffectToAmplify == effect.Data).Sum<Effect>(e => e.Value);
+
+                if (effectAmplifiers <= 0)
+                    effectAmplifiers = 1; // Ensure at least one multiplier is applied
+
+                //                Debug.Log($"Effect: {effect.Data.name}, Amplifiers: {effectAmplifiers}, Price Modifier: {effect.PriceModifier(card)}");
+                priceModifier += effect.PriceModifier(card) * effectAmplifiers;
+            }
+
             return priceModifier;
         }
 
@@ -223,6 +312,10 @@ namespace Quackery.Effects
         {
             float priceRatioModifier = 1.0f;
             foreach (var effect in _effects)
+            {
+                priceRatioModifier += effect.PriceRatioModifier(card);
+            }
+            foreach (var effect in card.Effects)
             {
                 priceRatioModifier += effect.PriceRatioModifier(card);
             }
@@ -262,7 +355,13 @@ namespace Quackery.Effects
                 EffectEvents.OnUpdated?.Invoke(existingEffect);
                 return;
             }
-            _effects.Add(effect);
+            else
+            {
+                _effects.Add(effect);
+                if (effect.Trigger == EnumEffectTrigger.Continous)
+                    effect.Execute(null);
+            }
+
             EffectEvents.OnAdded?.Invoke(effect);
 
         }
@@ -281,20 +380,31 @@ namespace Quackery.Effects
 
         private void Execute(EnumEffectTrigger trigger, CardPile pile)
         {
-            List<int> _effectToRemove = new();
-            var effectToExecute = _effects.FindAll(effect => effect.Trigger == trigger);
+            // List<int> _effectToRemove = new();
+            // var effectToExecute = _effects.FindAll(effect => effect.Trigger == trigger);
 
+            // foreach (var effect in effectToExecute)
+            // {
+            //     if (effect.Trigger != trigger) continue;
+            //     effect.Execute(pile);
+            //     if (effect.Tags.Contains(EnumEffectTag.OneTime))
+            //     {
+            //         _effects.Remove(effect);
+            //         EffectEvents.OnRemoved?.Invoke(effect);
+            //     }
+            // }
 
-            foreach (var effect in effectToExecute)
+            if (pile == null || pile.IsEmpty || !pile.Enabled)
+                return;
+
+            var topCard = pile.TopCard;
+
+            foreach (var effect in topCard.Effects)
             {
                 if (effect.Trigger != trigger) continue;
                 effect.Execute(pile);
-                if (effect.Tags.Contains(EnumEffectTag.OneTime))
-                {
-                    _effects.Remove(effect);
-                    EffectEvents.OnRemoved?.Invoke(effect);
-                }
             }
+
         }
     }
 }

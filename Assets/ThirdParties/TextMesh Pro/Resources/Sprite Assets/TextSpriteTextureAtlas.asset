@@ -74,8 +74,14 @@ MonoBehaviour:
     m_Unicode: 65534
     m_GlyphIndex: 5
     m_Scale: 1.2
-    m_Name: ehinese
-    m_HashCode: 1464274457
+    m_Name: Chinese
+    m_HashCode: -2069564161
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 6
+    m_Scale: 1.2
+    m_Name: Coin
+    m_HashCode: 2451115
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -145,9 +151,9 @@ MonoBehaviour:
     m_Metrics:
       m_Width: 64
       m_Height: 64
-      m_HorizontalBearingX: 5
+      m_HorizontalBearingX: -10
       m_HorizontalBearingY: 50
-      m_HorizontalAdvance: 55
+      m_HorizontalAdvance: 45
     m_GlyphRect:
       m_X: 256
       m_Y: 448
@@ -173,6 +179,22 @@ MonoBehaviour:
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: -203676584, guid: cce829a7674b34fb8a65df088679a633, type: 3}
+  - m_Index: 6
+    m_Metrics:
+      m_Width: 64
+      m_Height: 64
+      m_HorizontalBearingX: -10
+      m_HorizontalBearingY: 50
+      m_HorizontalAdvance: 45
+    m_GlyphRect:
+      m_X: 385
+      m_Y: 448
+      m_Width: 64
+      m_Height: 64
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: -1950653382, guid: cce829a7674b34fb8a65df088679a633, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []
 --- !u!21 &1750353925529120539

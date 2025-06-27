@@ -6,10 +6,10 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 using Quackery.Effects;
-using System.Collections;
+
 using DG.Tweening;
 using UnityEngine.Assertions;
-using Holypastry.Bakery;
+
 
 namespace Quackery.Decks
 {
@@ -45,16 +45,32 @@ namespace Quackery.Decks
 
                 //  UpdateEffects();
                 _cardForeground.sprite = _item.Data.Icon;
-                _cardName.text = _item.Data.GetDescription();
+                _cardName.text = _item.Name; //Data.GetDescription();
 
                 if (IsSkill) return;
                 _cardBackground.color = Colors.Get(_item.Category.ToString());
 
-                _cardPrice.text = Price.ToString();
+                UpdatePrice();
 
                 SetCategoryIcon();
 
             }
+        }
+
+        private void UpdatePrice()
+        {
+            if (Price == 0)
+            {
+                _PriceBackground.gameObject.SetActive(false);
+                _cardPrice.gameObject.SetActive(false);
+            }
+            else
+            {
+                _PriceBackground.gameObject.SetActive(true);
+                _cardPrice.gameObject.SetActive(true);
+                _cardPrice.text = Price.ToString();
+            }
+
         }
 
         private void SetCategoryIcon()
@@ -91,20 +107,20 @@ namespace Quackery.Decks
 
         public List<Effect> Effects => _item.Data.Effects;
 
-        public bool HasActivatableEffects
-        {
-            get
-            {
-                foreach (var effect in Effects)
-                {
-                    if (effect.Tags.Contains(EnumEffectTag.Activated)
-                    && !_activatedEffects.Contains(effect))
-                        return true;
+        // public bool HasActivatableEffects
+        // {
+        //     get
+        //     {
+        //         foreach (var effect in Effects)
+        //         {
+        //             if (effect.Tags.Contains(EnumEffectTag.Activated)
+        //             && !_activatedEffects.Contains(effect))
+        //                 return true;
 
-                }
-                return false;
-            }
-        }
+        //         }
+        //         return false;
+        //     }
+        // }
 
         private Item _item;
 
@@ -117,6 +133,8 @@ namespace Quackery.Decks
                 return Effects.Exists(e => e.Data is CoverProtection);
             }
         }
+
+        // public bool FullfillRequirements { get; internal set; }
 
         private List<EffectIcon> _effectIconPool = new();
         private readonly List<Effect> _activatedEffects = new();
@@ -165,15 +183,17 @@ namespace Quackery.Decks
         {
             if (IsSkill) return;
             // Rating = _item.Rating;
-            _cardPrice.text = Price.ToString();
+            UpdatePrice();
             // _cardRating.text = Rating.ToString();
+            _cardBackground.color = Colors.Get(_item.Category.ToString());
+
             _activatedEffects.Clear();
             _effectIconPool.ForEach(icon => icon.Activated = false);
         }
 
         public void UpdateUI()
         {
-            _cardPrice.text = Price.ToString();
+            UpdatePrice();
         }
 
         internal void ExecutePowerInCart(CardPile pile)
@@ -181,7 +201,7 @@ namespace Quackery.Decks
             foreach (var effect in Effects)
             {
                 if (effect.Tags.Contains(EnumEffectTag.Activated)) continue;
-                if (effect.Trigger == EnumEffectTrigger.OnCardMoveToCart)
+                if (effect.Trigger == EnumEffectTrigger.OnCardPlayed)
                     effect.Execute(pile);
                 if (effect.Trigger == EnumEffectTrigger.OnDraw ||
                      effect.Trigger == EnumEffectTrigger.Continous)
@@ -230,7 +250,7 @@ namespace Quackery.Decks
 
         public override string ToString()
         {
-            return $"{_item.Name} - {_item.Price} ";
+            return $"{_item.Name} - {_item.BasePrice} ";
         }
     }
 }

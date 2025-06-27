@@ -17,6 +17,6 @@ MonoBehaviour:
   StartPrice: 1
   Description: 
   SubscriptionCost: 0
-  Category: 6
+  Category: 7
   Effects: []
   ValueEvaluator: {fileID: 0}

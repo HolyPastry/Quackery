@@ -29,7 +29,10 @@ namespace Quackery
                 _controller.StartNewRound(client);
 
                 yield return _controller.WaitUntilEndOfRound();
-                _controller.ResetDeck();
+
+                _controller.ApplyEndRoundEffects();
+
+
                 EffectServices.CleanEffects();
                 if (_controller.RoundInterrupted)
                 {
@@ -39,9 +42,11 @@ namespace Quackery
                 else
                 {
                     _controller.TransfertCartToPurse();
+                    yield return new WaitForSeconds(1f);
                     client.GoodReview();
                     ClientServices.ClientServed(client.Data);
                 }
+                _controller.ResetDeck();
                 EffectServices.CleanEffects();
                 _controller.ShowEndRoundScreen(!_controller.RoundInterrupted);
 
