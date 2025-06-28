@@ -21,7 +21,6 @@ namespace Quackery.Effects
         {
             return Sprites.Replace(Category, Description);
         }
-        public override void Execute(Effect effect, CardPile pile)
-        { }
+
     }
 }

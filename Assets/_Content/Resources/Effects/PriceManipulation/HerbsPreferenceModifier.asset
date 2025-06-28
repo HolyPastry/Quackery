@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaf19e3c64ac54976bba3a3e5ce6e175, type: 3}
-  m_Name: MergeCart 1
+  m_Script: {fileID: 11500000, guid: a7a61d5f4b4d6487dad4cbe930ac768a, type: 3}
+  m_Name: HerbsPreferenceModifier
   m_EditorClassIdentifier: 
   MasterText: 
-  Icon: {fileID: 21300000, guid: f9c3208626c3242ec82aa76a902679f6, type: 3}
-  Trigger: 1
-  StartValue: 1
-  UseValue: 1
-  Description: Merge two Cart stacks
-  Tags: 
+  Icon: {fileID: 0}
+  Description: Modify by #Value
+  _effectToModify: {fileID: 11400000, guid: 20ce1060ae6814fe092e901535c4d6be, type: 2}

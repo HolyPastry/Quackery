@@ -11,17 +11,17 @@ namespace Quackery.Effects
     {
         [SerializeField] private EffectData _counterEffect;
         [SerializeField] private ItemData _curseCard;
-        public EnumPileType TargetDeck = EnumPileType.DiscardPile;
+        public EnumCardPile TargetDeck = EnumCardPile.Discard;
 
-        public override void Execute(Effect effect, CardPile drawPile)
+        public override void Execute(Effect effect)
         {
             int countered = EffectServices.CounterEffect(_counterEffect, effect.Value);
-            if (TargetDeck == EnumPileType.DrawPile)
+            if (TargetDeck == EnumCardPile.Draw)
             {
                 DeckServices.AddNewToDrawDeck(_curseCard, effect.Value - countered);
                 DeckServices.Shuffle();
             }
-            else if (TargetDeck == EnumPileType.DiscardPile)
+            else if (TargetDeck == EnumCardPile.Discard)
             {
                 DeckServices.AddNewToDiscard(_curseCard, effect.Value - countered);
             }

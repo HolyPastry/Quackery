@@ -1,9 +1,6 @@
-using System;
-using System.Runtime.InteropServices;
 using Quackery.Decks;
-
 using UnityEngine;
-using UnityEngine.UI;
+
 
 namespace Quackery
 {
@@ -14,7 +11,7 @@ namespace Quackery
         public override void SetTooltip(GameObject hoveredObject)
         {
             if (!hoveredObject.TryGetComponent<CardPileUI>(out CardPileUI cardPileUI)) return;
-            var card = DeckServices.GetTopCard(cardPileUI.Type);
+            var card = cardPileUI.TopCard;
             if (card == null) return;
 
             string tooltip = FormatTooltip(card);

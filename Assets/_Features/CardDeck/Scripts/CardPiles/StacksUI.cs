@@ -1,14 +1,14 @@
 
-using KBCore.Refs;
+
 using Quackery.Decks;
 using Quackery.Inventories;
 using UnityEngine;
 
 namespace Quackery
 {
-    public class StacksUI : ValidatedMonoBehaviour
+    public class StacksUI : MonoBehaviour
     {
-        [SerializeField, Parent] private CardPileUI _cardPileUI;
+        [SerializeField] private CartPileUI _cartPileUI;
         [SerializeField] private StackInfoUI _herbStackInfo;
         [SerializeField] private StackInfoUI _magicStackInfo;
         [SerializeField] private StackInfoUI _chineseStackInfo;
@@ -21,26 +21,26 @@ namespace Quackery
 
         void OnEnable()
         {
-            _cardPileUI.OnCardMovedIn += UpdateUI;
-            _cardPileUI.OnCardMovedOut += UpdateUI;
-            _cardPileUI.OnPileUpdated += UpdateUI;
+            _cartPileUI.OnCardMovedIn += UpdateUI;
+            _cartPileUI.OnCardMovedOut += UpdateUI;
+            _cartPileUI.OnPileUpdated += UpdateUI;
         }
         void OnDisable()
         {
-            _cardPileUI.OnCardMovedIn -= UpdateUI;
-            _cardPileUI.OnCardMovedOut -= UpdateUI;
-            _cardPileUI.OnPileUpdated -= UpdateUI;
+            _cartPileUI.OnCardMovedIn -= UpdateUI;
+            _cartPileUI.OnCardMovedOut -= UpdateUI;
+            _cartPileUI.OnPileUpdated -= UpdateUI;
         }
 
         private void UpdateUI()
         {
-            if (_cardPileUI.IsEmpty)
+            if (_cartPileUI.IsEmpty)
             {
                 ClearCounts();
                 return;
             }
 
-            var cards = _cardPileUI.GetComponentsInChildren<Card>();
+            var cards = _cartPileUI.GetComponentsInChildren<Card>();
             int herbCount = 0;
             int magicCount = 0;
             int chineseCount = 0;

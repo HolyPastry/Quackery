@@ -9,10 +9,10 @@ namespace Quackery.Effects
     {
         [SerializeField] private List<Effect> _curseEffect;
 
-        public override void Execute(Effect effect, CardPile drawPile)
+        public override void Execute(Effect effect)
         {
             var curseEffect = _curseEffect[Random.Range(0, _curseEffect.Count)];
-            curseEffect.Data.Execute(curseEffect, drawPile);
+            curseEffect.Data.Execute(curseEffect);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Quackery.Effects
 
         public override string GetDescription() => $"Remove effects";
 
-        public override void Execute(Effect effect, CardPile pile)
+        public override void Execute(Effect effect)
         {
             foreach (var effectToRemove in _effectsToRemove)
             {

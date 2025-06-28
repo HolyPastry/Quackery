@@ -16,10 +16,7 @@ namespace Quackery.Effects
             return Sprites.Replace(Category, Description);
         }
 
-        public override void Execute(Effect effect, CardPile pile)
-        {
-            //noop
-        }
+
         public override int PriceModifier(Effect effect, Card card)
         {
             if (card.Category == Category || Category == EnumItemCategory.Unset)
@@ -27,10 +24,8 @@ namespace Quackery.Effects
                 return effect.Value;
             }
             return 0;
-
         }
 
-        public override void Cancel(Effect effect)
-        { }
+
     }
 }

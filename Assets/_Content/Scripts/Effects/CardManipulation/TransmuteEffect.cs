@@ -16,7 +16,7 @@ namespace Quackery.Effects
             return Sprites.Replace(_newCategory, Description);
         }
 
-        public override void Execute(Effect effect, CardPile pile)
+        public override void Execute(Effect effect)
         {
             DeckServices.ChangeCardCategory(_newCategory, _cardSelection);
         }

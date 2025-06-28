@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Quackery.Clients;
 using Quackery.Decks;
 using UnityEngine;
@@ -14,6 +13,7 @@ namespace Quackery
         IEnumerator Start()
         {
             yield return FlowServices.WaitUntilEndOfSetup();
+            yield return DeckServices.WaitUntilReady();
             StartCoroutine(Routine());
         }
 
@@ -21,21 +21,21 @@ namespace Quackery
         {
             var client = ClientServices.GetNextClient();
             _controller.Show();
+
             yield return new WaitForSeconds(1f);
             while (true)
             {
+                DeckServices.Shuffle();
+                yield return new WaitForSeconds(1f);
                 client = ClientServices.SelectedClient();
 
                 _controller.StartNewRound(client);
 
                 yield return _controller.WaitUntilEndOfRound();
-
-                _controller.ApplyEndRoundEffects();
-
-
-                EffectServices.CleanEffects();
+                DeckServices.DiscardHand();
                 if (_controller.RoundInterrupted)
                 {
+                    CartServices.SetCartValue(0);
                     client.BadReview();
                     ClientServices.ClientServed(client.Data);
                 }
@@ -46,7 +46,7 @@ namespace Quackery
                     client.GoodReview();
                     ClientServices.ClientServed(client.Data);
                 }
-                _controller.ResetDeck();
+                CartServices.DiscardCart();
                 EffectServices.CleanEffects();
                 _controller.ShowEndRoundScreen(!_controller.RoundInterrupted);
 

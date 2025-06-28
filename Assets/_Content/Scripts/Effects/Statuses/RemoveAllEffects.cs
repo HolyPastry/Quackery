@@ -15,7 +15,7 @@ namespace Quackery.Effects
     {
         [Tooltip("List of effects that should not be removed.")]
         [SerializeField] private List<EffectData> _whiteList;
-        public override void Execute(Effect effect, CardPile pile)
+        public override void Execute(Effect effect)
         {
             EffectServices.CancelAllEffects(_whiteList);
         }

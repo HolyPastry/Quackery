@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Quackery.Decks
 {
-    internal class RewardPanel : MonoBehaviour
+    public class RewardPanel : MonoBehaviour
     {
         [SerializeField] private float _duration = 0.5f;
         [SerializeField] private float _easeDuration = 0.3f;

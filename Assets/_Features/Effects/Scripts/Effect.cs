@@ -32,10 +32,10 @@ namespace Quackery
             Data = data;
         }
 
-        internal void Execute(CardPile pile)
+        internal void Execute(Card card)
         {
-            if (pile != null && !pile.IsEmpty) LinkedCard = pile.TopCard;
-            Data.Execute(this, pile);
+            LinkedCard = card;
+            Data.Execute(this);
         }
 
         public int PriceModifier(Card card) => Data.PriceModifier(this, card);

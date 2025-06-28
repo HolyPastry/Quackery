@@ -10,9 +10,9 @@ namespace Quackery.Effects
     public class MergeCartEffect : EffectData
     {
         [SerializeField] private EnumItemCategory _category = EnumItemCategory.Unset;
-        public override void Execute(Effect effect, CardPile pile)
+        public override void Execute(Effect effect)
         {
-            DeckServices.MergeCart(effect.Value, _category);
+            CartServices.MergeCart(effect.Value, _category);
         }
     }
 }

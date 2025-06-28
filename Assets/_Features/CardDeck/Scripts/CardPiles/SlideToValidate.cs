@@ -52,7 +52,7 @@ namespace Quackery.Decks
 
         private void ValidateCard()
         {
-            DeckServices.PileClicked(_cardPileUI.Type);
+            DeckServices.PileClicked(_cardPileUI.Type, _cardPileUI.PileIndex);
             ResetMovements();
         }
 

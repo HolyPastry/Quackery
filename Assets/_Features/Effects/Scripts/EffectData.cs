@@ -12,7 +12,7 @@ namespace Quackery.Effects
     {
         public Sprite Icon;
 
-        public virtual void Execute(Effect effect, CardPile pile) { }
+        public virtual void Execute(Effect effect) { }
         public virtual void Cancel(Effect effect) { }
 
         public virtual int PriceModifier(Effect effect, Card card) => 0;

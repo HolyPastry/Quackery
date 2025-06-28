@@ -23,8 +23,8 @@ MonoBehaviour:
     Value: 0
     Trigger: 1
     Tags: 
-  - Data: {fileID: 11400000, guid: 0c626a7a36b8a460b8d88aab4412ca1c, type: 2}
+  - Data: {fileID: 11400000, guid: 8a07f7e7de1984e8ba47772184110020, type: 2}
     Value: 1
-    Trigger: 3
-    Tags: 02000000
+    Trigger: 1
+    Tags: 
   ValueEvaluator: {fileID: 0}

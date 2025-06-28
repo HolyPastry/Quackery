@@ -1,0 +1,429 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Holypastry.Bakery;
+using Quackery.Effects;
+using Quackery.Inventories;
+using UnityEngine;
+
+namespace Quackery.Decks
+{
+
+    public class CartManager : MonoBehaviour
+    {
+
+        [SerializeField] private int _initialCartSize = 3;
+
+        private int _ratingCartSizeModifier;
+        private int _cardCartSizeModifier;
+        private bool _cartCalculated;
+
+        private int _cartValue;
+
+        private readonly List<CardPile> _cartPiles = new();
+
+        public bool CartIsFull => _cartPiles.TrueForAll(p => !p.IsEmpty || !p.Enabled);
+
+        public int CartSize => _cartPiles.Count(p => p.Enabled);
+
+        public int CartValue
+        {
+            get => _cartValue;
+            private set
+            {
+                _cartValue = value;
+                CartEvents.OnCartValueChanged?.Invoke(_cartValue);
+            }
+        }
+
+        private CardPile _lastCartPile;
+
+        void OnEnable()
+        {
+
+            CartServices.SetRatingCartSizeModifier = SetRatingModifier;
+            CartServices.ModifyCardCartSizeModifier = ModifyCardModifier;
+            CartServices.GetCartSize = () => CartSize;
+
+            CartServices.DiscardCart = DiscardCart;
+            CartServices.MergeCart = MergeCart;
+
+            CartServices.GetNumCardInCart = GetNumCardInCart;
+            CartServices.GetCategoriesInCart = GetCategoriesInCart;
+            CartServices.CalculateCart = CalculateCart;
+            CartServices.CompleteCartPileCalculation = () => _cartCalculated = true;
+
+            CartServices.AddCardToCart = AddCardToCart;
+            CartServices.CanAddToCart = CanAddToCart;
+
+            CartServices.RestoreCategories = RestoreCategories;
+            CartServices.ChangeCardCategory = ChangeCardCategory;
+            CartServices.RemoveCard = RemoveCard;
+            CartServices.GetPileRewards = GetPileRewards;
+
+            CartServices.AddToCartValue = value => CartValue += value;
+            CartServices.SetCartValue = value => CartValue = value;
+            CartServices.GetCartValue = () => CartValue;
+            CartServices.CanCartAfford = value => CartValue >= value;
+
+            EffectEvents.OnAdded += UpdateCardUI;
+            EffectEvents.OnRemoved += UpdateCardUI;
+            EffectEvents.OnUpdated += UpdateCardUI;
+
+        }
+
+
+        void OnDisable()
+        {
+            CartServices.SetRatingCartSizeModifier = delegate { };
+            CartServices.ModifyCardCartSizeModifier = delegate { };
+            CartServices.GetCartSize = () => 0;
+
+            CartServices.DiscardCart = delegate { };
+            CartServices.MergeCart = delegate { };
+
+            CartServices.GetNumCardInCart = (category) => 0;
+            CartServices.GetCategoriesInCart = () => new List<EnumItemCategory>();
+            CartServices.CalculateCart = () => null;
+            CartServices.CompleteCartPileCalculation = delegate { };
+
+            CartServices.AddCardToCart = (pile) => false;
+            CartServices.CanAddToCart = (card) => true;
+
+            CartServices.RestoreCategories = delegate { };
+            CartServices.ChangeCardCategory = delegate { };
+
+            CartServices.RemoveCard = delegate { };
+            CartServices.GetPileRewards = (type, index) => new();
+
+            CartServices.AddToCartValue = value => { };
+            CartServices.SetCartValue = value => { };
+            CartServices.GetCartValue = () => 0;
+            CartServices.CanCartAfford = value => true;
+
+            EffectEvents.OnAdded -= UpdateCardUI;
+            EffectEvents.OnRemoved -= UpdateCardUI;
+            EffectEvents.OnUpdated -= UpdateCardUI;
+        }
+
+        IEnumerator Start()
+        {
+            yield return FlowServices.WaitUntilReady();
+            _cartPiles.Clear();
+            for (int i = 0; i < _initialCartSize; i++)
+            {
+                _cartPiles.Add(new CardPile(EnumCardPile.Cart, i));
+            }
+        }
+
+        private void RemoveCard(Card card)
+        {
+
+            foreach (var pile in _cartPiles)
+                pile.RemoveCard(card);
+        }
+
+        private void ChangeCardCategory(EnumItemCategory category)
+        {
+            foreach (var pile in _cartPiles)
+            {
+                if (pile.IsEmpty || !pile.Enabled) continue;
+                pile.OverrideStackCategory(category);
+                DeckEvents.OnPileUpdated(pile.Type, pile.Index);
+            }
+        }
+
+        private bool AddCardToCart(Card card)
+        {
+            if (ActivatePreviousCard(card) ||
+                MergeWithPrevious(card) ||
+                AppendPileToCart(card))
+            {
+
+                UpdateUI();
+                return true;
+            }
+
+            return false;
+        }
+        private void UpdateCardUI(Effect effect) => UpdateUI();
+        private void UpdateUI()
+        {
+            _cartPiles.ForEach(p => p.UpdateUI());
+        }
+
+        private void RestoreCategories()
+        {
+
+            foreach (var pile in _cartPiles)
+            {
+                if (pile.IsEmpty || !pile.Enabled) continue;
+                pile.RestoreCategory();
+            }
+        }
+
+
+
+
+        private void ModifyCardModifier(int value)
+        {
+            _cardCartSizeModifier += value;
+            UpdateCartSize();
+        }
+
+        private void SetRatingModifier(int value)
+        {
+            _ratingCartSizeModifier = value;
+            UpdateCartSize();
+        }
+
+        private IEnumerator CalculateCart()
+        {
+            CartValue = 0;
+            foreach (var cartPile in _cartPiles)
+            {
+                if (!cartPile.Enabled || cartPile.IsEmpty) continue;
+
+                CartEvents.OnCalculatingCartPile(cartPile.Type, cartPile.Index);
+                _cartCalculated = false;
+                yield return new WaitUntil(() => _cartCalculated);
+            }
+        }
+        private bool ActivatePreviousCard(Card pile)
+        {
+            return false;
+            // if (_lastCartPile != null && !_lastCartPile.IsEmpty &&
+            //     // _lastCartPile.TopCard.HasActivatableEffects &&
+            //     _lastCartPile.Category == pile.TopCard.Category)
+            // {
+            //     // If the last cart pile is not empty and has the same category, merge into it
+            //     _lastCartPile.MergeBelow(pile);
+            //     DeckEvents.OnPileMoved(_lastCartPile.Type, _lastCartPile.Index);
+            //     DeckEvents.OnCalculatingCartPile(_lastCartPile.Type, _lastCartPile.Index);
+            //     _lastCartPile.TopCard.ActivatePower(_lastCartPile);
+            //     return true; // Exit after merging to the last cart pile
+            // }
+
+            //  return false;
+        }
+        private List<EnumItemCategory> GetCategoriesInCart()
+        {
+            var categories = new List<EnumItemCategory>();
+            foreach (var pile in _cartPiles)
+            {
+                if (!pile.Enabled || pile.IsEmpty) continue;
+                foreach (var card in pile.Cards)
+                {
+                    if (card.Category != EnumItemCategory.Unset)
+                        categories.AddUnique(card.Category);
+                }
+            }
+            return categories.ToList();
+        }
+
+        private int GetNumCardInCart(EnumItemCategory category)
+        {
+            int numCards = 0;
+            foreach (var pile in _cartPiles)
+            {
+                if (!pile.Enabled || pile.IsEmpty) continue;
+                numCards += pile.Cards.Count(card => card.Category == category || category == EnumItemCategory.Unset);
+            }
+            return numCards;
+        }
+        private void RecountCart()
+        {
+            foreach (var pile in _cartPiles)
+            {
+                if (pile.IsEmpty || !pile.Enabled) continue;
+                //Cart.OnCalculatingCartPile(pile.Type, pile.Index);
+            }
+        }
+        private void UpdateCartSize()
+        {
+            int cartSize = _initialCartSize + _ratingCartSizeModifier + _cardCartSizeModifier;
+            cartSize = Mathf.Max(cartSize, 2);
+
+            while (_cartPiles.Count <= cartSize)
+            {
+                _cartPiles.Add(new CardPile(EnumCardPile.Cart, _cartPiles.Count));
+            }
+            for (int i = 0; i < _cartPiles.Count; i++)
+            {
+                _cartPiles[i].Enabled = i < cartSize;
+            }
+            DeckEvents.OnCardPoolSizeUpdate(EnumCardPile.Cart);
+        }
+
+
+        private void MergeCart(int amount, EnumItemCategory category)
+        {
+            int index = _lastCartPile != null ? _cartPiles.IndexOf(_lastCartPile) : -1;
+            if (index == -1 || index == 0) return; // No other pile to merge into
+
+            if (category == EnumItemCategory.Unset)
+            {
+                while (CartPilesHaveSameCategory(out List<CardPile> piles))
+                {
+                    for (int i = 1; i < piles.Count; i++)
+                        DeckManager.MovePileTo(piles[i], piles[0]);
+                }
+            }
+            else
+            {
+                CardPile firstPile = null;
+                List<CardPile> pilesToMerge = new();
+                for (int i = 0; i <= _cartPiles.Count; i++)
+                {
+                    if (_cartPiles[i].IsEmpty ||
+                        !_cartPiles[i].Enabled ||
+                        _cartPiles[i].Category != category) continue;
+
+                    if (firstPile == null)
+                        firstPile = _cartPiles[i];
+                    else
+                        pilesToMerge.Add(_cartPiles[i]);
+                }
+                foreach (var pile in pilesToMerge)
+                {
+                    DeckManager.MovePileTo(pile, firstPile);
+                }
+            }
+
+            _lastCartPile = _cartPiles[index - 1];
+            // DeckEvents.OnCalculatingCartPile(_lastCartPile.Type, _lastCartPile.Index);
+        }
+
+        private bool CartPilesHaveSameCategory(out List<CardPile> piles)
+        {
+            //piles = _cartPiles.FindAll(p => p.Enabled && !p.IsEmpty);
+            piles = new List<CardPile>();
+            for (int i = 0; i < _cartPiles.Count; i++)
+            {
+                if (!_cartPiles[i].Enabled || _cartPiles[i].IsEmpty) continue;
+                for (int j = i + 1; j < _cartPiles.Count; j++)
+                {
+                    if (!_cartPiles[j].Enabled || _cartPiles[j].IsEmpty) continue;
+                    if (_cartPiles[i].Category != _cartPiles[j].Category) continue;
+                    piles.AddUnique(_cartPiles[i]);
+                    piles.AddUnique(_cartPiles[j]);
+                    return true; // Found at least two piles with the same category
+                }
+            }
+            return piles.Count >= 2;
+        }
+
+        private List<CardReward> GetPileRewards(EnumCardPile type, int index)
+        {
+            var pile = _cartPiles.Find(p => p.Type == type);
+
+            List<CardPile> otherCartPiles =
+                _cartPiles.Where((p, i) => p.Type == type && i != index).ToList();
+
+            return pile.CalculateCartRewards(otherCartPiles);
+        }
+
+        private bool MergeWithPrevious(Card topCard)
+        {
+
+            var effect = topCard.Effects.Find(effect => effect.Data is MergeWithPreviousPileEffect);
+            if (effect == null) return false;
+
+            var effectData = effect.Data as MergeWithPreviousPileEffect;
+            CardPile cardPileRef = null;
+
+            if (effectData.TargetStack == MergeWithPreviousPileEffect.EnumTargetStack.Previous)
+            {
+                if (_lastCartPile == null || _lastCartPile.IsEmpty)
+                {
+                    Debug.LogWarning(
+                        "MergeWithPreviousPileEffect: No last cart pile to merge with. This card should not be playable");
+                    return false;
+                }
+                cardPileRef = _lastCartPile;
+            }
+            else if (effectData.TargetStack == MergeWithPreviousPileEffect.EnumTargetStack.LowestValue)
+            {
+                cardPileRef = _cartPiles
+                    .Where(p => p.Enabled && !p.IsEmpty)
+                    .OrderBy(p => GetPileRewards(p.Type, p.Index).Sum(r => r.Value))
+                    .FirstOrDefault();
+            }
+            if (cardPileRef == null || cardPileRef.IsEmpty)
+            {
+                Debug.LogWarning("MergeWithPreviousPileEffect: No valid previous pile found. This card should not have been playable");
+                return false;
+            }
+
+            if (effectData.Category != EnumItemCategory.Unset &&
+               effectData.Category != cardPileRef.Category)
+            {
+                Debug.LogWarning("CAtegory is not matching: No valid previous pile found. This card should not have been playable");
+                return false;
+            }
+
+            if (effectData.Location == EnumPileLocation.AtTheBottom)
+            {
+                cardPileRef.AddAtTheBottom(topCard);
+                return true;
+            }
+            else if (effectData.Location == EnumPileLocation.OnTop)
+            {
+                cardPileRef.AddAtTheTop(topCard);
+                return true; // Exit after merging to the last cart pile
+            }
+            else
+            {
+                Debug.LogWarning($"MergeWithPreviousPileEffect: Unknown location {effectData.Location} for card {topCard.Item.Data.name}");
+            }
+
+            return false;
+        }
+        private bool AppendPileToCart(Card card)
+        {
+            var cartPile = _cartPiles.Find(c => c.IsEmpty && c.Enabled);
+            if (cartPile == null) return false;
+
+
+            cartPile.AddAtTheTop(card);
+            _lastCartPile = cartPile;
+            //card.ExecutePowerInCart(cartPile);
+            // DeckEvents.OnPileMoved(cartPile.Type, cartPile.Index);
+            // DeckEvents.OnCalculatingCartPile(cartPile.Type, cartPile.Index);
+
+            return true;
+        }
+
+        private void DiscardCart()
+        {
+            EffectServices.RemoveEffectsLinkedToPiles(_cartPiles);
+            List<Card> cardsToDiscard = new();
+            foreach (var cartPile in _cartPiles)
+                foreach (var card in cartPile.Cards)
+                    cardsToDiscard.Add(card);
+
+            DeckServices.Discard(cardsToDiscard);
+
+            _lastCartPile = null;
+        }
+
+        private bool CanAddToCart(Card topCard)
+        {
+
+            var mergeEffects = topCard.Effects.FindAll(effect => effect.Data is MergeWithPreviousPileEffect);
+            if (mergeEffects.Count == 0)
+                return !CartIsFull;
+            // If there are merge effects, check if the last cart pile is compatible
+            if (_lastCartPile == null || _lastCartPile.IsEmpty) return false;
+            var mergeEffect = mergeEffects[0].Data as MergeWithPreviousPileEffect;
+
+            if (mergeEffect.Location == EnumPileLocation.OnTop &&
+                 _lastCartPile.TopCard.CannotBeCovered)
+                return false;
+            if (mergeEffect.Category != EnumItemCategory.Unset &&
+                _lastCartPile.Category != mergeEffect.Category) return false;
+            return true;
+        }
+
+    }
+}

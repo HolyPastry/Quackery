@@ -54,7 +54,7 @@ namespace Quackery
                     yield return DialogQueueServices.WaitUntilAllDialogEnds();
                 }
 
-                controller.ResetDeck();
+                // controller.ResetDeck();
                 EffectServices.CleanEffects();
 
                 controller.ShowEndRoundScreen(!controller.RoundInterrupted);

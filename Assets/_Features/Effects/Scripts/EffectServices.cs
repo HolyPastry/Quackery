@@ -18,7 +18,9 @@ namespace Quackery
 
         public static Func<List<Effect>> GetCurrent = () => new();
 
-        internal static Action<EnumEffectTrigger, CardPile> Execute = (trigger, cardPile) => { };
+        internal static Func<EnumEffectTrigger, Card, int> Execute = (trigger, card) => 0;
+
+
 
         internal static Action<List<CardPile>> RemoveEffectsLinkedToPiles = delegate { };
 

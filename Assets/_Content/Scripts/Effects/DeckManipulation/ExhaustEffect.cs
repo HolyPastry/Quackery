@@ -8,11 +8,11 @@ namespace Quackery
     [CreateAssetMenu(fileName = "ExhaustEffect", menuName = "Quackery/Effects/Exhaust", order = 0)]
     public class ExhaustEffect : EffectData
     {
-        public override void Execute(Effect effect, CardPile pile)
+        public override void Execute(Effect effect)
         {
             if (effect.LinkedCard != null)
             {
-                DeckServices.DestroyCard(effect.LinkedCard);
+                //DeckServices.MoveCardTo(effect.LinkedCard);
             }
             else
             {

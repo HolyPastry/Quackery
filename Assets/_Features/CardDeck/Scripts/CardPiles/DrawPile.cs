@@ -13,11 +13,40 @@ namespace Quackery.Decks
 
         public bool InterruptDraw { get; set; } = false;
 
-        public DrawPile(CardFactory cardFactory)
+        public DrawPile(CardFactory cardFactory) : base(EnumCardPile.Draw, 0)
         {
             _cardFactory = cardFactory;
-            Type = EnumPileType.DrawPile;
+            var allItems = InventoryServices.GetAllItems();
+            Populate(allItems);
+            RegisterServices();
         }
+
+        ~DrawPile()
+        {
+            UnregisterServices();
+        }
+
+        private void RegisterServices()
+        {
+            DeckServices.AddNewToDrawDeck = AddNew;
+            DeckServices.AddToDrawPile = AddNewCardToDeck;
+            DeckServices.InterruptDraw = () => InterruptDraw = true;
+            DeckServices.DrawSpecificCards = DrawSpecificCards;
+            DeckServices.DrawCategory = DrawCategoryCard;
+            DeckServices.Draw = DrawMany;
+        }
+
+        private void UnregisterServices()
+        {
+
+            DeckServices.AddNewToDrawDeck = delegate { };
+            DeckServices.AddToDrawPile = delegate { };
+            DeckServices.InterruptDraw = delegate { };
+            DeckServices.DrawSpecificCards = delegate { };
+            DeckServices.DrawCategory = category => null;
+            DeckServices.Draw = number => new List<Card>();
+        }
+
         internal void AddNewCardToDeck(List<ItemData> list)
         {
             foreach (var itemData in list)
@@ -36,7 +65,7 @@ namespace Quackery.Decks
         {
             Card card = _cardFactory.Create(item);
             AddAtTheBottom(card);
-            DeckEvents.OnCardMovedTo(card, EnumPileType.DrawPile, false);
+            // DeckEvents.OnCardMovedTo(card, EnumCardPile.Draw, Index, false);
         }
         public void DrawSpecificCards(List<ItemData> list)
         {
@@ -84,7 +113,7 @@ namespace Quackery.Decks
         {
             if (!DrawTopCard(out Card card))
             {
-                DeckServices.MovePileTo(EnumPileType.DiscardPile, EnumPileType.DrawPile);
+                DeckServices.MovePileTo(EnumCardPile.Discard, EnumCardPile.Draw);
                 DeckServices.Shuffle();
                 if (!DrawTopCard(out card))
                 {

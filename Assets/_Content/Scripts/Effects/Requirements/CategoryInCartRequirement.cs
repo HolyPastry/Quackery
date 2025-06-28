@@ -13,7 +13,7 @@ namespace Quackery.Effects
 
         public override bool IsFulfilled(Effect effect, Card card)
         {
-            var categories = DeckServices.GetCategoriesInCard();
+            var categories = CartServices.GetCategoriesInCart();
             return categories.Contains(_category) && categories.Count == 1;
         }
 

@@ -7,7 +7,10 @@ using System.Linq;
 using Quackery.Effects;
 using Quackery.Clients;
 using Holypastry.Bakery;
-
+using UnityEngine.Assertions;
+using UnityEngine.Android;
+using UnityEngine.PlayerLoop;
+using System;
 
 namespace Quackery.Decks
 {
@@ -19,63 +22,26 @@ namespace Quackery.Decks
         [SerializeField] private Card _skillCardPrefab;
         [SerializeField] private Card _curseCardPrefab;
 
+
+        [SerializeField] private int _initialHandSize = 4;
+        [SerializeField] private int _initialSelectionSize = 4;
+
         private CardFactory _cardFactory;
 
         #region Service Properties
-        private readonly List<CardPile> _piles = new()
-        {
-            new CardPile { Type = EnumPileType.DiscardPile },
-            new CardPile { Type = EnumPileType.OnTable1 },
-            new CardPile { Type = EnumPileType.OnTable2 },
-            new CardPile { Type = EnumPileType.OnTable3 },
-            new CardPile { Type = EnumPileType.OnTable4 },
-            new CardPile { Type = EnumPileType.InCart1 },
-            new CardPile { Type = EnumPileType.InCart2 },
-            new CardPile { Type = EnumPileType.InCart3 },
-            new CardPile { Type = EnumPileType.InCart4 },
-            new CardPile { Type = EnumPileType.InCart5 },
-            new CardPile { Type = EnumPileType.SelectPile1 },
-            new CardPile { Type = EnumPileType.SelectPile2 },
-            new CardPile { Type = EnumPileType.SelectPile3 },
-            new CardPile { Type = EnumPileType.SelectPile4 }
-        };
-        private List<EnumPileType> _tablePileTypes = new()
-        {
-           EnumPileType.OnTable1 ,
-           EnumPileType.OnTable2 ,
-           EnumPileType.OnTable3 ,
-            EnumPileType.OnTable4
-        };
 
-        private List<EnumPileType> _selectPileTypes = new()
-        {
-            EnumPileType.SelectPile1,
-            EnumPileType.SelectPile2,
-            EnumPileType.SelectPile3,
-            EnumPileType.SelectPile4
-        };
+        private readonly List<CardPile> _cardPiles = new();
 
-        private List<EnumPileType> _cartPileTypes = new()
-        {
-            EnumPileType.InCart1,
-            EnumPileType.InCart2,
-            EnumPileType.InCart3,
-            EnumPileType.InCart4,
-            EnumPileType.InCart5
-        };
-        private CardPile _lastCartPile;
 
-        [SerializeField] private DrawPile _drawPile;
+
         private bool _movingCards;
+        private bool _cardPlayed;
 
-        private CardPile _discardPile => _piles.Find(p => p.Type == EnumPileType.DiscardPile);
-        private List<CardPile> _tablePiles => _piles.FindAll(p => _tablePileTypes.Contains(p.Type));
-        private List<CardPile> _cartPiles => _piles.FindAll(p => _cartPileTypes.Contains(p.Type));
-        private List<CardPile> _selectPiles => _piles.FindAll(p => _selectPileTypes.Contains(p.Type));
+        private DrawPile _drawPile;
 
-        public bool CartIsFull => _cartPiles.TrueForAll(p => !p.IsEmpty || !p.Enabled);
-
-        public int CartSize => _cartPiles.Count(p => p.Enabled);
+        private CardPile _discardPile => _cardPiles.Find(p => p.Type == EnumCardPile.Discard);
+        private List<CardPile> _handPiles => _cardPiles.FindAll(p => p.Type == EnumCardPile.Hand);
+        private List<CardPile> _selectPiles => _cardPiles.FindAll(p => p.Type == EnumCardPile.Selection);
 
         #endregion
 
@@ -85,130 +51,121 @@ namespace Quackery.Decks
         void Awake()
         {
             _cardFactory = new CardFactory(_itemCardPrefab, _skillCardPrefab, _curseCardPrefab);
-            _drawPile = new DrawPile(_cardFactory);
         }
         void OnDisable()
         {
             DeckServices.WaitUntilReady = () => new WaitUntil(() => true);
-            DeckServices.WaitUntilCardStopMoving = () => new WaitUntil(() => true);
 
-            DeckServices.AddToDrawPile = (itemData) => { };
             DeckServices.AddNewToDiscard = (itemData, amount) => { };
-            DeckServices.AddNewToDrawDeck = (itemData, amount) => { };
-
             DeckServices.Shuffle = () => { };
-            DeckServices.ShuffleDiscardIn = () => { };
 
-            DeckServices.DrawBackToFull = () => { };
-            DeckServices.Draw = (numberCards) => new List<Card>();
-            DeckServices.InterruptDraw = () => { };
-            DeckServices.DrawSpecificCards = (cards) => { };
-            DeckServices.DrawCategory = (category) => null;
+            DeckServices.DrawBackToFull = () => null;
 
-            DeckServices.DiscardHand = () => { };
+            DeckServices.DiscardHand = () => null;
             DeckServices.Discard = (card) => { };
-            DeckServices.DiscardCart = () => { };
-            DeckServices.DestroyCard = (cards) => { };
-            DeckServices.DuplicateCard = (card) => null;
             DeckServices.DiscardCards = (amount) => { };
 
-
             DeckServices.DestroyCard = (cards) => { };
+            DeckServices.DuplicateCard = (card) => null;
 
-
-            DeckServices.GetPileRewards = (pileType) => new();
             DeckServices.GetTablePile = () => new();
-            DeckServices.PileClicked = (pileType) => { };
+            DeckServices.PileClicked = (pileType, index) => { };
             DeckServices.MovePileTo = (sourcePile, targetPile) => { };
             DeckServices.GetTopCard = (pileType) => null;
-            DeckServices.EvaluatePileValue = (pileType) => 0;
-            DeckServices.GetNumCardInCart = (category) => 0;
-            DeckServices.GetCategoriesInCard = () => new();
-
 
             DeckServices.MoveToCardSelect = (cards) => { };
             DeckServices.MoveToTable = (card) => { };
-            DeckServices.ReplaceTopCard = (pile) => { };
-
-
-            DeckServices.IsCartFull = () => false;
-            DeckServices.SetCartSize = (newSize) => { };
-            DeckServices.ModifyCartSize = (amount) => { };
-
-            DeckServices.MergeCart = (amount, category) => { };
-            DeckServices.RecountCart = () => { };
-            DeckServices.RecountPile = (pileType) => { };
-
+            DeckServices.ActivateTableCards = () => { };
 
             DeckServices.ChangeCardCategory = delegate { };
             DeckServices.RestoreCardCategories = () => { };
+            DeckServices.ReplaceTopCard = (pile) => { };
 
+            DeckServices.CardPlayed = () => false;
+            DeckServices.GetCardPoolSize = (cardPileType) => 0;
 
-            EffectEvents.OnAdded -= CheckEffects;
-            EffectEvents.OnRemoved -= CheckEffects;
-            EffectEvents.OnUpdated -= CheckEffects;
-
+            EffectEvents.OnAdded -= UpdateCardUI;
+            EffectEvents.OnRemoved -= UpdateCardUI;
+            EffectEvents.OnUpdated -= UpdateCardUI;
 
         }
+
+
 
         void OnEnable()
         {
             DeckServices.WaitUntilReady = () => new WaitUntil(() => _isReady);
-            DeckServices.WaitUntilCardStopMoving = () => new WaitUntil(() => !_movingCards);
 
-
-            DeckServices.AddToDrawPile = _drawPile.AddNewCardToDeck;
             DeckServices.AddNewToDiscard = AddNewToDiscard;
-            DeckServices.AddNewToDrawDeck = _drawPile.AddNew;
-
-
             DeckServices.Shuffle = ShuffleDiscardPileIn;
-            DeckServices.ShuffleDiscardIn = ShuffleDiscardPileIn;
+
 
             DeckServices.DrawBackToFull = DrawBackToFull;
-            DeckServices.Draw = _drawPile.DrawMany;
-            DeckServices.InterruptDraw = () => _drawPile.InterruptDraw = true;
-            DeckServices.DrawSpecificCards = _drawPile.DrawSpecificCards;
-            DeckServices.DrawCategory = _drawPile.DrawCategoryCard;
 
             DeckServices.Discard = Discard;
             DeckServices.DiscardHand = DiscardHand;
-            DeckServices.DiscardCart = DiscardCart;
-            DeckServices.DestroyCard = DestroyCard;
-            DeckServices.DuplicateCard = DuplicateCard;
             DeckServices.DiscardCards = DiscardRandomCards;
 
+            DeckServices.DestroyCard = DestroyCard;
+            DeckServices.DuplicateCard = DuplicateCard;
+
+
             DeckServices.PileClicked = PileClicked;
-            DeckServices.GetPileRewards = GetPileRewards;
-            DeckServices.GetTablePile = () => _tablePiles;
+            DeckServices.GetTablePile = () => _handPiles;
             DeckServices.MovePileTo = MovePileTo;
             DeckServices.GetTopCard = GetTopCard;
-            DeckServices.EvaluatePileValue = (pileType) => GetPileRewards(pileType).Sum(r => r.Value);
-            DeckServices.GetNumCardInCart = GetNumCardInCart;
-            DeckServices.GetCategoriesInCard = GetCategoriesInCard;
+
 
             DeckServices.MoveToCardSelect = MoveToCardSelectionPile;
             DeckServices.MoveToTable = AddCardToTable;
-            DeckServices.ReplaceTopCard = ReplaceTopCard;
             DeckServices.ActivateTableCards = ActivateTableCards;
 
-            DeckServices.SetCartSize = (newSize) => UpdateCartSize(newSize);
-            DeckServices.ModifyCartSize = (amount) => UpdateCartSize(Mathf.Max(2, CartSize + amount));
-            DeckServices.IsCartFull = () => CartIsFull;
-
-
-            DeckServices.MergeCart = MergeCart;
-            DeckServices.RecountCart = RecountCart;
-            DeckServices.RecountPile = RecountPile;
 
 
             DeckServices.ChangeCardCategory = ChangeCardCategory;
             DeckServices.RestoreCardCategories = RestoreCardCategories;
+            DeckServices.ReplaceTopCard = ReplaceTopCard;
+
+            DeckServices.CardPlayed = () => _cardPlayed;
+            DeckServices.GetCardPoolSize = GetCardPoolSize;
 
 
-            EffectEvents.OnAdded += CheckEffects;
-            EffectEvents.OnRemoved += CheckEffects;
-            EffectEvents.OnUpdated += CheckEffects;
+            EffectEvents.OnAdded += UpdateCardUI;
+            EffectEvents.OnRemoved += UpdateCardUI;
+            EffectEvents.OnUpdated += UpdateCardUI;
+        }
+
+
+
+        protected override IEnumerator Start()
+        {
+            yield return FlowServices.WaitUntilReady();
+            yield return InventoryServices.WaitUntilReady();
+
+            _drawPile = new DrawPile(_cardFactory);
+
+            _cardPiles.Add(_drawPile);
+            _cardPiles.Add(new CardPile(EnumCardPile.Discard, 0));
+            _cardPiles.Add(new CardPile(EnumCardPile.Exhaust, 0));
+            _cardPiles.Add(new CardPile(EnumCardPile.Effect, 0));
+
+            for (int i = 0; i < _initialHandSize; i++)
+            {
+                _cardPiles.Add(new CardPile(EnumCardPile.Hand, i));
+            }
+            for (int i = 0; i < _initialSelectionSize; i++)
+            {
+                _cardPiles.Add(new CardPile(EnumCardPile.Selection, i));
+            }
+
+            _isReady = true;
+        }
+
+        private int GetCardPoolSize(EnumCardPile cardPileType)
+        {
+            if (cardPileType == EnumCardPile.Cart)
+                return CartServices.GetCartSize();
+            return _cardPiles.Count(p => p.Type == cardPileType && p.Enabled);
         }
 
         private void AddNewToDiscard(ItemData data, int numCards)
@@ -221,18 +178,18 @@ namespace Quackery.Decks
             }
         }
 
-        private Card GetTopCard(EnumPileType type)
+        private Card GetTopCard(EnumCardPile type)
         {
-            if (type == EnumPileType.DrawPile)
+            if (type == EnumCardPile.Draw)
                 return _drawPile.TopCard;
 
-            if (type == EnumPileType.DiscardPile)
+            if (type == EnumCardPile.Discard)
                 return _discardPile.TopCard;
 
-            if (type == EnumPileType.InCart)
-                return _lastCartPile?.TopCard;
+            // if (type == EnumCardPile.Cart)
+            //     return _lastCartPile?.TopCard;
 
-            var pile = _piles.Find(p => p.Type == type);
+            var pile = _cardPiles.Find(p => p.Type == type);
             return pile?.TopCard;
         }
 
@@ -255,56 +212,23 @@ namespace Quackery.Decks
             return duplicate;
         }
 
-        private List<EnumItemCategory> GetCategoriesInCard()
-        {
-            var categories = new List<EnumItemCategory>();
-            foreach (var pile in _cartPiles)
-            {
-                if (!pile.Enabled || pile.IsEmpty) continue;
-                foreach (var card in pile.Cards)
-                {
-                    if (card.Category != EnumItemCategory.Unset)
-                        categories.AddUnique(card.Category);
-                }
-            }
-            return categories.ToList();
-        }
+
 
         private void ReplaceTopCard(CardPile pile)
         {
-            if (_lastCartPile == null ||
-                _lastCartPile.IsEmpty ||
-                _lastCartPile.Count < 2)
-                return;
+            // if (_lastCartPile == null ||
+            //     _lastCartPile.IsEmpty ||
+            //     _lastCartPile.Count < 2)
+            //     return;
 
-            var topCard = _lastCartPile.TopCard;
-            var secondCard = _lastCartPile.Cards[1];
+            // var topCard = _lastCartPile.TopCard;
+            // var secondCard = _lastCartPile.Cards[1];
 
-            _lastCartPile.RemoveCard(secondCard);
-            AddCardToTable(secondCard);
-            DeckEvents.OnPileUpdated(_lastCartPile.Type);
-
+            // _lastCartPile.RemoveCard(secondCard);
+            // AddCardToTable(secondCard);
+            // DeckEvents.OnPileUpdated(_lastCartPile.Type, _lastCartPile.Index);
         }
 
-        private int GetNumCardInCart(EnumItemCategory category)
-        {
-            int numCards = 0;
-            foreach (var pile in _cartPiles)
-            {
-                if (!pile.Enabled || pile.IsEmpty) continue;
-                numCards += pile.Cards.Count(card => card.Category == category || category == EnumItemCategory.Unset);
-            }
-            return numCards;
-        }
-
-        protected override IEnumerator Start()
-        {
-            yield return FlowServices.WaitUntilReady();
-            yield return InventoryServices.WaitUntilReady();
-            var allItems = InventoryServices.GetAllItems();
-            _drawPile.Populate(allItems);
-            _isReady = true;
-        }
 
 
         #endregion
@@ -318,16 +242,13 @@ namespace Quackery.Decks
 
         private void RestoreCardCategories()
         {
-            foreach (var pile in _tablePiles)
+            foreach (var pile in _handPiles)
             {
                 if (pile.IsEmpty || !pile.Enabled) continue;
                 pile.RestoreCategory();
             }
-            foreach (var pile in _cartPiles)
-            {
-                if (pile.IsEmpty || !pile.Enabled) continue;
-                pile.RestoreCategory();
-            }
+            CartServices.RestoreCategories();
+
         }
 
         private void ChangeCardCategory(EnumItemCategory category, EnumCardSelection selection)
@@ -339,12 +260,8 @@ namespace Quackery.Decks
             }
             if (selection == EnumCardSelection.AllStack)
             {
-                foreach (var pile in _cartPiles)
-                {
-                    if (pile.IsEmpty || !pile.Enabled) continue;
-                    pile.OverrideStackCategory(category);
-                    DeckEvents.OnPileUpdated(pile.Type);
-                }
+                CartServices.ChangeCardCategory(category);
+
                 return;
             }
 
@@ -353,7 +270,7 @@ namespace Quackery.Decks
         {
             CardPile impactedPile = null;
 
-            foreach (var pile in _tablePiles)
+            foreach (var pile in _handPiles)
             {
                 if (pile.IsEmpty) continue;
                 if (pile.TopCard.Category == category) continue;
@@ -368,14 +285,7 @@ namespace Quackery.Decks
             topCard.OverrideCategory(category);
         }
 
-        private void RecountCart()
-        {
-            foreach (var pile in _cartPiles)
-            {
-                if (pile.IsEmpty || !pile.Enabled) continue;
-                DeckEvents.OnCashingTheCart(pile.Type);
-            }
-        }
+
 
         private void RecountPile(CardPile pile)
         {
@@ -383,267 +293,138 @@ namespace Quackery.Decks
             DeckEvents.OnCashingPile(pile);
         }
 
-        private void DestroyPile(EnumPileType type)
+        private void DestroyPile(EnumCardPile type)
         {
-            var pile = _piles.Find(p => p.Type == type);
+            var pile = _cardPiles.Find(p => p.Type == type);
+            if (pile == null) return;
             pile?.Clear();
-            DeckEvents.OnPileDestroyed(type);
+            DeckEvents.OnPileDestroyed(type, pile.Index);
         }
 
-        private void UpdateCartSize(int cartSize)
+
+
+
+
+        private void UpdateCardUI(Effect _) => UpdateCardUI();
+        private void UpdateCardUI()
         {
-            for (int i = 0; i < _cartPiles.Count; i++)
-            {
-                _cartPiles[i].Enabled = i < cartSize;
-            }
-            DeckEvents.OnCartSizeUpdated(cartSize);
+
+            _handPiles.ForEach(pile => pile.UpdateUI());
+
+            _selectPiles.ForEach(pile => pile.UpdateUI());
         }
 
-        private void CheckEffects(Effect _)
-        {
-            _cartPiles.ForEach(pile =>
-            {
-                if (pile.IsEmpty || !pile.Enabled) return;
-                pile.TopCard.UpdateUI();
-            });
-            _tablePiles.ForEach(pile =>
-            {
-                if (pile.IsEmpty || !pile.Enabled) return;
-                pile.TopCard.UpdateUI();
-            });
-            _selectPiles.ForEach(pile =>
-            {
-                if (pile.IsEmpty || !pile.Enabled) return;
-                pile.TopCard.UpdateUI();
-            });
-        }
-
-        private void MergeCart(int amount, EnumItemCategory category)
-        {
-            int index = _lastCartPile != null ? _cartPiles.IndexOf(_lastCartPile) : -1;
-            if (index == -1 || index == 0) return; // No other pile to merge into
-
-            if (category == EnumItemCategory.Unset)
-            {
-                while (CartPilesHaveSameCategory(out List<CardPile> piles))
-                {
-                    for (int i = 1; i < piles.Count; i++)
-                        MovePileTo(piles[i], piles[0]);
-                }
-            }
-            else
-            {
-                CardPile firstPile = null;
-                List<CardPile> pilesToMerge = new();
-                for (int i = 0; i <= _cartPiles.Count; i++)
-                {
-                    if (_cartPiles[i].IsEmpty ||
-                        !_cartPiles[i].Enabled ||
-                        _cartPiles[i].Category != category) continue;
-
-                    if (firstPile == null)
-                        firstPile = _cartPiles[i];
-                    else
-                        pilesToMerge.Add(_cartPiles[i]);
-                }
-                foreach (var pile in pilesToMerge)
-                {
-                    MovePileTo(pile, firstPile);
-                }
-            }
-
-            _lastCartPile = _cartPiles[index - 1];
-            DeckEvents.OnCashingTheCart(_lastCartPile.Type);
-        }
-
-        private bool CartPilesHaveSameCategory(out List<CardPile> piles)
-        {
-            //piles = _cartPiles.FindAll(p => p.Enabled && !p.IsEmpty);
-            piles = new List<CardPile>();
-            for (int i = 0; i < _cartPiles.Count; i++)
-            {
-                if (!_cartPiles[i].Enabled || _cartPiles[i].IsEmpty) continue;
-                for (int j = i + 1; j < _cartPiles.Count; j++)
-                {
-                    if (!_cartPiles[j].Enabled || _cartPiles[j].IsEmpty) continue;
-                    if (_cartPiles[i].Category != _cartPiles[j].Category) continue;
-                    piles.AddUnique(_cartPiles[i]);
-                    piles.AddUnique(_cartPiles[j]);
-                    return true; // Found at least two piles with the same category
-                }
-            }
-            return piles.Count >= 2;
-        }
 
         #endregion
 
 
-        private List<CardReward> GetPileRewards(EnumPileType type)
-        {
-            var pile = _piles.Find(p => p.Type == type);
-            if (pile == null || pile.IsEmpty) return new();
-            int index = _cartPiles.IndexOf(pile);
-            List<CardPile> otherCartPiles = _cartPiles.Where((p, i) => i != index).ToList();
 
-            return pile.CalculateCartRewards(otherCartPiles);
-        }
 
         #region Player Interations
-        private void PileClicked(EnumPileType type)
+        private void PileClicked(EnumCardPile type, int index)
         {
             DeactivateAllPiles();
-            if (_tablePileTypes.Contains(type))
-                ClickOnTablePile(type);
+            if (type == EnumCardPile.Hand)
+                ClickOnTablePile(type, index);
 
-            if (_selectPileTypes.Contains(type))
-                ClickOnCardSelection(type);
+            if (type == EnumCardPile.Selection)
+                ClickOnCardSelection(type, index);
         }
 
-        private void ClickOnCardSelection(EnumPileType type)
+        private void ClickOnCardSelection(EnumCardPile type, int index)
         {
-            var pile = _piles.Find(p => p.Type == type);
-            if (pile == null || pile.IsEmpty) return;
+            var pile = _cardPiles.Find(p => p.Type == type && p.Index == index);
+            Assert.IsTrue(pile != null && !pile.IsEmpty, "called pile is null or Empty: " + type);
 
             var otherCards = new List<Card>();
-            foreach (var selectPile in _selectPileTypes)
+
+            foreach (var selectPile in _selectPiles)
             {
-                if (selectPile == type) continue; // Skip the clicked pile
-                var otherPile = _piles.Find(p => p.Type == selectPile);
-                if (otherPile != null && !otherPile.IsEmpty)
-                    otherCards.Add(otherPile.TopCard);
+                if (selectPile.Index == index) continue; // Skip the pile that was clicked
+
+                if (selectPile != null && !selectPile.IsEmpty)
+                    otherCards.Add(selectPile.TopCard);
             }
             DeckEvents.OnCardSelected(pile.TopCard, otherCards);
             ActivateTableCards();
 
         }
 
-        private void ClickOnTablePile(EnumPileType type)
+        private void ClickOnTablePile(EnumCardPile type, int index)
         {
+            var pile = _cardPiles.Find(p => p.Type == type && p.Index == index);
+            Assert.IsTrue(pile != null && !pile.IsEmpty, "called pile is null or Empty: " + type);
 
-            var pile = _piles.Find(p => p.Type == type);
-            if (pile == null || pile.IsEmpty) return;
+            var card = pile.TopCard;
+            StartCoroutine(PlayCardRoutine(card));
 
-            var meDialog = pile.TopCard.Item.Data.name + "Me";
+        }
+
+        private IEnumerator PlayCardRoutine(Card card)
+        {
+            var meDialog = card.Item.Data.name + "Me";
             string clientResponse = ClientServices.SelectedClient().Data.CharacterData.name + "Answer";
             DialogQueueServices.QueueDialog(meDialog);
             DialogQueueServices.QueueDialog(clientResponse);
 
-            if (ExecuteSkills(pile)) return;
-
-            if (ActivatePreviousCard(pile)) return;
-
-            if (MergeWithPrevious(pile)) return;
-
-            MergePileToCart(pile);
-        }
+            RemoveFromAllPiles(card);
 
 
-        private bool ExecuteSkills(CardPile pile)
-        {
-            if (pile.TopCard.Category != EnumItemCategory.Skills) return false;
-            pile.TopCard.ExecutePowerInCart(pile);
-            CardGameContollerServices.ModifyCartCash(pile.TopCard.Price);
-            Discard(pile.TopCard);
-            DeckServices.DrawBackToFull();
+            yield return StartCoroutine(OnPlayEffectRoutine(card));
 
-            return true;
-        }
-
-        private bool ActivatePreviousCard(CardPile pile)
-        {
-            return false;
-            if (_lastCartPile != null && !_lastCartPile.IsEmpty &&
-                // _lastCartPile.TopCard.HasActivatableEffects &&
-                _lastCartPile.Category == pile.TopCard.Category)
+            if (ExecuteSkills(card))
             {
-                // If the last cart pile is not empty and has the same category, merge into it
-                _lastCartPile.MergeBelow(pile);
-                DeckEvents.OnPileMoved(_lastCartPile.Type);
-                DeckEvents.OnCashingTheCart(_lastCartPile.Type);
-                _lastCartPile.TopCard.ActivatePower(_lastCartPile);
-                return true; // Exit after merging to the last cart pile
+                _cardPlayed = true;
+                UpdateCardUI();
+                yield break;
             }
 
-            return false;
-        }
-
-        private bool MergeWithPrevious(CardPile pile)
-        {
-            var topCard = pile.TopCard;
-
-            var effect = topCard.Effects.Find(effect => effect.Data is MergeWithPreviousPileEffect);
-            if (effect == null) return false;
-
-            var effectData = effect.Data as MergeWithPreviousPileEffect;
-            CardPile cardPileRef = null;
-
-            if (effectData.TargetStack == MergeWithPreviousPileEffect.EnumTargetStack.Previous)
+            if (CartServices.AddCardToCart(card))
             {
-                if (_lastCartPile == null || _lastCartPile.IsEmpty)
-                {
-                    Debug.LogWarning(
-                        "MergeWithPreviousPileEffect: No last cart pile to merge with. This card should not be playable");
-                    return false;
-                }
-                cardPileRef = _lastCartPile;
-            }
-            else if (effectData.TargetStack == MergeWithPreviousPileEffect.EnumTargetStack.LowestValue)
-            {
-                cardPileRef = _cartPiles
-                    .Where(p => p.Enabled && !p.IsEmpty)
-                    .OrderBy(p => GetPileRewards(p.Type).Sum(r => r.Value))
-                    .FirstOrDefault();
-            }
-            if (cardPileRef == null || cardPileRef.IsEmpty)
-            {
-                Debug.LogWarning("MergeWithPreviousPileEffect: No valid previous pile found. This card should not have been playable");
-                return false;
-            }
-
-            if (effectData.Category != EnumItemCategory.Unset &&
-               effectData.Category != cardPileRef.Category)
-            {
-                Debug.LogWarning("CAtegory is not matching: No valid previous pile found. This card should not have been playable");
-                return false;
-            }
-
-            if (effectData.Location == EnumPileLocation.AtTheBottom)
-            {
-                cardPileRef.MergeBelow(pile);
-                DeckEvents.OnPileMoved(cardPileRef.Type);
-                DeckEvents.OnCashingPile(cardPileRef);
-                CheckEffects(null);
-                return true;
-            }
-            else if (effectData.Location == EnumPileLocation.OnTop)
-            {
-                cardPileRef.MergeOnTop(pile);
-                cardPileRef.TopCard.ExecutePowerInCart(cardPileRef);
-                DeckEvents.OnPileMoved(cardPileRef.Type);
-                DeckEvents.OnCashingTheCart(cardPileRef.Type);
-                CheckEffects(null);
-                return true; // Exit after merging to the last cart pile
+                _cardPlayed = true;
+                UpdateCardUI();
             }
             else
             {
-                Debug.LogWarning($"MergeWithPreviousPileEffect: Unknown location {effectData.Location} for card {topCard.Item.Data.name}");
+                Debug.LogWarning("Could not do anything with: " + card.Name);
             }
-
-            return false;
         }
-        private void MergePileToCart(CardPile pile)
+
+        private IEnumerator OnPlayEffectRoutine(Card card)
         {
-            var cartPile = _cartPiles.Find(c => c.IsEmpty && c.Enabled);
-            if (cartPile == null) return;
+            var onPlayEffects = card.Effects.FindAll(e => e.Trigger == EnumEffectTrigger.OnCardPlayed);
+            if (onPlayEffects.Count == 0)
+                yield break;
 
-            var topCard = pile.TopCard;
-            cartPile.MergeBelow(pile);
-            _lastCartPile = cartPile;
-            topCard.ExecutePowerInCart(cartPile);
-            DeckEvents.OnPileMoved(cartPile.Type);
-            DeckEvents.OnCashingTheCart(cartPile.Type);
-            CheckEffects(null);
+            MoveToEffectPile(card);
+            yield return new WaitForSeconds(0.5f);
+
+            for (int i = 0; i < onPlayEffects.Count; i++)
+            {
+                onPlayEffects[i].Execute(card);
+                yield return new WaitForSeconds(0.5f);
+            }
         }
+
+
+        private void MoveToEffectPile(Card card)
+        {
+            var effectPile = _cardPiles.Find(p => p.Type == EnumCardPile.Effect);
+
+            effectPile.AddAtTheTop(card);
+        }
+
+        private bool ExecuteSkills(Card card)
+        {
+            if (card.Category != EnumItemCategory.Skills) return false;
+            CartServices.AddToCartValue(card.Price);
+            Discard(card);
+            return true;
+        }
+
+
+
+
         #endregion
 
 
@@ -651,9 +432,9 @@ namespace Quackery.Decks
         private void DiscardRandomCards(int numCard)
         {
             List<int> tablePileIndexes = new();
-            for (int i = 0; i < _tablePiles.Count; i++)
+            for (int i = 0; i < _handPiles.Count; i++)
             {
-                if (_tablePiles[i].IsEmpty || !_tablePiles[i].Enabled) continue;
+                if (_handPiles[i].IsEmpty || !_handPiles[i].Enabled) continue;
                 tablePileIndexes.Add(i);
             }
             tablePileIndexes.Shuffle();
@@ -662,7 +443,7 @@ namespace Quackery.Decks
             if (numCardToDiscard <= 0) return;
             for (int i = 0; i < numCardToDiscard; i++)
             {
-                var pile = _tablePiles[tablePileIndexes[i]];
+                var pile = _handPiles[tablePileIndexes[i]];
                 Discard(pile.TopCard);
             }
         }
@@ -680,21 +461,22 @@ namespace Quackery.Decks
             _discardPile.AddAtTheTop(card);
             card.Discard();
 
-            DeckEvents.OnCardMovedTo(card, EnumPileType.DiscardPile, true);
+            //DeckEvents.OnCardMovedTo(card, EnumCardPile.Discard, _discardPile.Index, true);
         }
 
-        private void DiscardHand()
+        private IEnumerator DiscardHand()
         {
 
             var cardsToDiscard = new List<Card>();
-            foreach (var pile in _tablePiles)
+            foreach (var pile in _handPiles)
             {
+                if (pile.IsEmpty || !pile.Enabled) continue;
                 cardsToDiscard.AddRange(pile.Cards);
+                EffectServices.Execute(EnumEffectTrigger.OnDiscard, pile.TopCard);
+                Discard(pile.Cards.ToList());
+                yield return new WaitForSeconds(0.2f);
             }
-            foreach (var card in cardsToDiscard)
-            {
-                Discard(card);
-            }
+
         }
 
 
@@ -706,11 +488,11 @@ namespace Quackery.Decks
         {
             _drawPile.RemoveCard(card);
             _discardPile.RemoveCard(card);
-            foreach (var pile in _tablePiles)
+            foreach (var pile in _handPiles)
                 pile.RemoveCard(card);
 
-            foreach (var pile in _cartPiles)
-                pile.RemoveCard(card);
+            CartServices.RemoveCard(card);
+
 
             foreach (var pile in _selectPiles)
                 pile.RemoveCard(card);
@@ -719,25 +501,25 @@ namespace Quackery.Decks
 
         private void ShuffleDiscardPileIn()
         {
-            SetPileActivation(_tablePiles, false);
+            SetPileActivation(_handPiles, false);
             _drawPile.MergeBelow(_discardPile);
             _drawPile.Shuffle();
-            DeckEvents.OnShuffle(EnumPileType.DrawPile, _drawPile.Cards);
+            DeckEvents.OnShuffle(EnumCardPile.Draw, _drawPile.Index, _drawPile.Cards);
         }
 
         private void AddCardToTable(Card card)
         {
             RemoveFromAllPiles(card);
-            foreach (var pile in _tablePiles)
+            foreach (var pile in _handPiles)
             {
                 if (pile.IsEmpty)
                 {
                     pile.AddAtTheTop(card);
-                    DeckEvents.OnCardMovedTo(card, pile.Type, true);
+
                     return; // Exit after adding to the first empty table pile
                 }
             }
-            // If no empty table pile found, discard the card
+
             Discard(card);
         }
 
@@ -750,7 +532,7 @@ namespace Quackery.Decks
                 if (card == null) continue;
                 _drawPile.AddAtTheBottom(card);
                 _discardPile.RemoveCard(card);
-                DeckEvents.OnCardMovedTo(card, EnumPileType.DrawPile, false);
+                // DeckEvents.OnCardMovedTo(card, EnumCardPile.Draw, _drawPile.Index, false);
             }
             _drawPile.Shuffle();
         }
@@ -758,7 +540,7 @@ namespace Quackery.Decks
 
         private void ActivateTableCards()
         {
-            foreach (var pile in _tablePiles)
+            foreach (var pile in _handPiles)
             {
                 if (pile.IsEmpty) continue;
                 var topCard = pile.TopCard;
@@ -767,7 +549,7 @@ namespace Quackery.Decks
                 {
                     if (topCard.Price > 0) pile.Playable = true;
                     else
-                        pile.Playable = CardGameContollerServices.CanCartAfford(-topCard.Price);
+                        pile.Playable = CartServices.CanCartAfford(-topCard.Price);
                 }
                 else if (topCard.Category == EnumItemCategory.Fatigues)
                 {
@@ -775,11 +557,11 @@ namespace Quackery.Decks
                 }
                 else
                 {
-                    pile.Playable = CanAddToCart(topCard);
+                    pile.Playable = CartServices.CanAddToCart(topCard);
                 }
 
                 pile.Playable &= EffectServices.IsCardPlayable(topCard);
-                DeckEvents.OnActivatePile(pile.Type, pile.Playable);
+                DeckEvents.OnActivatePile(pile.Type, pile.Index, pile.Playable);
             }
 
         }
@@ -795,7 +577,7 @@ namespace Quackery.Decks
                     if (pile.IsEmpty)
                     {
                         pile.AddAtTheTop(card);
-                        DeckEvents.OnCardMovedTo(card, pile.Type, true);
+
                         break;
                     }
                 }
@@ -803,90 +585,63 @@ namespace Quackery.Decks
             SetPileActivation(_selectPiles, true);
         }
 
-        private void DiscardCart()
+
+
+        private void MovePileTo(EnumCardPile pileType1, EnumCardPile pileType2)
         {
-            EffectServices.RemoveEffectsLinkedToPiles(_cartPiles);
-            List<Card> cardsToDiscard = new();
-            foreach (var cartPile in _cartPiles)
-                foreach (var card in cartPile.Cards)
-                    cardsToDiscard.Add(card);
-
-            cardsToDiscard.ForEach(card => Discard(card));
-
-            _lastCartPile = null;
-        }
-
-        private void MovePileTo(EnumPileType pileType1, EnumPileType pileType2)
-        {
-            var pile1 = _piles.Find(p => p.Type == pileType1);
-            var pile2 = _piles.Find(p => p.Type == pileType2);
+            var pile1 = _cardPiles.Find(p => p.Type == pileType1);
+            var pile2 = _cardPiles.Find(p => p.Type == pileType2);
 
             MovePileTo(pile1, pile2);
 
         }
-        private void MovePileTo(CardPile pile1, CardPile pile2)
+        public static void MovePileTo(CardPile pile1, CardPile pile2)
         {
             if (pile1 == null || pile2 == null || pile1.IsEmpty) return;
 
             pile2.MergeBelow(pile1);
-            DeckEvents.OnPileMoved(pile2.Type);
+            DeckEvents.OnPileMoved(pile2.Type, pile2.Index);
         }
 
-        internal void DrawBackToFull()
+        internal IEnumerator DrawBackToFull()
         {
-            EffectServices.Execute(EnumEffectTrigger.OnDraw, null);
-
-            if (_drawPile.InterruptDraw)
-            {
-                _drawPile.InterruptDraw = false;
-                return;
-            }
-            int cardsNeeded = _tablePiles.FindAll(p => p.IsEmpty).Count;
+            _cardPlayed = false;
+            // if (_drawPile.InterruptDraw)
+            // {
+            //     _drawPile.InterruptDraw = false;
+            //     yield break;
+            // }
+            int cardsNeeded = _handPiles.FindAll(p => p.IsEmpty && p.Enabled).Count;
             if (cardsNeeded <= 0)
             {
-                DeckServices.ActivateTableCards();
-                return;
+                // DeckServices.ActivateTableCards();
+                yield break;
             }
 
             List<Card> drawnCards = _drawPile.DrawMany(cardsNeeded);
             foreach (var card in drawnCards)
             {
                 DeckServices.MoveToTable(card);
+                //ADD THE OnDRAW Effect execution
+                //EffectServices.Execute(EnumEffectTrigger.OnDraw, null);
                 card.UpdateUI();
             }
-            DeckServices.ActivateTableCards();
+            yield return new WaitForSeconds(drawnCards.Count * 0.2f);
         }
 
 
-        private bool CanAddToCart(Card topCard)
-        {
-
-            var mergeEffects = topCard.Effects.FindAll(effect => effect.Data is MergeWithPreviousPileEffect);
-            if (mergeEffects.Count == 0)
-                return !CartIsFull;
-            // If there are merge effects, check if the last cart pile is compatible
-            if (_lastCartPile == null || _lastCartPile.IsEmpty) return false;
-            var mergeEffect = mergeEffects[0].Data as MergeWithPreviousPileEffect;
-
-            if (mergeEffect.Location == EnumPileLocation.OnTop &&
-                 _lastCartPile.TopCard.CannotBeCovered)
-                return false;
-            if (mergeEffect.Category != EnumItemCategory.Unset &&
-                _lastCartPile.Category != mergeEffect.Category) return false;
-            return true;
-        }
 
         private void SetPileActivation(List<CardPile> piles, bool activated)
         {
             foreach (var pile in piles)
             {
-                DeckEvents.OnActivatePile(pile.Type, activated);
+                DeckEvents.OnActivatePile(pile.Type, pile.Index, activated);
             }
         }
 
         private void DeactivateAllPiles()
         {
-            SetPileActivation(_tablePiles, false);
+            SetPileActivation(_handPiles, false);
             SetPileActivation(_selectPiles, false);
         }
         #endregion

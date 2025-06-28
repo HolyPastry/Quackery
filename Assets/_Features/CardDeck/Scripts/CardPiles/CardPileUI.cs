@@ -9,30 +9,36 @@ using UnityEngine;
 namespace Quackery.Decks
 {
 
-
     public class CardPileUI : MonoBehaviour
     {
-        [SerializeField] EnumPileType _pileType;
-        [SerializeField] private float _moveSpeed = 0.5f;
-        [SerializeField] private Ease _easeType = Ease.OutBack;
-        [SerializeField] private float _staggerDelay = 0.1f;
-        [SerializeField] private RewardPanel _rewardPanel;
+        [SerializeField] EnumCardPile _pileType;
+        [SerializeField] protected float _moveSpeed = 0.5f;
+        [SerializeField] protected Ease _easeType = Ease.OutBack;
+        [SerializeField] protected float _staggerDelay = 0.1f;
 
         public bool Activated { get; private set; }
 
-        public EnumPileType Type => _pileType;
+        public int PileIndex { get; set; } = 0;
+
+
+        public EnumCardPile Type
+        {
+            get => _pileType;
+            set => _pileType = value;
+
+        }
         public bool IsEmpty => transform.childCount == 0;
         public Card TopCard => IsEmpty ? null : GetComponentsInChildren<Card>()[^1];
 
         public float Height => (transform as RectTransform).sizeDelta.y;
         public const float CardOriginalHeight = 512;
-        private readonly Queue<RectTransform> _moveQueue = new();
+        protected readonly Queue<RectTransform> _moveQueue = new();
 
         public event Action OnCardMovedIn = delegate { };
         public event Action OnCardMovedOut = delegate { };
         public event Action OnPileUpdated = delegate { };
 
-        void OnEnable()
+        protected virtual void OnEnable()
         {
             DeckEvents.OnCardMovedTo += OnCardMoved;
             DeckEvents.OnShuffle += OnShuffle;
@@ -45,7 +51,7 @@ namespace Quackery.Decks
 
         }
 
-        void OnDisable()
+        protected virtual void OnDisable()
         {
             DeckEvents.OnCardMovedTo -= OnCardMoved;
             DeckEvents.OnShuffle -= OnShuffle;
@@ -57,34 +63,39 @@ namespace Quackery.Decks
             StopAllCoroutines(); // Stop all coroutines when disabled
         }
 
-        private void OnPilesUpdated(EnumPileType type)
+        protected bool IsItMe(EnumCardPile type, int pileIndex)
         {
-            if (type != _pileType) return;
+            return type == _pileType && pileIndex == PileIndex;
+        }
+
+        private void OnPilesUpdated(EnumCardPile type, int pileIndex)
+        {
+            if (!IsItMe(type, pileIndex)) return;
             OnPileUpdated?.Invoke();
 
         }
 
-        private void OnActivatePile(EnumPileType type, bool activated)
+        private void OnActivatePile(EnumCardPile type, int pileIndex, bool activated)
         {
-            if (type != _pileType || IsEmpty) return;
+            if (!IsItMe(type, pileIndex) || IsEmpty) return;
 
             Activated = activated;
             TopCard.SetOutline(activated);
         }
 
 
-        private void OnPileDestroyed(EnumPileType type)
+        private void OnPileDestroyed(EnumCardPile type, int pileIndex)
         {
-            if (type != _pileType) return;
+            if (!IsItMe(type, pileIndex)) return;
 
             DestroyCards();
             OnCardMovedOut?.Invoke();
 
         }
 
-        private void OnShuffle(EnumPileType type, List<Card> cards)
+        private void OnShuffle(EnumCardPile type, int pileIndex, List<Card> cards)
         {
-            if (type != _pileType) return;
+            if (!IsItMe(type, pileIndex)) return;
 
             foreach (var card in GetComponentsInChildren<Card>())
             {
@@ -141,9 +152,9 @@ namespace Quackery.Decks
             }
         }
 
-        private void OnCardMoved(Card card, EnumPileType type, bool atTheTop)
+        private void OnCardMoved(Card card, EnumCardPile type, int pileIndex, bool atTheTop)
         {
-            if (type != _pileType) return;
+            if (!IsItMe(type, pileIndex)) return;
 
             MoveCardToPile(card, atTheTop);
         }
@@ -189,15 +200,6 @@ namespace Quackery.Decks
             Destroy(card.gameObject);
         }
 
-        internal void ShowReward(CardReward cardReward)
-        {
-            if (_rewardPanel == null)
-            {
-                Debug.LogWarning("RewardPanel is not assigned in CardPileUI.");
-                return;
-            }
-            _rewardPanel.ShowReward(cardReward);
-            _rewardPanel.transform.SetAsLastSibling();
-        }
+
     }
 }

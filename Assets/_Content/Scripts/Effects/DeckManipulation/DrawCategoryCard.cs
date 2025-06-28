@@ -9,13 +9,13 @@ namespace Quackery.Effects
     {
         public EnumItemCategory Category = EnumItemCategory.Unset;
 
-        public override void Execute(Effect effect, CardPile drawPile)
+        public override void Execute(Effect effect)
         {
             DeckServices.InterruptDraw();
             Card drawnCard = DeckServices.DrawCategory(Category);
             if (drawnCard != null)
                 DeckServices.MoveToTable(drawnCard);
-            DeckServices.DrawBackToFull();
+            //DeckServices.DrawBackToFull();
         }
     }
 }

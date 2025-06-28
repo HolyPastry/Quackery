@@ -16,19 +16,19 @@ namespace Quackery.Effects
 
         [SerializeField] private CardPosition _position = CardPosition.TopDraw;
 
-        public override void Execute(Effect effect, CardPile pile)
+        public override void Execute(Effect effect)
         {
             Card card = null;
             switch (_position)
             {
                 case CardPosition.TopDraw:
-                    card = DeckServices.GetTopCard(EnumPileType.DrawPile);
+                    card = DeckServices.GetTopCard(EnumCardPile.Draw);
                     break;
                 case CardPosition.TopDiscard:
-                    card = DeckServices.GetTopCard(EnumPileType.DiscardPile);
+                    card = DeckServices.GetTopCard(EnumCardPile.Discard);
                     break;
                 case CardPosition.TopCart:
-                    card = DeckServices.GetTopCard(EnumPileType.InCart);
+                    card = DeckServices.GetTopCard(EnumCardPile.Cart);
                     break;
             }
             if (card == null) return;

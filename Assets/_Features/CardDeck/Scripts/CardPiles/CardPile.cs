@@ -1,13 +1,15 @@
+
 using System;
 using System.Collections.Generic;
 using Quackery.Inventories;
-using UnityEngine;
+
 
 namespace Quackery.Decks
 {
     public class CardPile
     {
-        public EnumPileType Type;
+        public EnumCardPile Type;
+        public int Index;
         public List<Card> Cards = new();
         public void Shuffle() => Cards.Shuffle();
         public bool IsEmpty => Cards.Count == 0;
@@ -20,6 +22,13 @@ namespace Quackery.Decks
 
         public bool Playable = true;
         public bool Enabled = true;
+
+        public CardPile(EnumCardPile discardPile, int index)
+        {
+            Type = discardPile;
+            Index = index;
+        }
+
         private bool ValidityCheck()
         {
             if (Cards.Count == 0)
@@ -98,11 +107,13 @@ namespace Quackery.Decks
         {
             if (card == null) return;
             Cards.Insert(0, card);
+            DeckEvents.OnCardMovedTo(card, Type, Index, true);
         }
         public void AddAtTheBottom(Card card)
         {
             if (card == null) return;
             Cards.Add(card);
+            DeckEvents.OnCardMovedTo(card, Type, Index, false);
         }
 
         public void MergeOnTop(CardPile pile)
@@ -114,7 +125,7 @@ namespace Quackery.Decks
                 if (card != null)
                 {
                     AddAtTheTop(card);
-                    DeckEvents.OnCardMovedTo(card, Type, true);
+                    //DeckEvents.OnCardMovedTo(card, Type, Index, true);
                 }
             }
             pile.Clear();
@@ -124,12 +135,12 @@ namespace Quackery.Decks
         {
             if (pile == null || pile.IsEmpty) return;
 
-            foreach (var card in pile.Cards)
+            foreach (var card in pile.Cards.ToArray())
             {
                 if (card != null)
                 {
                     AddAtTheBottom(card);
-                    DeckEvents.OnCardMovedTo(card, Type, false);
+                    // DeckEvents.OnCardMovedTo(card, Type, Index, false);
                 }
             }
             pile.Clear();
@@ -161,6 +172,12 @@ namespace Quackery.Decks
                 Cards[i].OverrideCategory(category);
             }
 
+        }
+
+        internal void UpdateUI()
+        {
+            if (IsEmpty || !Enabled) return;
+            TopCard.UpdateUI();
         }
     }
 }

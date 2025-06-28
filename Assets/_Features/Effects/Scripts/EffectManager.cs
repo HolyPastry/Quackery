@@ -24,7 +24,7 @@ namespace Quackery.Effects
             EffectServices.Add = (effectData) => { };
             EffectServices.Cancel = delegate { };
 
-            EffectServices.Execute = delegate { };
+            EffectServices.Execute = (trigger, card) => 0;
             EffectServices.GetCurrent = () => new();
 
             EffectServices.ModifyValue = (effectData, value) => { };
@@ -148,7 +148,7 @@ namespace Quackery.Effects
             {
                 var effect = card.Effects.Find(e => e.Data is CategoryInCartPriceEffect);
 
-                int numCards = DeckServices.GetNumCardInCart((effect.Data as CategoryInCartPriceEffect).Category);
+                int numCards = CartServices.GetNumCardInCart((effect.Data as CategoryInCartPriceEffect).Category);
                 basePrice = numCards * effect.Value;
             }
 
@@ -378,7 +378,7 @@ namespace Quackery.Effects
             EffectEvents.OnRemoved?.Invoke(effect);
         }
 
-        private void Execute(EnumEffectTrigger trigger, CardPile pile)
+        private int Execute(EnumEffectTrigger trigger, Card card)
         {
             // List<int> _effectToRemove = new();
             // var effectToExecute = _effects.FindAll(effect => effect.Trigger == trigger);
@@ -394,16 +394,20 @@ namespace Quackery.Effects
             //     }
             // }
 
-            if (pile == null || pile.IsEmpty || !pile.Enabled)
-                return;
+            if (card == null)
+            {
+                Debug.LogWarning("Card is null when executing effects.");
+                return 0; ;
+            }
 
-            var topCard = pile.TopCard;
+            var effectToExecute = card.Effects.FindAll(effect => effect.Trigger == trigger);
 
-            foreach (var effect in topCard.Effects)
+            foreach (var effect in card.Effects)
             {
                 if (effect.Trigger != trigger) continue;
-                effect.Execute(pile);
+                effect.Execute(card);
             }
+            return effectToExecute.Count();
 
         }
     }

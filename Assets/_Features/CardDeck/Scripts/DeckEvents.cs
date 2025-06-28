@@ -4,22 +4,21 @@ namespace Quackery.Decks
 {
     public static class DeckEvents
     {
-        public static Action<Card, EnumPileType, bool> OnCardMovedTo = (card, pileType, placeOnTop) => { };
-        public static Action<EnumPileType> OnPileMoved = (destinationPile) => { };
-        public static Action<EnumPileType> OnCashingTheCart = (destinationPile) => { };
-        public static Action<EnumPileType> OnPileDestroyed = (pileType) => { };
+        public static Action<Card, EnumCardPile, int, bool> OnCardMovedTo = (card, pileType, index, placeOnTop) => { };
+        public static Action<EnumCardPile, int> OnPileMoved = (destinationPile, index) => { };
+        public static Action<EnumCardPile, int> OnPileDestroyed = (pileType, index) => { };
 
-        public static Action<EnumPileType, List<Card>> OnShuffle = (pileType, cards) => { };
+        public static Action<EnumCardPile, int, List<Card>> OnShuffle = (pileType, index, cards) => { };
 
         public static Action OnCardsMovingToSelectPile = () => { };
 
         public static Action<Card, List<Card>> OnCardSelected = (selectedCard, otherCards) => { };
 
-        internal static Action<int> OnCartSizeUpdated = (size) => { };
+        internal static Action<EnumCardPile> OnCardPoolSizeUpdate = (cardPile) => { };
 
-        public static Action<EnumPileType, bool> OnActivatePile { get; internal set; }
+        public static Action<EnumCardPile, int, bool> OnActivatePile = (pileType, index, activate) => { };
 
         internal static Action<CardPile> OnCashingPile = (pile) => { };
-        internal static Action<EnumPileType> OnPileUpdated = (pileType) => { };
+        internal static Action<EnumCardPile, int> OnPileUpdated = (pileType, index) => { };
     }
 }

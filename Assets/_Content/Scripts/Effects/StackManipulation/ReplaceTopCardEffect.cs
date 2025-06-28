@@ -9,9 +9,9 @@ namespace Quackery
     [CreateAssetMenu(fileName = "REplace Top Card", menuName = "Quackery/Effects/ReplaceTopCard", order = 0)]
     public class ReplaceTopCardEffect : MergeWithPreviousPileEffect
     {
-        public override void Execute(Effect effect, CardPile pile)
+        public override void Execute(Effect effect)
         {
-            DeckServices.ReplaceTopCard(pile);
+            //DeckServices.ReplaceTopCard();
         }
     }
 }

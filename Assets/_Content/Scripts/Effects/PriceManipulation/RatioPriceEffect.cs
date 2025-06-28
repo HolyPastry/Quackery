@@ -15,10 +15,7 @@ namespace Quackery.Effects
             return Sprites.Replace(Category, Description).Replace("#Ratio", (Ratio * 100).ToString("F0") + "%");
         }
 
-        public override void Execute(Effect effect, CardPile pile)
-        {
-            //noop
-        }
+
 
         public override float RatioPriceModifier(Effect effect, Card card)
         {

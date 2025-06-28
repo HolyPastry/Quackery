@@ -7,7 +7,7 @@ namespace Quackery.Effects
     public class SetValueEffect : EffectData
     {
         [SerializeField] private EffectData _effectToModify;
-        public override void Execute(Effect effect, CardPile drawPile)
+        public override void Execute(Effect effect)
         {
             EffectServices.SetValue(_effectToModify, effect.Value);
         }

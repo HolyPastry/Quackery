@@ -12,13 +12,5 @@ namespace Quackery.Effects
             Pile
         }
         [SerializeField] private Scope _scope;
-
-        public override void Execute(Effect effect, CardPile pile)
-        {
-            if (_scope == Scope.Pile)
-                DeckServices.RecountPile(pile);
-            else
-                DeckServices.RecountCart();
-        }
     }
 }

@@ -10,9 +10,9 @@ namespace Quackery.Effects
     public class SpendingLimitEffect : EffectData
     {
 
-        public override void Execute(Effect effect, CardPile drawPile)
+        public override void Execute(Effect effect)
         {
-            if (CardGameController.GetClientCartValue() <= effect.Value) return;
+            if (CartServices.GetCartValue() >= effect.Value) return;
 
             CardGameController.InterruptRoundRequest();
         }

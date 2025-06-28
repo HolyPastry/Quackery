@@ -9,7 +9,7 @@ namespace Quackery.Effects
     {
         // public override string Description => "Draw two cards from the deck, select one to keep, and discard the other.";
 
-        public override void Execute(Effect effect, CardPile drawPile)
+        public override void Execute(Effect effect)
         {
             DeckServices.InterruptDraw();
             List<Card> drawnCards = DeckServices.Draw(effect.Value);
@@ -22,7 +22,7 @@ namespace Quackery.Effects
             DeckEvents.OnCardSelected -= OnCardSelected;
             DeckServices.MoveToTable(selectedCard);
             DeckServices.Discard(otherCards);
-            DeckServices.DrawBackToFull();
+            //DeckServices.DrawBackToFull();
         }
     }
 }

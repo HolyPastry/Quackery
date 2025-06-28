@@ -196,18 +196,18 @@ namespace Quackery.Decks
             UpdatePrice();
         }
 
-        internal void ExecutePowerInCart(CardPile pile)
-        {
-            foreach (var effect in Effects)
-            {
-                if (effect.Tags.Contains(EnumEffectTag.Activated)) continue;
-                if (effect.Trigger == EnumEffectTrigger.OnCardPlayed)
-                    effect.Execute(pile);
-                if (effect.Trigger == EnumEffectTrigger.OnDraw ||
-                     effect.Trigger == EnumEffectTrigger.Continous)
-                    EffectServices.Add(effect);
-            }
-        }
+        // internal void ExecutePowerInCart(CardPile pile)
+        // {
+        //     foreach (var effect in Effects)
+        //     {
+        //         if (effect.Tags.Contains(EnumEffectTag.Activated)) continue;
+        //         if (effect.Trigger == EnumEffectTrigger.OnCardPlayed)
+        //             effect.Execute(pile);
+        //         if (effect.Trigger == EnumEffectTrigger.OnDraw ||
+        //              effect.Trigger == EnumEffectTrigger.Continous)
+        //             EffectServices.Add(effect);
+        //     }
+        // }
 
         internal void Destroy()
         {
@@ -218,22 +218,22 @@ namespace Quackery.Decks
             });
         }
 
-        internal void ActivatePower(CardPile lastCartPile)
-        {
-            foreach (var effect in Effects)
-            {
-                if (!effect.Tags.Contains(EnumEffectTag.Activated)) continue;
-                if (_activatedEffects.Contains(effect)) continue;
+        // internal void ActivatePower(CardPile lastCartPile)
+        // {
+        //     foreach (var effect in Effects)
+        //     {
+        //         if (!effect.Tags.Contains(EnumEffectTag.Activated)) continue;
+        //         if (_activatedEffects.Contains(effect)) continue;
 
-                effect.LinkedCard = lastCartPile.TopCard;
-                EffectServices.Add(effect);
-                _activatedEffects.Add(effect);
-                var effectIcon = _effectIconPool.Find(icon => icon.Effect == effect);
-                effectIcon.Activated = true;
-                if (effect.Trigger == EnumEffectTrigger.OnActivated)
-                    effect.Execute(lastCartPile);
-            }
-        }
+        //         effect.LinkedCard = lastCartPile.TopCard;
+        //         EffectServices.Add(effect);
+        //         _activatedEffects.Add(effect);
+        //         var effectIcon = _effectIconPool.Find(icon => icon.Effect == effect);
+        //         effectIcon.Activated = true;
+        //         if (effect.Trigger == EnumEffectTrigger.OnActivated)
+        //             effect.Execute(lastCartPile);
+        //     }
+        // }
 
         internal void OverrideCategory(EnumItemCategory category)
         {

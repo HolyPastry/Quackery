@@ -8,7 +8,7 @@ namespace Quackery.Effects
     [CreateAssetMenu(fileName = "CleanseEffect", menuName = "Quackery/Effects/Cleanse", order = 1)]
     public class CleanseEffect : EffectData
     {
-        public override void Execute(Effect effect, CardPile drawPile)
+        public override void Execute(Effect effect)
         {
             DeckServices.InterruptDraw();
             List<Card> drawnCards = DeckServices.Draw(effect.Value);
@@ -21,7 +21,7 @@ namespace Quackery.Effects
             DeckEvents.OnCardSelected -= OnCardSelected;
             DeckServices.DestroyCard(selectedCard);
             DeckServices.Discard(otherCards);
-            DeckServices.DrawBackToFull();
+            //DeckServices.DrawBackToFull();
         }
     }
 }

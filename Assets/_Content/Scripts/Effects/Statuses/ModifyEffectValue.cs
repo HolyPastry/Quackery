@@ -14,7 +14,7 @@ namespace Quackery.Effects
             EffectServices.ModifyValue(_effectToModify, -effect.Value);
         }
 
-        public override void Execute(Effect effect, CardPile drawPile)
+        public override void Execute(Effect effect)
         {
             EffectServices.ModifyValue(_effectToModify, effect.Value);
         }

@@ -7,10 +7,7 @@ namespace Quackery.Effects
     public class PriceModifierBasedOnPriceEffect : EffectData
     {
         [SerializeField] private int _priceToMatch = 1;
-        public override void Execute(Effect effect, CardPile pile)
-        {
-            //noop
-        }
+
 
         public override int PriceModifier(Effect effect, Card card)
         {
@@ -21,7 +18,6 @@ namespace Quackery.Effects
             return 0;
         }
 
-        public override void Cancel(Effect effect)
-        { }
+
     }
 }
