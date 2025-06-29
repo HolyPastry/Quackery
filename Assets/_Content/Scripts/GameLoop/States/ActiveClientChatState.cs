@@ -22,7 +22,7 @@ namespace Quackery
             // DialogQueueServices.QueueDialog("MeIntro");
             // yield return DialogQueueServices.WaitUntilAllDialogEnds();
 
-            bool firstTime = true;
+            //bool firstTime = true;
             while (true)
             {
                 var client = ClientServices.SelectedClient();
