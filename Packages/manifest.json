@@ -1,12 +1,14 @@
 {
   "dependencies": {
     "com.eflatun.scenereference": "https://github.com/starikcetin/Eflatun.SceneReference.git#upm",
+    "com.github.superunitybuild.buildtool": "8.0.0-pre.1",
     "com.holypastry.bakery": "https://github.com/HolyPastry/Bakery.git",
     "com.holypastry.bakery.dialogs": "https://github.com/HolyPastry/DialogServices.git",
     "com.holypastry.bakery.flow": "https://github.com/HolyPastry/FlowServices.git",
     "com.holypastry.bakery.saves": "https://github.com/HolyPastry/SaveServices.git",
     "com.inkle.ink-unity-integration": "https://github.com/inkle/ink-unity-integration.git#upm",
     "com.kylewbanks.scenerefattribute": "https://github.com/KyleBanks/scene-ref-attribute.git",
+    "com.unity.adaptiveperformance": "4.0.1",
     "com.unity.cinemachine": "3.1.3",
     "com.unity.collab-proxy": "2.8.2",
     "com.unity.feature.2d": "2.0.1",
@@ -51,5 +53,14 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.github.superunitybuild.buildtool"
+      ]
+    }
+  ]
 }

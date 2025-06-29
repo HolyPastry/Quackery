@@ -17,7 +17,7 @@ MonoBehaviour:
   Effects:
   - Data: {fileID: 11400000, guid: 0c626a7a36b8a460b8d88aab4412ca1c, type: 2}
     Value: 1
-    Trigger: 4
+    Trigger: 6
     Tags: 02000000
   - Data: {fileID: 11400000, guid: 3286b0a8bc6aa4739935360d999462de, type: 2}
     Value: 0

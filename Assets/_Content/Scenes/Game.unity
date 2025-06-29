@@ -1638,6 +1638,7 @@ GameObject:
   - component: {fileID: 1072491520}
   - component: {fileID: 1072491519}
   - component: {fileID: 1072491521}
+  - component: {fileID: 1072491522}
   m_Layer: 0
   m_Name: --- SceneSetup ---
   m_TagString: Untagged
@@ -1780,6 +1781,20 @@ MonoBehaviour:
   BillDataList:
   - {fileID: 11400000, guid: 8fbc1d46b407e4c4e877ebc87cfd0b6f, type: 2}
   - {fileID: 11400000, guid: c6fc7d27a457448fb9fe84540c312852, type: 2}
+--- !u!114 &1072491522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072491515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89cc8cd2cf5174ef286f29c15fa21fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _disable: 0
+  _startRating: 1
 --- !u!114 &1203412792 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3599782344628367698, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}

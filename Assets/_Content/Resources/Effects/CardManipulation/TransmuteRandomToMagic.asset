@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: 
   Icon: {fileID: 0}
-  Trigger: 1
-  StartValue: 0
-  UseValue: 0
   Description: <b>Transmute</b> - Change the category to #Category of a card for
     this client
-  Tags: 
+  Explanations: []
   _newCategory: 2
+  _cardSelection: 0

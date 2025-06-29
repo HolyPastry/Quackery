@@ -16,4 +16,4 @@ MonoBehaviour:
   Background: {fileID: 0}
   Icon: {fileID: 21300000, guid: e779d3f8816444fb2845825715a99c2d, type: 3}
   StartPrice: 200
-  PaymentInterval: 10
+  PaymentInterval: 1

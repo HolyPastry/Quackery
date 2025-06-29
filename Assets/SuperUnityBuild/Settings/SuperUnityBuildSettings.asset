@@ -1,0 +1,188 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4944712547968660327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2786f6b2301a94f4288672ff5305244c, type: 3}
+  m_Name: Windows
+  m_EditorClassIdentifier: 
+  enabled: 1
+  distributionList:
+    distributions: []
+  targets:
+  - type: 19
+    name: Player
+    enabled: 1
+    binaryNameFormat: '{0}.exe'
+    subtarget: 0
+  - type: 19
+    name: Dedicated Server
+    enabled: 0
+    binaryNameFormat: '{0}.exe'
+    subtarget: 1
+  variants:
+  - variantName: Architecture
+    selectedIndex: 0
+    values:
+    - Intel 64-bit
+    - Intel 32-bit
+    isFlag: 0
+  - variantName: Build Output
+    selectedIndex: 0
+    values:
+    - App
+    - Visual Studio Solution
+    isFlag: 0
+  scriptingBackends:
+  - scriptingImplementation: 0
+    name: Mono
+    enabled: 0
+  - scriptingImplementation: 1
+    name: IL2CPP
+    enabled: 1
+  platformName: Windows
+  targetGroup: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5886119a5c7b34d8872ab527ca3e1b, type: 3}
+  m_Name: SuperUnityBuildSettings
+  m_EditorClassIdentifier: 
+  _basicSettings:
+    baseBuildFolder: Builds
+    buildPath: $VERSION/$PLATFORM/
+    openFolderPostBuild: 1
+    constantsFileLocation: Assets/SuperUnityBuild
+  _productParameters:
+    buildCounter: 1
+    buildVersion: 0.0.0
+    versionTemplate: 0.0.0
+    autoGenerate: 0
+    syncWithPlayerSettings: 0
+  _releaseTypeList:
+    releaseTypes:
+    - typeName: Test
+      bundleIdentifier: com.nhnt.quackery
+      companyName: Not Here, Not There
+      productName: Quackery
+      syncAppNameWithProduct: 1
+      appBuildName: Quackery
+      buildOptions: 1
+      customDefines: 
+      sceneList:
+        releaseScenes:
+        - fileGUID: 3fc8acdd13e6c734bafef6554d6fdbcd
+          sceneActive: 1
+  _platformList:
+    platforms:
+    - {fileID: 8030532183746009011}
+    - {fileID: -4944712547968660327}
+  _projectConfigurations:
+    configSet:
+      _Buckets: 0300000006000000ffffffff000000000200000005000000ffffffff
+      _HashCodes: eb61b16172aba76810dceb6537bdec0cceb7a84b8c621d736678124c
+      _Next: ffffffffffffffff01000000ffffffffffffffff04000000ffffffff
+      _Count: 7
+      _Version: 7
+      _FreeList: -1
+      _FreeCount: 0
+      _Keys:
+      - Test/macOS/Player (Intel 64-bit,App)/IL2CPP
+      - Test/macOS/Player (Intel 64-bit,App)
+      - Test/macOS
+      - Test/Windows/Player (Intel 64-bit,App)/IL2CPP
+      - Test/Windows/Player (Intel 64-bit,App)
+      - Test/Windows
+      - Test
+      _Values:
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys:
+        - Test/macOS/Player (Intel 64-bit,App)/IL2CPP
+      - enabled: 1
+        childKeys:
+        - Test/macOS/Player (Intel 64-bit,App)
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys:
+        - Test/Windows/Player (Intel 64-bit,App)/IL2CPP
+      - enabled: 1
+        childKeys:
+        - Test/Windows/Player (Intel 64-bit,App)
+      - enabled: 1
+        childKeys:
+        - Test/macOS
+        - Test/Windows
+    showViewOptions: 0
+    showConfigs: 0
+    showBuildInfo: 0
+    hideDisabled: 0
+    treeView: 0
+    selectedKeyChain: Test/macOS/Player (Intel 64-bit,App)/IL2CPP
+  _preBuildActions:
+    buildActions: []
+  _postBuildActions:
+    buildActions: []
+--- !u!114 &8030532183746009011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d962d142a259c394da2bdb301b72eeb5, type: 3}
+  m_Name: macOS
+  m_EditorClassIdentifier: 
+  enabled: 1
+  distributionList:
+    distributions: []
+  targets:
+  - type: 2
+    name: Player
+    enabled: 1
+    binaryNameFormat: '{0}.app'
+    subtarget: 0
+  - type: 2
+    name: Dedicated Server
+    enabled: 0
+    binaryNameFormat: '{0}.app'
+    subtarget: 1
+  variants:
+  - variantName: Architecture
+    selectedIndex: 0
+    values:
+    - Intel 64-bit
+    - Apple silicon
+    - Intel 64-bit + Apple silicon
+    isFlag: 0
+  - variantName: Build Output
+    selectedIndex: 0
+    values:
+    - App
+    - Xcode Project
+    isFlag: 0
+  scriptingBackends:
+  - scriptingImplementation: 0
+    name: Mono
+    enabled: 0
+  - scriptingImplementation: 1
+    name: IL2CPP
+    enabled: 1
+  platformName: macOS
+  targetGroup: 1
