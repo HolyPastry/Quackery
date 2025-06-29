@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
+  m_Name: 25.BadVibesSpray
+  m_EditorClassIdentifier: 
+  MasterText: Bad Vibe Spray
+  Icon: {fileID: 21300000, guid: 5382d34bc060d46718ac124080b204fe, type: 3}
+  StartPrice: 1
+  ShortDescription: 'Remove statuses
+
+    -1 <b>#Rating</b>'
+  LongDescription: "Remove all active statuses good and bad. \n"
+  Explanations:
+  - {fileID: 11400000, guid: b68f6241973cb43238534a194944f7d7, type: 2}
+  SubscriptionCost: 0
+  Category: 2
+  Effects:
+  - Data: {fileID: 11400000, guid: fa5ae57cd5de542419740c4385d93a0c, type: 2}
+    Value: 0
+    Trigger: 1
+    Tags: 
+  - Data: {fileID: 11400000, guid: e70add7ad83d1426fbc50047ea4b68de, type: 2}
+    Value: -1
+    Trigger: 1
+    Tags: 
+  ValueEvaluator: {fileID: 0}

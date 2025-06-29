@@ -15,7 +15,7 @@ namespace Quackery
         [SerializeField] private Ease _easeType;
         [SerializeField] private float _transitionDuration = 1f;
         [SerializeField] private CustomerPanelState _currentState;
-        private ChatWindow _chatWindow;
+        [SerializeField] private ChatWindow _chatWindow;
 
         public bool IsPanelMoving = false;
 
@@ -37,7 +37,7 @@ namespace Quackery
         {
             set
             {
-                _chatWindow.BottomMargin = value;
+                // _chatWindow.BottomMargin = value;
             }
         }
 
@@ -45,7 +45,7 @@ namespace Quackery
 
         void Awake()
         {
-            _chatWindow = GetComponentInChildren<ChatWindow>(true);
+
             _chatWindow.enabled = false;
         }
 

@@ -22,7 +22,7 @@ namespace Quackery
 
         public string Description => Data == null ?
                          "No Effect Data Assigned" :
-                 Data.GetDescription().Replace("#Value", Value.ToString());
+                 Data.Description.Replace("#Value", Value.ToString());
 
         public Effect()
         { }
@@ -44,6 +44,11 @@ namespace Quackery
         internal bool ContainsTag(EnumEffectTag effectTag)
         {
             return Tags.Contains(effectTag);
+        }
+
+        internal void ExecutePile(CardPile pile)
+        {
+            Data.ExecutePile(this, pile);
         }
     }
 }

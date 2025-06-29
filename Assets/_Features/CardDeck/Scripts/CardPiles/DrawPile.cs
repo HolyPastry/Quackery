@@ -11,7 +11,6 @@ namespace Quackery.Decks
     {
         private readonly CardFactory _cardFactory;
 
-        public bool InterruptDraw { get; set; } = false;
 
         public DrawPile(CardFactory cardFactory) : base(EnumCardPile.Draw, 0)
         {
@@ -30,7 +29,6 @@ namespace Quackery.Decks
         {
             DeckServices.AddNewToDrawDeck = AddNew;
             DeckServices.AddToDrawPile = AddNewCardToDeck;
-            DeckServices.InterruptDraw = () => InterruptDraw = true;
             DeckServices.DrawSpecificCards = DrawSpecificCards;
             DeckServices.DrawCategory = DrawCategoryCard;
             DeckServices.Draw = DrawMany;
@@ -41,7 +39,6 @@ namespace Quackery.Decks
 
             DeckServices.AddNewToDrawDeck = delegate { };
             DeckServices.AddToDrawPile = delegate { };
-            DeckServices.InterruptDraw = delegate { };
             DeckServices.DrawSpecificCards = delegate { };
             DeckServices.DrawCategory = category => null;
             DeckServices.Draw = number => new List<Card>();
@@ -113,7 +110,7 @@ namespace Quackery.Decks
         {
             if (!DrawTopCard(out Card card))
             {
-                DeckServices.MovePileTo(EnumCardPile.Discard, EnumCardPile.Draw);
+                DeckServices.MovePileType(EnumCardPile.Discard, EnumCardPile.Draw);
                 DeckServices.Shuffle();
                 if (!DrawTopCard(out card))
                 {

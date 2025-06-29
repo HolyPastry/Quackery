@@ -8,12 +8,9 @@ namespace Quackery.Decks
     public class CartValueUI : MonoBehaviour
     {
         [SerializeField] private TMPro.TextMeshProUGUI _cartValueText;
-        private Vector3 _originalPosition;
 
-        void Awake()
-        {
-            _originalPosition = transform.position;
-        }
+
+
         void OnEnable()
         {
             CartEvents.OnCartValueChanged += UpdateCartValue;
@@ -30,7 +27,9 @@ namespace Quackery.Decks
         }
         public void Show()
         {
+
             gameObject.SetActive(true);
+            transform.localPosition = Vector3.zero;
             UpdateCartValue(CartServices.GetCartValue());
         }
 
@@ -46,7 +45,7 @@ namespace Quackery.Decks
         }
         public void ResetPosition()
         {
-            transform.position = _originalPosition;
+            transform.localPosition = Vector3.zero;
         }
 
         public void Hide()

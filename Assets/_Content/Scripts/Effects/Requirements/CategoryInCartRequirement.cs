@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Quackery.Effects
 {
 
-    [CreateAssetMenu(fileName = "CategoryInCartRequirement", menuName = "Quackery/Effects/Category In Cart Requirement", order = 0)]
+    [CreateAssetMenu(fileName = "CategoryInCartRequirement", menuName = "Quackery/Effects/Requirements/Category In Cart Requirement", order = 0)]
     public class CategoryInCartRequirement : RequirementEffectData
     {
         [SerializeField] private EnumItemCategory _category = EnumItemCategory.Unset;

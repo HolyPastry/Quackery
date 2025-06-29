@@ -269,6 +269,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Rating
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 450
+        width: 54
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89ea2f6f1a7304438a841da156e98a67
+      internalID: -1742062740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -287,6 +308,7 @@ TextureImporter:
       Energy: 329415838
       Herbs: 1902273417
       Magic: -56568269
+      Rating: -1742062740
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

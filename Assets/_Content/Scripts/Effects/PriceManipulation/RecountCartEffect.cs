@@ -12,5 +12,9 @@ namespace Quackery.Effects
             Pile
         }
         [SerializeField] private Scope _scope;
+        public override void Execute(Effect effect)
+        {
+            effect.LinkedCard.StartCoroutine(CartServices.CalculateCart());
+        }
     }
 }

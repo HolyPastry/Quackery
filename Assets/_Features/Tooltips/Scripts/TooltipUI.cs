@@ -1,19 +1,20 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using KBCore.Refs;
-using TMPro;
-using UnityEngine;
 
+using System.Collections.Generic;
+
+using TMPro;
+using UnityEditor.Overlays;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Quackery
 {
 
-    public class TooltipUI : ValidatedMonoBehaviour
+    public class TooltipUI : MonoBehaviour
     {
-        [SerializeField, Child] private TextMeshProUGUI _tooltipText;
+        [SerializeField] private TextMeshProUGUI _descriptionGUI;
+        [SerializeField] private TextMeshProUGUI _titleGUI;
+        [SerializeField] private TextMeshProUGUI _explanationGUI;
         [SerializeField] private GameObject _hiddable;
         public static Action<GameObject> ShowTooltipRequest = delegate { };
         public static Action HideTooltipRequest = delegate { };
@@ -48,10 +49,22 @@ namespace Quackery
             StopAllCoroutines();
         }
 
-        internal void AddTooltip(string description)
+        internal void AddTooltip(string title, string description, List<Explanation> explanation)
         {
-            _tooltipText.text = description;
+            _descriptionGUI.text = Sprites.Replace(description);
+            _titleGUI.text = title;
+
+            _explanationGUI.gameObject.SetActive(explanation.Count > 0);
+            if (explanation.Count > 0)
+            {
+                _explanationGUI.text = "";
+                foreach (var exp in explanation)
+                {
+                    _explanationGUI.text += Sprites.Replace(exp.ShortDescription) + "\n";
+                }
+            }
             _hiddable.SetActive(true);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_hiddable.transform as RectTransform);
 
         }
 

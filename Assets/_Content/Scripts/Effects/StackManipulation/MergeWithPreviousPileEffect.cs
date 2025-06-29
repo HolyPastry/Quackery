@@ -17,10 +17,10 @@ namespace Quackery.Effects
         public EnumTargetStack TargetStack;
         public EnumPileLocation Location;
         public EnumItemCategory Category;
-        public override string GetDescription()
-        {
-            return Sprites.Replace(Category, Description);
-        }
+        // public override string GetDescription()
+        // {
+        //     return Sprites.Replace(Category, Description);
+        // }
 
     }
 }

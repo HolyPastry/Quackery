@@ -22,6 +22,7 @@ namespace Quackery
             var client = ClientServices.GetNextClient();
             _controller.Show();
 
+
             yield return new WaitForSeconds(1f);
             while (true)
             {

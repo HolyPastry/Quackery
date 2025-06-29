@@ -10,10 +10,10 @@ namespace Quackery.Effects
         public EnumItemCategory Category;
         public float Ratio = 1.0f;
 
-        public override string GetDescription()
-        {
-            return Sprites.Replace(Category, Description).Replace("#Ratio", (Ratio * 100).ToString("F0") + "%");
-        }
+        // public override string GetDescription()
+        // {
+        //     return Sprites.Replace(Category, Description).Replace("#Ratio", (Ratio * 100).ToString("F0") + "%");
+        // }
 
 
 

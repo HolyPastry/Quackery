@@ -33,7 +33,7 @@ namespace Quackery.Shops
             Assert.IsNotNull(cardReward, "ShopConfirmCard can only handle AddCardReward types.");
 
             _card.Item = new Item(cardReward.ItemData);
-            _description.text = cardReward.ItemData.Description;
+            _description.text = cardReward.ItemData.ShortDescription;
 
         }
     }

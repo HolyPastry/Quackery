@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
+  m_Name: 9.CrystalRing
+  m_EditorClassIdentifier: 
+  MasterText: The one Ring to cure it all
+  Icon: {fileID: 21300000, guid: ebc18aa93726541bab4c09558a4afd9c, type: 3}
+  StartPrice: 5
+  ShortDescription: Charm x3. -1 #Rating
+  LongDescription: Charm Bonus x3. -1 #Rating
+  Explanations:
+  - {fileID: 11400000, guid: 48f617e1041c14b9d855f83da3a9fb1e, type: 2}
+  SubscriptionCost: 0
+  Category: 3
+  Effects:
+  - Data: {fileID: 11400000, guid: e70add7ad83d1426fbc50047ea4b68de, type: 2}
+    Value: -1
+    Trigger: 1
+    Tags: 
+  - Data: {fileID: 11400000, guid: 1682d1d9dda21408f875ac1db50be104, type: 2}
+    Value: 3
+    Trigger: 6
+    Tags: 
+  ValueEvaluator: {fileID: 0}

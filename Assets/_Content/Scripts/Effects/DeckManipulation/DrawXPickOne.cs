@@ -22,7 +22,7 @@ namespace Quackery.Effects
             DeckEvents.OnCardSelected -= OnCardSelected;
             DeckServices.MoveToTable(selectedCard);
             DeckServices.Discard(otherCards);
-            //DeckServices.DrawBackToFull();
+            DeckServices.ResumeDraw();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Quackery
     {
         public override void Execute(Effect effect)
         {
-            //DeckServices.ReplaceTopCard();
+            CartServices.ReplaceTopCard(effect.LinkedCard);
         }
     }
 }

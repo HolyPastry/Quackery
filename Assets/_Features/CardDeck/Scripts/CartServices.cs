@@ -28,13 +28,19 @@ namespace Quackery.Decks
 
         public static Action<Card> RemoveCard = (card) => { };
 
-        public static Func<EnumCardPile, int, List<CardReward>> GetPileRewards = (type, index) => new List<CardReward>();
+        public static Func<int, List<CardReward>> GetPileRewards = (index) => new List<CardReward>();
 
         public static Action<int> AddToCartValue = (value) => { };
 
         public static Func<int> GetCartValue = () => 0;
         public static Action<int> SetCartValue = (value) => { };
         public static Func<int, bool> CanCartAfford = (value) => { return true; };
+
+        internal static Action ResetCartSizeCardModifier = () => { };
+
+        internal static Action<Card> ReplaceTopCard = (card) => { };
+
+        internal static Func<Card> GetTopCard = () => null;
 
     }
 }

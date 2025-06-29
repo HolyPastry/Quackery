@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using Holypastry.Bakery;
 
@@ -12,6 +13,10 @@ namespace Quackery.Effects
     {
         public Sprite Icon;
 
+        public string Description;
+
+        public List<Explanation> Explanations;
+
         public virtual void Execute(Effect effect) { }
         public virtual void Cancel(Effect effect) { }
 
@@ -19,10 +24,7 @@ namespace Quackery.Effects
 
         public virtual float RatioPriceModifier(Effect effect, Card card) => 0f;
 
-        public virtual string GetDescription() => Sprites.ReplaceCategories(Description);
-
-        public string Description;
-
+        public virtual void ExecutePile(Effect effect, CardPile pile) { }
 
     }
 }

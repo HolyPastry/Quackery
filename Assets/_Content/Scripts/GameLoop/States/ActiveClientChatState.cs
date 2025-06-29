@@ -1,6 +1,6 @@
 using System.Collections;
 using Quackery.Clients;
-
+using Quackery.Decks;
 using UnityEngine;
 
 namespace Quackery
@@ -15,31 +15,32 @@ namespace Quackery
             var controller = _gameLoop.CardGameController;
             var textChat = _gameLoop.ClientTextChat;
 
-            textChat.Show(CustomerPanelSize.Short);
-
-            DialogQueueServices.QueueDialog("MeIntro");
-            yield return DialogQueueServices.WaitUntilAllDialogEnds();
-            yield return new WaitForSeconds(0.3f);
             controller.Show();
-            yield return new WaitForSeconds(1f);
+            textChat.Show(CustomerPanelSize.Short);
+            DeckServices.Shuffle();
+
+            // DialogQueueServices.QueueDialog("MeIntro");
+            // yield return DialogQueueServices.WaitUntilAllDialogEnds();
+
             bool firstTime = true;
             while (true)
             {
                 var client = ClientServices.SelectedClient();
-                if (!firstTime)
-                {
-                    DialogQueueServices.QueueDialog("MeIntro");
-                    yield return DialogQueueServices.WaitUntilAllDialogEnds();
+                // if (!firstTime)
+                // {
+                DialogQueueServices.QueueDialog("MeIntro");
+                yield return DialogQueueServices.WaitUntilAllDialogEnds();
+                // }
 
-
-                }
-                firstTime = false;
+                // firstTime = false;
                 controller.StartNewRound(client);
 
                 yield return controller.WaitUntilEndOfRound();
 
+                DeckServices.DiscardHand();
                 if (controller.RoundInterrupted)
                 {
+                    CartServices.SetCartValue(0);
                     client.BadReview();
                     ClientServices.ClientServed(client.Data);
 
@@ -49,12 +50,15 @@ namespace Quackery
                     DialogQueueServices.QueueDialog("MeConclusion");
                     DialogQueueServices.QueueDialog($"{client.DialogKey}Success");
                     controller.TransfertCartToPurse();
+                    yield return new WaitForSeconds(1f);
                     client.GoodReview();
                     ClientServices.ClientServed(client.Data);
                     yield return DialogQueueServices.WaitUntilAllDialogEnds();
                 }
 
+
                 // controller.ResetDeck();
+                CartServices.DiscardCart();
                 EffectServices.CleanEffects();
 
                 controller.ShowEndRoundScreen(!controller.RoundInterrupted);

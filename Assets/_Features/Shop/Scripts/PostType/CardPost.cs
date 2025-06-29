@@ -38,7 +38,7 @@ namespace Quackery.Shops
             var item = new Item(itemData);
             _banner.sprite = _categoryBanners.Find(x => x.Category == item.Category).Banner;
             _card.Item = item;
-            _description.text = item.Data.Description;
+            _description.text = item.Data.ShortDescription;
             _price.text = item.BasePrice.ToString("0");
         }
     }

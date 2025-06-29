@@ -447,7 +447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c1cfcdba19945bb8977f7aa2338595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _duration: 0.5
+  _duration: 1.5
   _easeDuration: 0.3
   _easeType: 27
   _rewardPanelUI: {fileID: 7770940377734645708}

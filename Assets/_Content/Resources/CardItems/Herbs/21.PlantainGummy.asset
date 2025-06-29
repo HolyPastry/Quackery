@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
+  m_Name: 21.PlantainGummy
+  m_EditorClassIdentifier: 
+  MasterText: Plantain Gummy
+  Icon: {fileID: 21300000, guid: 840b364ad9dea43bc9dcceceedc19579, type: 3}
+  StartPrice: 4
+  ShortDescription: <b>Transmute</b> stacks to #Herb
+  LongDescription: Transmute all cards tucked in the cart to #Herb.
+  Explanations:
+  - {fileID: 11400000, guid: 6754a472a65b24a8cb54a1dc13d3db9e, type: 2}
+  SubscriptionCost: 1
+  Category: 1
+  Effects:
+  - Data: {fileID: 11400000, guid: bb43e6857569044bfb63251de3ef8f1e, type: 2}
+    Value: 1
+    Trigger: 1
+    Tags: 
+  ValueEvaluator: {fileID: 0}

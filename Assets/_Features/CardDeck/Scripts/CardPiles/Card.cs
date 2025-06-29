@@ -45,31 +45,29 @@ namespace Quackery.Decks
 
                 //  UpdateEffects();
                 _cardForeground.sprite = _item.Data.Icon;
-                _cardName.text = _item.Name; //Data.GetDescription();
+                _cardName.text = Sprites.Replace(_item.Data.ShortDescription); //Data.GetDescription();
 
                 if (IsSkill) return;
                 _cardBackground.color = Colors.Get(_item.Category.ToString());
 
                 UpdatePrice();
-
                 SetCategoryIcon();
-
             }
         }
 
         private void UpdatePrice()
         {
-            if (Price == 0)
-            {
-                _PriceBackground.gameObject.SetActive(false);
-                _cardPrice.gameObject.SetActive(false);
-            }
-            else
-            {
-                _PriceBackground.gameObject.SetActive(true);
-                _cardPrice.gameObject.SetActive(true);
-                _cardPrice.text = Price.ToString();
-            }
+
+            _PriceBackground.gameObject.SetActive(_item.Category != EnumItemCategory.Fatigues);
+            _cardPrice.gameObject.SetActive(_item.Category != EnumItemCategory.Fatigues);
+            _cardPrice.text = Price.ToString();
+
+            if (Price > _item.BasePrice)
+                _cardPrice.color = Color.green;
+            else if (Price == _item.BasePrice)
+                _cardPrice.color = Color.white;
+            else if (Price < _item.BasePrice)
+                _cardPrice.color = Color.red;
 
         }
 

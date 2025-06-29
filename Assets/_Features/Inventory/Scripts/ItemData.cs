@@ -20,7 +20,14 @@ namespace Quackery.Inventories
 
         public int StartPrice = 1;
 
-        public string Description;
+        [TextArea(2, 10)]
+        public string ShortDescription;
+
+        [TextArea(3, 10)]
+        public string LongDescription;
+
+        public List<Explanation> Explanations = new();
+
         public int SubscriptionCost;
 
         public EnumItemCategory Category;
@@ -34,40 +41,39 @@ namespace Quackery.Inventories
         internal List<CardReward> CalculateCardRewards(Card topCard, List<Item> subItems, List<CardPile> otherPiles)
         {
 
-            List<CardReward> rewards = new()
-            {
-                new()
-                {
-                    Type = EnumCardReward.BaseReward,
-                    Value = topCard.Price
-                }
-            };
-            if (subItems.Count > 0)
+            List<CardReward> rewards = new();
+            // {
+            //     new()
+            //     {
+            //         Type = EnumCardReward.BaseReward,
+            //         Value = topCard.Price
+            //     }
+            // };
+            int value = EffectServices.GetStackPrice(topCard, subItems);
+            if (value > 0)
             {
                 rewards.Add(new()
                 {
                     Type = EnumCardReward.StackReward,
-                    Value = EffectServices.GetStackPrice(topCard, subItems)
-                    //TODO: Count the stacks properly using Effects
-                    //Value = EffectServices.GetValue(topCard, subItems)
+                    Value = value
                 });
             }
-            int numSameCategory = 0;
-            foreach (var pile in otherPiles)
-            {
-                if (pile.Category == topCard.Item.Category)
-                {
-                    numSameCategory++;
-                }
-            }
-            if (numSameCategory > 0)
-            {
-                rewards.Add(new()
-                {
-                    Type = EnumCardReward.NeighborReward,
-                    Value = numSameCategory
-                });
-            }
+            // int numSameCategory = 0;
+            // foreach (var pile in otherPiles)
+            // {
+            //     if (pile.Category == topCard.Item.Category)
+            //     {
+            //         numSameCategory++;
+            //     }
+            // }
+            // if (numSameCategory > 0)
+            // {
+            //     rewards.Add(new()
+            //     {
+            //         Type = EnumCardReward.NeighborReward,
+            //         Value = numSameCategory
+            //     });
+            // }
 
 
             if (ValueEvaluator != null)
@@ -75,11 +81,6 @@ namespace Quackery.Inventories
                 rewards.AddRange(ValueEvaluator.Evaluate(topCard, subItems, otherPiles));
             }
             return rewards;
-        }
-
-        internal string GetDescription()
-        {
-            return Sprites.ReplaceCategories(Description);
         }
     }
 }

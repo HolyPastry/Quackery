@@ -15,8 +15,14 @@ MonoBehaviour:
   MasterText: TechnicalGlitch
   Icon: {fileID: 21300000, guid: becafd84bad54f947a752f021dfe1623, type: 3}
   StartPrice: 1
-  Description: 
+  ShortDescription: Recalculate The Cart
+  LongDescription: Recalculate The Cart and adds the value to the cart
+  Explanations: []
   SubscriptionCost: 0
   Category: 7
-  Effects: []
+  Effects:
+  - Data: {fileID: 11400000, guid: 03be1d03f54764c1eb89214c16e83ba5, type: 2}
+    Value: 0
+    Trigger: 1
+    Tags: 
   ValueEvaluator: {fileID: 0}

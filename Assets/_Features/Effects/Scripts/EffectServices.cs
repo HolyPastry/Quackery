@@ -9,7 +9,7 @@ namespace Quackery
 {
     public static class EffectServices
     {
-        public static Action<Effect> Add = (data) => { };
+        public static Action<Effect> AddStatus = (data) => { };
         public static Action<EffectData> Cancel = delegate { };
 
         // public static Action<int> RemoveById = delegate { };
@@ -19,8 +19,7 @@ namespace Quackery
         public static Func<List<Effect>> GetCurrent = () => new();
 
         internal static Func<EnumEffectTrigger, Card, int> Execute = (trigger, card) => 0;
-
-
+        public static Action<EnumEffectTrigger, CardPile> ExecutePile = (trigger, cardPile) => { };
 
         internal static Action<List<CardPile>> RemoveEffectsLinkedToPiles = delegate { };
 

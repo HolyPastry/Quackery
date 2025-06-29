@@ -10,7 +10,7 @@ namespace Quackery.Shops
 
         public override int Price => ItemData.SubscriptionCost;
 
-        public override string Description => ItemData.Description;
+        public override string Description => ItemData.ShortDescription;
 
         public override bool IsSubscription => true;
 

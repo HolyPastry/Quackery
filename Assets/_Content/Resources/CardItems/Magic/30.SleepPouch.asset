@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
+  m_Name: 30.SleepPouch
+  m_EditorClassIdentifier: 
+  MasterText: Sleep Pouch
+  Icon: {fileID: 21300000, guid: 67c6f18855576460a9725faba0c82ffc, type: 3}
+  StartPrice: 3
+  ShortDescription: <b>Cover</b> a #Herbs card
+  LongDescription: 'Cover a #Herb card that is already in the Cart. '
+  Explanations:
+  - {fileID: 11400000, guid: c1335b97d67394f8da53d1020c816505, type: 2}
+  SubscriptionCost: 1
+  Category: 2
+  Effects:
+  - Data: {fileID: 11400000, guid: 0a63f52dab1444fa696fa54c646ce910, type: 2}
+    Value: 0
+    Trigger: 1
+    Tags: 
+  ValueEvaluator: {fileID: 0}

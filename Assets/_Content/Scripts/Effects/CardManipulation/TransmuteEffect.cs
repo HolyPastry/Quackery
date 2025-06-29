@@ -11,10 +11,10 @@ namespace Quackery.Effects
         [SerializeField] private EnumItemCategory _newCategory;
         [SerializeField] private EnumCardSelection _cardSelection = EnumCardSelection.Random;
 
-        public override string GetDescription()
-        {
-            return Sprites.Replace(_newCategory, Description);
-        }
+        // public override string GetDescription()
+        // {
+        //     return Sprites.Replace(_newCategory, Description);
+        // }
 
         public override void Execute(Effect effect)
         {

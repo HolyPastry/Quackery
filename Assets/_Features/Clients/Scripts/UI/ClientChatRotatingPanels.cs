@@ -23,7 +23,7 @@ namespace Quackery
     }
     public class ClientChatRotatingPanels : MonoBehaviour
     {
-        private List<ClientChatInfo> _panels = new();
+        [SerializeField] private List<ClientChatInfo> _panels = new();
         private ClientChatInfo _enteringPanel;
 
         [SerializeField] private float _shortBottomMargin = 1900;
@@ -31,11 +31,6 @@ namespace Quackery
 
         public Action OnExitingChat = delegate { };
 
-        void Awake()
-        {
-            GetComponentsInChildren(true, _panels);
-
-        }
 
         void OnEnable()
         {

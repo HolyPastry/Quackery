@@ -100,6 +100,7 @@ namespace Quackery.Decks
             _endDayScreen.Hide();
             _endRoundScreen.Hide(instant: true);
             _canvas.gameObject.SetActive(true);
+            _animatable.SlideIn(Direction.Right);
         }
 
         private void EndTheDay() => _endOfDay = true;
@@ -119,12 +120,12 @@ namespace Quackery.Decks
         private IEnumerator DelayedSwitchOffSelectPanel()
         {
             yield return null;
-            _cardSelectPanel.Show();
+            _cardSelectPanel.Hide();
         }
 
         private void OnCardsMovingToSelectPile()
         {
-            _cardSelectPanel.Hide();
+            _cardSelectPanel.Show();
         }
 
         // private void OnCashingPile(CardPile pile)
@@ -208,11 +209,13 @@ namespace Quackery.Decks
 
                 DeckServices.ActivateTableCards();
 
-                _EndRoundButton.interactable = true;
+                SetEndRoundButtonInteractable(true);
+
                 yield return new WaitUntil(() => DeckServices.CardPlayed() ||
-                                         _endButtonPressed ||
-                                         RoundInterrupted);
-                _EndRoundButton.interactable = false;
+                                                 _endButtonPressed ||
+                                                 RoundInterrupted);
+                SetEndRoundButtonInteractable(false);
+
 
                 if (RoundInterrupted)
                 {
@@ -220,17 +223,24 @@ namespace Quackery.Decks
                     yield break;
                 }
 
-                yield return CartServices.CalculateCart();
-
                 if (_endButtonPressed == true)
                     break;
+                CartServices.CalculateCart();
 
             }
             yield return DeckServices.DiscardHand();
-            yield return CartServices.CalculateCart();
 
-            EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundEnd, null);
+            //EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundEnd, null);
             _endOfRound = true;
+        }
+
+        private void SetEndRoundButtonInteractable(bool isOn)
+        {
+            _EndRoundButton.interactable = isOn;
+            if (isOn && DeckServices.NoPlayableCards())
+                _EndRoundButton.GetComponent<Image>().color = Color.green;
+            else
+                _EndRoundButton.GetComponent<Image>().color = Color.white;
         }
 
         private IEnumerator ApplyClientEffects()
@@ -238,7 +248,7 @@ namespace Quackery.Decks
             foreach (var effect in _client.Effects)
             {
                 yield return new WaitForSeconds(0.2f);
-                EffectServices.Add(effect);
+                EffectServices.AddStatus(effect);
                 if (effect.Trigger == Effects.EnumEffectTrigger.OnRoundStart)
                     effect.Execute(null);
             }
@@ -309,7 +319,7 @@ namespace Quackery.Decks
             foreach (var pile in tablepiles)
             {
                 if (pile.IsEmpty || !pile.Enabled) continue;
-                EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundEnd, pile.TopCard);
+                //EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundEnd, pile.TopCard);
             }
         }
     }

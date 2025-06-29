@@ -17,22 +17,17 @@ namespace Quackery.Effects
 
         // public override string Description => "<b>Bundle:</b> Allows you to bundle up to #Value cards together.";
 
-        public override void Execute(Effect effect)
+        public override void ExecutePile(Effect effect, CardPile owningPile)
         {
             List<CardPile> piles = DeckServices.GetTablePile();
 
-            int cardMoved = 0;
             foreach (var pile in piles)
             {
-                //TODO:: Redo the Bundle Effect
-                // if (pile.Category != owningPile.Category) continue;
-
-                // DeckServices.MovePileTo(pile.Type, owningPile.Type);
-
-                cardMoved++;
-                if (cardMoved >= effect.Value) break;
+                if (pile.Category != effect.LinkedCard.Category) continue;
+                DeckServices.MoveToPile(pile, owningPile);
 
             }
+
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,7 @@ namespace Quackery.Decks
 
             CartServices.SetRatingCartSizeModifier = SetRatingModifier;
             CartServices.ModifyCardCartSizeModifier = ModifyCardModifier;
+            CartServices.ResetCartSizeCardModifier = ResetCartSizeCardModifier;
             CartServices.GetCartSize = () => CartSize;
 
             CartServices.DiscardCart = DiscardCart;
@@ -66,6 +68,9 @@ namespace Quackery.Decks
             CartServices.GetCartValue = () => CartValue;
             CartServices.CanCartAfford = value => CartValue >= value;
 
+            CartServices.ReplaceTopCard = ReplaceTopCard;
+            CartServices.GetTopCard = GetTopCard;
+
             EffectEvents.OnAdded += UpdateCardUI;
             EffectEvents.OnRemoved += UpdateCardUI;
             EffectEvents.OnUpdated += UpdateCardUI;
@@ -73,10 +78,12 @@ namespace Quackery.Decks
         }
 
 
+
         void OnDisable()
         {
             CartServices.SetRatingCartSizeModifier = delegate { };
             CartServices.ModifyCardCartSizeModifier = delegate { };
+            CartServices.ResetCartSizeCardModifier = delegate { };
             CartServices.GetCartSize = () => 0;
 
             CartServices.DiscardCart = delegate { };
@@ -94,12 +101,15 @@ namespace Quackery.Decks
             CartServices.ChangeCardCategory = delegate { };
 
             CartServices.RemoveCard = delegate { };
-            CartServices.GetPileRewards = (type, index) => new();
+            CartServices.GetPileRewards = (index) => new();
 
             CartServices.AddToCartValue = value => { };
             CartServices.SetCartValue = value => { };
             CartServices.GetCartValue = () => 0;
             CartServices.CanCartAfford = value => true;
+
+            CartServices.ReplaceTopCard = delegate { };
+            CartServices.GetTopCard = () => null;
 
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
@@ -114,6 +124,32 @@ namespace Quackery.Decks
             {
                 _cartPiles.Add(new CardPile(EnumCardPile.Cart, i));
             }
+        }
+
+
+        private Card GetTopCard()
+        {
+            if (_lastCartPile == null || _lastCartPile.IsEmpty)
+            {
+                Debug.LogWarning("No last cart pile found. Cannot get top card.");
+                return null;
+            }
+
+            return _lastCartPile.TopCard;
+        }
+
+        private void ReplaceTopCard(Card card)
+        {
+            if (_lastCartPile == null || _lastCartPile.IsEmpty)
+            {
+                Debug.LogWarning("No last cart pile found. Cannot replace top card.");
+                return;
+            }
+
+            DeckServices.MoveToTable(_lastCartPile.TopCard);
+
+            _lastCartPile.AddAtTheTop(card);
+            DeckEvents.OnPileUpdated(_lastCartPile.Type, _lastCartPile.Index);
         }
 
         private void RemoveCard(Card card)
@@ -170,6 +206,11 @@ namespace Quackery.Decks
             _cardCartSizeModifier += value;
             UpdateCartSize();
         }
+        private void ResetCartSizeCardModifier()
+        {
+            _cardCartSizeModifier = 0;
+            UpdateCartSize();
+        }
 
         private void SetRatingModifier(int value)
         {
@@ -179,16 +220,20 @@ namespace Quackery.Decks
 
         private IEnumerator CalculateCart()
         {
-            CartValue = 0;
-            foreach (var cartPile in _cartPiles)
+            if (_lastCartPile == null || !_lastCartPile.Enabled)
             {
-                if (!cartPile.Enabled || cartPile.IsEmpty) continue;
-
-                CartEvents.OnCalculatingCartPile(cartPile.Type, cartPile.Index);
-                _cartCalculated = false;
-                yield return new WaitUntil(() => _cartCalculated);
+                Debug.LogWarning("No last cart pile found. Cannot calculate cart.");
+                yield break;
             }
+
+            if (_lastCartPile.IsEmpty) yield break;
+            EffectServices.ExecutePile(EnumEffectTrigger.BeforeCartCalculation, _lastCartPile);
+
+            _cartCalculated = false;
+            CartEvents.OnCalculatingCartPile(_lastCartPile.Index);
+            yield return new WaitUntil(() => _cartCalculated);
         }
+
         private bool ActivatePreviousCard(Card pile)
         {
             return false;
@@ -313,12 +358,12 @@ namespace Quackery.Decks
             return piles.Count >= 2;
         }
 
-        private List<CardReward> GetPileRewards(EnumCardPile type, int index)
+        private List<CardReward> GetPileRewards(int index)
         {
-            var pile = _cartPiles.Find(p => p.Type == type);
+            var pile = _cartPiles.Find(p => p.Index == index);
 
             List<CardPile> otherCartPiles =
-                _cartPiles.Where((p, i) => p.Type == type && i != index).ToList();
+                _cartPiles.Where((p, i) => i != index).ToList();
 
             return pile.CalculateCartRewards(otherCartPiles);
         }
@@ -346,7 +391,7 @@ namespace Quackery.Decks
             {
                 cardPileRef = _cartPiles
                     .Where(p => p.Enabled && !p.IsEmpty)
-                    .OrderBy(p => GetPileRewards(p.Type, p.Index).Sum(r => r.Value))
+                    .OrderBy(p => p.TopCard.Price)
                     .FirstOrDefault();
             }
             if (cardPileRef == null || cardPileRef.IsEmpty)

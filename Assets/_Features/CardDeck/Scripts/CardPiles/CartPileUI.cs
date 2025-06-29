@@ -22,11 +22,10 @@ namespace Quackery.Decks
             CartEvents.OnCalculatingCartPile -= CalculateCartPile;
         }
 
-        private void CalculateCartPile(EnumCardPile pile, int index)
+        private void CalculateCartPile(int index)
         {
-            if (!IsItMe(pile, index)) return;
-            var rewards = CartServices.GetPileRewards(pile, index);
-
+            if (!IsItMe(EnumCardPile.Cart, index)) return;
+            var rewards = CartServices.GetPileRewards(index);
 
             _rewardPanel.transform.SetAsLastSibling();
 
@@ -35,11 +34,12 @@ namespace Quackery.Decks
 
         private IEnumerator ShowRewardsRoutine(List<CardReward> rewards)
         {
+            yield return new WaitForSeconds(1f);
             foreach (var cardReward in rewards)
             {
                 _rewardPanel.ShowReward(cardReward);
                 CartServices.AddToCartValue(cardReward.Value);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(2f);
             }
             CartServices.CompleteCartPileCalculation();
             _rewardPanel.Hide();

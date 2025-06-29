@@ -15,7 +15,7 @@ namespace Quackery.Effects
         [Tooltip("Effect to remove.")]
         [SerializeField] private List<EffectData> _effectsToRemove;
 
-        public override string GetDescription() => $"Remove effects";
+        // public override string GetDescription() => $"Remove effects";
 
         public override void Execute(Effect effect)
         {

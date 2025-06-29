@@ -9,19 +9,19 @@ namespace Quackery
         public override void SetTooltip(GameObject hoveredObject)
         {
             if (hoveredObject.TryGetComponent(out EffectUI effectUI))
-                AddEffectTooltip(effectUI);
+                AddEffectTooltip(effectUI.Effect);
 
-            if (hoveredObject.TryGetComponent(out StackMultiplierUI stackMultiplierUI))
-                _tooltipManager.AddTooltip($"Stack Multiplier: x{stackMultiplierUI.MultiplierText}");
+            // if (hoveredObject.TryGetComponent(out StackMultiplierUI stackMultiplierUI))
+            //     _tooltipManager.AddTooltip($"Stack Multiplier: x{stackMultiplierUI.MultiplierText}");
 
             // ShowNextToStatus(hoveredObject.transform);
         }
 
-        private void AddEffectTooltip(EffectUI effectUI)
+        private void AddEffectTooltip(Effect effect)
         {
             //string description = effectUI.Effect.Description;
 
-            _tooltipManager.AddTooltip(effectUI.Effect.Description);
+            _tooltipManager.AddTooltip(effect.Data.MasterText, effect.Description, effect.Data.Explanations);
         }
 
         // private void ShowNextToStatus(Transform objectTransform)

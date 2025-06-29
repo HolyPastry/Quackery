@@ -6,12 +6,9 @@ namespace Quackery
 {
     public class Sprites : Singleton<Sprites>
     {
-        //private SpriteLibrary _spriteLibrary;
 
-        public static Func<EnumItemCategory, string, string> Replace
-                => (category, text) => Instance.ReplaceCategoryInString(category, text);
 
-        internal static Func<string, string> ReplaceCategories
+        internal static Func<string, string> Replace
             => (text) => Instance.ReplaceCategoriesInString(text);
 
         private string ReplaceCategoriesInString(string text)
@@ -25,6 +22,7 @@ namespace Quackery
                 text = text.Replace($"#{category.ToString()}", textInsert);
             }
             text = text.Replace("#Coin", "<sprite name=Coin>");
+            text = text.Replace("#Rating", "<sprite name=Rating>");
 
             return text;
         }
