@@ -24,6 +24,8 @@ namespace Quackery
 
         public App SleepApp;
 
+        public App GameOverApp;
+
         public NotificationApp NotificationApp;
 
         private Client SelectedClient => ClientServices.SelectedClient();
@@ -52,13 +54,16 @@ namespace Quackery
             var billState = new BillState(this);
             var sleepState = new SleepState(this);
             var notificationState = new NotificationState(this);
+            var gameOverState = new GameOverState(this);
 
             At(notificationState, clientListState, () => !NotificationApp.IsOn);
 
             At(clientListState, activeClientChatState, () => ActiveClientSelected);
             At(activeClientChatState, shopState, () => SelectedClient == null);
             At(shopState, billState, () => !ShopApp.IsOn);
-            At(billState, sleepState, () => !BillApp.IsOn);
+
+            At(billState, sleepState, () => !BillApp.IsOn && !BillApp.IsGameOver);
+            At(billState, gameOverState, () => !BillApp.IsOn && BillApp.IsGameOver);
             At(sleepState, notificationState, () => !SleepApp.IsOn);
 
             At(clientListState, passiveClientChatState, () => PassiveClientSelected);

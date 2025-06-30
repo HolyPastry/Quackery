@@ -56,7 +56,7 @@ namespace Quackery.Notifications
 
         private void GenerateDailyNotification()
         {
-            _dayCountText.text = $"Day {CalendarServices.Today()}";
+            _dayCountText.text = $"Week {CalendarServices.Today()}";
             foreach (var info in _dailyNotificationInfos)
             {
                 ShowNotification(info);

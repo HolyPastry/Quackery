@@ -1,21 +1,21 @@
 using System;
 using System.Collections.Generic;
+
 using Quackery.Inventories;
 using UnityEngine;
 
 namespace Quackery
 {
+    [CreateAssetMenu(fileName = "SpriteLibrary", menuName = "Quackery/Sprite Library")]
     public class SpriteLibrary : ScriptableObject
     {
         [Serializable]
-        public struct CategorySpriteTextInserts
+        public record CategorySprite()
         {
             public EnumItemCategory Category;
-            public string StringInsert;
+            public Sprite Icon;
         }
-        public List<CategorySpriteTextInserts> TextInserts;
 
-
-
+        public List<CategorySprite> Categories;
     }
 }
