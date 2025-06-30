@@ -423,10 +423,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb6901e344e44027bdcb4b76aa8d9f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _overdueBillUIs:
-  - {fileID: 5799679547814839611}
-  - {fileID: 1967331190017666913}
-  - {fileID: 5222891715638546194}
+  _overdueCrosses:
+  - {fileID: 8808445823810125062}
+  - {fileID: 5361978951898117396}
+  - {fileID: 3764050964355453540}
 --- !u!1 &1967331190017666913
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,13 +438,14 @@ GameObject:
   - component: {fileID: 4110346477968842534}
   - component: {fileID: 7659213442977936260}
   - component: {fileID: 2445050034709991033}
+  - component: {fileID: 5361978951898117396}
   m_Layer: 5
   m_Name: CrossOn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4110346477968842534
 RectTransform:
   m_ObjectHideFlags: 0
@@ -485,7 +486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -502,6 +503,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5361978951898117396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967331190017666913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c616b5d48b6b84079bc3944aa531bf37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cross: {fileID: 2445050034709991033}
 --- !u!1 &2153648923709122885
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,6 +936,7 @@ MonoBehaviour:
   _canvas: {fileID: 7201532381683286598}
   ContinueButton: {fileID: 4473599576477656457}
   GameOverButton: {fileID: 7102752024043253293}
+  _billOverdueUI: {fileID: 2088082312490308868}
 --- !u!1 &3873153995186175322
 GameObject:
   m_ObjectHideFlags: 0
@@ -1353,13 +1368,14 @@ GameObject:
   - component: {fileID: 8945172031512425599}
   - component: {fileID: 2478268154157188928}
   - component: {fileID: 1974218952272521202}
+  - component: {fileID: 3764050964355453540}
   m_Layer: 5
   m_Name: CrossOn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8945172031512425599
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1417,6 +1433,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3764050964355453540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5222891715638546194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c616b5d48b6b84079bc3944aa531bf37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cross: {fileID: 1974218952272521202}
 --- !u!1 &5725516597717443161
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,13 +1559,14 @@ GameObject:
   - component: {fileID: 386854869983510431}
   - component: {fileID: 6123075093322071074}
   - component: {fileID: 7510720242836941083}
+  - component: {fileID: 8808445823810125062}
   m_Layer: 5
   m_Name: CrossOn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &386854869983510431
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1594,6 +1624,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8808445823810125062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5799679547814839611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c616b5d48b6b84079bc3944aa531bf37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cross: {fileID: 7510720242836941083}
 --- !u!1 &6480764842895280368
 GameObject:
   m_ObjectHideFlags: 0

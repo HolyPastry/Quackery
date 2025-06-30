@@ -59,24 +59,24 @@ namespace Quackery.Bills
             _billAmount.text = bill.TotalPrice.ToString("C");
             int dueIn = BillServices.DueIn(bill);
 
-            if (dueIn == 0)
-            {
-                _billWarningText.text = "Bill due Today!";
-                _billDueDate.gameObject.SetActive(false);
-                _billWarningText.gameObject.SetActive(true);
-            }
-            else if (dueIn < 0)
-            {
-                _billWarningText.text = "Overdue!";
-                _billDueDate.gameObject.SetActive(false);
-                _billWarningText.gameObject.SetActive(true);
-            }
-            else
-            {
-                _billDueDate.text = $"Due in {dueIn} days";
-                _billDueDate.gameObject.SetActive(true);
-                _billWarningText.gameObject.SetActive(false);
-            }
+            // if (dueIn == 0)
+            // {
+            _billWarningText.text = "Bill due Today!";
+            _billDueDate.gameObject.SetActive(false);
+            _billWarningText.gameObject.SetActive(true);
+            // }
+            // else if (dueIn < 0)
+            // {
+            //     _billWarningText.text = "Overdue!";
+            //     _billDueDate.gameObject.SetActive(false);
+            //     _billWarningText.gameObject.SetActive(true);
+            // }
+            // else
+            // {
+            //     _billDueDate.text = $"Due in {dueIn} days";
+            //     _billDueDate.gameObject.SetActive(true);
+            //     _billWarningText.gameObject.SetActive(false);
+            // }
             _payButton.gameObject.SetActive(true);
             _payButton.interactable = PurseServices.CanAfford(bill.TotalPrice);
         }

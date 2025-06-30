@@ -74,5 +74,9 @@ namespace Quackery.Bills
 
             return overdueCount;
         }
+        public int GetNumBillDueToday()
+        {
+            return _bills.Sum(bill => (!bill.Paid && bill.IsDueToday()) ? 1 : 0);
+        }
     }
 }

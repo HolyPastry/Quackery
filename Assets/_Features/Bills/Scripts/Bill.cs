@@ -35,7 +35,7 @@ namespace Quackery.Bills
         {
             var daysPassed = CalendarServices.Today() - StartedData;
             var daysSinceLastDueDate = daysPassed % Data.PaymentInterval;
-            var lastDueDate = daysPassed - daysSinceLastDueDate;
+            var lastDueDate = daysPassed - daysSinceLastDueDate + 1;
             return lastDueDate == CalendarServices.Today();
         }
     }

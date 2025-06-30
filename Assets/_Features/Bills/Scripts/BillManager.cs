@@ -23,7 +23,7 @@ namespace Quackery.Bills
             BillServices.DueIn = CalculateDueInDate;
             BillServices.GetNumOverdueBills = () => _billList.GetNumOverdueBills();
             BillServices.GetAmountDueToday = GetAmountDueToday;
-
+            BillServices.GetNumBillDueToday = GetNumBillDueToday;
 
         }
 
@@ -38,6 +38,7 @@ namespace Quackery.Bills
             BillServices.DueIn = (bill) => 0;
             BillServices.GetNumOverdueBills = () => 0;
             BillServices.GetAmountDueToday = () => 0;
+            BillServices.GetNumBillDueToday = () => 0;
         }
 
         protected override IEnumerator Start()
@@ -54,6 +55,7 @@ namespace Quackery.Bills
             BillEvents.OnBillUpdated(bill);
         }
 
+        private int GetNumBillDueToday() => _billList.GetNumBillDueToday();
 
         private int CalculateDueInDate(Bill bill)
         {

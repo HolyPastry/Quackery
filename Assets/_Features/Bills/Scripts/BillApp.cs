@@ -12,6 +12,8 @@ namespace Quackery
 
         [SerializeField] private Button ContinueButton;
         [SerializeField] private Button GameOverButton;
+
+        [SerializeField] private BillOverdueUI _billOverdueUI;
         private bool _initialized;
 
         void OnEnable()
@@ -54,7 +56,17 @@ namespace Quackery
 
         private void OnContinue()
         {
+            StartCoroutine(ContinueRoutine());
+
+        }
+
+        private IEnumerator ContinueRoutine()
+        {
+            yield return _billOverdueUI.ActOverdueBillRoutine();
+
             Hide();
         }
+
+
     }
 }
