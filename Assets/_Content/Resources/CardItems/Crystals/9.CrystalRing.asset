@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: The one Ring to cure it all
   Icon: {fileID: 21300000, guid: ebc18aa93726541bab4c09558a4afd9c, type: 3}
-  StartPrice: 5
+  BasePrice: 1
   ShortDescription: Charm x3. -1 #Rating
   LongDescription: Charm Bonus x3. -1 #Rating
   Explanations:
   - {fileID: 11400000, guid: 48f617e1041c14b9d855f83da3a9fb1e, type: 2}
-  SubscriptionCost: 0
+  SubscriptionCost: 1
   Category: 3
   Effects:
   - Data: {fileID: 11400000, guid: e70add7ad83d1426fbc50047ea4b68de, type: 2}

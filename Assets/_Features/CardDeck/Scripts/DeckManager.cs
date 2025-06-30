@@ -91,6 +91,7 @@ namespace Quackery.Decks
             DeckServices.NoPlayableCards = () => false;
 
             DeckServices.MoveToPile = (source, target) => { };
+            DeckServices.CreateCard = (itemData) => null;
 
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
@@ -140,13 +141,17 @@ namespace Quackery.Decks
                     () => _handPiles.All(p => p.Enabled && (p.IsEmpty || !p.Playable));
 
             DeckServices.MoveToPile = MovePileTo;
+            DeckServices.CreateCard = CreateCard;
 
             EffectEvents.OnAdded += UpdateCardUI;
             EffectEvents.OnRemoved += UpdateCardUI;
             EffectEvents.OnUpdated += UpdateCardUI;
         }
 
-
+        private Card CreateCard(ItemData data)
+        {
+            return _cardFactory.Create(data);
+        }
 
         protected override IEnumerator Start()
         {

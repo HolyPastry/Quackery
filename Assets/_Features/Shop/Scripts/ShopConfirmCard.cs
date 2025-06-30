@@ -10,8 +10,9 @@ namespace Quackery.Shops
 {
     internal class ShopConfirmCard : ConfirmationPanel
     {
-        [SerializeField] private Card _card;
+        [SerializeField] private RectTransform _cardRoot;
         [SerializeField] private TextMeshProUGUI _description;
+        [SerializeField] private TextMeshProUGUI _subscriptionPrice;
         [SerializeField] private Button _applyButton;
         [SerializeField] private Button _cancelButton;
 
@@ -32,8 +33,12 @@ namespace Quackery.Shops
             var cardReward = reward as AddCardReward;
             Assert.IsNotNull(cardReward, "ShopConfirmCard can only handle AddCardReward types.");
 
-            _card.Item = new Item(cardReward.ItemData);
-            _description.text = cardReward.ItemData.ShortDescription;
+            Card card = DeckServices.CreateCard(cardReward.ItemData);
+            card.transform.SetParent(_cardRoot, false);
+            card.transform.localPosition = Vector3.zero;
+            _subscriptionPrice.text = Sprites.Replace("Free for a week, then " + cardReward.ItemData.SubscriptionCost + "#Coin per week");
+
+            _description.text = Sprites.Replace(cardReward.ItemData.LongDescription);
 
         }
     }

@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: 
   Icon: {fileID: 21300000, guid: 924378c9a205d4ae4a6da4df1f61810c, type: 3}
-  StartPrice: 1
-  Description: 
-  SubscriptionCost: 0
+  BasePrice: 1
+  ShortDescription: 
+  LongDescription: 
+  Explanations: []
+  SubscriptionCost: 1
   Category: 3
   Effects: []
   ValueEvaluator: {fileID: 0}

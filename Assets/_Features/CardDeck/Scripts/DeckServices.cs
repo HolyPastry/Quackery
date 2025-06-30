@@ -72,6 +72,6 @@ namespace Quackery
 
         internal static Func<bool> NoPlayableCards = () => false;
 
-
+        internal static Func<ItemData, Card> CreateCard = (itemData) => null;
     }
 }

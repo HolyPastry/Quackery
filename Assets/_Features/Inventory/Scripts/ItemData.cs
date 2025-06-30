@@ -18,7 +18,7 @@ namespace Quackery.Inventories
     {
         public Sprite Icon;
 
-        public int StartPrice = 1;
+        public int BasePrice = 1;
 
         [TextArea(2, 10)]
         public string ShortDescription;

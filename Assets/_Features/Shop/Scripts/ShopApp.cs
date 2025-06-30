@@ -99,15 +99,15 @@ namespace Quackery.Shops
         private IEnumerator ShowPostsRoutine()
         {
             _continueButtonContainer.gameObject.SetActive(false);
-            yield return new WaitForSeconds(0.5f);
+            //yield return new WaitForSeconds(0.5f);
             List<ShopReward> rewards = ShopServices.GetRewards(3);
             foreach (var reward in rewards)
             {
                 var post = InstantiatePost(reward);
-                post.SlideIn();
+                //post.SlideIn();
                 _posts.Add(post);
 
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.1f);
             }
             _continueButtonContainer.SetAsLastSibling();
             _continueButtonContainer.gameObject.SetActive(true);

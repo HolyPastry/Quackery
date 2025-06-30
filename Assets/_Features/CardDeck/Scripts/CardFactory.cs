@@ -1,5 +1,6 @@
 using UnityEngine;
 using Quackery.Inventories;
+using System;
 
 
 namespace Quackery.Decks
@@ -30,6 +31,12 @@ namespace Quackery.Decks
 
             card.Item = item;
             return card;
+        }
+
+        internal Card Create(ItemData data)
+        {
+            var Item = new Item(data);
+            return Create(Item);
         }
     }
 }

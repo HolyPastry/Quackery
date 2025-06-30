@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Crystal Book
   Icon: {fileID: 0}
-  StartPrice: 1
+  BasePrice: 1
   ShortDescription: '#Coin = 5x #Crystals in Cart'
   LongDescription: Price is equal to the number of crystal card in the cart x5.
   Explanations: []
-  SubscriptionCost: 0
+  SubscriptionCost: 1
   Category: 3
   Effects:
   - Data: {fileID: 11400000, guid: 23785c4b0152440499051433ea692429, type: 2}

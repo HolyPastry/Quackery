@@ -57,7 +57,7 @@ MonoBehaviour:
   _scaleDuration: 0.2
   _animationEaseIn: 27
   _animationEaseOut: 26
-  _startHidden: 1
+  _startHidden: 0
   _overridePosition: {x: 0, y: 0}
   _overridePositionEnabled: 0
 --- !u!114 &61726369979309350

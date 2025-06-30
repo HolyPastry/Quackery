@@ -10,7 +10,6 @@ namespace Quackery.Shops
     public class ShopSelectCard : ConfirmationPanel
     {
 
-        [SerializeField] private Card _cardPrefab;
         [SerializeField] private ClickableOverlay _clickableOverlay;
         [SerializeField] private Transform _cardParent;
 
@@ -46,7 +45,9 @@ namespace Quackery.Shops
             // Create new cards
             foreach (var item in InventoryServices.GetAllItems())
             {
-                var cardInstance = Instantiate(_cardPrefab, _cardParent);
+                var cardInstance = DeckServices.CreateCard(item.Data);
+                cardInstance.transform.SetParent(_cardParent, false);
+
                 cardInstance.Item = item;
                 var overlay = Instantiate(_clickableOverlay, cardInstance.transform);
                 overlay.Init(cardInstance);

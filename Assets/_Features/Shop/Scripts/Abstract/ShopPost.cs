@@ -18,12 +18,12 @@ namespace Quackery.Shops
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _animatedRect.ScaleUp();
+            //_animatedRect.ScaleUp();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            _animatedRect.ScaleDown();
+            // _animatedRect.ScaleDown();
         }
 
         public void OnPointerDown(PointerEventData eventData)

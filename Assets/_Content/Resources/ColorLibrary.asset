@@ -35,3 +35,5 @@ MonoBehaviour:
     Color: {r: 1, g: 1, b: 1, a: 1}
   - Id: CardHighlight
     Color: {r: 1, g: 0.74655265, b: 0, a: 1}
+  - Id: Skills
+    Color: {r: 1, g: 1, b: 1, a: 1}

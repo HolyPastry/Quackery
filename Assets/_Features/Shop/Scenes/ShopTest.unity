@@ -346,6 +346,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 58d19edc3fa1749ec83cab3e1b8d1a92, type: 2}
   - {fileID: 11400000, guid: b9ff9024e001b43749e9ee7fe195ed18, type: 2}
   - {fileID: 11400000, guid: c21abe8addce14177b358f6748938663, type: 2}
+  _cardInHands: []
 --- !u!114 &680548772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -685,6 +686,62 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 165343643870421962, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_fontSize
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 165343643870421962, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: d143a886659284d97bccd0b734e59bec, type: 2}
+    - target: {fileID: 165343643870421962, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 165343643870421962, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6401490985109458625, guid: d143a886659284d97bccd0b734e59bec, type: 2}
+    - target: {fileID: 165343643870421962, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976517987057073210, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_fontSize
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976517987057073210, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: d143a886659284d97bccd0b734e59bec, type: 2}
+    - target: {fileID: 2976517987057073210, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976517987057073210, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6401490985109458625, guid: d143a886659284d97bccd0b734e59bec, type: 2}
+    - target: {fileID: 2976517987057073210, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3771375180117890343, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034989173087843726, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246333311831953209, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 6008233571033976298, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_Color.a
+      value: 0.8666667
+      objectReference: {fileID: 0}
     - target: {fileID: 7502394093125466052, guid: ee79d44860f35434982a489985513e2c, type: 3}
       propertyPath: m_Name
       value: ShopApp
