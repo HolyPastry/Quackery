@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3318aca86921748e3bdeba2e700ee9dd, type: 3}
-  m_Name: RentBill
+  m_Script: {fileID: 11500000, guid: 5ac8219b0d2884eee8bc8d4a7163ae54, type: 3}
+  m_Name: SubscriptionBillData
   m_EditorClassIdentifier: 
-  MasterText: Rent
+  MasterText: Subscriptions
   Background: {fileID: 0}
-  Icon: {fileID: 21300000, guid: e779d3f8816444fb2845825715a99c2d, type: 3}
-  _startPrice: 100
+  Icon: {fileID: 21300000, guid: 2051fbf29ab844663b8552a58372e937, type: 3}
+  _startPrice: 0
   PaymentInterval: 1

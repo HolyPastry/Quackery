@@ -13,9 +13,9 @@ namespace Quackery.Bills
         [SerializeField] private Image _billIcon;
         [SerializeField] private TextMeshProUGUI _billTitle;
         [SerializeField] private TextMeshProUGUI _billAmount;
-        [SerializeField] private TextMeshProUGUI _billDueDate;
+        // [SerializeField] private TextMeshProUGUI _billDueDate;
         [SerializeField] private Button _payButton;
-        [SerializeField] private TextMeshProUGUI _billWarningText;
+        // [SerializeField] private TextMeshProUGUI _billWarningText;
         [SerializeField] private GameObject _paidIndicator;
 
         private Bill _bill;
@@ -43,8 +43,8 @@ namespace Quackery.Bills
         private void OnPayButtonClickedHandler()
         {
             BillServices.PayBill(_bill);
-            _billDueDate.gameObject.SetActive(false);
-            _billWarningText.gameObject.SetActive(false);
+            //   _billDueDate.gameObject.SetActive(false);
+            //   _billWarningText.gameObject.SetActive(false);
             _payButton.gameObject.SetActive(false);
             _paidIndicator.SetActive(true);
 
@@ -61,9 +61,9 @@ namespace Quackery.Bills
 
             // if (dueIn == 0)
             // {
-            _billWarningText.text = "Bill due Today!";
-            _billDueDate.gameObject.SetActive(false);
-            _billWarningText.gameObject.SetActive(true);
+            //  _billWarningText.text = "Bill due Today!";
+            //  _billDueDate.gameObject.SetActive(false);
+            //  _billWarningText.gameObject.SetActive(true);
             // }
             // else if (dueIn < 0)
             // {

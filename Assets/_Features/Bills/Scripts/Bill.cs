@@ -6,7 +6,7 @@ namespace Quackery.Bills
     {
         public BillData Data;
         public string Key;
-        public int Price;
+        public int Price => Data.Price;
 
         public int TotalPrice => Price * (NumMissedPayments + 1);
         public bool Paid;
@@ -26,7 +26,7 @@ namespace Quackery.Bills
         {
             Data = data;
             Key = Data.name;
-            Price = data.StartPrice;
+            //Price = data.Price;
             Paid = false;
 
         }

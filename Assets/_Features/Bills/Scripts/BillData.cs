@@ -4,13 +4,14 @@ using UnityEngine;
 
 namespace Quackery.Bills
 {
-    [CreateAssetMenu(fileName = "BillData", menuName = "Quackery/BillData", order = 1)]
+    [CreateAssetMenu(fileName = "BillData", menuName = "Quackery/Bills/BillData", order = 1)]
     public class BillData : ContentTag
     {
         public Sprite Background;
         public Sprite Icon;
-        public int StartPrice;
+        [SerializeField] private int _startPrice;
 
+        public virtual int Price => _startPrice;
 
         public int PaymentInterval;
     }

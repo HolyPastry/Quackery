@@ -15,5 +15,5 @@ MonoBehaviour:
   MasterText: Utility
   Background: {fileID: 0}
   Icon: {fileID: 21300000, guid: 37c8d2696cd98480fbdf3352857caee1, type: 3}
-  StartPrice: 30
+  _startPrice: 30
   PaymentInterval: 1

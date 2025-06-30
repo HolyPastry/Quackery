@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +13,17 @@ namespace Quackery.Bills
     {
         [SerializeField] private List<OverdueCross> _overdueCrosses;
 
+        [SerializeField] private Image _skullInside;
+
         private Coroutine _updateUICoroutine;
+        private Color _originalColor;
+        private bool _isOverdue;
+        private TweenerCore<Vector3, Vector3, VectorOptions> _skullTween;
+
+        void Awake()
+        {
+            _originalColor = _skullInside.color;
+        }
         private void OnEnable()
         {
             _updateUICoroutine ??= StartCoroutine(UpdateUICoroutine());
@@ -39,6 +51,24 @@ namespace Quackery.Bills
 
                 int overdue = BillServices.GetNumOverdueBills();
                 int dueToday = BillServices.GetNumBillDueToday();
+
+
+                if (overdue + dueToday >= 4)
+                {
+                    if (!_isOverdue)
+                    {
+                        _isOverdue = true;
+                        _skullInside.color = Color.red;
+                        _skullTween?.Kill();
+                        _skullTween = _skullInside.transform.DOScale(0.3f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+                    }
+                }
+                else
+                {
+                    _isOverdue = false;
+                    _skullInside.color = _originalColor;
+                    _skullTween?.Kill();
+                }
 
                 for (int i = 0; i < _overdueCrosses.Count; i++)
                 {

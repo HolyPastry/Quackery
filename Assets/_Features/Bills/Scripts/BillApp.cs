@@ -13,11 +13,16 @@ namespace Quackery
         [SerializeField] private Button ContinueButton;
         [SerializeField] private Button GameOverButton;
 
+        [SerializeField] private GameObject _warningPanel;
+
         [SerializeField] private BillOverdueUI _billOverdueUI;
         private bool _initialized;
 
+        public bool IsGameOver { get; private set; }
+
         void OnEnable()
         {
+
             ContinueButton.onClick.AddListener(OnContinue);
             GameOverButton.onClick.AddListener(OnGameOver);
             BillEvents.OnBillUpdated += UpdateButtons;
@@ -37,21 +42,28 @@ namespace Quackery
         {
             yield return FlowServices.WaitUntilEndOfSetup();
             yield return BillServices.WaitUntilReady();
+            IsGameOver = false;
             UpdateButtons();
             _initialized = true;
         }
+
         private void UpdateButtons(Bill bill) => UpdateButtons();
 
         private void UpdateButtons()
         {
             int numOverdueBills = BillServices.GetNumOverdueBills();
-            ContinueButton.gameObject.SetActive(numOverdueBills < 4);
-            GameOverButton.gameObject.SetActive(numOverdueBills >= 4);
+            int numDueToday = BillServices.GetNumBillDueToday();
+            ContinueButton.gameObject.SetActive(numOverdueBills + numDueToday < 4);
+            GameOverButton.gameObject.SetActive(numOverdueBills + numDueToday >= 4);
+
+            _warningPanel.SetActive(numOverdueBills + numDueToday >= 4);
+
         }
 
         private void OnGameOver()
         {
-            Application.Quit();
+            IsGameOver = true;
+            StartCoroutine(ContinueRoutine());
         }
 
         private void OnContinue()
