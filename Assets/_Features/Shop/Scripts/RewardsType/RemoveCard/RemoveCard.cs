@@ -26,7 +26,7 @@ namespace Quackery
 
         public override void ApplyReward()
         {
-            //  DeckServices.RemoveCardRequest();
+            //DeckServices.DestroyCard
         }
     }
 }

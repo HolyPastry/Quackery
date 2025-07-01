@@ -1,4 +1,6 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using Quackery.Inventories;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Quackery.Shops

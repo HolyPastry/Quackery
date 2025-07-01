@@ -10,7 +10,7 @@ namespace Quackery.Clients
         [SerializeField] private List<ClientData> clients;
         [SerializeField] private bool GenerateDailyQueue = true;
         [SerializeField] private bool InfiniteQueue = false;
-        protected override IEnumerator Routine()
+        public override IEnumerator Routine()
         {
             yield return FlowServices.WaitUntilReady();
             yield return ClientServices.WaitUntilReady();
@@ -23,7 +23,6 @@ namespace Quackery.Clients
             {
                 ClientServices.GenerateDailyQueue();
             }
-            EndScript();
         }
     }
 }

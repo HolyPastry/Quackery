@@ -6,11 +6,9 @@ public class SceneSetupPurse : SceneSetupScript
 {
     [SerializeField] private float _initialAmount = 0f;
 
-    protected override IEnumerator Routine()
+    public override IEnumerator Routine()
     {
         yield return PurseServices.WaitUntilReady();
         PurseServices.Modify(_initialAmount);
-        EndScript();
-
     }
 }

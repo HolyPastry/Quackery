@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Quackery.Decks;
+
 using UnityEngine;
 
 namespace Quackery.Shops

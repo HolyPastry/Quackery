@@ -706,6 +706,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1174931917523022756, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2976517987057073210, guid: ee79d44860f35434982a489985513e2c, type: 3}
       propertyPath: m_fontSize
       value: 80
@@ -732,7 +736,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4034989173087843726, guid: ee79d44860f35434982a489985513e2c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5246333311831953209, guid: ee79d44860f35434982a489985513e2c, type: 3}
       propertyPath: m_SizeDelta.x

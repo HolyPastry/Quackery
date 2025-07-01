@@ -10,7 +10,7 @@ namespace Quackery.Decks
         [SerializeField] private List<ItemData> cards = new();
         [SerializeField] private List<ItemData> _cardInHands = new();
 
-        protected override IEnumerator Routine()
+        public override IEnumerator Routine()
         {
             yield return InventoryServices.WaitUntilReady();
             yield return DeckServices.WaitUntilReady();
@@ -19,7 +19,7 @@ namespace Quackery.Decks
             yield return null;
             DeckServices.DrawSpecificCards(_cardInHands);
             yield return null;
-            EndScript();
+
         }
     }
 }

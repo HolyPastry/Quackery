@@ -9,14 +9,13 @@ namespace Quackery.Effects
     {
         [SerializeField] private List<Effect> _initialEffects;
         [SerializeField] private Transform _effectOrigin;
-        protected override IEnumerator Routine()
+        public override IEnumerator Routine()
         {
             foreach (var effect in _initialEffects)
             {
                 EffectServices.AddStatus(effect);
             }
             yield return null;
-            EndScript();
         }
     }
 }
