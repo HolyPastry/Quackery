@@ -19,7 +19,7 @@ namespace Quackery.Shops
         public override void SetupPost(ShopReward reward)
         {
             base.SetupPost(reward);
-            var cardReward = reward as AddCardReward;
+            var cardReward = reward as NewCardReward;
             Assert.IsNotNull(cardReward, "CardPost can only handle CardReward types.");
 
             var itemData = cardReward.ItemData;

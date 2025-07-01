@@ -5,9 +5,8 @@ using UnityEngine.Assertions;
 
 namespace Quackery.Shops
 {
-    public class AddCardReward : ShopReward
+    public class NewCardReward : ShopReward
     {
-        public override ShopRewardType Type => ShopRewardType.AddCard;
 
         public override int Price => ItemData.SubscriptionCost;
 
@@ -15,17 +14,13 @@ namespace Quackery.Shops
 
         public override bool IsSubscription => true;
 
-        public ItemData ItemData;
+        public override string Title => ItemData.MasterText;
 
-        public AddCardReward()
-        {
-            ItemData = InventoryServices.GetRandomItemData();
-            Assert.IsNotNull(ItemData, "ItemData cannot be null for AddCardReward.");
-        }
+        public ItemData ItemData;
 
         public override void ApplyReward()
         {
-            DeckServices.AddToDrawPile(new() { ItemData });
+            DeckServices.AddNewToDraw(ItemData, true);
         }
     }
 }

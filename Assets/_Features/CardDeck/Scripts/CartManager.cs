@@ -311,7 +311,7 @@ namespace Quackery.Decks
                 while (CartPilesHaveSameCategory(out List<CardPile> piles))
                 {
                     for (int i = 1; i < piles.Count; i++)
-                        DeckManager.MovePileTo(piles[i], piles[0]);
+                        DeckController.MovePileTo(piles[i], piles[0]);
                 }
             }
             else
@@ -331,7 +331,7 @@ namespace Quackery.Decks
                 }
                 foreach (var pile in pilesToMerge)
                 {
-                    DeckManager.MovePileTo(pile, firstPile);
+                    DeckController.MovePileTo(pile, firstPile);
                 }
             }
 

@@ -30,7 +30,7 @@ namespace Quackery.Shops
         public override void Show(ShopReward reward)
         {
             base.Show(reward);
-            var cardReward = reward as AddCardReward;
+            var cardReward = reward as NewCardReward;
             Assert.IsNotNull(cardReward, "ShopConfirmCard can only handle AddCardReward types.");
 
             Card card = DeckServices.CreateCard(cardReward.ItemData);

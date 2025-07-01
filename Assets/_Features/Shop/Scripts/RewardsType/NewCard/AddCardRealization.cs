@@ -16,7 +16,7 @@ namespace Quackery.Shops
 
         public override IEnumerator RealizationRoutine(ShopReward reward)
         {
-            var cardReward = reward as AddCardReward;
+            var cardReward = reward as NewCardReward;
             Assert.IsNotNull(cardReward, "AddCardRealization can only handle AddCardReward types.");
             Card card = DeckServices.CreateCard(cardReward.ItemData);
             card.transform.SetParent(_animatedCard.transform, false);

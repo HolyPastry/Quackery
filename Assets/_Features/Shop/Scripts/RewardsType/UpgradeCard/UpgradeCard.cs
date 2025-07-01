@@ -8,11 +8,14 @@ namespace Quackery
     {
         private int _price;
 
-        public override ShopRewardType Type => ShopRewardType.UpgradeCard;
+
 
         public override int Price => _price;
         public override string Description => "Upgrade a card to enhance its abilities or stats.";
         public override bool IsSubscription => false;
+
+        public override string Title => throw new System.NotImplementedException();
+
         //Added later on when the player selects a card to remove
         public Item ItemToUpgrade;
 

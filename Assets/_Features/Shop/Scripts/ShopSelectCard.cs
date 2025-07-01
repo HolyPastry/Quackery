@@ -69,7 +69,7 @@ namespace Quackery.Shops
             }
             card.SetOutline(true);
 
-            if (_reward is RemoveCard removeCard)
+            if (_reward is RemoveCardReward removeCard)
                 removeCard.ItemToRemove = card.Item;
 
             else if (_reward is UpgradeCard upgradeCard)
@@ -80,7 +80,7 @@ namespace Quackery.Shops
         {
             base.Show(reward);
 
-            if (reward is RemoveCard removeCard)
+            if (reward is RemoveCardReward removeCard)
                 _explanationText.text = removeCard.Description;
 
             else if (reward is UpgradeCard upgradeCard)

@@ -19,7 +19,7 @@ namespace Quackery.Shops
         public override void SetupPost(ShopReward reward)
         {
             base.SetupPost(reward);
-            if (reward is RemoveCard)
+            if (reward is RemoveCardReward)
             {
                 _banner.sprite = RemoveCardBanner;
                 _description.text = "Remove a card from your deck.";

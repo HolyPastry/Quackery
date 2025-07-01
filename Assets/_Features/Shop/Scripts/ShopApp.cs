@@ -52,12 +52,12 @@ namespace Quackery.Shops
         {
             panel.OnConfirmed -= ShowRewardRealization; // Unsubscribe to avoid multiple calls
             panel.Hide();
-            RewardRealization realizationPanel = _rewardPosts.Find(x => x.Type == reward.Type).RewardRealizationPanel;
-            Assert.IsNotNull(realizationPanel, "RewardRealizationPanel is not set for " + reward.Type);
-            _currentReward = reward;
-            realizationPanel.gameObject.SetActive(true);
-            realizationPanel.OnRealizationComplete += RemovePost;
-            StartCoroutine(realizationPanel.RealizationRoutine(reward));
+            // RewardRealization realizationPanel = _rewardPosts.Find(x => x.Type == reward.Type).RewardRealizationPanel;
+            // Assert.IsNotNull(realizationPanel, "RewardRealizationPanel is not set for " + reward.Type);
+            // _currentReward = reward;
+            // realizationPanel.gameObject.SetActive(true);
+            // realizationPanel.OnRealizationComplete += RemovePost;
+            // StartCoroutine(realizationPanel.RealizationRoutine(reward));
 
         }
 
@@ -116,11 +116,10 @@ namespace Quackery.Shops
 
         private ShopPost InstantiatePost(ShopReward reward)
         {
-            var postPrefab = _rewardPosts.Find(x => x.Type == reward.Type).PostPrefab;
 
-            Assert.IsNotNull(postPrefab, "PostPrefab is not set for " + reward.Type);
+            Assert.IsNotNull(reward.PostPrefab, "PostPrefab is not set for " + reward);
 
-            var post = Instantiate(postPrefab, _postsContainer);
+            var post = Instantiate(reward.PostPrefab, _postsContainer);
             post.SetupPost(reward);
             post.OnPostClicked += OnPostClicked;
             return post;
@@ -128,10 +127,10 @@ namespace Quackery.Shops
 
         private void OnPostClicked(ShopReward reward)
         {
-            var confirmationPanel = _rewardPosts.Find(x => x.Type == reward.Type).ConfirmationPanel;
-            Assert.IsNotNull(confirmationPanel, "ConfirmationPanel is not set for " + reward.Type);
-            confirmationPanel.OnConfirmed += ShowRewardRealization;
-            confirmationPanel.Show(reward);
+            // // var confirmationPanel = _rewardPosts.Find(x => x.Type == reward.Type).ConfirmationPanel;
+            // // Assert.IsNotNull(confirmationPanel, "ConfirmationPanel is not set for " + reward.Type);
+            // confirmationPanel.OnConfirmed += ShowRewardRealization;
+            // confirmationPanel.Show(reward);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Quackery.Shops
         [SerializeField] private AnimatedRect _animatedCard;
         public override IEnumerator RealizationRoutine(ShopReward reward)
         {
-            var cardReward = reward as RemoveCard;
+            var cardReward = reward as RemoveCardReward;
             Assert.IsNotNull(cardReward, "DestroyRealization can only handle DestroyCardReward types.");
             _card.Item = cardReward.ItemToRemove;
 

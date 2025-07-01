@@ -36,8 +36,8 @@ namespace Quackery.Shops
             {
                 ShopReward reward = type switch
                 {
-                    ShopRewardType.AddCard => new AddCardReward(),
-                    ShopRewardType.RemoveCard => new RemoveCard(_shopManagerData.RemoveCardPrice),
+                    ShopRewardType.AddCard => new NewCardReward(),
+                    ShopRewardType.RemoveCard => new RemoveCardReward(_shopManagerData.RemoveCardPrice),
                     ShopRewardType.UpgradeCard => new UpgradeCard(_shopManagerData.UpgradeCardPrice),
                     _ => null
                 };

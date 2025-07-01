@@ -27,30 +27,25 @@ namespace Quackery.Decks
 
         private void RegisterServices()
         {
-            DeckServices.AddNewToDrawDeck = AddNew;
-            DeckServices.AddToDrawPile = AddNewCardToDeck;
+            DeckServices.AddNewToDraw = AddNewCard;
+            // DeckServices.AddMultipleInstancesToDrawDeck = AddMultipleNew;
+            // DeckServices.AddToDrawPile = AddNewCardsToDeck;
             DeckServices.DrawSpecificCards = DrawSpecificCards;
             DeckServices.DrawCategory = DrawCategoryCard;
             DeckServices.Draw = DrawMany;
         }
 
+
+
         private void UnregisterServices()
         {
 
-            DeckServices.AddNewToDrawDeck = delegate { };
-            DeckServices.AddToDrawPile = delegate { };
+            // DeckServices.AddMultipleInstancesToDrawDeck = delegate { };
+            // DeckServices.AddToDrawPile = delegate { };
+            DeckServices.AddNewToDraw = (itemData, isPermanent) => { };
             DeckServices.DrawSpecificCards = delegate { };
             DeckServices.DrawCategory = category => null;
             DeckServices.Draw = number => new List<Card>();
-        }
-
-        internal void AddNewCardToDeck(List<ItemData> list)
-        {
-            foreach (var itemData in list)
-            {
-                var item = InventoryServices.AddNewItem(itemData);
-                AddToDeck(item);
-            }
         }
 
         internal void Populate(List<Item> items)
@@ -62,7 +57,6 @@ namespace Quackery.Decks
         {
             Card card = _cardFactory.Create(item);
             AddAtTheBottom(card);
-            // DeckEvents.OnCardMovedTo(card, EnumCardPile.Draw, Index, false);
         }
         public void DrawSpecificCards(List<ItemData> list)
         {
@@ -127,13 +121,32 @@ namespace Quackery.Decks
             return Cards.Find(c => c.Category == category);
         }
 
-        internal void AddNew(ItemData data, int numCards)
+
+        private void AddNewCard(ItemData data, bool isPermanent)
         {
-            for (int i = 0; i < numCards; i++)
-            {
-                Item item = InventoryServices.AddNewItem(data);
-                AddToDeck(item);
-            }
+            if (isPermanent)
+
+                AddToDeck(InventoryServices.AddNewItem(data));
+            else
+
+                AddToDeck(new Item(data));
         }
+
+        // internal void AddMultipleNew(ItemData data, int numCards)
+        // {
+        //     for (int i = 0; i < numCards; i++)
+        //     {
+        //         Item item = InventoryServices.AddNewItem(data);
+        //         AddToDeck(item);
+        //     }
+        // }
+        // internal void AddNewCardsToDeck(List<ItemData> list)
+        // {
+        //     foreach (var itemData in list)
+        //     {
+        //         var item = InventoryServices.AddNewItem(itemData);
+        //         AddToDeck(item);
+        //     }
+        // }
     }
 }

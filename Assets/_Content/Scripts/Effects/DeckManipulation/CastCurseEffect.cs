@@ -18,7 +18,10 @@ namespace Quackery.Effects
             int countered = EffectServices.CounterEffect(_counterEffect, effect.Value);
             if (TargetDeck == EnumCardPile.Draw)
             {
-                DeckServices.AddNewToDrawDeck(_curseCard, effect.Value - countered);
+                for (int i = 0; i < effect.Value - countered; i++)
+                {
+                    DeckServices.AddNewToDraw(_curseCard, false);
+                }
                 DeckServices.Shuffle();
             }
             else if (TargetDeck == EnumCardPile.Discard)

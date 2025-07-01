@@ -6,17 +6,14 @@ using Quackery.Inventories;
 using System.Linq;
 using Quackery.Effects;
 using Quackery.Clients;
-using Holypastry.Bakery;
 using UnityEngine.Assertions;
-using UnityEngine.Android;
-using UnityEngine.PlayerLoop;
-using System;
+
 
 namespace Quackery.Decks
 {
 
 
-    public class DeckManager : Service
+    public class DeckController : MonoBehaviour
     {
         [SerializeField] private Card _itemCardPrefab;
         [SerializeField] private Card _skillCardPrefab;
@@ -103,7 +100,6 @@ namespace Quackery.Decks
 
         void OnEnable()
         {
-            DeckServices.WaitUntilReady = () => new WaitUntil(() => _isReady);
 
             DeckServices.AddNewToDiscard = AddNewToDiscard;
             DeckServices.Shuffle = ShuffleDiscardPileIn;
@@ -153,9 +149,9 @@ namespace Quackery.Decks
             return _cardFactory.Create(data);
         }
 
-        protected override IEnumerator Start()
+        IEnumerator Start()
         {
-            yield return FlowServices.WaitUntilReady();
+            yield return FlowServices.WaitUntilEndOfSetup();
             yield return InventoryServices.WaitUntilReady();
 
             _drawPile = new DrawPile(_cardFactory);
@@ -173,8 +169,6 @@ namespace Quackery.Decks
             {
                 _cardPiles.Add(new CardPile(EnumCardPile.Selection, i));
             }
-
-            _isReady = true;
         }
 
         private int GetCardPoolSize(EnumCardPile cardPileType)

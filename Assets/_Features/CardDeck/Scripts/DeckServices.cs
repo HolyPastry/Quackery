@@ -20,7 +20,7 @@ namespace Quackery
         public static Action Shuffle = () => { };
         public static Action<List<Card>> Discard = (card) => { };
         public static Func<IEnumerator> DiscardHand = () => null;
-        public static Action<List<ItemData>> AddToDrawPile = (cards) => { };
+
 
         internal static Func<List<CardPile>> GetTablePile = () => new();
 
@@ -63,7 +63,9 @@ namespace Quackery
 
         internal static Action<ItemData, int> AddNewToDiscard = (card, amount) => { };
 
-        internal static Action<ItemData, int> AddNewToDrawDeck = (card, amount) => { };
+        // internal static Action<ItemData, int> AddMultipleInstancesToDrawDeck = (card, amount) => { };
+        // public static Action<List<ItemData>> AddToDrawPile = (cards) => { };
+        public static Action<ItemData, bool> AddNewToDraw = (card, isPermanent) => { };
 
         internal static Func<bool> CardPlayed = () => false;
         internal static Func<EnumCardPile, int> GetCardPoolSize = (cardPileType) => 0;
