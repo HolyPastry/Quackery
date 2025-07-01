@@ -9,14 +9,7 @@ namespace Quackery.Shops
 {
     public class ShopApp : App
     {
-        [Serializable]
-        public struct RewardShopPost
-        {
-            public ShopRewardType Type;
-            public ShopPost PostPrefab;
-            public RewardRealization RewardRealizationPanel;
-            public ConfirmationPanel ConfirmationPanel;
-        }
+
 
         [Header("References")]
 
@@ -24,10 +17,7 @@ namespace Quackery.Shops
         [SerializeField] private Transform _continueButtonContainer;
         [SerializeField] private Transform _postsContainer;
 
-        [Header("Posts")]
-        [SerializeField] private List<RewardShopPost> _rewardPosts = new();
-
-        private List<ShopPost> _posts = new();
+        private readonly List<ShopPost> _posts = new();
         private ShopReward _currentReward;
 
         public event Action PhaseEnded = delegate { };

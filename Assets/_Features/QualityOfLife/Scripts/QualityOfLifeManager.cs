@@ -9,14 +9,7 @@ using UnityEngine;
 
 namespace Quackery.QualityOfLife
 {
-    public static class QualityOfLifeServices
-    {
 
-    }
-    public static class QualityOfLifeEvents
-    {
-        // Define events related to quality of life features here
-    }
 
     public class QualityOfLifeManager : Service
     {
@@ -31,12 +24,20 @@ namespace Quackery.QualityOfLife
 
         void OnEnable()
         {
-
+            QualityOfLifeServices.GetSuitable = GetSuitable;
+            QualityOfLifeServices.Acquire = Acquire;
+            QualityOfLifeServices.GetRandomSuitable = () =>
+            {
+                var suitable = GetSuitable(5);
+                return suitable.Count == 0 ? null : suitable[Random.Range(0, suitable.Count)];
+            };
         }
 
         void OnDisable()
         {
-
+            QualityOfLifeServices.GetSuitable = static number => new();
+            QualityOfLifeServices.Acquire = static (data) => { };
+            QualityOfLifeServices.GetRandomSuitable = static () => null;
         }
 
         protected override IEnumerator Start()

@@ -1,6 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using Quackery.Decks;
+using Quackery.QualityOfLife;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,8 +28,8 @@ namespace Quackery.Shops
         {
             base.SetupPost(shopReward);
 
-            _descriptionGUI.text = shopReward.Description;
             _titleGUI.text = shopReward.Title;
+            _descriptionGUI.text = shopReward.Description;
 
             if (shopReward.Price > 0)
             {
@@ -47,13 +48,58 @@ namespace Quackery.Shops
 
             if (SetupNewCard(shopReward)) return;
             if (SetupQualityOfLife(shopReward)) return;
+            if (SetupCardRemoval(shopReward)) return;
 
+
+        }
+
+        private bool SetupCardRemoval(ShopReward shopReward)
+        {
+            if (shopReward is not RemoveCardReward cardRemovalReward) return false;
+
+            _followerPanel.SetActive(false);
+            _ratingTextGUI.text = "";
+            _logo.gameObject.SetActive(true);
+            _logo.sprite = cardRemovalReward.Logo;
+            return true;
 
         }
 
         private bool SetupQualityOfLife(ShopReward shopReward)
         {
-            throw new NotImplementedException();
+
+            if (shopReward is not QualityOfLifeReward qualityOfLifeReward) return false;
+            QualityOfLifeData qualityOfLifeData = qualityOfLifeReward.QualityOfLifeData;
+            if (qualityOfLifeData.FollowerBonus > 0)
+            {
+                _followerTextGUI.text = $"+{qualityOfLifeData.FollowerBonus}";
+                _followerPanel.SetActive(true);
+            }
+            else
+            {
+                _followerPanel.SetActive(false);
+            }
+
+            if (qualityOfLifeData.RatingBonus > 0)
+                _ratingTextGUI.text = $"+{qualityOfLifeData.RatingBonus}";
+
+            else
+                _ratingTextGUI.text = "";
+
+            if (qualityOfLifeData.CardBonus != null)
+            {
+                _logo.gameObject.SetActive(false);
+                Card card = DeckServices.CreateCard(qualityOfLifeData.CardBonus);
+                card.transform.SetParent(_cardParent, false);
+                card.transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                _logo.gameObject.SetActive(true);
+                _logo.sprite = qualityOfLifeData.ShopBanner;
+            }
+
+            return true;
         }
 
         private bool SetupNewCard(ShopReward shopReward)

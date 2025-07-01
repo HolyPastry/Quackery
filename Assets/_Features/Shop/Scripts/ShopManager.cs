@@ -29,23 +29,7 @@ namespace Quackery.Shops
 
         private List<ShopReward> GetRewards(int NumRewards)
         {
-            List<ShopRewardType> rewardTypes = _shopManagerData.GenerateRewards(NumRewards);
-
-            List<ShopReward> rewards = new();
-            foreach (var type in rewardTypes)
-            {
-                ShopReward reward = type switch
-                {
-                    ShopRewardType.AddCard => new NewCardReward(),
-                    ShopRewardType.RemoveCard => new RemoveCardReward(_shopManagerData.RemoveCardPrice),
-                    ShopRewardType.UpgradeCard => new UpgradeCard(_shopManagerData.UpgradeCardPrice),
-                    _ => null
-                };
-                if (reward != null)
-                    rewards.Add(reward);
-            }
-            return rewards;
-            //var reward = new ShopReward();
+            return _shopManagerData.GenerateRewards(NumRewards);
         }
     }
 }

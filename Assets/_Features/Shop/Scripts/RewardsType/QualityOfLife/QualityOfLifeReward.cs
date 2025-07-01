@@ -1,18 +1,32 @@
+using Quackery.QualityOfLife;
+using UnityEngine;
+
 namespace Quackery.Shops
 {
+    [CreateAssetMenu(fileName = "QualityOfLifeReward", menuName = "Quackery/Shop/Quality Of Life Reward")]
     public class QualityOfLifeReward : ShopReward
     {
-        public override int Price => throw new System.NotImplementedException();
+        private QualityOfLifeData _qualityOfLifeData;
 
-        public override string Description => throw new System.NotImplementedException();
-
-        public override bool IsSubscription => throw new System.NotImplementedException();
-
-        public override string Title => throw new System.NotImplementedException();
+        public QualityOfLifeData QualityOfLifeData
+        {
+            get
+            {
+                if (_qualityOfLifeData == null)
+                {
+                    _qualityOfLifeData = QualityOfLifeServices.GetRandomSuitable();
+                }
+                return _qualityOfLifeData;
+            }
+        }
+        public override int Price => QualityOfLifeData.Price;
+        public override bool IsSubscription => true;
+        public override string Title => QualityOfLifeData.Title;
+        public override string Description => QualityOfLifeData.Description;
 
         public override void ApplyReward()
         {
-            throw new System.NotImplementedException();
+            QualityOfLifeServices.Acquire(QualityOfLifeData);
         }
     }
 }

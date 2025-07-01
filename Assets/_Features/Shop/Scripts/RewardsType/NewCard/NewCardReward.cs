@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 namespace Quackery.Shops
 {
+    [CreateAssetMenu(fileName = "NewCardReward", menuName = "Quackery/Shop/New Card Reward")]
     public class NewCardReward : ShopReward
     {
 
@@ -15,8 +16,17 @@ namespace Quackery.Shops
         public override bool IsSubscription => true;
 
         public override string Title => ItemData.MasterText;
+        ItemData _itemData;
 
-        public ItemData ItemData;
+        public ItemData ItemData
+        {
+            get
+            {
+                if (_itemData == null)
+                    _itemData = InventoryServices.GetRandomItemData();
+                return _itemData;
+            }
+        }
 
         public override void ApplyReward()
         {
