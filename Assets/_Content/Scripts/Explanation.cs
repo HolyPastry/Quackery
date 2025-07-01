@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Quackery
@@ -12,5 +13,11 @@ namespace Quackery
         [TextArea(2, 10)]
         public string Definition;
         public string ShortDescription => $"<b>{Name}:</b> {Definition}";
+
+        public override string ToString()
+        {
+            return ShortDescription;
+        }
+
     }
 }

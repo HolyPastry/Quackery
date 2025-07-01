@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Bakery.Saves;
 using Holypastry.Bakery;
 using Holypastry.Bakery.Flow;
+
 using UnityEngine;
 
 namespace Quackery.Inventories
@@ -38,6 +40,7 @@ namespace Quackery.Inventories
             InventoryServices.HasItem = data => false;
             InventoryServices.GetAllItems = () => new();
             InventoryServices.GetRandomItemData = () => null;
+            InventoryServices.GetRandomItems = amount => new();
         }
 
         void OnEnable()
@@ -50,15 +53,24 @@ namespace Quackery.Inventories
             InventoryServices.HasItem = HasItem;
             InventoryServices.GetAllItems = () => _inventory.Items;
             InventoryServices.GetRandomItemData = GetRandomItemData;
+            InventoryServices.GetRandomItems = GetRandomItems;
+        }
+
+        private List<ItemData> GetRandomItems(int amount)
+        {
+
+            List<ItemData> randomItems = new();
+            List<ItemData> itemDataList = _itemDataCollection.Data.ToList();
+            itemDataList.Shuffle();
+            for (int i = 0; i < Math.Min(amount, itemDataList.Count); i++)
+                randomItems.Add(itemDataList[i]);
+
+            return randomItems;
         }
 
         private ItemData GetRandomItemData()
         {
-            if (_itemDataCollection == null || _itemDataCollection.Count == 0)
-            {
-                Debug.LogWarning("Item data collection is empty or not initialized.");
-                return null;
-            }
+
             int randomIndex = UnityEngine.Random.Range(0, _itemDataCollection.Count);
             return _itemDataCollection.Data[randomIndex];
         }

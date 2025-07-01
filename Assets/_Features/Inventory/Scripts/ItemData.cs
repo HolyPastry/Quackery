@@ -26,6 +26,9 @@ namespace Quackery.Inventories
         [TextArea(3, 10)]
         public string LongDescription;
 
+        [TextArea(3, 10)]
+        public string ShopDescription;
+
         public List<Explanation> Explanations = new();
 
         public int SubscriptionCost;

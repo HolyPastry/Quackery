@@ -16,6 +16,10 @@ namespace Quackery.Shops
         [SerializeField] private Button _continueButton;
         [SerializeField] private Transform _continueButtonContainer;
         [SerializeField] private Transform _postsContainer;
+        [SerializeField] private ConfirmationPanel _confirmationPanel;
+        [SerializeField] private ShopSelectCard _selectCardPanel;
+
+        [SerializeField] private ShopPost _postPrefab;
 
         private readonly List<ShopPost> _posts = new();
         private ShopReward _currentReward;
@@ -91,25 +95,21 @@ namespace Quackery.Shops
             _continueButtonContainer.gameObject.SetActive(false);
             //yield return new WaitForSeconds(0.5f);
             List<ShopReward> rewards = ShopServices.GetRewards(3);
+
             foreach (var reward in rewards)
             {
-                var post = InstantiatePost(reward);
-                //post.SlideIn();
-                _posts.Add(post);
-
+                _posts.Add(InstantiatePost(reward));
                 yield return new WaitForSeconds(0.1f);
             }
             _continueButtonContainer.SetAsLastSibling();
             _continueButtonContainer.gameObject.SetActive(true);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_postsContainer as RectTransform);
 
         }
 
         private ShopPost InstantiatePost(ShopReward reward)
         {
-
-            Assert.IsNotNull(reward.PostPrefab, "PostPrefab is not set for " + reward);
-
-            var post = Instantiate(reward.PostPrefab, _postsContainer);
+            var post = Instantiate(_postPrefab, _postsContainer);
             post.SetupPost(reward);
             post.OnPostClicked += OnPostClicked;
             return post;
@@ -117,6 +117,28 @@ namespace Quackery.Shops
 
         private void OnPostClicked(ShopReward reward)
         {
+            Debug.Log($"Post clicked: ");
+
+            switch (reward)
+            {
+                case NewCardReward newCardReward:
+                    _confirmationPanel.Show(newCardReward);
+                    break;
+
+                case RemoveCardReward removeCardReward:
+
+                    _selectCardPanel.Show(removeCardReward);
+                    break;
+
+                case QualityOfLifeReward qualityOfLifeReward:
+                    _confirmationPanel.Show(qualityOfLifeReward);
+                    break;
+
+                default:
+                    Debug.LogWarning($"Unknown reward type: {reward.GetType()}");
+                    return;
+            }
+
             // // var confirmationPanel = _rewardPosts.Find(x => x.Type == reward.Type).ConfirmationPanel;
             // // Assert.IsNotNull(confirmationPanel, "ConfirmationPanel is not set for " + reward.Type);
             // confirmationPanel.OnConfirmed += ShowRewardRealization;

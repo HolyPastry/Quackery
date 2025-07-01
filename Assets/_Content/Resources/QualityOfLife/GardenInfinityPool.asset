@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20c79a06968b24f61a3e81f436b0a463, type: 3}
-  m_Name: HolisticWellness
+  m_Name: GardenInfinityPool
   m_EditorClassIdentifier: 
-  Title: HolisticWellness
-  Description: ' Influencer special offer! 5 days in paradise. The one cures all
-    solution to all your problems.  '
-  ShopBanner: {fileID: 0}
-  Price: 0
+  Title: Garden Infinity Pool
+  Description: A beautiful, sexy pool for your garden, completely made of materials.
+    you'll feel like a duck in water!
+  ShopBanner: {fileID: 21300000, guid: f3a261ad1fc774c68878de653d7973b2, type: 3}
+  Price: 100
   FollowersRequirement: 0
-  FollowerBonus: 100
+  FollowerBonus: 1000
   RatingBonus: 0
-  CardBonus: {fileID: 11400000, guid: 2c2598c959e2b492eac6b86e0f0626a1, type: 2}
-  Bill: {fileID: 0}
+  CardBonus: {fileID: 0}
+  Bill: {fileID: 11400000, guid: f7513803cdd9d4bcaa3e8dfb80863b6e, type: 2}

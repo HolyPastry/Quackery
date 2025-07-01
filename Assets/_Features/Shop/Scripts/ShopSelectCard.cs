@@ -80,11 +80,11 @@ namespace Quackery.Shops
         {
             base.Show(reward);
 
-            if (reward is RemoveCardReward removeCard)
-                _explanationText.text = removeCard.Description;
+            if (reward is RemoveCardReward)
+                _explanationText.text = "Select a card to remove from your deck.";
 
-            else if (reward is UpgradeCard upgradeCard)
-                _explanationText.text = upgradeCard.Description;
+            else if (reward is UpgradeCard)
+                _explanationText.text = "Select a card to upgrade.";
 
             PopulateUI();
         }

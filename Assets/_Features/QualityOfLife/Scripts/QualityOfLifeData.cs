@@ -8,6 +8,8 @@ namespace Quackery.QualityOfLife
     public class QualityOfLifeData : ScriptableObject
     {
         public string Title;
+
+        [TextArea(3, 10)]
         public string Description;
         public Sprite ShopBanner;
 

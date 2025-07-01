@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Cordyceps
   Icon: {fileID: 21300000, guid: 16fc71f9a417f4393bebad3d39cbbdf1, type: 3}
-  StartPrice: 5
+  BasePrice: 1
   ShortDescription: Draw a #Chinese Card
   LongDescription: Draw the next #Chinese card in your deck
+  ShopDescription: "It's a plant! it's an animal! \nNo! it's a fungus!\nA life supply
+    of this potent energy booster. \nForget feeling flacid! The future is Fungal!"
   Explanations: []
   SubscriptionCost: 1
   Category: 6

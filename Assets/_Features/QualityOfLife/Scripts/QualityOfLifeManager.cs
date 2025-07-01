@@ -13,43 +13,47 @@ namespace Quackery.QualityOfLife
 
     public class QualityOfLifeManager : Service
     {
-
+        [SerializeField] private string _collectionKey = "QualityOfLife";
         private DataCollection<QualityOfLifeData> _collection;
         private QualityOfLifeSerial _acquired;
 
         void Awake()
         {
-            _collection = new("QualityOfLife");
+            _collection = new(_collectionKey);
         }
 
         void OnEnable()
         {
             QualityOfLifeServices.GetSuitable = GetSuitable;
             QualityOfLifeServices.Acquire = Acquire;
-            QualityOfLifeServices.GetRandomSuitable = () =>
-            {
-                var suitable = GetSuitable(5);
-                return suitable.Count == 0 ? null : suitable[Random.Range(0, suitable.Count)];
-            };
+            QualityOfLifeServices.GetRandomSuitable = GetRandomSuitable;
         }
+
+
 
         void OnDisable()
         {
             QualityOfLifeServices.GetSuitable = static number => new();
             QualityOfLifeServices.Acquire = static (data) => { };
-            QualityOfLifeServices.GetRandomSuitable = static () => null;
+            QualityOfLifeServices.GetRandomSuitable = static (amount) => new();
         }
 
         protected override IEnumerator Start()
         {
             yield return FlowServices.WaitUntilReady();
-            _acquired = SaveServices.Load<QualityOfLifeSerial>("QualityOfLife");
+            _acquired = SaveServices.Load<QualityOfLifeSerial>(_collectionKey);
             _acquired ??= new QualityOfLifeSerial();
+        }
+
+        private List<QualityOfLifeData> GetRandomSuitable(int amount)
+        {
+            return GetSuitable(amount);
+            //return suitable.Count == 0 ? null : suitable[Random.Range(0, suitable.Count)];
         }
 
         void Save()
         {
-            SaveServices.Save("QualityOfLife", _acquired);
+            SaveServices.Save(_collectionKey, _acquired);
         }
 
         private List<QualityOfLifeData> GetSuitable(int number)

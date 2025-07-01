@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Quackery.Decks;
 using Quackery.QualityOfLife;
@@ -24,8 +25,35 @@ namespace Quackery.Shops
         [SerializeField] TextMeshProUGUI _followerTextGUI;
         [SerializeField] TextMeshProUGUI _ratingTextGUI;
 
+        [SerializeField] private LayoutGroup _leftColumnGroup;
+
+        private static readonly List<string> _freeTexts = new()
+        {
+            "It's on the house!",
+            "Try it for free!",
+            "No cost, just rewards!",
+            "A gift from us to you!",
+            "Enjoy this for free!",
+            "No strings attached!",
+            "Experience it at no cost!",
+            "Free for a limited time!",
+            "No charge, just benefits!",
+            "A complimentary offer!",
+            "Enjoy it on us!",
+            "No initial payment required!",
+            "Experience it without spending!",
+            "A free opportunity!",
+            "Exclusive Offer",
+            "Exclusive Deal",
+            "Limited Time Offer",
+            "Special Promotion",
+            "You're in luck!",
+            "You've been selected!",
+            "A special gift for you!",
+        };
         public override void SetupPost(ShopReward shopReward)
         {
+
             base.SetupPost(shopReward);
 
             _titleGUI.text = shopReward.Title;
@@ -46,9 +74,16 @@ namespace Quackery.Shops
                 _freeTextGUI.text = GenerateFreeText(shopReward);
             }
 
-            if (SetupNewCard(shopReward)) return;
-            if (SetupQualityOfLife(shopReward)) return;
-            if (SetupCardRemoval(shopReward)) return;
+            if (SetupNewCard(shopReward) ||
+               SetupQualityOfLife(shopReward) ||
+                SetupCardRemoval(shopReward))
+            {
+                _leftColumnGroup.enabled = false;
+                _leftColumnGroup.enabled = true;
+                LayoutRebuilder.ForceRebuildLayoutImmediate(_leftColumnGroup.GetComponent<RectTransform>());
+            }
+            else
+                Debug.LogWarning($"ShopReward {shopReward.GetType()} is not supported in UniversalPost");
 
 
         }
@@ -119,7 +154,8 @@ namespace Quackery.Shops
 
         private string GenerateFreeText(ShopReward shopReward)
         {
-            throw new NotImplementedException();
+            int randomIndex = UnityEngine.Random.Range(0, _freeTexts.Count);
+            return _freeTexts[randomIndex];
         }
     }
 }

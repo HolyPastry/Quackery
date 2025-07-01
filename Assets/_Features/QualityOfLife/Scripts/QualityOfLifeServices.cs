@@ -8,7 +8,7 @@ namespace Quackery.QualityOfLife
         public static Func<int, List<QualityOfLifeData>> GetSuitable = (num) => new();
         public static Action<QualityOfLifeData> Acquire = (data) => { };
 
-        internal static Func<QualityOfLifeData> GetRandomSuitable = () => null;
+        internal static Func<int, List<QualityOfLifeData>> GetRandomSuitable = (amount) => new();
 
 
     }

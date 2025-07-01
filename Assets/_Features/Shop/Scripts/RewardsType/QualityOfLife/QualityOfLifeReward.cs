@@ -3,26 +3,21 @@ using UnityEngine;
 
 namespace Quackery.Shops
 {
-    [CreateAssetMenu(fileName = "QualityOfLifeReward", menuName = "Quackery/Shop/Quality Of Life Reward")]
+
     public class QualityOfLifeReward : ShopReward
     {
-        private QualityOfLifeData _qualityOfLifeData;
 
-        public QualityOfLifeData QualityOfLifeData
-        {
-            get
-            {
-                if (_qualityOfLifeData == null)
-                {
-                    _qualityOfLifeData = QualityOfLifeServices.GetRandomSuitable();
-                }
-                return _qualityOfLifeData;
-            }
-        }
+        public QualityOfLifeData QualityOfLifeData { get; private set; }
+
         public override int Price => QualityOfLifeData.Price;
         public override bool IsSubscription => true;
         public override string Title => QualityOfLifeData.Title;
         public override string Description => QualityOfLifeData.Description;
+
+        public QualityOfLifeReward(QualityOfLifeData qualityOfLifeData)
+        {
+            QualityOfLifeData = qualityOfLifeData;
+        }
 
         public override void ApplyReward()
         {

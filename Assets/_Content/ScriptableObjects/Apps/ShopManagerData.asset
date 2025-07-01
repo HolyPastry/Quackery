@@ -14,8 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RemoveCardPrice: 10
   UpgradeCardPrice: 20
-  RemoveCardBanner: {fileID: 21300000, guid: a8e97e6ae7c2742b3966f7f389ce885e, type: 3}
-  UpgradeCardBanner: {fileID: 21300000, guid: 4a81cc6e0c8b446f180d122757e4fd78, type: 3}
+  _removalCompanies:
+  - Name: A Blanche Profile
+    Logo: {fileID: 21300000, guid: 5b8fa63fd98284bcabf8149dd2e94e00, type: 3}
+    Description: Your internet presence will never be so clean. Digital Bleach will
+      scrub and sanitize until all the dirt on you is gone!
+    Price: 20
+  - Name: We Kill Subscription
+    Logo: {fileID: 21300000, guid: b827cd86db54e45b28e614a05f18a772, type: 3}
+    Description: Trust Monarch Shark Technology to track and destroy your unwanted
+      subscription!
+    Price: 30
   RewardDistributions:
   - Type: 0
     Weight: -1
@@ -23,9 +32,9 @@ MonoBehaviour:
     Weight: 10
   - Type: 2
     Weight: 20
-  - Type: 0
+  - Type: 2
     Weight: 30
   - Type: 0
     Weight: 5
-  - Type: 3
+  - Type: 0
     Weight: 5

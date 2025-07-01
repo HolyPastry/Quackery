@@ -40,7 +40,7 @@ namespace Quackery
 
         internal static Action<EnumItemCategory> ChangePreference = (category) => { };
 
-        internal static Func<Card, int> GetCardPrice = (card) => 0;
+        internal static Func<Card, int> GetCardPrice = (card) => card.Item.BasePrice;
 
         internal static Func<Card, List<Item>, int> GetStackPrice = (topCard, subItems) => 0;
 

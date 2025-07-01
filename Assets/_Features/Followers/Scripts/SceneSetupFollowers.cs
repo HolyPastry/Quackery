@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Quackery.Followers
 {
-    public class SceneSetup_Followers : SceneSetupScript
+    public class SceneSetupFollowers : SceneSetupScript
     {
         [SerializeField] private int _numberOfFollowers = 0;
         public override IEnumerator Routine()

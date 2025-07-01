@@ -7,7 +7,6 @@ namespace Quackery.Decks
 {
     public class SceneSetupDeck : SceneSetupScript
     {
-        [SerializeField] private List<ItemData> cards = new();
         [SerializeField] private List<ItemData> _cardInHands = new();
 
         public override IEnumerator Routine()

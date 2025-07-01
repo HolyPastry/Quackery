@@ -2,7 +2,7 @@ namespace Quackery.Shops
 {
     public enum ShopRewardType
     {
-        AddCard,
+        NewCard,
         RemoveCard,
         QualityOfLife,
         UpgradeCard

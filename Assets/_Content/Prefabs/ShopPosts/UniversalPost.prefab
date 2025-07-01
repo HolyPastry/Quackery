@@ -120,6 +120,7 @@ MonoBehaviour:
   _followerPanel: {fileID: 2548651229977482213}
   _followerTextGUI: {fileID: 6947063198122354633}
   _ratingTextGUI: {fileID: 5804420180490350722}
+  _leftColumnGroup: {fileID: 7806093776227229494}
 --- !u!1 &530857789798383678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1212,7 +1213,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 472, y: 100}
+  m_SizeDelta: {x: 700, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &4707537130527550178
 CanvasRenderer:

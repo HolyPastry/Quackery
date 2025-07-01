@@ -26,6 +26,7 @@ namespace Quackery.Shops
         public virtual void Show(ShopReward reward)
         {
             _reward = reward;
+
             gameObject.SetActive(true);
             _animatable.ZoomIn();
         }
