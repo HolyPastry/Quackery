@@ -11,8 +11,11 @@ namespace Quackery.Followers
         {
             public int NumFollowers;
 
-            public static implicit operator int(FollowerSerial data) => data == null ? 0 : data.NumFollowers;
-            public static implicit operator FollowerSerial(int numFollowers) => new() { NumFollowers = 0 };
+            public static implicit operator
+                int(FollowerSerial data) => data == null ? 0 : data.NumFollowers;
+
+            public static implicit operator
+                FollowerSerial(int numFollowers) => new() { NumFollowers = numFollowers };
         }
         private FollowerSerial _numberOfFollowers;
 
