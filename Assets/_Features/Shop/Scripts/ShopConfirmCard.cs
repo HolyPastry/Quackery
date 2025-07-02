@@ -1,11 +1,10 @@
+
 using System;
+using System.Collections;
 using Quackery.Decks;
-using Quackery.Inventories;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.UI;
-
 namespace Quackery.Shops
 {
     internal class ShopConfirmCard : ConfirmationPanel
@@ -17,7 +16,11 @@ namespace Quackery.Shops
         [SerializeField] private TextMeshProUGUI _subscriptionPrice;
         [SerializeField] private Button _applyButton;
         [SerializeField] private Button _cancelButton;
+        [SerializeField] private GameObject _buttons;
+        [SerializeField] private AnimatedRect _cardAnimated;
         private Card _card;
+
+
 
         void OnEnable()
         {
@@ -30,9 +33,59 @@ namespace Quackery.Shops
             _cancelButton.onClick.RemoveListener(Cancel);
         }
 
+        public void Confirm()
+        {
+            //Debug.Log("Confirm");
+            PlayConfirmRealization(_reward);
+        }
+
+        public void Cancel()
+        {
+            Hide();
+            OnExited(false);
+        }
+
+        protected void PlayConfirmRealization(ShopReward reward)
+        {
+            _buttons.SetActive(false);
+            if (reward is NewCardReward newCardReward)
+            {
+                StartCoroutine(AddCardRoutine(newCardReward));
+            }
+            else if (reward is QualityOfLifeReward qualityOfLifeReward)
+            {
+                Hide();
+                OnExited(true);
+            }
+
+        }
+
+        private IEnumerator AddCardRoutine(NewCardReward newCardReward)
+        {
+            _subscriptionPrice.text = "";
+            _description.text = "";
+            _title.text = "";
+            yield return new WaitForSeconds(0.2f);
+            _cardAnimated.RectTransform = _card.transform as RectTransform;
+            _cardAnimated.SlideOut(Direction.Left)
+                        .DoComplete(() => { });
+            yield return _cardAnimated.WaitForAnimation();
+
+            InventoryServices.AddNewItem(newCardReward.ItemData);
+            Destroy(_card.gameObject);
+            _description.text = "New Card Added!!";
+            yield return new WaitForSeconds(2f);
+
+            Hide();
+            OnExited(true);
+
+
+
+        }
 
         public override void Show(ShopReward reward)
         {
+            _buttons.SetActive(true);
             _logo.gameObject.SetActive(false);
             if (_card != null)
                 Destroy(_card.gameObject);
@@ -73,18 +126,21 @@ namespace Quackery.Shops
                 _description.text += $" +{data.FollowerBonus} Followers. ";
             if (data.RatingBonus > 0)
                 _description.text += $" +{data.RatingBonus} Rating. ";
+
+            string subscriptionText = "";
             if (data.Price > 0)
             {
-                _subscriptionPrice.text = "" + data.Price + "<sprite name=Coin>";
+                subscriptionText = "" + data.Price + "#Coin";
             }
             else
             {
-                _subscriptionPrice.text = "Free for a week";
+                subscriptionText = "Free for a week";
             }
             if (data.Bill != null)
             {
-                _subscriptionPrice.text += $"\nNew bill: {Sprites.Replace(data.Bill.MasterText)} ({data.Bill.Price} <sprite name=Coin>)";
+                subscriptionText += $"\n#Bill {Sprites.Replace(data.Bill.MasterText)} ({data.Bill.Price} #Coin)";
             }
+            _subscriptionPrice.text = Sprites.Replace(subscriptionText);
         }
 
         private void ShowNewCardConfirmation(NewCardReward cardReward)

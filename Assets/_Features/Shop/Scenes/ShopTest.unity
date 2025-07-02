@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 680548773}
   - component: {fileID: 680548774}
   - component: {fileID: 680548775}
+  - component: {fileID: 680548776}
   m_Layer: 0
   m_Name: SceneSetup
   m_TagString: Untagged
@@ -349,6 +350,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5077920aa9140445f9c1bccfecaaa1c3, type: 2}
   - {fileID: 11400000, guid: 869bf536400604bb0ba291afc44926bc, type: 2}
   - {fileID: 11400000, guid: 924763be3d5d84a5ebef0cd1b40ba185, type: 2}
+--- !u!114 &680548776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680548770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ab640686d4e489486e7fa48c01ddab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _disable: 0
+  _initialAmount: 324
 --- !u!1 &713555658
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,17 +734,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1282623146 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2563933227203940667, guid: ee79d44860f35434982a489985513e2c, type: 3}
-  m_PrefabInstance: {fileID: 3611145453749006735}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18c769bfaef3e4891a7431ccd5489408, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1345877924
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,25 +950,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1174931917523022756, guid: ee79d44860f35434982a489985513e2c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3701278901442240428, guid: ee79d44860f35434982a489985513e2c, type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367064782266321975, guid: ee79d44860f35434982a489985513e2c, type: 3}
-      propertyPath: _selectCardPanel
-      value: 
-      objectReference: {fileID: 1282623146}
     - target: {fileID: 7502394093125466052, guid: ee79d44860f35434982a489985513e2c, type: 3}
       propertyPath: m_Name
       value: ShopApp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8495072749168097419, guid: ee79d44860f35434982a489985513e2c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9012704261980253538, guid: ee79d44860f35434982a489985513e2c, type: 3}
       propertyPath: m_LocalPosition.x

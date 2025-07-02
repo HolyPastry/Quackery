@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using Holypastry.Bakery;
 using Quackery.Inventories;
 using UnityEngine;
@@ -42,7 +43,8 @@ namespace Quackery
             }
             text = text.Replace("#Coin", "<sprite name=Coin>");
             text = text.Replace("#Rating", "<sprite name=Rating>");
-
+            text = text.Replace("#Bill", "<sprite name=Bill>");
+            //  text = Regex.Replace(text, @"#$1s", "<sprite name=$1>")
             return text;
         }
 

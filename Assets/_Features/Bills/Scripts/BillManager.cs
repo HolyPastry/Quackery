@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Bakery.Saves;
 using Holypastry.Bakery.Flow;
 
 using UnityEngine;
@@ -17,13 +18,14 @@ namespace Quackery.Bills
         void OnEnable()
         {
             BillServices.WaitUntilReady = () => WaitUntilReady;
-            BillServices.GetAllBills = () => _billList.Bills;
+            BillServices.GetAllBills = () => _billList.Bills.FindAll(b => b.Price > 0);
             BillServices.AddNewBill = AddNewBill;
             BillServices.PayBill = PayBill;
             BillServices.DueIn = CalculateDueInDate;
             BillServices.GetNumOverdueBills = () => _billList.GetNumOverdueBills();
             BillServices.GetAmountDueToday = GetAmountDueToday;
             BillServices.GetNumBillDueToday = GetNumBillDueToday;
+            BillServices.ResetBills = ResetBills;
 
         }
 
@@ -39,13 +41,20 @@ namespace Quackery.Bills
             BillServices.GetNumOverdueBills = () => 0;
             BillServices.GetAmountDueToday = () => 0;
             BillServices.GetNumBillDueToday = () => 0;
+            BillServices.ResetBills = delegate { };
         }
 
         protected override IEnumerator Start()
         {
             yield return FlowServices.WaitUntilReady();
-            _billList = new();
+            _billList = SaveServices.Load<BillList>(BillList.BillCollectionKey);
+            _billList ??= new();
             _isReady = true;
+        }
+
+        private void ResetBills()
+        {
+            _billList.ResetPaidStatus();
         }
 
         private void AddNewBill(BillData data)

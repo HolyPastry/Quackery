@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using JetBrains.Annotations;
+using Quackery.Decks;
+using Quackery.Inventories;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +17,9 @@ namespace Quackery.Bills
         [SerializeField] private List<OverdueCross> _overdueCrosses;
 
         [SerializeField] private Image _skullInside;
+        [SerializeField] private GameObject _overduePanel;
+        [SerializeField] private AnimatedRect _animatedCardRect;
+        [SerializeField] private ItemData _overdueCurse;
 
         private Coroutine _updateUICoroutine;
         private Color _originalColor;
@@ -46,14 +52,15 @@ namespace Quackery.Bills
 
         private IEnumerator UpdateUICoroutine()
         {
+            _overduePanel.gameObject.SetActive(false);
             while (true)
             {
 
-                int overdue = BillServices.GetNumOverdueBills();
+                // int overdue = BillServices.GetNumOverdueBills();
                 int dueToday = BillServices.GetNumBillDueToday();
 
 
-                if (overdue + dueToday >= 4)
+                if (dueToday >= 4)
                 {
                     if (!_isOverdue)
                     {
@@ -73,11 +80,7 @@ namespace Quackery.Bills
                 for (int i = 0; i < _overdueCrosses.Count; i++)
                 {
 
-                    if (i < overdue)
-                    {
-                        _overdueCrosses[i].SetState(OverdueCross.State.Overdue);
-                    }
-                    else if (i < dueToday)
+                    if (i < dueToday)
                     {
                         _overdueCrosses[i].SetState(OverdueCross.State.DueToday);
                     }
@@ -90,14 +93,17 @@ namespace Quackery.Bills
             }
         }
 
-
-
-
         internal IEnumerator ActOverdueBillRoutine()
         {
             if (_updateUICoroutine != null)
                 StopCoroutine(_updateUICoroutine);
-
+            int dueToday = BillServices.GetNumBillDueToday();
+            if (dueToday == 0)
+            {
+                StopAllCoroutines();
+                yield break;
+            }
+            _overduePanel.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.5f);
             for (int i = 0; i < _overdueCrosses.Count; i++)
             {
@@ -106,8 +112,22 @@ namespace Quackery.Bills
                     continue;
                 _overdueCrosses[i].SetState(OverdueCross.State.Overdue);
                 yield return new WaitForSeconds(0.5f);
+                Card card = DeckServices.CreateCard(_overdueCurse);
+                card.transform.SetParent(_animatedCardRect.transform);
+                card.transform.position = _overdueCrosses[i].transform.position;
+                card.transform.localScale = Vector3.zero;
+                card.transform.DOScale(1, 0.5f).SetEase(Ease.OutBack);
+                card.transform.DOLocalMove(Vector3.zero, 0.5f).SetEase(Ease.OutBack);
+                yield return new WaitForSeconds(1f);
+                _animatedCardRect.RectTransform = card.transform as RectTransform;
+
+                _animatedCardRect.SlideOut(Direction.Left)
+                                .DoComplete(() => Destroy(card.gameObject));
+                DeckServices.AddNewToDraw(_overdueCurse, true);
+                yield return new WaitForSeconds(0.5f);
             }
             yield return new WaitForSeconds(0.5f);
+            StopAllCoroutines();
         }
     }
 }

@@ -9,24 +9,11 @@ namespace Quackery.Shops
         [SerializeField, Self] protected AnimatedRect _animatable;
 
         protected ShopReward _reward;
-        public Action<ConfirmationPanel, ShopReward> OnConfirmed = delegate { };
-        public Action OnCancelled = delegate { };
+        public Action<bool> OnExited = delegate { };
 
-        public virtual void Confirm()
-        {
-            OnConfirmed?.Invoke(this, _reward);
-            Hide();
-        }
-
-        public virtual void Cancel()
-        {
-            OnCancelled?.Invoke();
-            Hide();
-        }
         public virtual void Show(ShopReward reward)
         {
             _reward = reward;
-
             gameObject.SetActive(true);
             _animatable.ZoomIn();
         }

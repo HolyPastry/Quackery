@@ -76,6 +76,7 @@ namespace Quackery
         {
             yield return _billOverdueUI.ActOverdueBillRoutine();
 
+            BillServices.ResetBills();
             Hide();
         }
 

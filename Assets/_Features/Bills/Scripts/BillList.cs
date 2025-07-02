@@ -10,26 +10,22 @@ namespace Quackery.Bills
 {
     public class BillList : SerialData
     {
-        private const string BillCollectionKey = "Bills";
+        public const string BillCollectionKey = "Bills";
         private DataCollection<BillData> _billDataCollection;
-        private readonly List<Bill> _bills;
-        public List<Bill> Bills => _bills;
+
+        public List<Bill> Bills = new();
 
         public BillList()
         {
             _billDataCollection = new DataCollection<BillData>(BillCollectionKey);
-            var bills = SaveServices.Load<BillList>(BillCollectionKey);
-            if (bills != null)
-                _bills = bills._bills;
-            else
-                _bills = new List<Bill>();
+
         }
 
         public Bill AddNewBill(BillData billData)
         {
             var bill = new Bill(billData);
 
-            _bills.Add(bill);
+            Bills.Add(bill);
             Save();
             return bill;
         }
@@ -41,7 +37,7 @@ namespace Quackery.Bills
 
         public void RemoveBill(BillData billData)
         {
-            _bills.RemoveAll(b => b.Data == billData);
+            Bills.RemoveAll(b => b.Data == billData);
             Save();
         }
 
@@ -53,7 +49,7 @@ namespace Quackery.Bills
         public override void Deserialize()
         {
             base.Deserialize();
-            foreach (var bill in _bills)
+            foreach (var bill in Bills)
             {
                 bill.Data = _billDataCollection.GetFromName(bill.Key);
                 Assert.IsNotNull(bill.Data, $"Bill data for {bill.Key} not found in collection");
@@ -62,7 +58,7 @@ namespace Quackery.Bills
 
         internal void PayBill(Bill bill)
         {
-            Assert.IsTrue(_bills.Contains(bill), "Bill not found in the list");
+            Assert.IsTrue(Bills.Contains(bill), "Bill not found in the list");
             bill.Paid = true;
             bill.LastPaymentDay = CalendarServices.Today();
             Save();
@@ -70,13 +66,24 @@ namespace Quackery.Bills
 
         internal int GetNumOverdueBills()
         {
-            int overdueCount = _bills.Sum(bill => bill.IsOverdue ? 1 : 0);
+            int overdueCount = Bills.Sum(bill => bill.IsOverdue ? 1 : 0);
 
             return overdueCount;
         }
         public int GetNumBillDueToday()
         {
-            return _bills.Sum(bill => (!bill.Paid && bill.IsDueToday()) ? 1 : 0);
+            return Bills.Sum(bill => (!bill.Paid && bill.Price > 0 && bill.IsDueToday()) ? 1 : 0);
+        }
+
+        internal void ResetPaidStatus()
+        {
+            foreach (var bill in Bills)
+            {
+                bill.Paid = false;
+                bill.NumMissedPayments = 0;
+                bill.LastPaymentDay = CalendarServices.Today();
+            }
+            Save();
         }
     }
 }

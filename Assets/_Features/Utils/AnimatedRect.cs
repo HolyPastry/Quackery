@@ -101,8 +101,6 @@ namespace Quackery
             return this;
         }
 
-
-
         public AnimatedRect SlideOut(Direction to)
         {
             _isAnimating = true;
@@ -172,7 +170,13 @@ namespace Quackery
 
         internal void Punch()
         {
-            _rectTransform.DOPunchScale(Vector3.one * 1.2f, _scaleDuration, 10, 0.1f);
+
+            _isAnimating = true;
+            _rectTransform.DOPunchScale(Vector3.one * 1.1f, _scaleDuration, 10, 0.1f).OnComplete(() =>
+            {
+                EndAnimation();
+            });
+
         }
     }
 }

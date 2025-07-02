@@ -28,5 +28,8 @@ namespace Quackery
         internal static Func<int> GetAmountDueToday = () => 0;
 
         internal static Func<int> GetNumBillDueToday = () => 0;
+
+        internal static Action ResetBills = delegate { };
+
     }
 }

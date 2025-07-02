@@ -30,29 +30,25 @@ namespace Quackery.Shops
         void OnEnable()
         {
             _continueButton.onClick.AddListener(EndShopPhase);
+            _confirmationPanel.OnExited += OnConfirmationExited;
+            _selectCardPanel.OnExited += OnConfirmationExited;
         }
         void OnDisable()
         {
             _continueButton.onClick.RemoveListener(EndShopPhase);
+            _confirmationPanel.OnExited -= OnConfirmationExited;
+            _selectCardPanel.OnExited -= OnConfirmationExited;
+        }
+
+        private void OnConfirmationExited(bool succeed)
+        {
+            if (succeed) RemovePost();
         }
 
         private void EndShopPhase()
         {
             PhaseEnded?.Invoke();
             Hide();
-        }
-
-        public void ShowRewardRealization(ConfirmationPanel panel, ShopReward reward)
-        {
-            panel.OnConfirmed -= ShowRewardRealization; // Unsubscribe to avoid multiple calls
-            panel.Hide();
-            // RewardRealization realizationPanel = _rewardPosts.Find(x => x.Type == reward.Type).RewardRealizationPanel;
-            // Assert.IsNotNull(realizationPanel, "RewardRealizationPanel is not set for " + reward.Type);
-            // _currentReward = reward;
-            // realizationPanel.gameObject.SetActive(true);
-            // realizationPanel.OnRealizationComplete += RemovePost;
-            // StartCoroutine(realizationPanel.RealizationRoutine(reward));
-
         }
 
         private void RemovePost()
@@ -117,8 +113,7 @@ namespace Quackery.Shops
 
         private void OnPostClicked(ShopReward reward)
         {
-            Debug.Log($"Post clicked: ");
-
+            _currentReward = reward;
             switch (reward)
             {
                 case NewCardReward newCardReward:

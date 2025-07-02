@@ -10,19 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
-  m_Name: HolisticOil
+  m_Name: 46.Duck Collectors
   m_EditorClassIdentifier: 
-  MasterText: Holistic Oil
+  MasterText: Duck Collectors
   Icon: {fileID: 0}
   BasePrice: 1
-  ShortDescription: '#Coin = Number of #Magic in Cart'
-  LongDescription: '#Coin = Number of #Magic card currently in the Cart'
+  ShortDescription: Duck Collectors Glaring at you
+  LongDescription: Nothing for now...
+  ShopDescription: 
   Explanations: []
   SubscriptionCost: 10
-  Category: 2
-  Effects:
-  - Data: {fileID: 11400000, guid: 08f0d76a2b2b043a49edbf4b792dc61a, type: 2}
-    Value: 0
-    Trigger: 6
-    Tags: 
+  Category: 8
+  Effects: []
   ValueEvaluator: {fileID: 0}

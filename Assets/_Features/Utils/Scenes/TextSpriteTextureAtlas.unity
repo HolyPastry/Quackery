@@ -469,7 +469,7 @@ MonoBehaviour:
     Rating <sprite name=Rating>
     checked
 
-'
+    Bill <sprite name=Bill> checked'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b327fd216578d415998451b740114e41, type: 2}
   m_sharedMaterial: {fileID: -2354260568499448761, guid: b327fd216578d415998451b740114e41, type: 2}
