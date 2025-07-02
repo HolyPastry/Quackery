@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Quackery.Notifications
 {
+
     public class BankNotification : Notification
     {
         [SerializeField] private TextMeshProUGUI _message;

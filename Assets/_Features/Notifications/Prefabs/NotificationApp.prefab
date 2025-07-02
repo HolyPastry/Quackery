@@ -66,6 +66,9 @@ MonoBehaviour:
   - IsPersistent: 1
     Prefab: {fileID: 390518207298447700, guid: 578766a5c9e28458f9ab3d223f597a31, type: 3}
     ExpandedPanelPrefab: {fileID: 0}
+  - IsPersistent: 1
+    Prefab: {fileID: 274565052419825572, guid: e767796f61e5e4e49bec25201d5d34bc, type: 3}
+    ExpandedPanelPrefab: {fileID: 0}
 --- !u!222 &5921469600988965456
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -456,7 +459,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4813126532630856696
 RectTransform:
   m_ObjectHideFlags: 0
