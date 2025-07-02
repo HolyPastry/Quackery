@@ -129,10 +129,8 @@ namespace Quackery.Inventories
 
         private void RemoveItem(Item item)
         {
-
             _inventory.Items.Remove(item);
             Save();
-
         }
 
         private void Save()

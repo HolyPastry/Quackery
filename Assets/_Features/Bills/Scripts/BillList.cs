@@ -72,7 +72,9 @@ namespace Quackery.Bills
         }
         public int GetNumBillDueToday()
         {
-            return Bills.Sum(bill => (!bill.Paid && bill.Price > 0 && bill.IsDueToday()) ? 1 : 0);
+            return Bills.Sum(bill => (!bill.Paid &&
+                                !bill.New &&
+                                bill.Price > 0) ? 1 : 0);
         }
 
         internal void ResetPaidStatus()
@@ -80,6 +82,7 @@ namespace Quackery.Bills
             foreach (var bill in Bills)
             {
                 bill.Paid = false;
+                bill.New = false;
                 bill.NumMissedPayments = 0;
                 bill.LastPaymentDay = CalendarServices.Today();
             }

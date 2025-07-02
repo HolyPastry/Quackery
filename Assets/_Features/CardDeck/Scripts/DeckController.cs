@@ -235,6 +235,7 @@ namespace Quackery.Decks
         {
             RemoveFromAllPiles(card);
             card.Destroy();
+
         }
 
         private void RestoreCardCategories()

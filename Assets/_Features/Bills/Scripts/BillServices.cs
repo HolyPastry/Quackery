@@ -17,7 +17,7 @@ namespace Quackery
 
         public static Func<List<Bill>> GetAllBills = () => new();
 
-        internal static Action<BillData> AddNewBill = delegate { };
+        internal static Action<BillData, bool> AddNewBill = delegate { };
 
         internal static Action<Bill> PayBill = delegate { };
 

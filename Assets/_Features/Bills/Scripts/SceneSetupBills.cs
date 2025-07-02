@@ -15,7 +15,7 @@ namespace Quackery
             yield return BillServices.WaitUntilReady();
             foreach (var billData in BillDataList)
             {
-                BillServices.AddNewBill(billData);
+                BillServices.AddNewBill(billData, false);
             }
         }
     }

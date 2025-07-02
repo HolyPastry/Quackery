@@ -67,22 +67,21 @@ namespace Quackery.QualityOfLife
 
         private void Acquire(QualityOfLifeData data)
         {
-
             _acquired.Add(data);
             Save();
 
-            if (data.FollowerBonus > 0)
-                FollowerServices.ModifyFollowers(data.FollowerBonus);
+            // if (data.FollowerBonus > 0)
+            //     FollowerServices.ModifyFollowers(data.FollowerBonus);
 
-            PurseServices.Modify(-data.Price);
-            if (data.Bill != null)
-                BillServices.AddNewBill(data.Bill);
+            // PurseServices.Modify(-data.Price);
+            // if (data.Bill != null)
+            //     BillServices.AddNewBill(data.Bill);
 
-            if (data.RatingBonus > 0)
-                RatingServices.Modify(data.RatingBonus);
+            // if (data.RatingBonus > 0)
+            //     RatingServices.Modify(data.RatingBonus);
 
-            if (data.CardBonus != null)
-                DeckServices.AddNewToDraw(data.CardBonus, true);
+            // if (data.CardBonus != null)
+            //     DeckServices.AddNewToDraw(data.CardBonus, true);
         }
     }
 }

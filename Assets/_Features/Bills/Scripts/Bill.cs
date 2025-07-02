@@ -19,6 +19,8 @@ namespace Quackery.Bills
         public int NumMissedPayments = 0;
         public bool IsOverdue => NumMissedPayments > 0;
 
+        public bool New = false;
+
         public Bill()
         { }
 
@@ -28,15 +30,15 @@ namespace Quackery.Bills
             Key = Data.name;
             //Price = data.Price;
             Paid = false;
-
         }
 
         internal bool IsDueToday()
         {
-            var daysPassed = CalendarServices.Today() - StartedData;
-            var daysSinceLastDueDate = daysPassed % Data.PaymentInterval;
-            var lastDueDate = daysPassed - daysSinceLastDueDate + 1;
-            return lastDueDate == CalendarServices.Today();
+            return true;
+            // var daysPassed = CalendarServices.Today() - StartedData;
+            // var daysSinceLastDueDate = daysPassed % Data.PaymentInterval;
+            // var lastDueDate = daysPassed - daysSinceLastDueDate + 1;
+            // return lastDueDate == CalendarServices.Today();
         }
     }
 }

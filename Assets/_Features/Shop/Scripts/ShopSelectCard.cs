@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Quackery.Decks;
 using TMPro;
@@ -23,26 +24,25 @@ namespace Quackery.Shops
 
         [SerializeField] private GameObject _buttons;
 
-        private List<Card> _cards = new();
+        private readonly List<Card> _cards = new();
         private Card _selectedCard;
 
 
 
         void OnEnable()
         {
-
             _confirmButton.onClick.AddListener(Confirm);
             _cancelButton.onClick.AddListener(Cancel);
         }
 
         private void Confirm()
-        {
-            StartCoroutine(ConfirmRoutine());
-        }
+            => StartCoroutine(ConfirmRoutine());
+
 
         private IEnumerator ConfirmRoutine()
         {
             _buttons.SetActive(false);
+            _cards.Remove(_selectedCard);
 
             _explanationText.text = "";
             _cardParent.gameObject.SetActive(false);
@@ -56,7 +56,7 @@ namespace Quackery.Shops
 
             if (_reward is RemoveCardReward)
             {
-                DeckServices.DestroyCard(_selectedCard);
+                InventoryServices.RemoveItem(_selectedCard.Item);
                 _realizationText.text = $"Card Removed from your deck.";
                 _realizationText.gameObject.SetActive(true);
             }
@@ -90,7 +90,8 @@ namespace Quackery.Shops
         {
 
             // Clear existing cards
-            foreach (var card in _cards)
+            var cardToDestroy = _cards.FindAll(c => c != null);
+            foreach (var card in cardToDestroy)
             {
                 Destroy(card.gameObject);
             }

@@ -2,6 +2,9 @@
 using System;
 using System.Collections;
 using Quackery.Decks;
+using Quackery.Followers;
+using Quackery.QualityOfLife;
+using Quackery.Ratings;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -54,10 +57,60 @@ namespace Quackery.Shops
             }
             else if (reward is QualityOfLifeReward qualityOfLifeReward)
             {
-                Hide();
-                OnExited(true);
+
+                StartCoroutine(ApplyQualityOfLifeRoutine(qualityOfLifeReward));
+
             }
 
+        }
+
+        private IEnumerator ApplyQualityOfLifeRoutine(QualityOfLifeReward qualityOfLifeReward)
+        {
+            _description.text = "\n";
+            _subscriptionPrice.text = "";
+
+            var data = qualityOfLifeReward.QualityOfLifeData;
+
+            if (data.Price > 0)
+            {
+                PurseServices.Modify(-data.Price);
+                yield return new WaitForSeconds(1f);
+            }
+
+
+            if (data.FollowerBonus > 0)
+            {
+                _description.text += $"+{data.FollowerBonus} Followers. \n";
+                FollowerServices.ModifyFollowers(data.FollowerBonus);
+                yield return new WaitForSeconds(1f);
+
+            }
+            if (data.RatingBonus > 0)
+            {
+                _description.text += Sprites.Replace($"+{data.RatingBonus} #Rating. \n");
+                RatingServices.Modify(data.RatingBonus);
+                yield return new WaitForSeconds(01f);
+            }
+            if (data.CardBonus != null)
+            {
+                _description.text += $"New Card added to Deck.\n";
+                _cardAnimated.SlideOut(Direction.Left);
+
+                DeckServices.AddNewToDraw(data.CardBonus, true);
+                yield return _cardAnimated.WaitForAnimation();
+
+            }
+
+            if (data.Bill != null)
+            {
+                _description.text += Sprites.Replace($"new #Bill {Sprites.Replace(data.Bill.MasterText)}");
+                BillServices.AddNewBill(data.Bill, true);
+                yield return new WaitForSeconds(1f);
+            }
+            QualityOfLifeServices.Acquire(data);
+            yield return new WaitForSeconds(1f);
+            Hide();
+            OnExited(true);
         }
 
         private IEnumerator AddCardRoutine(NewCardReward newCardReward)
@@ -67,8 +120,9 @@ namespace Quackery.Shops
             _title.text = "";
             yield return new WaitForSeconds(0.2f);
             _cardAnimated.RectTransform = _card.transform as RectTransform;
-            _cardAnimated.SlideOut(Direction.Left)
-                        .DoComplete(() => { });
+            _cardAnimated.SlideOut(Direction.Left);
+
+
             yield return _cardAnimated.WaitForAnimation();
 
             InventoryServices.AddNewItem(newCardReward.ItemData);
@@ -113,6 +167,7 @@ namespace Quackery.Shops
                 _card = DeckServices.CreateCard(data.CardBonus);
                 _card.transform.SetParent(_cardRoot, false);
                 _card.transform.localPosition = Vector3.zero;
+                _cardAnimated.RectTransform = _card.transform as RectTransform;
             }
             else
             {

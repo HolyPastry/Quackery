@@ -18,7 +18,7 @@ namespace Quackery.Bills
         void OnEnable()
         {
             BillServices.WaitUntilReady = () => WaitUntilReady;
-            BillServices.GetAllBills = () => _billList.Bills.FindAll(b => b.Price > 0);
+            BillServices.GetAllBills = () => _billList.Bills.FindAll(b => b.Price > 0 && !b.New);
             BillServices.AddNewBill = AddNewBill;
             BillServices.PayBill = PayBill;
             BillServices.DueIn = CalculateDueInDate;
@@ -57,10 +57,11 @@ namespace Quackery.Bills
             _billList.ResetPaidStatus();
         }
 
-        private void AddNewBill(BillData data)
+        private void AddNewBill(BillData data, bool IsNew)
         {
             var bill = _billList.AddNewBill(data);
             bill.StartedData = CalendarServices.Today();
+            bill.New = IsNew;
             BillEvents.OnBillUpdated(bill);
         }
 
