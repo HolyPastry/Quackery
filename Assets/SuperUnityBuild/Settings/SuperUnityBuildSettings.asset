@@ -42,10 +42,10 @@ MonoBehaviour:
   scriptingBackends:
   - scriptingImplementation: 0
     name: Mono
-    enabled: 0
+    enabled: 1
   - scriptingImplementation: 1
     name: IL2CPP
-    enabled: 1
+    enabled: 0
   platformName: Windows
   targetGroup: 1
 --- !u!114 &11400000
@@ -92,7 +92,7 @@ MonoBehaviour:
   _projectConfigurations:
     configSet:
       _Buckets: 0300000006000000ffffffff000000000200000005000000ffffffff
-      _HashCodes: eb61b16172aba76810dceb6537bdec0cceb7a84b8c621d736678124c
+      _HashCodes: eb61b16172aba76810dceb65f049c27bceb7a84b8c621d736678124c
       _Next: ffffffffffffffff01000000ffffffffffffffff04000000ffffffff
       _Count: 7
       _Version: 7
@@ -102,7 +102,7 @@ MonoBehaviour:
       - Test/macOS/Player (Intel 64-bit,App)/IL2CPP
       - Test/macOS/Player (Intel 64-bit,App)
       - Test/macOS
-      - Test/Windows/Player (Intel 64-bit,App)/IL2CPP
+      - Test/Windows/Player (Intel 64-bit,App)/Mono
       - Test/Windows/Player (Intel 64-bit,App)
       - Test/Windows
       - Test
@@ -119,7 +119,7 @@ MonoBehaviour:
         childKeys: []
       - enabled: 1
         childKeys:
-        - Test/Windows/Player (Intel 64-bit,App)/IL2CPP
+        - Test/Windows/Player (Intel 64-bit,App)/Mono
       - enabled: 1
         childKeys:
         - Test/Windows/Player (Intel 64-bit,App)

@@ -1,10 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.VersionControl;
+
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.TestTools;
 
 namespace Quackery.Followers.Tests
 {
