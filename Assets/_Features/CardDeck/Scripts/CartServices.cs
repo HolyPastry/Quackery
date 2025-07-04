@@ -42,5 +42,7 @@ namespace Quackery.Decks
 
         internal static Func<Card> GetTopCard = () => null;
 
+        internal static Func<int> GetLastCartValue = () => 0;
+
     }
 }

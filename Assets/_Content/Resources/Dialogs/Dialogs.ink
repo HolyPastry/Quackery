@@ -6,6 +6,8 @@ INCLUDE CardGame/Bat.ink
 INCLUDE CardGame/DefaultCustomerA.ink
 INCLUDE CardGame/Combos.ink
 INCLUDE Test/Troubleshooting.ink
+INCLUDE ClientReveals/Wolfgang.ink
+
 
 
 
@@ -28,6 +30,7 @@ VAR Herbalisim = 0
 
 //Customer
 VAR CurrentCustomer = "Sheep"
+
 
 
 

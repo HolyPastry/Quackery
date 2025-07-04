@@ -67,10 +67,15 @@ namespace Quackery.Clients
             return client != null;
         }
 
-        internal void RemoveUnknown(string key)
+        internal void RemoveFromKey(string key)
         {
             if (Clients.RemoveAll(c => c.Key == key) > 0)
                 Save();
+        }
+
+        internal void Remove(Client selectedClient)
+        {
+            RemoveFromKey(selectedClient.Key);
         }
     }
 }

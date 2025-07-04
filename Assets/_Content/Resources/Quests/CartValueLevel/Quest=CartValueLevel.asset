@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414a1d7b232b2474f9914ef7a3c228b0, type: 3}
+  m_Name: Quest=CartValueLevel
+  m_EditorClassIdentifier: 
+  MasterText: Cart Value
+  Description: Cart Value going over a certain value
+  IsHidden: 1
+  IsRepeatable: 0
+  Steps:
+  - StepTitle: Level 1
+    AnyCondition: 0
+    Conditions:
+    - {fileID: 11400000, guid: cb1075eaa7d45451f8296ec71cf8beb6, type: 2}
+    - {fileID: 11400000, guid: f0cccb6ce89e94078a24906c583b27ee, type: 2}
+    Results:
+    - {fileID: 11400000, guid: c030493fec7044dc49c57ac73d71b251, type: 2}
+    - {fileID: 11400000, guid: fa278da5cbcd6483fad53be35f7308ed, type: 2}

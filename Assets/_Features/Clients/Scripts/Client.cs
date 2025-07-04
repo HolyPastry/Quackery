@@ -34,6 +34,10 @@ namespace Quackery.Clients
 
         public string DialogName => (Data != null) ? Data.CharacterData.name : "Client";
 
+        public bool IsAnonymous => Data == null;
+
+        public int LastFollowersBonus = 150;
+
         public Sprite Portrait;
         public string LoginName;
         public object DialogKey;
@@ -71,6 +75,9 @@ namespace Quackery.Clients
 
             LoginName = data.CharacterData.MasterText;
             Portrait = data.Icon;
+            LastReviewText = data.FirstReward.Review;
+            LastRating = data.FirstReward.Rating;
+            LastFollowersBonus = data.FirstReward.FollowerBonus;
         }
 
         internal void GoodReview()

@@ -22,7 +22,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "8989811b467d63936972ea0927e8f05822677db4"
+      "hash": "e9e31f7c59885a5a98974f601db9c42a1c2dea4b"
     },
     "com.holypastry.bakery.dialogs": {
       "version": "https://github.com/HolyPastry/DialogServices.git",
@@ -397,6 +397,13 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "holypastry.bakery.quest": {
+      "version": "https://github.com/HolyPastry/QuestServices.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "80af1281d3c903309b8d08c17fb3422f8c7624f9"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

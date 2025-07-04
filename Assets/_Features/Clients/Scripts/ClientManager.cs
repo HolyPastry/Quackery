@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Holypastry.Bakery.Flow;
+using Quackery.Shops;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace Quackery.Clients
         private ClientList _clientList;
         private Client _selectedClient;
         private bool _infiniteQueue;
+        private Client _clientToSwap;
 
         void OnEnable()
         {
@@ -31,9 +33,16 @@ namespace Quackery.Clients
             ClientServices.SelectedClient = () => _selectedClient;
             ClientServices.ClientLeaves = ClientLeaves;
 
+            ClientServices.IsCurrentClientAnonymous = () => _selectedClient != null && _selectedClient.IsAnonymous && _clientToSwap == null;
+            ClientServices.SwapCurrentClientTo = SwapCurrentClientTo;
+
             ClientServices.SetInfiniteQueue = (infinite) => { };
+            ClientServices.GetRevealedClient = () => _clientToSwap;
+
+            ClientServices.SwapClients = SwapClients;
 
         }
+
 
 
         void OnDisable()
@@ -52,8 +61,11 @@ namespace Quackery.Clients
             ClientServices.SelectClient = (client) => { };
             ClientServices.SelectedClient = () => null;
             ClientServices.ClientLeaves = () => { };
+            ClientServices.IsCurrentClientAnonymous = () => false;
+            ClientServices.SwapClients = () => { };
 
             ClientServices.SetInfiniteQueue = (isOn) => _infiniteQueue = isOn;
+            ClientServices.GetRevealedClient = () => null;
 
         }
 
@@ -63,6 +75,20 @@ namespace Quackery.Clients
             _clientList = new ClientList();
             _clientList.Init();
             _isReady = true;
+        }
+
+        private void SwapClients()
+        {
+            _clientList.Remove(_selectedClient);
+            _clientList.Add(_clientToSwap);
+            _selectedClient = _clientToSwap;
+        }
+
+        private void SwapCurrentClientTo(ClientData data)
+        {
+            _clientToSwap = new Client();
+
+            _clientToSwap.InitKnownClient(data);
         }
 
         private void SelectClient(Client client)
@@ -142,7 +168,7 @@ namespace Quackery.Clients
 
         private void RemoveUnknownClient(string key)
         {
-            _clientList.RemoveUnknown(key);
+            _clientList.RemoveFromKey(key);
             ClientEvents.ClientListUpdated?.Invoke();
         }
 

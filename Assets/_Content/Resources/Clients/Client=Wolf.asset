@@ -19,3 +19,7 @@ MonoBehaviour:
     Value: 2
     Trigger: 4
     Tags: 02000000
+  FirstReward:
+    Review: 'Lovely store, wish it was more affordable though. '
+    Rating: 2
+    FollowerBonus: 50

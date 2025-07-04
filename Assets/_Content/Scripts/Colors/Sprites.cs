@@ -22,29 +22,23 @@ namespace Quackery
                 return _library;
             }
         }
-
+        public static Func<string, EnumItemCategory, string> ReplaceCategory
+            => (text, category) => Instance.ReplaceCategoryInString(category, text);
         internal static Func<string, string> Replace
-            => (text) => Instance.ReplaceCategoriesInString(text);
+            => (text) => Instance.ReplaceTags(text);
 
         internal static Sprite GetCategory(EnumItemCategory category)
         {
             return Instance.Library.Categories.Find(x => x.Category == category)?.Icon;
         }
 
-        private string ReplaceCategoriesInString(string text)
+        private string ReplaceTags(string text)
         {
             if (string.IsNullOrEmpty(text))
                 return string.Empty;
-            foreach (EnumItemCategory category in Enum.GetValues(typeof(EnumItemCategory)))
-            {
 
-                string textInsert = $"<sprite name={category.ToString()}>";
-                text = text.Replace($"#{category.ToString()}", textInsert);
-            }
-            text = text.Replace("#Coin", "<sprite name=Coin>");
-            text = text.Replace("#Rating", "<sprite name=Rating>");
-            text = text.Replace("#Bill", "<sprite name=Bill>");
-            //  text = Regex.Replace(text, @"#$1s", "<sprite name=$1>")
+            text = Regex.Replace(text, @"#(\w+)", "<sprite name=$1>");
+
             return text;
         }
 
@@ -55,7 +49,7 @@ namespace Quackery
 
             text = text.Replace("#Category", textInsert);
 
-            return text;
+            return ReplaceTags(text);
 
         }
 

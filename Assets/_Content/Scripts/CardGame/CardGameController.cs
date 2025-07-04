@@ -287,6 +287,7 @@ namespace Quackery.Decks
 
         public void ShowEndRoundScreen(bool success)
         {
+
             _endRoundScreen.Show(_client, success);
         }
         public void HideEndRoundScreen()

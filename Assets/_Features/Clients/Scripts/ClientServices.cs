@@ -26,5 +26,14 @@ namespace Quackery.Clients
         internal static Action ClientLeaves = () => { };
 
         internal static Action<bool> SetInfiniteQueue = (infinite) => { };
+
+        internal static Action<ClientData> SwapCurrentClientTo = (clientData) => { };
+
+        internal static Func<bool> IsCurrentClientAnonymous = () => false;
+
+        internal static Func<Client> GetRevealedClient = () => null;
+
+        internal static Action SwapClients = () => { };
+
     }
 }
