@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Bakery.Dialogs;
-using Quackery.Effects;
+
 using UnityEngine;
 
 namespace Quackery.Clients

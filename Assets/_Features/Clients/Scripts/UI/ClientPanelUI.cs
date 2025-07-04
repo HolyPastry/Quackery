@@ -43,8 +43,8 @@ namespace Quackery
         {
 
             _badge.SetActive(_client.IsInQueue && !_client.Served);
-            _portrait.sprite = _client.Data.Icon;
-            _nameText.text = _client.Data.Name;
+            _portrait.sprite = _client.Portrait;
+            _nameText.text = _client.LoginName;
             _chatText.text = _client.ChatLastLine;
 
             if (_client.IsInQueue)

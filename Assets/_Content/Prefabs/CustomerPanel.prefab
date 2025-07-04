@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8529de8df5fba4ba9903b52edc94f0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _portrait: {fileID: 7200542157893347873}
+  _portrait: {fileID: 599116255838596897}
   _loginName: {fileID: 4692942265571605292}
   _easeType: 6
   _transitionDuration: 1
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 7200542157893347873}
   - component: {fileID: 9160860151937279165}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 4366920214571340738}
   - component: {fileID: 599116255838596897}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Portrait
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -618,7 +618,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8875428881460546706, guid: 64906bd203cb74ba997551e0dcffe478, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000061035156
+      value: -41780.17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

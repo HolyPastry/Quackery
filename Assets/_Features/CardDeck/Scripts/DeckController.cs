@@ -362,7 +362,7 @@ namespace Quackery.Decks
         private IEnumerator PlayCardRoutine(Card card)
         {
             var meDialog = card.Item.Data.name + "Me";
-            string clientResponse = ClientServices.SelectedClient().Data.CharacterData.name + "Answer";
+            string clientResponse = ClientServices.SelectedClient().DialogName + "Answer";
             DialogQueueServices.QueueDialog(meDialog);
             DialogQueueServices.QueueDialog(clientResponse);
 

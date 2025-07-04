@@ -1,0 +1,1922 @@
+fileFormatVersion: 2
+guid: e583cc40efb534b86bc31228d4f43c0e
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 1000
+        width: 182
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0f621c9f25b44bc983048d3aa3aa739
+      internalID: -264572069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 998
+        width: 141
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4fccf3d05a564a768a6103825b274d7
+      internalID: -1145577131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 997
+        width: 152
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bc39c80fcf254bb5b27db96f19b189a
+      internalID: -928145162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 610
+        y: 976
+        width: 135
+        height: 141
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c36c57fa4fc1f495281f3dfd17d37b2d
+      internalID: -1652365533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 795
+        y: 976
+        width: 147
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9e58f9a32b5c4b5988ff54d3297587a
+      internalID: 1421343740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 1003
+        y: 1073
+        width: 27
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed4e77abafe2f4f10a4bdf4b5512a9b2
+      internalID: -656844695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 1012
+        y: 991
+        width: 106
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8aa15a40cb96e4305bdcbbf28bdbb125
+      internalID: 1532177893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_7
+      rect:
+        serializedVersion: 2
+        x: 1178
+        y: 1002
+        width: 147
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8141a37074dce437695d40fdea6dbe7c
+      internalID: -1414294769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_8
+      rect:
+        serializedVersion: 2
+        x: 1376
+        y: 993
+        width: 130
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 208f2f7d884474066b543d5beda3363f
+      internalID: 1902559218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_9
+      rect:
+        serializedVersion: 2
+        x: 1551
+        y: 983
+        width: 161
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d7599ec23de94a42b8effef4b0744f6
+      internalID: -1612952349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 1749
+        y: 971
+        width: 153
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56cf775d1fec74c868986d652ec7a167
+      internalID: 232002428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_11
+      rect:
+        serializedVersion: 2
+        x: 1941
+        y: 988
+        width: 149
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54e27f04317f24c2c8ffc6483767e93d
+      internalID: 757135965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_12
+      rect:
+        serializedVersion: 2
+        x: 2125
+        y: 966
+        width: 155
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac0a51bba29c84432a1f84737ee60e07
+      internalID: -1285684219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_13
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 794
+        width: 156
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e90280337d464f40ab9220ba9593e3f
+      internalID: -708919310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_14
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 796
+        width: 144
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 961eb2cac044547a2bb3bd18be0fbcc2
+      internalID: 789698976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_15
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 786
+        width: 120
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d5fde4987b904122845f71633a153a9
+      internalID: 308676546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_16
+      rect:
+        serializedVersion: 2
+        x: 626
+        y: 796
+        width: 105
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 309032fe940c547c2853e27b06e3abf4
+      internalID: -677195036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_17
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 787
+        width: 130
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 151647dc081df4639a48599155a1c16b
+      internalID: 1762805061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_18
+      rect:
+        serializedVersion: 2
+        x: 987
+        y: 786
+        width: 140
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 693235d253621425c9022dba3098c5ac
+      internalID: 897372820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_19
+      rect:
+        serializedVersion: 2
+        x: 1180
+        y: 796
+        width: 146
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b7aa2060a82a4c2ba5448b42ff7005f
+      internalID: 1426970252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_20
+      rect:
+        serializedVersion: 2
+        x: 1397
+        y: 787
+        width: 87
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6ef636f65d704080a371435b5c85021
+      internalID: 192245179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_21
+      rect:
+        serializedVersion: 2
+        x: 1547
+        y: 791
+        width: 166
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94d772d7d68784e189c78fa901fa45bf
+      internalID: 848453232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_22
+      rect:
+        serializedVersion: 2
+        x: 1743
+        y: 790
+        width: 159
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 775384b723ba04cbd8646ae0c4fc028e
+      internalID: -1854732284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_23
+      rect:
+        serializedVersion: 2
+        x: 1938
+        y: 796
+        width: 149
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28b1db48374904c71a1d89d73a1bafe5
+      internalID: 226656199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_24
+      rect:
+        serializedVersion: 2
+        x: 2132
+        y: 799
+        width: 148
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35241322ad227458081182b1a151d904
+      internalID: -1043795601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_25
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 595
+        width: 104
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2eebb0535ab8a4fbfbb8b605897a2a2f
+      internalID: 2088990180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_26
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 591
+        width: 145
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14aa1c295e6a3403bbfac827da8fc20e
+      internalID: 392440378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_27
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 584
+        width: 152
+        height: 165
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85786dd0659a947c69e6d61461be1e24
+      internalID: -1902309418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_28
+      rect:
+        serializedVersion: 2
+        x: 793
+        y: 614
+        width: 154
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5130a3ae7bd924a61b0e73b3412e9517
+      internalID: -542823097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_29
+      rect:
+        serializedVersion: 2
+        x: 988
+        y: 597
+        width: 148
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d79d969b04db46d8b4eb8fda925f565
+      internalID: 713366479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_30
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 608
+        width: 163
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a175b0b2fd9614d528464c91bcdf0d80
+      internalID: -1090881692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_31
+      rect:
+        serializedVersion: 2
+        x: 1371
+        y: 624
+        width: 143
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce318ac0d3fa54e7f8057881a9f6d9a1
+      internalID: 823927104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_32
+      rect:
+        serializedVersion: 2
+        x: 1556
+        y: 611
+        width: 151
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93b652c204f0042ae9acca2b94e25a5d
+      internalID: 1855394874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_33
+      rect:
+        serializedVersion: 2
+        x: 1740
+        y: 596
+        width: 165
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39fe68322a49a47039bcdb15edb17996
+      internalID: 856215428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_34
+      rect:
+        serializedVersion: 2
+        x: 2019
+        y: 719
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64ea6f502f069484d9cb1238fd9aa669
+      internalID: 137755586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_35
+      rect:
+        serializedVersion: 2
+        x: 2136
+        y: 613
+        width: 134
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ebcc1d9a21d14f67a6c86aff0466f7e
+      internalID: 1261646155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_36
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 618
+        width: 148
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cf7c5ffc3cda4c45913125ab8017e5a
+      internalID: 1895584137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_37
+      rect:
+        serializedVersion: 2
+        x: 1942
+        y: 593
+        width: 141
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d537dc5f14734767ac16629398798d2
+      internalID: 575628514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_38
+      rect:
+        serializedVersion: 2
+        x: 1976
+        y: 696
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2de8de859aa3845968e72f8459961914
+      internalID: -114884680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_39
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 434
+        width: 139
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 264a7e3decb86479d9a9222db1395b6a
+      internalID: -165910146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_40
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 402
+        width: 152
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e06871cbf5c34511ae1a28bf158dbf3
+      internalID: 2134198947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_41
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 429
+        width: 141
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93020b2b629eb4aab97260d36a9a39cb
+      internalID: -1778290966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_42
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 397
+        width: 151
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41123d0c59566497ba9585decaf9ceeb
+      internalID: -302748334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_43
+      rect:
+        serializedVersion: 2
+        x: 795
+        y: 413
+        width: 94
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba51ccf6940d3417abef46f296053fc3
+      internalID: -222446611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_44
+      rect:
+        serializedVersion: 2
+        x: 878
+        y: 512
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06e15ae715857435d829f7698f8d36c9
+      internalID: 20415176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_45
+      rect:
+        serializedVersion: 2
+        x: 897
+        y: 512
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c39e56125774402f91b48acb147aa57
+      internalID: 1983755242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_46
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 512
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4f09f95ec3774f82946e1a17d177917
+      internalID: -2069722136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_47
+      rect:
+        serializedVersion: 2
+        x: 929
+        y: 512
+        width: 13
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6ace74f92d624198ae9e1dbe8035a9c
+      internalID: 807133227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_48
+      rect:
+        serializedVersion: 2
+        x: 995
+        y: 429
+        width: 131
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f181079d59374e77936e7ab7d4f066b
+      internalID: 1695908038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_49
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 406
+        width: 108
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb27871cf4c034fb99f4dc6aae1c7317
+      internalID: -1442816325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_50
+      rect:
+        serializedVersion: 2
+        x: 1364
+        y: 396
+        width: 153
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f5c83a4f32c34cc39cbb2be51ed59c9
+      internalID: -395591414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_51
+      rect:
+        serializedVersion: 2
+        x: 1562
+        y: 410
+        width: 142
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99a0d643c662f44768e6098fa84978a3
+      internalID: 1207761917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_52
+      rect:
+        serializedVersion: 2
+        x: 1751
+        y: 422
+        width: 144
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57923e578a816421695b108b371c71c3
+      internalID: 214622468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_53
+      rect:
+        serializedVersion: 2
+        x: 1941
+        y: 420
+        width: 153
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8803a1243d6bd45f3921c36487dee1e0
+      internalID: -942318716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_54
+      rect:
+        serializedVersion: 2
+        x: 2122
+        y: 408
+        width: 165
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3972be99e2d7e421eb0d9b7d148d3e19
+      internalID: -952783298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_55
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 213
+        width: 144
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fb23edbe2627438b9b166daf00c8153
+      internalID: 328212619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_56
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 243
+        width: 176
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93ca5c11721334900993b5e815d882a6
+      internalID: -999386605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_57
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 219
+        width: 141
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f2da1300634d48a08dcc8439c6d9df1
+      internalID: 1550804461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_58
+      rect:
+        serializedVersion: 2
+        x: 599
+        y: 238
+        width: 159
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69fc3e64a9ee44002b673da663f85b67
+      internalID: -143211528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_59
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 264
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31ff8128da51140e6838f6492d6a5ace
+      internalID: 63050582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_60
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 228
+        width: 146
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef5a691c6809c42d385e7f8959091ca7
+      internalID: -1877413870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_61
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 216
+        width: 99
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40f502ab0950a48f1aaf384c114a7822
+      internalID: -87085088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_62
+      rect:
+        serializedVersion: 2
+        x: 1209
+        y: 205
+        width: 84
+        height: 160
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94482a454d826490b86363fa950e1272
+      internalID: 553375095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_63
+      rect:
+        serializedVersion: 2
+        x: 1372
+        y: 229
+        width: 137
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 969eda647d5054731a3174e0e4af6037
+      internalID: -820699727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_64
+      rect:
+        serializedVersion: 2
+        x: 1546
+        y: 217
+        width: 165
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47f1e24b9fe474eaa9e48f0ac1743dec
+      internalID: -1235784549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_65
+      rect:
+        serializedVersion: 2
+        x: 1747
+        y: 227
+        width: 134
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fa88f7d95a774af4a0afb3312255107
+      internalID: -1817432041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_66
+      rect:
+        serializedVersion: 2
+        x: 1878
+        y: 248
+        width: 22
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f4ede00e87d348d396a1d2a5174d2eb
+      internalID: 681354401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_67
+      rect:
+        serializedVersion: 2
+        x: 1947
+        y: 209
+        width: 111
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 091c25f375efd404bb2ef0e7357fe7f7
+      internalID: 1883899315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_68
+      rect:
+        serializedVersion: 2
+        x: 2157
+        y: 227
+        width: 117
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5811c6f7d088b4407975bc9624da382c
+      internalID: 1386466829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_69
+      rect:
+        serializedVersion: 2
+        x: 2138
+        y: 227
+        width: 24
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2dfe10b486fcf4c88a30aae9cfe7bddb
+      internalID: -692422090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_70
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 23
+        width: 124
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 809510d3fcfaf4338afd76a078ad893c
+      internalID: -1547054800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_71
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 44
+        width: 143
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26106a0b5430d43d381bc0e674bb34c8
+      internalID: -596819529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_72
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 51
+        width: 166
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47c99d5108b0b425e8a52a57beb1592a
+      internalID: -152112071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_73
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 42
+        width: 131
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f265fc13f58db4944a2f3f4d1293a543
+      internalID: -773012439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_74
+      rect:
+        serializedVersion: 2
+        x: 894
+        y: 21
+        width: 149
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1245daaeb9a34ae2a0c357e0f8f3a90
+      internalID: 452943042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_75
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 39
+        width: 142
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f5953b36af6a4dde80dd696b0e0388b
+      internalID: -2052772066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_76
+      rect:
+        serializedVersion: 2
+        x: 1271
+        y: 50
+        width: 153
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0cca51dfb1494183925e3b0802dbba9
+      internalID: 93244815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_77
+      rect:
+        serializedVersion: 2
+        x: 1462
+        y: 30
+        width: 151
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 107ac97d94a184d1b93d249b5642384c
+      internalID: -613398970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_78
+      rect:
+        serializedVersion: 2
+        x: 1667
+        y: 17
+        width: 128
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9623304c5991d451fbf3365bedf5e33e
+      internalID: 1283581357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_79
+      rect:
+        serializedVersion: 2
+        x: 1865
+        y: 23
+        width: 116
+        height: 141
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78259b6f6caa342e592c7800b228b847
+      internalID: -764602921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnonymousIconSpriteSheet_80
+      rect:
+        serializedVersion: 2
+        x: 2037
+        y: 42
+        width: 151
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bec82f7ae7a540a6bcf804232dd07df
+      internalID: -1236857111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      AnonymousIconSpriteSheet_0: -264572069
+      AnonymousIconSpriteSheet_1: -1145577131
+      AnonymousIconSpriteSheet_10: 232002428
+      AnonymousIconSpriteSheet_11: 757135965
+      AnonymousIconSpriteSheet_12: -1285684219
+      AnonymousIconSpriteSheet_13: -708919310
+      AnonymousIconSpriteSheet_14: 789698976
+      AnonymousIconSpriteSheet_15: 308676546
+      AnonymousIconSpriteSheet_16: -677195036
+      AnonymousIconSpriteSheet_17: 1762805061
+      AnonymousIconSpriteSheet_18: 897372820
+      AnonymousIconSpriteSheet_19: 1426970252
+      AnonymousIconSpriteSheet_2: -928145162
+      AnonymousIconSpriteSheet_20: 192245179
+      AnonymousIconSpriteSheet_21: 848453232
+      AnonymousIconSpriteSheet_22: -1854732284
+      AnonymousIconSpriteSheet_23: 226656199
+      AnonymousIconSpriteSheet_24: -1043795601
+      AnonymousIconSpriteSheet_25: 2088990180
+      AnonymousIconSpriteSheet_26: 392440378
+      AnonymousIconSpriteSheet_27: -1902309418
+      AnonymousIconSpriteSheet_28: -542823097
+      AnonymousIconSpriteSheet_29: 713366479
+      AnonymousIconSpriteSheet_3: -1652365533
+      AnonymousIconSpriteSheet_30: -1090881692
+      AnonymousIconSpriteSheet_31: 823927104
+      AnonymousIconSpriteSheet_32: 1855394874
+      AnonymousIconSpriteSheet_33: 856215428
+      AnonymousIconSpriteSheet_34: 137755586
+      AnonymousIconSpriteSheet_35: 1261646155
+      AnonymousIconSpriteSheet_36: 1895584137
+      AnonymousIconSpriteSheet_37: 575628514
+      AnonymousIconSpriteSheet_38: -114884680
+      AnonymousIconSpriteSheet_39: -165910146
+      AnonymousIconSpriteSheet_4: 1421343740
+      AnonymousIconSpriteSheet_40: 2134198947
+      AnonymousIconSpriteSheet_41: -1778290966
+      AnonymousIconSpriteSheet_42: -302748334
+      AnonymousIconSpriteSheet_43: -222446611
+      AnonymousIconSpriteSheet_44: 20415176
+      AnonymousIconSpriteSheet_45: 1983755242
+      AnonymousIconSpriteSheet_46: -2069722136
+      AnonymousIconSpriteSheet_47: 807133227
+      AnonymousIconSpriteSheet_48: 1695908038
+      AnonymousIconSpriteSheet_49: -1442816325
+      AnonymousIconSpriteSheet_5: -656844695
+      AnonymousIconSpriteSheet_50: -395591414
+      AnonymousIconSpriteSheet_51: 1207761917
+      AnonymousIconSpriteSheet_52: 214622468
+      AnonymousIconSpriteSheet_53: -942318716
+      AnonymousIconSpriteSheet_54: -952783298
+      AnonymousIconSpriteSheet_55: 328212619
+      AnonymousIconSpriteSheet_56: -999386605
+      AnonymousIconSpriteSheet_57: 1550804461
+      AnonymousIconSpriteSheet_58: -143211528
+      AnonymousIconSpriteSheet_59: 63050582
+      AnonymousIconSpriteSheet_6: 1532177893
+      AnonymousIconSpriteSheet_60: -1877413870
+      AnonymousIconSpriteSheet_61: -87085088
+      AnonymousIconSpriteSheet_62: 553375095
+      AnonymousIconSpriteSheet_63: -820699727
+      AnonymousIconSpriteSheet_64: -1235784549
+      AnonymousIconSpriteSheet_65: -1817432041
+      AnonymousIconSpriteSheet_66: 681354401
+      AnonymousIconSpriteSheet_67: 1883899315
+      AnonymousIconSpriteSheet_68: 1386466829
+      AnonymousIconSpriteSheet_69: -692422090
+      AnonymousIconSpriteSheet_7: -1414294769
+      AnonymousIconSpriteSheet_70: -1547054800
+      AnonymousIconSpriteSheet_71: -596819529
+      AnonymousIconSpriteSheet_72: -152112071
+      AnonymousIconSpriteSheet_73: -773012439
+      AnonymousIconSpriteSheet_74: 452943042
+      AnonymousIconSpriteSheet_75: -2052772066
+      AnonymousIconSpriteSheet_76: 93244815
+      AnonymousIconSpriteSheet_77: -613398970
+      AnonymousIconSpriteSheet_78: 1283581357
+      AnonymousIconSpriteSheet_79: -764602921
+      AnonymousIconSpriteSheet_8: 1902559218
+      AnonymousIconSpriteSheet_80: -1236857111
+      AnonymousIconSpriteSheet_9: -1612952349
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Holypastry.Bakery;
 using UnityEngine;
 
 namespace Quackery.Clients
@@ -7,24 +8,13 @@ namespace Quackery.Clients
     public record Client
     {
         [NonSerialized]
-        public ClientData Data;
+        private ClientData Data;
         public string Key;
-
-        public Client()
-        { }
-
-        public Client(ClientData data)
-        {
-            Data = data;
-
-            Key = data.name;
-            IsNew = true;
-        }
 
         public bool IsInQueue;
         public bool Served;
 
-        public List<Effect> Effects => Data.Effects;
+        public List<Effect> Effects;
 
         public string ChatLastLine
         {
@@ -42,10 +32,11 @@ namespace Quackery.Clients
             }
         }
 
-        public Sprite Portrait => Data.Icon;
-        public string LoginName => Data.CharacterData.MasterText;
+        public string DialogName => (Data != null) ? Data.CharacterData.name : "Client";
 
-        public object DialogKey => Data.CharacterData.name;
+        public Sprite Portrait;
+        public string LoginName;
+        public object DialogKey;
 
         public bool IsNew;
 
@@ -53,6 +44,34 @@ namespace Quackery.Clients
         public int LastRating = 0;
 
         public string ChatHistory;
+
+        public void InitUnknown(UnknownClientsData unknownClientsData)
+        {
+
+            Key = unknownClientsData.RandomName;
+            Effects = unknownClientsData.RandomEffects;
+            Portrait = unknownClientsData.RandomIcon;
+            LoginName = Key;
+
+            IsNew = true;
+            ChatHistory = string.Empty;
+
+        }
+
+        public void InitKnownClient(ClientData data)
+        {
+
+            Data = data;
+            Key = data.name;
+
+            if (data.Effects != null)
+                Effects = new List<Effect>(data.Effects);
+            else
+                Effects = new List<Effect>();
+
+            LoginName = data.CharacterData.MasterText;
+            Portrait = data.Icon;
+        }
 
         internal void GoodReview()
         {
@@ -64,6 +83,11 @@ namespace Quackery.Clients
         {
             LastReviewText = "What a Quacker, To avoid at all cost";
             LastRating = 1;
+        }
+
+        internal void ReconcileData(DataCollection<ClientData> collection)
+        {
+            Data = collection.GetFromName(Key);
         }
     }
 }

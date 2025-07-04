@@ -17,7 +17,7 @@ namespace Quackery.Clients
             ClientServices.SetInfiniteQueue(InfiniteQueue);
             foreach (var client in clients)
             {
-                ClientServices.AddClient(client);
+                ClientServices.AddKnownClient(client);
             }
             if (GenerateDailyQueue)
             {

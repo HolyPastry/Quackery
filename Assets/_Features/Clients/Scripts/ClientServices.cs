@@ -8,12 +8,13 @@ namespace Quackery.Clients
     {
 
         internal static Func<bool> HasNextClient = () => true;
-        internal static Action<ClientData> AddClient = delegate { };
-        internal static Action<ClientData> RemoveClient = delegate { };
+        internal static Action<ClientData> AddKnownClient = delegate { };
+        internal static Action<int> AddUnknownClients = (count) => { };
+
         public static Func<List<Client>> GetClients = () => new();
 
         public static Func<Client> GetNextClient = () => null;
-        public static Action<ClientData> ClientServed = delegate { };
+        public static Action<Client> ClientServed = (client) => { };
 
         public static Action GenerateDailyQueue = delegate { };
 

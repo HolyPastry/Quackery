@@ -42,7 +42,7 @@ namespace Quackery
                 {
                     CartServices.SetCartValue(0);
                     client.BadReview();
-                    ClientServices.ClientServed(client.Data);
+                    ClientServices.ClientServed(client);
 
                 }
                 else
@@ -52,7 +52,7 @@ namespace Quackery
                     controller.TransfertCartToPurse();
                     yield return new WaitForSeconds(1f);
                     client.GoodReview();
-                    ClientServices.ClientServed(client.Data);
+                    ClientServices.ClientServed(client);
                     yield return DialogQueueServices.WaitUntilAllDialogEnds();
                 }
 

@@ -38,14 +38,14 @@ namespace Quackery
                 {
                     CartServices.SetCartValue(0);
                     client.BadReview();
-                    ClientServices.ClientServed(client.Data);
+                    ClientServices.ClientServed(client);
                 }
                 else
                 {
                     _controller.TransfertCartToPurse();
                     yield return new WaitForSeconds(1f);
                     client.GoodReview();
-                    ClientServices.ClientServed(client.Data);
+                    ClientServices.ClientServed(client);
                 }
                 CartServices.DiscardCart();
                 EffectServices.CleanEffects();

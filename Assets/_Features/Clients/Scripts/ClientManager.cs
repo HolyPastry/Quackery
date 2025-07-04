@@ -1,23 +1,25 @@
 using System;
 using System.Collections;
 using Holypastry.Bakery.Flow;
-
+using UnityEditor;
 using UnityEngine;
 
 namespace Quackery.Clients
 {
     public class ClientManager : Service
     {
-        private ClientList _clientList;
         [SerializeField] private int _queueSize = 5;
+        [SerializeField] private UnknownClientsData unknownClientsData;
+
+        private ClientList _clientList;
         private Client _selectedClient;
         private bool _infiniteQueue;
 
         void OnEnable()
         {
             ClientServices.WaitUntilReady = () => WaitUntilReady;
-            ClientServices.AddClient = AddClient;
-            ClientServices.RemoveClient = RemoveClient;
+            ClientServices.AddKnownClient = AddKnownClient;
+            ClientServices.AddUnknownClients = AddUnknownClients;
 
             ClientServices.HasNextClient = HasNextClient;
             ClientServices.GetNextClient = GetNextClient;
@@ -37,8 +39,9 @@ namespace Quackery.Clients
         void OnDisable()
         {
             ClientServices.WaitUntilReady = () => new WaitUntil(() => true);
-            ClientServices.AddClient = delegate { };
-            ClientServices.RemoveClient = delegate { };
+            ClientServices.AddKnownClient = delegate { };
+            ClientServices.AddUnknownClients = (num) => { };
+
 
             ClientServices.HasNextClient = () => true;
             ClientServices.GetNextClient = () => null;
@@ -75,14 +78,14 @@ namespace Quackery.Clients
         private void GenerateDailyQueue()
         {
             ResetClientQueue();
-            if (_clientList.Clients.Count < _queueSize)
-                Debug.LogWarning("Not enough clients to generate a daily queue.");
 
-            var queueSize = Mathf.Min(_queueSize, _clientList.Clients.Count);
+            int missingClients = _queueSize - _clientList.Clients.Count;
+            if (missingClients > 0)
+                AddUnknownClients(missingClients);
 
             _clientList.Clients.Shuffle();
 
-            for (int i = 0; i < queueSize; i++)
+            for (int i = 0; i < _queueSize; i++)
                 _clientList.Clients[i].IsInQueue = true;
             ClientEvents.ClientListUpdated?.Invoke();
         }
@@ -98,16 +101,18 @@ namespace Quackery.Clients
             _selectedClient = null;
         }
 
-        private void ClientServed(ClientData data)
+        private void ClientServed(Client client)
         {
-            if (_clientList.TryAndGet(data, out Client client))
-            {
-                client.IsNew = false;
-                client.Served = true;
-            }
-            else
-                Debug.LogWarning($"Client {data.name} not found in the client list.");
+            client.IsNew = false;
+            client.Served = true;
+            _clientList.Save();
+
             ClientEvents.ClientListUpdated?.Invoke();
+        }
+
+        private void Save()
+        {
+            throw new NotImplementedException();
         }
 
         private Client GetNextClient()
@@ -135,17 +140,30 @@ namespace Quackery.Clients
             return _clientList.Clients.Exists(c => (c.IsInQueue && !c.Served) || _infiniteQueue);
         }
 
-        private void RemoveClient(ClientData data)
+        private void RemoveUnknownClient(string key)
         {
-            _clientList.Remove(data);
+            _clientList.RemoveUnknown(key);
             ClientEvents.ClientListUpdated?.Invoke();
         }
 
-        private void AddClient(ClientData data)
+        private void AddKnownClient(ClientData data)
         {
-            var client = new Client(data);
+            var client = new Client();
+            client.InitKnownClient(data);
             _clientList.Add(client);
             ClientEvents.ClientListUpdated?.Invoke();
+        }
+
+        private void AddUnknownClients(int numClients)
+        {
+            for (int i = 0; i < numClients; i++)
+            {
+                var client = new Client();
+                client.InitUnknown(unknownClientsData);
+                _clientList.Add(client);
+                ClientEvents.ClientListUpdated?.Invoke();
+            }
+
         }
     }
 }

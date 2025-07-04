@@ -29,7 +29,7 @@ namespace Quackery.Clients
                 Clients = new();
         }
 
-        private void Save()
+        internal void Save()
         {
             SaveServices.Save("Clients", this);
         }
@@ -37,10 +37,6 @@ namespace Quackery.Clients
         public override void Serialize()
         {
             base.Serialize();
-            foreach (var client in Clients)
-            {
-                client.Key = client.Data.name;
-            }
         }
 
         public override void Deserialize()
@@ -48,13 +44,13 @@ namespace Quackery.Clients
             base.Deserialize();
             foreach (var client in Clients)
             {
-                client.Data = Collection.GetFromName(client.Key);
+                client.ReconcileData(Collection);
             }
         }
 
         internal void Add(Client client)
         {
-            if (client == null || client.Data == null)
+            if (client == null)
                 return;
 
             Clients.AddUnique(client);
@@ -62,26 +58,19 @@ namespace Quackery.Clients
 
         }
 
-        internal void Remove(ClientData data)
-        {
-            if (data == null)
-                return;
 
-            var client = Clients.Find(c => c.Data == data);
-            if (client != null)
-            {
-                Clients.Remove(client);
-                Save();
-            }
-        }
-
-        internal bool TryAndGet(ClientData data, out Client client)
+        internal bool TryAndGet(string key, out Client client)
         {
             client = null;
-            if (data == null)
-                return false;
-            client = Clients.Find(c => c.Data == data);
+
+            client = Clients.Find(c => c.Key == key);
             return client != null;
+        }
+
+        internal void RemoveUnknown(string key)
+        {
+            if (Clients.RemoveAll(c => c.Key == key) > 0)
+                Save();
         }
     }
 }

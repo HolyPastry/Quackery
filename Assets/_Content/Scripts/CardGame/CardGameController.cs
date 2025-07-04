@@ -114,7 +114,8 @@ namespace Quackery.Decks
         }
         private void OnCardSelected(Card card, List<Card> list)
         {
-            StartCoroutine(DelayedSwitchOffSelectPanel());
+            _cardSelectPanel.Hide();
+            //StartCoroutine(DelayedSwitchOffSelectPanel());
         }
 
         private IEnumerator DelayedSwitchOffSelectPanel()

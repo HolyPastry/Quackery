@@ -2219,7 +2219,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1072491518}
   - component: {fileID: 1072491517}
-  - component: {fileID: 1072491516}
   - component: {fileID: 1072491520}
   - component: {fileID: 1072491521}
   - component: {fileID: 1072491522}
@@ -2232,26 +2231,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1072491516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072491515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd91425597a7440bfa4b352388875b95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _disable: 0
-  clients:
-  - {fileID: 11400000, guid: dd35aa6b8e65d448893fe7a8a6bf3331, type: 2}
-  - {fileID: 11400000, guid: 355fe53d729884ba39024d379c8c7a89, type: 2}
-  - {fileID: 11400000, guid: fe3cc36174e0a4fb68ab7297f06aabfd, type: 2}
-  - {fileID: 11400000, guid: 547468dd71e6942988ffcc2ced0e9b67, type: 2}
-  GenerateDailyQueue: 0
-  InfiniteQueue: 0
 --- !u!114 &1072491517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4285,6 +4264,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6456099979044635880, guid: 3a6b2ee63415d45f2b8c0cc52c40bd77, type: 3}
+      propertyPath: _dailyNotificationInfos.Array.data[1].Prefab
+      value: 
+      objectReference: {fileID: 390518207298447700, guid: 578766a5c9e28458f9ab3d223f597a31, type: 3}
     - target: {fileID: 6600848261915745713, guid: 3a6b2ee63415d45f2b8c0cc52c40bd77, type: 3}
       propertyPath: m_LocalPosition.x
       value: 486.16373
@@ -4324,10 +4307,6 @@ PrefabInstance:
     - target: {fileID: 6600848261915745713, guid: 3a6b2ee63415d45f2b8c0cc52c40bd77, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6865575985889277432, guid: 3a6b2ee63415d45f2b8c0cc52c40bd77, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7345542790798609680, guid: 3a6b2ee63415d45f2b8c0cc52c40bd77, type: 3}
       propertyPath: m_Name
@@ -4421,8 +4400,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 278255905245337764, guid: 6bac9e74e24044a748242056d33070d6, type: 3}
       propertyPath: _queueSize
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 278255905245337764, guid: 6bac9e74e24044a748242056d33070d6, type: 3}
+      propertyPath: unknownClientsData
+      value: 
+      objectReference: {fileID: 11400000, guid: 48ff009e43e0640edb6b629c8d31daf4, type: 2}
     - target: {fileID: 1377916368898403988, guid: 6bac9e74e24044a748242056d33070d6, type: 3}
       propertyPath: m_Name
       value: ClientManager

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace Quackery
+namespace Quackery.Notifications
 {
     public class ChatNotification : Notification
     {
