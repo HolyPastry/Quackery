@@ -6,9 +6,9 @@ using UnityEngine;
 namespace Quackery.Effects
 {
     [CreateAssetMenu(fileName = "TransmuteEffect", menuName = "Quackery/Effects/TransmuteEffect", order = 1)]
-    public class TransmuteEffect : EffectData
+    public class TransmuteEffect : CategoryEffectData
     {
-        [SerializeField] private EnumItemCategory _newCategory;
+        // [SerializeField] private EnumItemCategory _newCategory;
         [SerializeField] private EnumCardSelection _cardSelection = EnumCardSelection.Random;
 
         // public override string GetDescription()
@@ -18,7 +18,7 @@ namespace Quackery.Effects
 
         public override void Execute(Effect effect)
         {
-            DeckServices.ChangeCardCategory(_newCategory, _cardSelection);
+            DeckServices.ChangeCardCategory(Category, _cardSelection);
         }
 
         public override void Cancel(Effect effect)

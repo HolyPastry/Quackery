@@ -7,12 +7,12 @@ namespace Quackery.Effects
 {
 
     [CreateAssetMenu(fileName = "MergeCart", menuName = "Quackery/Effects/MergeCart", order = 0)]
-    public class MergeCartEffect : EffectData
+    public class MergeCartEffect : CategoryEffectData
     {
-        [SerializeField] private EnumItemCategory _category = EnumItemCategory.Unset;
+
         public override void Execute(Effect effect)
         {
-            CartServices.MergeCart(effect.Value, _category);
+            CartServices.MergeCart(effect.Value, Category);
         }
     }
 }

@@ -5,9 +5,8 @@ using UnityEngine;
 namespace Quackery.Effects
 {
     [CreateAssetMenu(fileName = "DrawCategoryCard", menuName = "Quackery/Effects/Draw Category Card", order = 0)]
-    public class DrawCategoryCardEffect : EffectData
+    public class DrawCategoryCardEffect : CategoryEffectData
     {
-        public EnumItemCategory Category = EnumItemCategory.Unset;
 
         public override void Execute(Effect effect)
         {

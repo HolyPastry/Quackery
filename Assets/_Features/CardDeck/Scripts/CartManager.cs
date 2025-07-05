@@ -409,8 +409,8 @@ namespace Quackery.Decks
                 return false;
             }
 
-            if (effect.Category != EnumItemCategory.Unset &&
-               effect.Category != cardPileRef.Category)
+            if (effectData.Category != EnumItemCategory.Unset &&
+               effectData.Category != cardPileRef.Category)
             {
                 Debug.LogWarning("CAtegory is not matching: No valid previous pile found. This card should not have been playable");
                 return false;
@@ -475,8 +475,8 @@ namespace Quackery.Decks
             if (mergeEffectData.Location == EnumPileLocation.OnTop &&
                  _lastCartPile.TopCard.CannotBeCovered)
                 return false;
-            if (mergeEffect.Category != EnumItemCategory.Unset &&
-                _lastCartPile.Category != mergeEffect.Category) return false;
+            if (mergeEffectData.Category != EnumItemCategory.Unset &&
+                _lastCartPile.Category != mergeEffectData.Category) return false;
             return true;
         }
 

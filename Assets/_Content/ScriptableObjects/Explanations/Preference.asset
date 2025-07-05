@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Preference
   m_EditorClassIdentifier: 
   Name: Preference
-  Definition: 'Give bonus value to matching cards. A client can only have one preference. '
+  Definition: Give bonus or malus value to cards of the matching category.

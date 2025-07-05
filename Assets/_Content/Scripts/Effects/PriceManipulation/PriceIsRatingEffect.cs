@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Quackery.Effects
 {
     [CreateAssetMenu(fileName = "PriceIsRatingEffect", menuName = "Quackery/Effects/PriceIsRating", order = 1)]
-    public class PriceIsRatingEffect : EffectData
+    public class PriceIsRatingEffect : CategoryEffectData
     {
         public override int PriceModifier(Effect effect, Card card)
         {

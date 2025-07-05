@@ -16,7 +16,7 @@ namespace Quackery
         public override string ToString()
         {
             int numCards = GameStatsServices.NumMatchingCard(RequiredStats);
-            return $"{numCards}/{NumCardRequired} sold at reduced price";
+            return $"{numCards}/{NumCardRequired} cards sold at reduced price";
         }
 
         public override bool Check

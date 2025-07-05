@@ -16,5 +16,6 @@ MonoBehaviour:
   Icon: {fileID: 0}
   Description: <b>Transmute</b> - Change the category to #Category of a card for
     this client
-  _newCategory: 1
+  Explanations: []
+  Category: 1
   _cardSelection: 1

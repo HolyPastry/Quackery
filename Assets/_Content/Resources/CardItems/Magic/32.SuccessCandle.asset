@@ -14,18 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Success Candles
   Icon: {fileID: 21300000, guid: db2b2467b243a4f398cacb5b9fa9e234, type: 3}
-  StartPrice: 8
+  BasePrice: 1
   ShortDescription: +1 #Magic <b>Preference</b>
   LongDescription: Increase Client's Preference to #Magic by 1.
+  ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: b94da696da3ea4e2e9adc1504cf09538, type: 2}
   SubscriptionCost: 1
   Category: 2
   Effects:
-  - Data: {fileID: 11400000, guid: 7817bd02af1de410dafe2284bf88fa54, type: 2}
-    Value: 1
-    Trigger: 1
-    Tags: 
   - Data: {fileID: 11400000, guid: 5c01443edb12a41a3937049ee302f228, type: 2}
     Value: 1
     Trigger: 1

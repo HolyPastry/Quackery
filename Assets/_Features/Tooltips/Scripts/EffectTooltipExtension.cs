@@ -1,5 +1,5 @@
 using System;
-
+using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery
@@ -19,12 +19,16 @@ namespace Quackery
 
         private void AddEffectTooltip(Effect effect)
         {
-            //string description = Sprites.ReplaceCategory(effect.Description);
-            //string title = effect.Data.MasterText;
+            string description = effect.Description;
+            string title = effect.Data.MasterText;
+            if (effect.Data is CategoryEffectData categoryEffectData)
+            {
+                description = Sprites.ReplaceCategory(description, categoryEffectData.Category);
+                title = Sprites.ReplaceCategory(title, categoryEffectData.Category);
+            }
 
 
-
-            _tooltipManager.AddTooltip(effect.Data.MasterText, effect.Description, effect.Data.Explanations);
+            _tooltipManager.AddTooltip(title, description, effect.Data.Explanations);
         }
 
         // private void ShowNextToStatus(Transform objectTransform)

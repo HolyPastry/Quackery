@@ -5,9 +5,8 @@ using UnityEngine;
 namespace Quackery.Effects
 {
     [CreateAssetMenu(fileName = "RatioPriceEffect", menuName = "Quackery/Effects/Ratio Price")]
-    public class RatioPriceEffect : EffectData
+    public class RatioPriceEffect : CategoryEffectData
     {
-        public EnumItemCategory Category;
         public float Ratio = 1.0f;
 
         // public override string GetDescription()

@@ -8905,7 +8905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086346f6488184e12ae2956f3248eb46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialCartSize: 3
+  _initialCartSize: 5
 --- !u!1 &8958583520879641248
 GameObject:
   m_ObjectHideFlags: 0

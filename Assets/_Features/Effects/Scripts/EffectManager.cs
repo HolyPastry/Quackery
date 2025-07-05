@@ -225,6 +225,12 @@ namespace Quackery.Effects
                 => e.Data == data);
             if (existingEffect != null)
             {
+                if (!data.CanBeNegative && existingEffect.Value + arg2 <= 0)
+                {
+                    _effects.Remove(existingEffect);
+                    EffectEvents.OnRemoved?.Invoke(existingEffect);
+                    return;
+                }
                 existingEffect.Value += arg2;
                 EffectEvents.OnUpdated?.Invoke(existingEffect);
             }

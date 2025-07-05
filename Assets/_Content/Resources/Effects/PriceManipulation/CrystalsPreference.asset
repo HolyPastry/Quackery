@@ -15,4 +15,6 @@ MonoBehaviour:
   MasterText: Prefers #Category
   Icon: {fileID: 21300000, guid: 40412d5ceede6d24e8ab8bf96de87aae, type: 3}
   Description: <b>Preference</b> #Value to all #Category cards
+  CanBeNegative: 1
+  Explanations: []
   Category: 3

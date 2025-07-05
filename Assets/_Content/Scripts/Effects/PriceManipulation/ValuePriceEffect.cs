@@ -7,9 +7,9 @@ namespace Quackery.Effects
 
 
     [CreateAssetMenu(fileName = "BoostPriceEffect", menuName = "Quackery/Effects/ValuePrice")]
-    public class ValuePriceEffect : EffectData
+    public class ValuePriceEffect : CategoryEffectData
     {
-        public EnumItemCategory Category;
+
 
         // public override string GetDescription()
         // {

@@ -4,16 +4,23 @@ using System.Collections.Generic;
 using Holypastry.Bakery;
 
 using Quackery.Decks;
+using Quackery.Inventories;
 using UnityEngine;
 
 
 namespace Quackery.Effects
 {
+    public abstract class CategoryEffectData : EffectData
+    {
+        public EnumItemCategory Category = EnumItemCategory.Unset;
+    }
     public abstract class EffectData : ContentTag
     {
         public Sprite Icon;
 
         public string Description;
+
+        public bool CanBeNegative = false;
 
         public List<Explanation> Explanations;
 

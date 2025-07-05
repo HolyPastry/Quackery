@@ -166,6 +166,7 @@ namespace Quackery.Clients
 
         private Client GetNextClient()
         {
+            _clientToSwap = null;
             var clients = _clientList.Clients.FindAll(c => c.IsInQueue && !c.Served);
             if (clients.Count == 0)
             {
