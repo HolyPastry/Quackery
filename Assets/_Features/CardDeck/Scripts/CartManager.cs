@@ -380,32 +380,40 @@ namespace Quackery.Decks
         private bool MergeWithPrevious(Card topCard)
         {
 
-            var effect = topCard.Effects.Find(effect => effect.Data is MergeWithPreviousPileEffect);
+            var effect = topCard.Effects.Find(effect => effect.Data is MergeWithPileEffect);
             if (effect == null) return false;
 
-            var effectData = effect.Data as MergeWithPreviousPileEffect;
+            var effectData = effect.Data as MergeWithPileEffect;
             CardPile cardPileRef = null;
 
-            if (effectData.TargetStack == MergeWithPreviousPileEffect.EnumTargetStack.Previous)
+            if (effectData.TargetStack == MergeWithPileEffect.EnumTargetStack.Previous)
             {
                 if (_lastCartPile == null || _lastCartPile.IsEmpty)
                 {
-                    Debug.LogWarning(
-                        "MergeWithPreviousPileEffect: No last cart pile to merge with. This card should not be playable");
+                    if (!effectData.AllowEmptyPiles)
+                        Debug.LogWarning(
+                            "MergeWithPreviousPileEffect: No last cart pile to merge with. This card should not be playable");
                     return false;
                 }
                 cardPileRef = _lastCartPile;
             }
-            else if (effectData.TargetStack == MergeWithPreviousPileEffect.EnumTargetStack.LowestValue)
+            else if (effectData.TargetStack == MergeWithPileEffect.EnumTargetStack.LowestValue)
             {
                 cardPileRef = _cartPiles
                     .Where(p => p.Enabled && !p.IsEmpty)
                     .OrderBy(p => p.TopCard.Price)
                     .FirstOrDefault();
             }
+            else if (effectData.TargetStack == MergeWithPileEffect.EnumTargetStack.SameCategory)
+            {
+                cardPileRef = _cartPiles
+                    .Where(p => p.Enabled && !p.IsEmpty && p.Category == topCard.Category)
+                    .FirstOrDefault();
+            }
             if (cardPileRef == null || cardPileRef.IsEmpty)
             {
-                Debug.LogWarning("MergeWithPreviousPileEffect: No valid previous pile found. This card should not have been playable");
+                if (!effectData.AllowEmptyPiles)
+                    Debug.LogWarning("MergeWithPreviousPileEffect: No valid previous pile found. This card should not have been playable");
                 return false;
             }
 
@@ -464,13 +472,16 @@ namespace Quackery.Decks
         private bool CanAddToCart(Card topCard)
         {
 
-            var mergeEffects = topCard.Effects.FindAll(effect => effect.Data is MergeWithPreviousPileEffect);
+            var mergeEffects = topCard.Effects.FindAll(effect => effect.Data is MergeWithPileEffect);
             if (mergeEffects.Count == 0)
                 return !CartIsFull;
             // If there are merge effects, check if the last cart pile is compatible
             if (_lastCartPile == null || _lastCartPile.IsEmpty) return false;
             var mergeEffect = mergeEffects[0];
-            var mergeEffectData = mergeEffect.Data as MergeWithPreviousPileEffect;
+            var mergeEffectData = mergeEffect.Data as MergeWithPileEffect;
+
+            if (mergeEffectData.AllowEmptyPiles && !CartIsFull)
+                return true; // If the last cart pile is empty and the effect allows it, we can add
 
             if (mergeEffectData.Location == EnumPileLocation.OnTop &&
                  _lastCartPile.TopCard.CannotBeCovered)

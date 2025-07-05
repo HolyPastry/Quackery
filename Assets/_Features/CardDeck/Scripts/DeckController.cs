@@ -36,6 +36,7 @@ namespace Quackery.Decks
 
         private DrawPile _drawPile;
         private bool _drawInterrupted;
+        private bool _isReady;
 
         private CardPile _discardPile => _cardPiles.Find(p => p.Type == EnumCardPile.Discard);
         private List<CardPile> _handPiles => _cardPiles.FindAll(p => p.Type == EnumCardPile.Hand);
@@ -90,6 +91,8 @@ namespace Quackery.Decks
             DeckServices.MoveToPile = (source, target) => { };
             DeckServices.CreateCard = (itemData) => null;
 
+            DeckServices.PopulateDeck = () => { };
+
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
             EffectEvents.OnUpdated -= UpdateCardUI;
@@ -100,6 +103,7 @@ namespace Quackery.Decks
 
         void OnEnable()
         {
+            DeckServices.WaitUntilReady = () => new WaitUntil(() => _isReady);
 
             DeckServices.AddNewToDiscard = AddNewToDiscard;
             DeckServices.Shuffle = ShuffleDiscardPileIn;
@@ -112,6 +116,8 @@ namespace Quackery.Decks
 
             DeckServices.DestroyCard = DestroyCard;
             DeckServices.DuplicateCard = DuplicateCard;
+
+            DeckServices.PopulateDeck = PopulateDeck;
 
             DeckServices.InterruptDraw = () => _drawInterrupted = true;
             DeckServices.ResumeDraw = () => { _drawInterrupted = false; _cardPlayed = true; };
@@ -144,6 +150,11 @@ namespace Quackery.Decks
             EffectEvents.OnUpdated += UpdateCardUI;
         }
 
+        private void PopulateDeck()
+        {
+
+        }
+
         private Card CreateCard(ItemData data)
         {
             return _cardFactory.Create(data);
@@ -169,6 +180,7 @@ namespace Quackery.Decks
             {
                 _cardPiles.Add(new CardPile(EnumCardPile.Selection, i));
             }
+            _isReady = true;
         }
 
         private int GetCardPoolSize(EnumCardPile cardPileType)

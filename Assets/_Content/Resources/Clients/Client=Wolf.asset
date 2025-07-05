@@ -17,8 +17,8 @@ MonoBehaviour:
   Effects:
   - Data: {fileID: 11400000, guid: f46eaadc5c50444de8d8e4db6280921c, type: 2}
     Value: 2
-    Trigger: 4
-    Tags: 02000000
+    Trigger: 6
+    Tags: 0200000003000000
   FirstReward:
     Review: 'Lovely store, wish it was more affordable though. '
     Rating: 2

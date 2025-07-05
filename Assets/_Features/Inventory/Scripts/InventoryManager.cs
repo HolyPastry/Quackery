@@ -34,7 +34,9 @@ namespace Quackery.Inventories
         {
             InventoryServices.WaitUntilReady = () => new WaitUntil(() => true);
             InventoryServices.AddNewItem = (data) => null;
+            InventoryServices.AddNewItems = items => { };
             InventoryServices.AddItem = item => { };
+
             InventoryServices.RemoveItem = delegate { };
             InventoryServices.GetItem = data => null;
             InventoryServices.HasItem = data => false;
@@ -47,6 +49,7 @@ namespace Quackery.Inventories
         {
             InventoryServices.WaitUntilReady = () => WaitUntilReady;
             InventoryServices.AddNewItem = AddItem;
+            InventoryServices.AddNewItems = AddNewItems;
             InventoryServices.AddItem = AddItem;
             InventoryServices.RemoveItem = RemoveItem;
             InventoryServices.GetItem = GetItem;
@@ -54,6 +57,14 @@ namespace Quackery.Inventories
             InventoryServices.GetAllItems = () => _inventory.Items;
             InventoryServices.GetRandomItemData = GetRandomItemData;
             InventoryServices.GetRandomItems = GetRandomItems;
+        }
+
+        private void AddNewItems(List<ItemData> list)
+        {
+            if (list == null)
+                _itemDataCollection.Data.ForEach(itemData => AddItem(itemData));
+            else
+                list.ForEach(itemData => AddItem(itemData));
         }
 
         private List<ItemData> GetRandomItems(int amount)

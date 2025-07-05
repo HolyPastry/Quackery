@@ -9,6 +9,7 @@ namespace Quackery
     public class CardGameControllerTest : MonoBehaviour
     {
         [SerializeField] private CardGameController _controller;
+
         // Start is called before the first frame update
         IEnumerator Start()
         {
@@ -19,6 +20,12 @@ namespace Quackery
 
         private IEnumerator Routine()
         {
+            yield return null;
+            var deckSetup = FindObjectOfType<SceneSetupDeck>();
+            if (deckSetup != null)
+                deckSetup.DrawCards();
+
+
             var client = ClientServices.GetNextClient();
             _controller.Show();
 
