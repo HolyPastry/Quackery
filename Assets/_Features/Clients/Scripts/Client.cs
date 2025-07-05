@@ -41,7 +41,6 @@ namespace Quackery.Clients
 
         public Sprite Portrait;
         public string LoginName;
-        public object DialogKey;
 
         public bool IsNew;
 
@@ -54,11 +53,16 @@ namespace Quackery.Clients
 
         public bool QuestFullfilled => FirstQuest != null && QuestServices.IsQuestCompleted(FirstQuest);
 
-        public void InitUnknown(UnknownClientsData unknownClientsData)
+        public void InitUnknown(UnknownClientsData unknownClientsData, Effect effect = null)
         {
 
             Key = unknownClientsData.RandomName;
-            Effects = unknownClientsData.RandomEffects;
+            if (effect != null)
+                Effects = new List<Effect> { effect };
+            else
+                Effects = unknownClientsData.RandomEffects;
+
+
             Portrait = unknownClientsData.RandomIcon;
             LoginName = Key;
 
@@ -101,5 +105,7 @@ namespace Quackery.Clients
         {
             Data = collection.GetFromName(Key);
         }
+
+
     }
 }

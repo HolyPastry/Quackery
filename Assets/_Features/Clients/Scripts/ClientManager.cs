@@ -39,6 +39,7 @@ namespace Quackery.Clients
 
             ClientServices.SetInfiniteQueue = (infinite) => { };
             ClientServices.GetRevealedClient = () => _clientToSwap;
+            ClientServices.AddUnknownClient = AddUnknownClient;
 
             ClientServices.SwapClients = SwapClients;
 
@@ -62,11 +63,16 @@ namespace Quackery.Clients
             ClientServices.SelectClient = (client) => { };
             ClientServices.SelectedClient = () => null;
             ClientServices.ClientLeaves = () => { };
+
             ClientServices.IsCurrentClientAnonymous = () => false;
-            ClientServices.SwapClients = () => { };
+            ClientServices.SwapCurrentClientTo = (data) => { };
+
+
 
             ClientServices.SetInfiniteQueue = (isOn) => _infiniteQueue = isOn;
             ClientServices.GetRevealedClient = () => null;
+            ClientServices.SwapClients = () => { };
+            ClientServices.AddUnknownClient = (effect) => { };
 
         }
 
@@ -83,6 +89,7 @@ namespace Quackery.Clients
             _clientList.Remove(_selectedClient);
             _clientList.Add(_clientToSwap);
             _selectedClient = _clientToSwap;
+            QuestServices.StartQuest(_selectedClient.FirstQuest);
         }
 
         private void SwapCurrentClientTo(ClientData data)
@@ -117,13 +124,14 @@ namespace Quackery.Clients
             }
 
             _clientList.Clients.Shuffle();
-
-            for (int i = 0; i < _queueSize; i++)
+            for (int i = 0; i < _clientList.Clients.Count; i++)
             {
-                if (_clientList.Clients[i].IsAnonymous)
-                    _clientList.Clients[i].IsInQueue = true;
-                else
-                    i++;
+                if (!_clientList.Clients[i].IsAnonymous) continue;
+
+                _clientList.Clients[i].IsInQueue = true;
+                missingClients--;
+                if (missingClients <= 0) break;
+
             }
             ClientEvents.ClientListUpdated?.Invoke();
         }
@@ -200,6 +208,14 @@ namespace Quackery.Clients
         {
             var client = new Client();
             client.InitKnownClient(data);
+            _clientList.Add(client);
+            ClientEvents.ClientListUpdated?.Invoke();
+        }
+
+        private void AddUnknownClient(Effect effect)
+        {
+            var client = new Client();
+            client.InitUnknown(unknownClientsData, effect);
             _clientList.Add(client);
             ClientEvents.ClientListUpdated?.Invoke();
         }

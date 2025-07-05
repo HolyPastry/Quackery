@@ -30,12 +30,12 @@ namespace Quackery
 
         private IEnumerator ShowClient(Client client)
         {
+            yield return null;
             _revealIdentityPanel.SetActive(false);
             _portrait.sprite = client.Portrait;
             _portrait.color = Color.white;
             _nameText.text = client.LoginName;
             _ratingText.text = client.LastReviewText;
-            _hiddable.SetActive(true);
 
             yield return StartCoroutine(_ratingPanel.SetRatingRoutine(client.LastRating));
             yield return StartCoroutine(_followerBadge.CountFollowersUpRoutine(client.LastFollowersBonus));

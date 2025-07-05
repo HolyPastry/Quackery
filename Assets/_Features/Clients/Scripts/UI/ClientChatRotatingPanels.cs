@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Newtonsoft.Json.Linq;
 using Quackery.Clients;
 
 using UnityEngine;
@@ -19,12 +20,15 @@ namespace Quackery
     public enum CustomerPanelSize
     {
         Short,
-        Long
+        Long,
+        Special
     }
     public class ClientChatRotatingPanels : MonoBehaviour
     {
-        [SerializeField] private List<ClientChatInfo> _panels = new();
-        private ClientChatInfo _enteringPanel;
+        [SerializeField] private List<RotatingClientChatPanel> _panels = new();
+
+        [SerializeField] private ClientChatPanel _specialPanel;
+        private RotatingClientChatPanel _enteringPanel;
 
         [SerializeField] private float _shortBottomMargin = 1900;
         [SerializeField] private float _longBottomMargin = 300;
@@ -49,6 +53,8 @@ namespace Quackery
                 p.OnBackButtonPressed -= PressBackButton;
 
             });
+            _specialPanel.DisableChat();
+            _specialPanel.Hide();
 
         }
 
@@ -59,8 +65,16 @@ namespace Quackery
 
         public void Show(CustomerPanelSize size)
         {
+            if (size == CustomerPanelSize.Special)
+            {
+                _specialPanel.Show();
+                _specialPanel.EnableChat();
+                _specialPanel.SetClientInfo(ClientServices.SelectedClient());
+                return;
+
+            }
             SetSize(size);
-            ClientChatInfo panel = _panels.Find(p => p.CurrentState == CustomerPanelState.Active);
+            RotatingClientChatPanel panel = _panels.Find(p => p.CurrentState == CustomerPanelState.Active);
             panel.EnableChat();
             panel.SetClientInfo(ClientServices.SelectedClient());
         }
@@ -77,7 +91,7 @@ namespace Quackery
         internal void ClientSwapIn(Client client)
         {
 
-            ClientChatInfo panel = _panels.Find(p => p.CurrentState == CustomerPanelState.ReadyToEnter);
+            RotatingClientChatPanel panel = _panels.Find(p => p.CurrentState == CustomerPanelState.ReadyToEnter);
             if (panel == null)
             {
                 panel = _panels.Find(p => p.CurrentState == CustomerPanelState.Exited);
@@ -96,7 +110,7 @@ namespace Quackery
 
         internal void ClientSwapOut()
         {
-            ClientChatInfo panel = _panels.Find(p => p.CurrentState == CustomerPanelState.Active);
+            RotatingClientChatPanel panel = _panels.Find(p => p.CurrentState == CustomerPanelState.Active);
             if (panel == null)
             {
                 Debug.LogWarning("No active customer panel found!");

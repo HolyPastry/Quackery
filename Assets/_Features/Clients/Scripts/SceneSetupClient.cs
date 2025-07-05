@@ -8,6 +8,8 @@ namespace Quackery.Clients
     public class SceneSetupClient : SceneSetupScript
     {
         [SerializeField] private List<ClientData> clients;
+
+        [SerializeField] private List<Effect> UnknownEffectsToAdd;
         [SerializeField] private bool GenerateDailyQueue = true;
         [SerializeField] private bool InfiniteQueue = false;
         public override IEnumerator Routine()
@@ -18,6 +20,11 @@ namespace Quackery.Clients
             foreach (var client in clients)
             {
                 ClientServices.AddKnownClient(client);
+                QuestServices.StartQuest(client.FirstQuest);
+            }
+            foreach (var effect in UnknownEffectsToAdd)
+            {
+                ClientServices.AddUnknownClient(effect);
             }
             if (GenerateDailyQueue)
             {

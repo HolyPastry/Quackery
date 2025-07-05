@@ -362,10 +362,10 @@ namespace Quackery.Decks
 
         private IEnumerator PlayCardRoutine(Card card)
         {
-            var meDialog = card.Item.Data.name + "Me";
-            string clientResponse = ClientServices.SelectedClient().DialogName + "Answer";
-            DialogQueueServices.QueueDialog(meDialog);
-            DialogQueueServices.QueueDialog(clientResponse);
+            // var meDialog = card.Item.Data.name + "Me";
+            // string clientResponse = ClientServices.SelectedClient().DialogName + "Answer";
+            // DialogQueueServices.QueueDialog(meDialog);
+            // DialogQueueServices.QueueDialog(clientResponse);
 
             RemoveFromAllPiles(card);
 

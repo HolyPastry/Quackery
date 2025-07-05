@@ -48,5 +48,6 @@ namespace Quackery
 
         internal static Func<EffectData, int, int> CounterEffect = (counterEffect, value) => 0;
 
+
     }
 }

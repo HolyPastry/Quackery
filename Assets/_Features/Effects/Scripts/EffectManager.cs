@@ -236,6 +236,10 @@ namespace Quackery.Effects
             }
             else
             {
+                if (!data.CanBeNegative && arg2 <= 0)
+                {
+                    return;
+                }
                 var newEffect = new Effect(data)
                 {
                     Value = arg2,

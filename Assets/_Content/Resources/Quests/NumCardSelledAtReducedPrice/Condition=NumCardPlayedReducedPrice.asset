@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: 
   CanReverse: 0
-  NumCardRequired: 10
+  NumCardRequired: 1
   RequiredStats:
     Key: 
     PriceCondition: 2

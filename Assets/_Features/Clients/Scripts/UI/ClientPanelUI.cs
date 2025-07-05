@@ -16,6 +16,7 @@ namespace Quackery
         [SerializeField] private Image _background;
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _questText;
+        [SerializeField] private Image _questBackground;
         [SerializeField] private GameObject _questLinePanel;
         [SerializeField] private VerticalLayoutGroup _rowLayoutGroup;
         [SerializeField] private GameObject _onlineBadge;
@@ -85,10 +86,14 @@ namespace Quackery
             _questText.text = "";
             _questLinePanel.SetActive(false);
 
-            if (Client.FirstQuest == null || _client.QuestFullfilled) return;
+            if (Client.FirstQuest == null) return;
+
             var firstCondition = _client.FirstQuest.Steps?[0].Conditions?[0];
 
             if (firstCondition == null) return;
+
+            if (_client.QuestFullfilled)
+                _questBackground.color = Color.green;
 
             _questText.text = firstCondition.ToString();
             _questLinePanel.SetActive(true);

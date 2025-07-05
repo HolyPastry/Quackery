@@ -16,7 +16,7 @@ namespace Quackery
             var textChat = _gameLoop.ClientTextChat;
 
             controller.Show();
-            textChat.Show(CustomerPanelSize.Short);
+
             DeckServices.Shuffle();
 
             // DialogQueueServices.QueueDialog("MeIntro");
@@ -26,13 +26,21 @@ namespace Quackery
             while (true)
             {
                 var client = ClientServices.SelectedClient();
-                // if (!firstTime)
-                // {
-                DialogQueueServices.QueueDialog("MeIntro");
-                yield return DialogQueueServices.WaitUntilAllDialogEnds();
-                // }
+                if (client.IsAnonymous)
+                {
+                    textChat.Show(CustomerPanelSize.Short);
+                    DialogQueueServices.QueueDialog("MeIntro");
+                    yield return DialogQueueServices.WaitUntilAllDialogEnds();
 
-                // firstTime = false;
+                }
+                else
+                {
+                    textChat.Show(CustomerPanelSize.Special);
+                    yield return new WaitForSeconds(0.5f);
+                    DialogQueueServices.QueueDialog($"{client.DialogName}Quest");
+                    yield return DialogQueueServices.WaitUntilAllDialogEnds();
+                }
+                yield return new WaitForSeconds(0.5f);
                 controller.StartNewRound(client);
 
                 yield return controller.WaitUntilEndOfRound();
@@ -48,7 +56,7 @@ namespace Quackery
                 else
                 {
                     DialogQueueServices.QueueDialog("MeConclusion");
-                    DialogQueueServices.QueueDialog($"{client.DialogKey}Success");
+                    DialogQueueServices.QueueDialog($"{client.DialogName}Success");
                     controller.TransfertCartToPurse();
                     yield return new WaitForSeconds(1f);
                     client.GoodReview();

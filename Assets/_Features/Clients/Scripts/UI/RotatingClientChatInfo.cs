@@ -1,21 +1,17 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using Quackery.Chats;
-using Quackery.Clients;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Quackery
 {
-    public class ClientChatInfo : MonoBehaviour
+
+    public class RotatingClientChatPanel : ClientChatPanel
     {
-        [SerializeField] private Image _portrait;
-        [SerializeField] private TMPro.TextMeshProUGUI _loginName;
+
         [SerializeField] private Ease _easeType;
         [SerializeField] private float _transitionDuration = 1f;
         [SerializeField] private CustomerPanelState _currentState;
-        [SerializeField] private ChatWindow _chatWindow;
 
         public bool IsPanelMoving = false;
 
@@ -43,24 +39,7 @@ namespace Quackery
 
         public Action OnBackButtonPressed = delegate { };
 
-        void Awake()
-        {
 
-            _chatWindow.enabled = false;
-        }
-
-        public void SetClientInfo(Client client)
-        {
-            _portrait.sprite = client.Portrait;
-            _loginName.text = client.LoginName;
-            _chatWindow.SetChatHistory(client.ChatHistory);
-        }
-        public void EnableChat() => _chatWindow.enabled = true;
-        public void DisableChat()
-        {
-            _chatWindow.ClearChat();
-            _chatWindow.enabled = false;
-        }
 
         public void TeleportToPosition(CustomerPanelState state)
         {

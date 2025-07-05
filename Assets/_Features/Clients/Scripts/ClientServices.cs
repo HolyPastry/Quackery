@@ -35,5 +35,6 @@ namespace Quackery.Clients
 
         internal static Action SwapClients = () => { };
 
+        internal static Action<Effect> AddUnknownClient = (effect) => { };
     }
 }
