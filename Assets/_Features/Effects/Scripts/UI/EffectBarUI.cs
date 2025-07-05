@@ -5,22 +5,24 @@ using UnityEngine;
 
 namespace Quackery
 {
+
     public class EffectBarUI : MonoBehaviour
     {
-
+        [SerializeField] private bool _listenToChange;
         private readonly List<EffectUI> _statusUIPool = new();
 
         void Awake()
         {
             GetComponentsInChildren(true, _statusUIPool);
             for (int i = 0; i < _statusUIPool.Count; i++)
-            {
                 _statusUIPool[i].gameObject.SetActive(false);
-            }
         }
+
 
         void OnEnable()
         {
+            if (!_listenToChange) return;
+
             EffectEvents.OnStackMultiplerUpdate += UpdateStackMultiplierUI;
             EffectEvents.OnUpdated += UpdateStatusUI;
             EffectEvents.OnAdded += AddStatusUI;
@@ -46,7 +48,7 @@ namespace Quackery
             // _stackMultiplierUI.UpdateMultipler(multiplier);
         }
 
-        private void RemoveStatusUI(Effect effect)
+        public void RemoveStatusUI(Effect effect)
         {
             for (int i = 0; i < _statusUIPool.Count; i++)
             {
@@ -59,7 +61,7 @@ namespace Quackery
             Debug.LogWarning($"StatusUI for {effect.Data.name} not found in pool.");
         }
 
-        private void AddStatusUI(Effect effect)
+        public void AddStatusUI(Effect effect)
         {
             foreach (var statusUI in _statusUIPool)
             {
@@ -72,7 +74,7 @@ namespace Quackery
 
 
 
-        private void UpdateStatusUI(Effect effect)
+        public void UpdateStatusUI(Effect effect)
         {
             List<Effect> effects = EffectServices.GetCurrent();
 

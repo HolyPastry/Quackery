@@ -71,6 +71,8 @@ namespace Quackery.Decks
             CartServices.ReplaceTopCard = ReplaceTopCard;
             CartServices.GetTopCard = GetTopCard;
 
+            CartServices.ValidateCart = Validate;
+
             EffectEvents.OnAdded += UpdateCardUI;
             EffectEvents.OnRemoved += UpdateCardUI;
             EffectEvents.OnUpdated += UpdateCardUI;
@@ -111,6 +113,8 @@ namespace Quackery.Decks
             CartServices.ReplaceTopCard = delegate { };
             CartServices.GetTopCard = () => null;
 
+            CartServices.ValidateCart = () => { };
+
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
             EffectEvents.OnUpdated -= UpdateCardUI;
@@ -126,6 +130,11 @@ namespace Quackery.Decks
             }
         }
 
+
+        private void Validate()
+        {
+            CartEvents.OnCartValidated(_cartPiles, _cartValue);
+        }
 
         private Card GetTopCard()
         {
@@ -400,8 +409,8 @@ namespace Quackery.Decks
                 return false;
             }
 
-            if (effectData.Category != EnumItemCategory.Unset &&
-               effectData.Category != cardPileRef.Category)
+            if (effect.Category != EnumItemCategory.Unset &&
+               effect.Category != cardPileRef.Category)
             {
                 Debug.LogWarning("CAtegory is not matching: No valid previous pile found. This card should not have been playable");
                 return false;
@@ -460,9 +469,10 @@ namespace Quackery.Decks
                 return !CartIsFull;
             // If there are merge effects, check if the last cart pile is compatible
             if (_lastCartPile == null || _lastCartPile.IsEmpty) return false;
-            var mergeEffect = mergeEffects[0].Data as MergeWithPreviousPileEffect;
+            var mergeEffect = mergeEffects[0];
+            var mergeEffectData = mergeEffect.Data as MergeWithPreviousPileEffect;
 
-            if (mergeEffect.Location == EnumPileLocation.OnTop &&
+            if (mergeEffectData.Location == EnumPileLocation.OnTop &&
                  _lastCartPile.TopCard.CannotBeCovered)
                 return false;
             if (mergeEffect.Category != EnumItemCategory.Unset &&

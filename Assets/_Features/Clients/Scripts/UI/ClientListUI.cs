@@ -3,6 +3,7 @@ using System.Collections;
 using Quackery.Clients;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Quackery
 {
@@ -42,6 +43,8 @@ namespace Quackery
                 clientPanel.Client = client;
                 clientPanel.OnSelected += OnClientSelected;
             }
+
+
         }
 
         private void OnClientSelected(Client client)

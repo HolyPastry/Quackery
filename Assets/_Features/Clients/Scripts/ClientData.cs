@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Bakery.Dialogs;
-
+using Holypastry.Bakery.Quests;
 using UnityEngine;
 
 namespace Quackery.Clients
@@ -25,6 +25,8 @@ namespace Quackery.Clients
         public List<Effect> Effects;
 
         public Reward FirstReward;
+
+        public QuestData FirstQuest;
 
         public string Name => CharacterData.MasterText;
     }

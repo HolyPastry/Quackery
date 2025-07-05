@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _queueSize: 5
+  unknownClientsData: {fileID: 11400000, guid: 48ff009e43e0640edb6b629c8d31daf4, type: 2}
 --- !u!4 &787438373
 Transform:
   m_ObjectHideFlags: 0
@@ -432,6 +433,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fe3cc36174e0a4fb68ab7297f06aabfd, type: 2}
   - {fileID: 11400000, guid: 547468dd71e6942988ffcc2ced0e9b67, type: 2}
   GenerateDailyQueue: 1
+  InfiniteQueue: 0
 --- !u!114 &2122329966
 MonoBehaviour:
   m_ObjectHideFlags: 0

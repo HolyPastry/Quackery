@@ -16,7 +16,7 @@ namespace Quackery.Clients
         public DataCollection<EffectData> EffectCollection;
         public List<Client> Clients;
 
-
+        public List<Client> UnknownClients => Clients.FindAll(c => c.IsAnonymous);
 
         public void Init()
         {

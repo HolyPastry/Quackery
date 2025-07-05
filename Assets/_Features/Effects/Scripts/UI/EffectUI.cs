@@ -54,7 +54,7 @@ namespace Quackery
             if (effect.Value == 0)
                 _valueText.text = string.Empty;
             else
-                _valueText.text = Mathf.Abs(effect.Value).ToString();
+                _valueText.text = effect.Value.ToString();
 
             gameObject.SetActive(true);
         }

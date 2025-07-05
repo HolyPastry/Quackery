@@ -355,6 +355,7 @@ namespace Quackery.Decks
                 $"called pile is null or Empty: {type} - {index}");
 
             var card = pile.TopCard;
+            DeckEvents.OnCardPlayed?.Invoke(card);
             StartCoroutine(PlayCardRoutine(card));
 
         }

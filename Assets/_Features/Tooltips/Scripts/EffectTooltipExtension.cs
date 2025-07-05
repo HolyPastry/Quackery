@@ -19,7 +19,10 @@ namespace Quackery
 
         private void AddEffectTooltip(Effect effect)
         {
-            //string description = effectUI.Effect.Description;
+            //string description = Sprites.ReplaceCategory(effect.Description);
+            //string title = effect.Data.MasterText;
+
+
 
             _tooltipManager.AddTooltip(effect.Data.MasterText, effect.Description, effect.Data.Explanations);
         }

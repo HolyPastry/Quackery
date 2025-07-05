@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Quackery
 {
-    [CreateAssetMenu(fileName = "RevealClientResult", menuName = "Quackery/Achievements/Reveal Client")]
+    [CreateAssetMenu(fileName = "RevealClientResult", menuName = "Quackery/Quests/Reveal Client")]
     public class RevealClientResult : Result
     {
         [SerializeField] private ClientData _clientData;

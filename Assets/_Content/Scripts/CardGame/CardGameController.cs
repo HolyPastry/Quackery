@@ -169,6 +169,7 @@ namespace Quackery.Decks
 
         public void TransfertCartToPurse()
         {
+            CartServices.ValidateCart();
             var cashInCart = CartServices.GetCartValue();
             if (cashInCart <= 0) return;
             _cartValue.MoveTo(_purseTransform, () =>

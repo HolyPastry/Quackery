@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Quackery
 {
-    [CreateAssetMenu(fileName = "DialogLineResult", menuName = "Quackery/Achievements/Play Dialog Line")]
+    [CreateAssetMenu(fileName = "DialogLineResult", menuName = "Quackery/Quests/Play Dialog Line")]
     public class DialogLineResult : Result
     {
         [SerializeField] private string _dialogKnot;

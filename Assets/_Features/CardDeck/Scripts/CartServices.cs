@@ -44,5 +44,7 @@ namespace Quackery.Decks
 
         internal static Func<int> GetLastCartValue = () => 0;
 
+        internal static Action ValidateCart = () => { };
+
     }
 }

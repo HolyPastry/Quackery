@@ -748,6 +748,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1970260046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &540839210
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 540839211}
+  - component: {fileID: 540839212}
+  m_Layer: 0
+  m_Name: GameStats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &540839211
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540839210}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1853978002}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &540839212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540839210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7cd89ca65eae4720bcfe15a21f93adf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &562564903
 GameObject:
   m_ObjectHideFlags: 0
@@ -2225,6 +2269,7 @@ GameObject:
   - component: {fileID: 1072491523}
   - component: {fileID: 1072491524}
   - component: {fileID: 1072491525}
+  - component: {fileID: 1072491526}
   m_Layer: 0
   m_Name: --- SceneSetup ---
   m_TagString: Untagged
@@ -2364,6 +2409,22 @@ MonoBehaviour:
   _disable: 0
   _quests:
   - {fileID: 11400000, guid: 4bd2be26a488043b982c790a2487491f, type: 2}
+--- !u!114 &1072491526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072491515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd91425597a7440bfa4b352388875b95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _disable: 0
+  clients: []
+  GenerateDailyQueue: 0
+  InfiniteQueue: 0
 --- !u!114 &1203412792 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3599782344628367698, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
@@ -3874,6 +3935,7 @@ Transform:
   - {fileID: 1480299647}
   - {fileID: 90818293}
   - {fileID: 1844829976}
+  - {fileID: 540839211}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1902878884
@@ -4948,12 +5010,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 278255905245337764, guid: 6bac9e74e24044a748242056d33070d6, type: 3}
       propertyPath: _queueSize
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 278255905245337764, guid: 6bac9e74e24044a748242056d33070d6, type: 3}
-      propertyPath: unknownClientsData
-      value: 
-      objectReference: {fileID: 11400000, guid: 48ff009e43e0640edb6b629c8d31daf4, type: 2}
     - target: {fileID: 1377916368898403988, guid: 6bac9e74e24044a748242056d33070d6, type: 3}
       propertyPath: m_Name
       value: ClientManager

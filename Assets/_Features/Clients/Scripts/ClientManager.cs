@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Holypastry.Bakery.Flow;
 using Quackery.Shops;
 using UnityEditor;
@@ -105,15 +106,37 @@ namespace Quackery.Clients
         {
             ResetClientQueue();
 
-            int missingClients = _queueSize - _clientList.Clients.Count;
-            if (missingClients > 0)
-                AddUnknownClients(missingClients);
+            int missingClients = _queueSize;
+
+            missingClients -= AddKnownClientsToQueue(_queueSize);
+
+
+            if (missingClients > _clientList.UnknownClients.Count)
+            {
+                AddUnknownClients(missingClients - _clientList.UnknownClients.Count);
+            }
 
             _clientList.Clients.Shuffle();
 
             for (int i = 0; i < _queueSize; i++)
-                _clientList.Clients[i].IsInQueue = true;
+            {
+                if (_clientList.Clients[i].IsAnonymous)
+                    _clientList.Clients[i].IsInQueue = true;
+                else
+                    i++;
+            }
             ClientEvents.ClientListUpdated?.Invoke();
+        }
+
+        private int AddKnownClientsToQueue(int queueSize)
+        {
+            var availableKnownClients =
+                 _clientList.Clients.FindAll(c => !c.IsAnonymous && c.QuestFullfilled);
+            foreach (var client in availableKnownClients)
+            {
+                client.IsInQueue = true;
+            }
+            return availableKnownClients.Count;
         }
 
         private void ResetClientQueue()

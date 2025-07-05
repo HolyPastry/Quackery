@@ -229,3 +229,19 @@ MonoBehaviour:
     Value: 1
     Trigger: 6
     Tags: 0300000002000000
+  - Data: {fileID: 11400000, guid: 20ce1060ae6814fe092e901535c4d6be, type: 2}
+    Value: -1
+    Trigger: 6
+    Tags: 0300000002000000
+  - Data: {fileID: 11400000, guid: f46eaadc5c50444de8d8e4db6280921c, type: 2}
+    Value: -1
+    Trigger: 6
+    Tags: 0300000002000000
+  - Data: {fileID: 11400000, guid: 0c626a7a36b8a460b8d88aab4412ca1c, type: 2}
+    Value: -1
+    Trigger: 6
+    Tags: 0300000002000000
+  - Data: {fileID: 11400000, guid: 800b97147ddac41c6ae43562328104db, type: 2}
+    Value: -1
+    Trigger: 6
+    Tags: 0300000002000000

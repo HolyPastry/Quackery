@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Quackery
 {
 
-    [CreateAssetMenu(fileName = "CartValueCondition", menuName = "Quackery/Achievements/Cart Value Condition")]
+    [CreateAssetMenu(fileName = "CartValueCondition", menuName = "Quackery/Quests/Conditions/Cart Value Condition")]
     public class CartValueCondition : Condition
     {
         [SerializeField] private int _cartValueThreshold = 100;

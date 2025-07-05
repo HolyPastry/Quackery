@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Holypastry.Bakery;
+using Holypastry.Bakery.Quests;
 using UnityEngine;
 
 namespace Quackery.Clients
@@ -48,6 +49,10 @@ namespace Quackery.Clients
         public int LastRating = 0;
 
         public string ChatHistory;
+
+        public QuestData FirstQuest => (Data == null) ? null : Data.FirstQuest;
+
+        public bool QuestFullfilled => FirstQuest != null && QuestServices.IsQuestCompleted(FirstQuest);
 
         public void InitUnknown(UnknownClientsData unknownClientsData)
         {

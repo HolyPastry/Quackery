@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _queueSize: 5
+  unknownClientsData: {fileID: 11400000, guid: 48ff009e43e0640edb6b629c8d31daf4, type: 2}
