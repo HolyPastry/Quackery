@@ -7,7 +7,7 @@ namespace Quackery.Decks
 {
     public class CartValueUI : MonoBehaviour
     {
-        [SerializeField] private TMPro.TextMeshProUGUI _cartValueText;
+        [SerializeField] protected TMPro.TextMeshProUGUI _cartValueText;
         void OnEnable()
         {
             CartEvents.OnCartValueChanged += UpdateCartValue;
@@ -18,16 +18,17 @@ namespace Quackery.Decks
             CartEvents.OnCartValueChanged -= UpdateCartValue;
         }
 
-        private void UpdateCartValue(int value)
+        protected virtual void UpdateCartValue(int value)
         {
-            _cartValueText.text = value.ToString();
+            _cartValueText.text = $"<sprite name=Coin> {value}";
         }
         public void Show()
         {
 
             gameObject.SetActive(true);
-            transform.localPosition = Vector3.zero;
+
             UpdateCartValue(CartServices.GetCartValue());
+            ResetPosition();
         }
 
         public void MoveTo(Transform target, Action onComplete)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Holypastry.Bakery;
 using Holypastry.Bakery.Quests;
+using Quackery.Decks;
 using UnityEngine;
 
 namespace Quackery.Clients
@@ -42,6 +43,8 @@ namespace Quackery.Clients
         public Sprite Portrait;
         public string LoginName;
 
+        public int Budget { get; private set; }
+
         public bool IsNew;
 
         public string LastReviewText = "";
@@ -51,7 +54,7 @@ namespace Quackery.Clients
 
         public QuestData FirstQuest => (Data == null) ? null : Data.FirstQuest;
 
-        public bool QuestFullfilled => FirstQuest != null && QuestServices.IsQuestCompleted(FirstQuest);
+        public bool QuestFullfilled => FirstQuest == null || QuestServices.IsQuestCompleted(FirstQuest);
 
         public void InitUnknown(UnknownClientsData unknownClientsData, Effect effect = null)
         {
@@ -65,7 +68,7 @@ namespace Quackery.Clients
 
             Portrait = unknownClientsData.RandomIcon;
             LoginName = Key;
-
+            Budget = -1;
             IsNew = true;
             ChatHistory = string.Empty;
 
@@ -76,6 +79,7 @@ namespace Quackery.Clients
 
             Data = data;
             Key = data.name;
+            Budget = data.Budget;
 
             if (data.Effects != null)
                 Effects = new List<Effect>(data.Effects);

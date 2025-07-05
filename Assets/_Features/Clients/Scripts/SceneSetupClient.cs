@@ -20,7 +20,10 @@ namespace Quackery.Clients
             foreach (var client in clients)
             {
                 ClientServices.AddKnownClient(client);
-                QuestServices.StartQuest(client.FirstQuest);
+                if (client.FirstQuest != null)
+                    QuestServices.StartQuest(client.FirstQuest);
+
+
             }
             foreach (var effect in UnknownEffectsToAdd)
             {

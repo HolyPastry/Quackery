@@ -23,3 +23,9 @@ MonoBehaviour:
     Value: 0
     Trigger: 6
     Tags: 02000000
+  FirstReward:
+    Review: 
+    Rating: 0
+    FollowerBonus: 0
+  FirstQuest: {fileID: 0}
+  Budget: 100

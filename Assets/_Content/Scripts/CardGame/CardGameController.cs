@@ -19,6 +19,8 @@ namespace Quackery.Decks
         [SerializeField] private Canvas _canvas;
         [SerializeField] private AnimatedRect _animatable;
         [SerializeField] private CartValueUI _cartValue;
+        [SerializeField] private BudgetCartValueUI _budgetCartValue;
+
         [SerializeField] private Transform _purseTransform;
 
         [SerializeField] private CardPool _cardSelectPanel;
@@ -61,6 +63,7 @@ namespace Quackery.Decks
         void Awake()
         {
             _cartValue.Hide();
+            _budgetCartValue.Hide();
             _gameStats = new GameStats();
             _EndRoundButton.interactable = false;
         }
@@ -129,50 +132,15 @@ namespace Quackery.Decks
             _cardSelectPanel.Show();
         }
 
-        // private void OnCashingPile(CardPile pile)
-        // {
-        //     if (pile == null || pile.IsEmpty) return;
-        //     AddCashToCart(pile.TopCard.Price);
-        //     DeckServices.DrawBackToFull();
-        // }
-
-        private void OnPileMovedToCart(EnumCardPile type, int index)
-        {
-            StartCoroutine(CartRewardRoutine(type, index));
-        }
-
-        private IEnumerator CalculateCartRoutine()
-        {
-            yield return new WaitForSeconds(0.5f);
-
-
-            // foreach (var pileUI in _cardPileUIs)
-            // {
-            //     yield return StartCoroutine(CartRewardRoutine(pileUI.Type, pileUI.PileIndex));
-            yield return new WaitForSeconds(0.2f);
-            // }
-        }
-
-        private IEnumerator CartRewardRoutine(EnumCardPile type, int index)
-        {
-            yield return null;
-            // //  _cashInCart += DeckServices.EvaluatePileValue(type);
-            // var pileUI = _cardPileUIs.Find(p => p.Type == type && p.PileIndex == index);
-            // foreach (CardReward cardReward in cardRewards)
-            // {
-            //     pileUI.ShowReward(cardReward);
-            //     yield return new WaitForSeconds(0.8f);
-            //     AddCashToCart(cardReward.Value);
-            // }
-            // EffectServices.Execute(Effects.EnumEffectTrigger.AfterCartCalculation, null);
-        }
 
         public void TransfertCartToPurse()
         {
             CartServices.ValidateCart();
             var cashInCart = CartServices.GetCartValue();
             if (cashInCart <= 0) return;
-            _cartValue.MoveTo(_purseTransform, () =>
+            CartValueUI cartValueUI = _client.Budget > 0 ? _budgetCartValue : _cartValue;
+
+            cartValueUI.MoveTo(_purseTransform, () =>
             {
                 PurseServices.Modify(cashInCart);
                 _purseTransform.DOPunchScale(Vector3.one * 0.2f, 0.2f, 10, 0.1f);
@@ -180,6 +148,7 @@ namespace Quackery.Decks
                 _gameStats.DayYield += cashInCart;
                 CartServices.SetCartValue(0);
                 _gameStats.TotalRating += 5; // Assuming each round gives a fixed rating of 5
+
             });
         }
 
@@ -191,8 +160,10 @@ namespace Quackery.Decks
             _endOfRound = false;
 
             _client = client;
-
-            _cartValue.Show();
+            if (_client.Budget > 0)
+                _budgetCartValue.Show();
+            else
+                _cartValue.Show();
             _gameStats.NumClientsServed++;
             StartCoroutine(RoundRoutine());
 

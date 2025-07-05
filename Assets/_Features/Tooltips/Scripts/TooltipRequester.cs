@@ -3,14 +3,14 @@ using UnityEngine.EventSystems;
 
 namespace Quackery
 {
-    public class TooltipRequester : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class TooltipRequester : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        public void OnPointerEnter(PointerEventData eventData)
+        public void OnPointerDown(PointerEventData eventData)
         {
             TooltipUI.ShowTooltipRequest(gameObject);
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public void OnPointerUp(PointerEventData eventData)
         {
             TooltipUI.HideTooltipRequest();
         }

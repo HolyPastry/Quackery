@@ -27,7 +27,7 @@ namespace Quackery.Decks
             set => _pileType = value;
 
         }
-        public bool IsEmpty => transform.childCount == 0;
+        public bool IsEmpty => GetComponentsInChildren<Card>().Length == 0;
         public Card TopCard => IsEmpty ? null : GetComponentsInChildren<Card>()[^1];
 
         public float Height => (transform as RectTransform).sizeDelta.y;

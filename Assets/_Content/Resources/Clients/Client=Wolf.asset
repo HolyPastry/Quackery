@@ -24,3 +24,4 @@ MonoBehaviour:
     Rating: 2
     FollowerBonus: 50
   FirstQuest: {fileID: 11400000, guid: a26c71a776caa4369874675cd95b3d80, type: 2}
+  Budget: 50

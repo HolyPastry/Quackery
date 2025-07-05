@@ -42,6 +42,7 @@ namespace Quackery.Clients
             ClientServices.AddUnknownClient = AddUnknownClient;
 
             ClientServices.SwapClients = SwapClients;
+            ClientServices.GetBudget = () => _selectedClient?.Budget ?? -1;
 
         }
 
@@ -67,12 +68,12 @@ namespace Quackery.Clients
             ClientServices.IsCurrentClientAnonymous = () => false;
             ClientServices.SwapCurrentClientTo = (data) => { };
 
-
-
             ClientServices.SetInfiniteQueue = (isOn) => _infiniteQueue = isOn;
             ClientServices.GetRevealedClient = () => null;
             ClientServices.SwapClients = () => { };
             ClientServices.AddUnknownClient = (effect) => { };
+
+            ClientServices.GetBudget = () => -1;
 
         }
 
