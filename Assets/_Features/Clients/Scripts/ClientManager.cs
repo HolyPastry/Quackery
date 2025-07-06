@@ -43,6 +43,8 @@ namespace Quackery.Clients
 
             ClientServices.SwapClients = SwapClients;
             ClientServices.GetBudget = () => _selectedClient?.Budget ?? -1;
+            ClientServices.SetClientState = SetClientState;
+            ClientServices.CheckStatus = CheckClientStatus;
 
         }
 
@@ -73,6 +75,10 @@ namespace Quackery.Clients
             ClientServices.SwapClients = () => { };
             ClientServices.AddUnknownClient = (effect) => { };
 
+            ClientServices.SetClientState = (clientData, state) => { };
+            ClientServices.CheckStatus = (clientData, state) => false;
+
+
             ClientServices.GetBudget = () => -1;
 
         }
@@ -90,7 +96,6 @@ namespace Quackery.Clients
             _clientList.Remove(_selectedClient);
             _clientList.Add(_clientToSwap);
             _selectedClient = _clientToSwap;
-            QuestServices.StartQuest(_selectedClient.FirstQuest);
         }
 
         private void SwapCurrentClientTo(ClientData data)
@@ -98,6 +103,44 @@ namespace Quackery.Clients
             _clientToSwap = new Client();
 
             _clientToSwap.InitKnownClient(data);
+        }
+        private bool CheckClientStatus(ClientData data, Client.EnumState state)
+        {
+
+            var client = _clientList.Clients.Find(c => c.Key == data.name);
+            if (client == null)
+            {
+                Debug.LogWarning($"Client with key {data.name} not found in the client list.");
+                return false;
+            }
+
+            return client.State == state;
+        }
+        private void SetClientState(ClientData data, Client.EnumState state)
+        {
+            switch (state)
+            {
+                case Client.EnumState.Unknown:
+                    Debug.LogWarning("Cannot set client state to Unknown. This should not happen.");
+                    break;
+                case Client.EnumState.Revealed:
+                    SwapCurrentClientTo(data);
+                    break;
+                case Client.EnumState.Ready:
+                    var client = _clientList.Clients.Find(c => c.Key == data.name);
+                    if (client != null)
+                        client.State = Client.EnumState.Ready;
+                    break;
+                case Client.EnumState.WonOver:
+                    client = _clientList.Clients.Find(c => c.Key == data.name);
+                    if (client != null)
+                        client.State = Client.EnumState.WonOver;
+
+                    break;
+
+            }
+
+
         }
 
         private void SelectClient(Client client)
@@ -140,11 +183,12 @@ namespace Quackery.Clients
         private int AddKnownClientsToQueue(int queueSize)
         {
             var availableKnownClients =
-                 _clientList.Clients.FindAll(c => !c.IsAnonymous && c.QuestFullfilled);
+                 _clientList.Clients.FindAll(c => !c.IsAnonymous
+                    && c.State == Client.EnumState.Ready);
+
             foreach (var client in availableKnownClients)
-            {
                 client.IsInQueue = true;
-            }
+
             return availableKnownClients.Count;
         }
 
@@ -159,11 +203,15 @@ namespace Quackery.Clients
             _selectedClient = null;
         }
 
-        private void ClientServed(Client client)
+        private void ClientServed(Client client, bool succeeded)
         {
             client.IsNew = false;
             client.Served = true;
+            if (succeeded)
+                client.State = Client.EnumState.WonOver;
+
             _clientList.Save();
+            ClientEvents.OnClientServed?.Invoke(client);
 
             ClientEvents.ClientListUpdated?.Invoke();
         }

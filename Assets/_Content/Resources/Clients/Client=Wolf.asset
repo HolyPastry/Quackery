@@ -23,5 +23,5 @@ MonoBehaviour:
     Review: 'Lovely store, wish it was more affordable though. '
     Rating: 2
     FollowerBonus: 50
-  FirstQuest: {fileID: 11400000, guid: a26c71a776caa4369874675cd95b3d80, type: 2}
+  FirstQuest: {fileID: 11400000, guid: 4bd2be26a488043b982c790a2487491f, type: 2}
   Budget: 50

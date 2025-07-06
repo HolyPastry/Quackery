@@ -9,6 +9,14 @@ namespace Quackery.Clients
 {
     public record Client
     {
+        public enum EnumState
+        {
+            Unknown,
+            Revealed,
+            Ready,
+            WonOver
+        }
+
         [NonSerialized]
         private ClientData Data;
         public string Key;
@@ -51,10 +59,14 @@ namespace Quackery.Clients
         public int LastRating = 0;
 
         public string ChatHistory;
+        public bool IsOnline;
+        public EnumState State = EnumState.Unknown;
 
         public QuestData FirstQuest => (Data == null) ? null : Data.FirstQuest;
 
         public bool QuestFullfilled => FirstQuest == null || QuestServices.IsQuestCompleted(FirstQuest);
+
+
 
         public void InitUnknown(UnknownClientsData unknownClientsData, Effect effect = null)
         {
@@ -80,7 +92,7 @@ namespace Quackery.Clients
             Data = data;
             Key = data.name;
             Budget = data.Budget;
-
+            State = EnumState.Revealed;
             if (data.Effects != null)
                 Effects = new List<Effect>(data.Effects);
             else

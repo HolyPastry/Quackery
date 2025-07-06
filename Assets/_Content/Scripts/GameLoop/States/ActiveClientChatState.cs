@@ -50,7 +50,7 @@ namespace Quackery
                 {
                     CartServices.SetCartValue(0);
                     client.BadReview();
-                    ClientServices.ClientServed(client);
+                    ClientServices.ClientServed(client, false);
 
                 }
                 else
@@ -60,7 +60,7 @@ namespace Quackery
                     controller.TransfertCartToPurse();
                     yield return new WaitForSeconds(1f);
                     client.GoodReview();
-                    ClientServices.ClientServed(client);
+                    ClientServices.ClientServed(client, true);
                     yield return DialogQueueServices.WaitUntilAllDialogEnds();
                 }
 
@@ -69,23 +69,22 @@ namespace Quackery
                 CartServices.DiscardCart();
                 EffectServices.CleanEffects();
 
-                controller.ShowEndRoundScreen(!controller.RoundInterrupted);
+                controller.ShowEndRoundScreen(!controller.RoundInterrupted, out bool wasBoss);
                 yield return controller.WaitUntilEndOfRoundScreenClosed();
                 controller.HideEndRoundScreen();
                 yield return new WaitForSeconds(1f);
 
-
-                if (ClientServices.HasNextClient())
-                {
-                    ClientServices.GetNextClient();
-                    yield return textChat.WaitUntilClientCameIn();
-                }
-                else
+                if (!ClientServices.HasNextClient() || wasBoss)
                 {
                     controller.ShowEndDayScreen();
                     yield return controller.WaitUntilEndOfDayValidated();
                     ClientServices.ClientLeaves();
                     break;
+                }
+                else
+                {
+                    ClientServices.GetNextClient();
+                    yield return textChat.WaitUntilClientCameIn();
                 }
             }
         }

@@ -26,7 +26,7 @@ namespace Quackery
             if (_revealClient)
                 ClientServices.SwapCurrentClientTo(_data);
 
-            _endOfRoundScreen.Show(client, true);
+            StartCoroutine(_endOfRoundScreen.Show(client, true));
 
         }
     }

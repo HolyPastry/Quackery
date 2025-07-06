@@ -2183,7 +2183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c705b4d9e7d49a9a1ceb01d3a7a94e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugState: 0
+  _debugState: 1
   CardGameController: {fileID: 1203412792}
   ClientTextChat: {fileID: 1259681806}
   ShopApp: {fileID: 479571801}
@@ -2410,9 +2410,7 @@ MonoBehaviour:
   _disable: 0
   _quests:
   - {fileID: 11400000, guid: 4bd2be26a488043b982c790a2487491f, type: 2}
-  - {fileID: 11400000, guid: a26c71a776caa4369874675cd95b3d80, type: 2}
-  _questsToComplete:
-  - {fileID: 11400000, guid: a26c71a776caa4369874675cd95b3d80, type: 2}
+  _questsToComplete: []
 --- !u!114 &1072491526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2426,8 +2424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _disable: 0
-  clients:
-  - {fileID: 11400000, guid: 547468dd71e6942988ffcc2ced0e9b67, type: 2}
+  clients: []
   UnknownEffectsToAdd:
   - Data: {fileID: 11400000, guid: 20ce1060ae6814fe092e901535c4d6be, type: 2}
     Value: -1
@@ -4461,6 +4458,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 575753464}
     m_Modifications:
+    - target: {fileID: 2183275844190550131, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: _startHidden
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3947170870763940767, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 701.5755

@@ -257,10 +257,12 @@ namespace Quackery.Decks
             return new WaitUntil(() => _endOfRound);
         }
 
-        public void ShowEndRoundScreen(bool success)
+        public void ShowEndRoundScreen(bool success, out bool wasBoss)
         {
+            wasBoss = !ClientServices.IsCurrentClientAnonymous() &&
+                      ClientServices.GetRevealedClient() == null;
 
-            _endRoundScreen.Show(_client, success);
+            StartCoroutine(_endRoundScreen.Show(_client, success));
         }
         public void HideEndRoundScreen()
         {

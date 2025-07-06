@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Holypastry.Bakery.Quests;
 using Quackery.Clients;
 using TMPro;
 
@@ -86,13 +87,15 @@ namespace Quackery
             _questText.text = "";
             _questLinePanel.SetActive(false);
 
-            if (Client.FirstQuest == null) return;
+            if (Client.State != Client.EnumState.Revealed &&
+                Client.State != Client.EnumState.Ready) return;
 
-            var firstCondition = _client.FirstQuest.Steps?[0].Conditions?[0];
+            var step = QuestServices.GetCurrentStep(Client.FirstQuest);
+            var firstCondition = step?.Conditions[0];
 
             if (firstCondition == null) return;
 
-            if (_client.QuestFullfilled)
+            if (_client.State == Client.EnumState.Revealed)
                 _questBackground.color = Color.green;
 
             _questText.text = firstCondition.ToString();

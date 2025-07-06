@@ -45,18 +45,18 @@ namespace Quackery
                 {
                     CartServices.SetCartValue(0);
                     client.BadReview();
-                    ClientServices.ClientServed(client);
+                    ClientServices.ClientServed(client, false);
                 }
                 else
                 {
                     _controller.TransfertCartToPurse();
                     yield return new WaitForSeconds(1f);
                     client.GoodReview();
-                    ClientServices.ClientServed(client);
+                    ClientServices.ClientServed(client, true);
                 }
                 CartServices.DiscardCart();
                 EffectServices.CleanEffects();
-                _controller.ShowEndRoundScreen(!_controller.RoundInterrupted);
+                _controller.ShowEndRoundScreen(!_controller.RoundInterrupted, out bool wasBoss);
 
                 yield return new WaitForSeconds(5f);
                 _controller.HideEndRoundScreen();

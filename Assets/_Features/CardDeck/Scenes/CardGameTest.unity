@@ -508,6 +508,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2706169665660358529, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3000870964074270261, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3000870964074270261, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3000870964074270261, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 295.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3000870964074270261, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3000870964074270261, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 147.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3000870964074270261, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -100
+      objectReference: {fileID: 0}
     - target: {fileID: 3947170870763940767, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 701.5755
@@ -548,9 +576,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4209357786488743459, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5512900835394248659, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
       propertyPath: m_Name
       value: CardGameController
+      objectReference: {fileID: 0}
+    - target: {fileID: 7118690974979494208, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -891,6 +927,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _disable: 0
   _cardInHands: []
+  _cardsInDeck: []
+  _addAllCards: 1
 --- !u!114 &1904557739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -968,6 +1006,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5077920aa9140445f9c1bccfecaaa1c3, type: 2}
   - {fileID: 11400000, guid: 869bf536400604bb0ba291afc44926bc, type: 2}
   - {fileID: 11400000, guid: 924763be3d5d84a5ebef0cd1b40ba185, type: 2}
+  _addAllItems: 1
 --- !u!1 &1956133995
 GameObject:
   m_ObjectHideFlags: 0

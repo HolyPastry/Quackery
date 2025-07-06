@@ -14,7 +14,7 @@ namespace Quackery.Clients
         public static Func<List<Client>> GetClients = () => new();
 
         public static Func<Client> GetNextClient = () => null;
-        public static Action<Client> ClientServed = (client) => { };
+        public static Action<Client, bool> ClientServed = (client, success) => { };
 
         public static Action GenerateDailyQueue = delegate { };
 
@@ -38,6 +38,11 @@ namespace Quackery.Clients
         internal static Action<Effect> AddUnknownClient = (effect) => { };
 
         internal static Func<int> GetBudget = () => -1;
+
+        internal static Action<ClientData, Client.EnumState> SetClientState = (clientData, state) => { };
+
+        internal static Func<ClientData, Client.EnumState, bool> CheckStatus = (clientData, state) => false;
+
 
     }
 }
