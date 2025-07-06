@@ -21,7 +21,7 @@ MonoBehaviour:
     Tags: 0300000002000000
   - Data: {fileID: 11400000, guid: 288c7482b65634ba0b357db9bef530a9, type: 2}
     Value: -1
-    Trigger: 7
+    Trigger: 6
     Tags: 0200000003000000
   FirstReward:
     Review: 

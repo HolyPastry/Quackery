@@ -13,7 +13,7 @@ namespace Quackery.Decks
         public static Func<List<EnumItemCategory>> GetCategoriesInCart = () => new();
 
         public static Action<int> SetRatingCartSizeModifier = (value) => { };
-        public static Action<int> ModifyCardCartSizeModifier = (value) => { };
+        // public static Action<int> ModifyCardCartSizeModifier = (value) => { };
         public static Func<IEnumerator> CalculateCart = () => null;
         public static Action CompleteCartPileCalculation = () => { };
 
@@ -36,7 +36,7 @@ namespace Quackery.Decks
         public static Action<int> SetCartValue = (value) => { };
         public static Func<int, bool> CanCartAfford = (value) => { return true; };
 
-        internal static Action ResetCartSizeCardModifier = () => { };
+        // internal static Action ResetCartSizeCardModifier = () => { };
 
         internal static Action<Card> ReplaceTopCard = (card) => { };
 

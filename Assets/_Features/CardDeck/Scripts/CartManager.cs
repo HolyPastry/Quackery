@@ -16,7 +16,7 @@ namespace Quackery.Decks
         [SerializeField] private int _initialCartSize = 3;
 
         private int _ratingCartSizeModifier;
-        private int _cardCartSizeModifier;
+        // private int _cardCartSizeModifier;
         private bool _cartCalculated;
 
         private int _cartValue;
@@ -43,8 +43,8 @@ namespace Quackery.Decks
         {
 
             CartServices.SetRatingCartSizeModifier = SetRatingModifier;
-            CartServices.ModifyCardCartSizeModifier = ModifyCardModifier;
-            CartServices.ResetCartSizeCardModifier = ResetCartSizeCardModifier;
+            // CartServices.ModifyCardCartSizeModifier = ModifyCardModifier;
+            // CartServices.ResetCartSizeCardModifier = ResetCartSizeCardModifier;
             CartServices.GetCartSize = () => CartSize;
 
             CartServices.DiscardCart = DiscardCart;
@@ -84,8 +84,7 @@ namespace Quackery.Decks
         void OnDisable()
         {
             CartServices.SetRatingCartSizeModifier = delegate { };
-            CartServices.ModifyCardCartSizeModifier = delegate { };
-            CartServices.ResetCartSizeCardModifier = delegate { };
+
             CartServices.GetCartSize = () => 0;
 
             CartServices.DiscardCart = delegate { };
@@ -194,6 +193,7 @@ namespace Quackery.Decks
         private void UpdateCardUI(Effect effect) => UpdateUI();
         private void UpdateUI()
         {
+            UpdateCartSize();
             _cartPiles.ForEach(p => p.UpdateUI());
         }
 
@@ -210,16 +210,16 @@ namespace Quackery.Decks
 
 
 
-        private void ModifyCardModifier(int value)
-        {
-            _cardCartSizeModifier += value;
-            UpdateCartSize();
-        }
-        private void ResetCartSizeCardModifier()
-        {
-            _cardCartSizeModifier = 0;
-            UpdateCartSize();
-        }
+        // private void ModifyCardModifier(int value)
+        // {
+        //     _cardCartSizeModifier += value;
+        //     UpdateCartSize();
+        // }
+        // private void ResetCartSizeCardModifier()
+        // {
+        //     _cardCartSizeModifier = 0;
+        //     UpdateCartSize();
+        // }
 
         private void SetRatingModifier(int value)
         {
@@ -295,7 +295,7 @@ namespace Quackery.Decks
         }
         private void UpdateCartSize()
         {
-            int cartSize = _initialCartSize + _ratingCartSizeModifier + _cardCartSizeModifier;
+            int cartSize = _initialCartSize + _ratingCartSizeModifier + EffectServices.GetCartSizeModifier();
             cartSize = Mathf.Max(cartSize, 2);
 
             while (_cartPiles.Count <= cartSize)

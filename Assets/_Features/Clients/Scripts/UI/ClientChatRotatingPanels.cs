@@ -90,7 +90,7 @@ namespace Quackery
         }
         internal void ClientSwapIn(Client client)
         {
-
+            _specialPanel.Hide();
             RotatingClientChatPanel panel = _panels.Find(p => p.CurrentState == CustomerPanelState.ReadyToEnter);
             if (panel == null)
             {

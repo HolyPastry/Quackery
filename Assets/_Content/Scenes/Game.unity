@@ -2380,6 +2380,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4eeacf355a402459d87f55d144dd1302, type: 2}
   - {fileID: 11400000, guid: e8b11a848fce949b9a292cebc7d0a24e, type: 2}
   - {fileID: 11400000, guid: 1991ee6454fb54a57b9813fee81df8b9, type: 2}
+  _addAllItems: 1
 --- !u!114 &1072491524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2409,6 +2410,9 @@ MonoBehaviour:
   _disable: 0
   _quests:
   - {fileID: 11400000, guid: 4bd2be26a488043b982c790a2487491f, type: 2}
+  - {fileID: 11400000, guid: a26c71a776caa4369874675cd95b3d80, type: 2}
+  _questsToComplete:
+  - {fileID: 11400000, guid: a26c71a776caa4369874675cd95b3d80, type: 2}
 --- !u!114 &1072491526
 MonoBehaviour:
   m_ObjectHideFlags: 0

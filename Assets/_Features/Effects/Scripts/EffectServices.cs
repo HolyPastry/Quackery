@@ -48,6 +48,7 @@ namespace Quackery
 
         internal static Func<EffectData, int, int> CounterEffect = (counterEffect, value) => 0;
 
+        internal static Func<int> GetCartSizeModifier = () => 0;
 
     }
 }

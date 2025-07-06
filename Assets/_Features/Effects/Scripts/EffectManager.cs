@@ -46,6 +46,7 @@ namespace Quackery.Effects
             EffectServices.CancelAllEffects = delegate { };
             EffectServices.ChangePreference = (category) => { };
             EffectServices.CounterEffect = (itemData, numCard) => 0;
+            EffectServices.GetCartSizeModifier = () => 0;
 
             EffectEvents.OnAdded -= ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved -= ExecuteOnAppliedEffect;
@@ -78,6 +79,8 @@ namespace Quackery.Effects
             EffectServices.CancelAllEffects = CancelAllEffects;
             EffectServices.ChangePreference = ChangePreference;
             EffectServices.CounterEffect = CounterEffect;
+
+            EffectServices.GetCartSizeModifier = GetCartSizeModifier;
 
             EffectEvents.OnAdded += ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved += ExecuteOnAppliedEffect;
@@ -138,6 +141,21 @@ namespace Quackery.Effects
             }
 
             return stackPrice;
+        }
+
+        private int GetCartSizeModifier()
+        {
+            int cartSizeModifier = 0;
+
+            foreach (var effect in _effects)
+            {
+                if (effect.Data is CartSizeModifierEffect)
+                {
+                    cartSizeModifier += effect.Value;
+                }
+            }
+
+            return cartSizeModifier;
         }
 
         private int GetCardPrice(Card card)
@@ -280,7 +298,6 @@ namespace Quackery.Effects
                 _effects.Remove(effect);
                 EffectEvents.OnRemoved?.Invoke(effect);
             }
-            CartServices.ResetCartSizeCardModifier();
         }
 
         private int GetPriceModifier(Card card)
