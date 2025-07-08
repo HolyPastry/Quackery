@@ -27,7 +27,7 @@ namespace Quackery
             ArtifactData artifactData = @object as ArtifactData;
             artifactData.MasterText = fields[3];
             artifactData.Level = IntParse(fields[4]);
-            artifactData.Icon = AssetDatabase.LoadAssetAtPath<Sprite>(Path.Join(_iconPath, "Artifact=" + fields[2] + ".png"));
+            artifactData.Icon = AssetDatabase.LoadAssetAtPath<Sprite>(Path.Join(_iconPath, "Artifacts=" + fields[2] + ".png"));
             artifactData.UpgradeFor = AssetDatabase.LoadAssetAtPath<ArtifactData>(Path.Join(DATA_PATH, fields[5] + ".asset"));
             ParseRequirements(artifactData, fields[6]);
 
