@@ -29,7 +29,7 @@ namespace Quackery
 
         private void Generate(Vector3 originPosition, Vector3 mousePosition)
         {
-            Debug.Log($"Generating dotted line from {originPosition} to {mousePosition}");
+
             var dotWidth = _dottedLinePrefab.rect.width;
 
             // var direction = (mousePosition - originPosition).normalized;

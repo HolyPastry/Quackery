@@ -21,14 +21,18 @@ namespace Quackery.Artifacts
 
         void OnEnable()
         {
+            ArtifactServices.WaitUntilReady = () => WaitUntilReady;
             ArtifactServices.Add = AddArtifact;
+            ArtifactServices.GetAllArtifacts = () => _ownedArtifacts.All;
         }
 
 
 
         void OnDisable()
         {
+            ArtifactServices.WaitUntilReady = () => new WaitUntil(() => true);
             ArtifactServices.Add = delegate { };
+            ArtifactServices.GetAllArtifacts = () => new();
         }
 
         protected override IEnumerator Start()
@@ -44,12 +48,6 @@ namespace Quackery.Artifacts
             SaveServices.Save(Key, _ownedArtifacts);
         }
 
-        private void UpgradeArtifact(ArtifactData data)
-        {
-            _ownedArtifacts.Upgrade(data);
-            Save();
-            ArtifactEvents.OnArtifactUpdated(data);
-        }
 
         private void AddArtifact(ArtifactData data)
         {

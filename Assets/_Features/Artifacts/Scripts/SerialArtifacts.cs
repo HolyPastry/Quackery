@@ -13,6 +13,9 @@ namespace Quackery.Artifacts
         [NonSerialized]
         private List<ArtifactData> _artifacts = new();
         public List<string> Keys = new();
+
+        public List<ArtifactData> All => new(_artifacts);
+
         public void Init(DataCollection<ArtifactData> collection)
         {
             foreach (string key in Keys)

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 
@@ -11,13 +12,21 @@ namespace Quackery.Artifacts
         void OnEnable()
         {
             ArtifactEvents.OnArtifactAdded += OnArtifactAdded;
-            ArtifactEvents.OnArtifactUpdated += OnArtifactUpdated;
         }
 
         void OnDisable()
         {
             ArtifactEvents.OnArtifactAdded -= OnArtifactAdded;
-            ArtifactEvents.OnArtifactUpdated -= OnArtifactUpdated;
+        }
+
+        IEnumerator Start()
+        {
+            yield return FlowServices.WaitUntilEndOfSetup();
+            yield return ArtifactServices.WaitUntilReady();
+            var artifacts = ArtifactServices.GetAllArtifacts();
+            foreach (var artifact in artifacts)
+                OnArtifactAdded(artifact);
+
         }
 
         private void OnArtifactAdded(ArtifactData data)
