@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 22.Digital Nomad
   m_EditorClassIdentifier: 
   MasterText: Digital Nomad
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 7627aaefa7182234aa3e3e3576e7e2e1, type: 3}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 2

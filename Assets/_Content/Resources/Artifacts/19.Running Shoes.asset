@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 19.Running Shoes
   m_EditorClassIdentifier: 
   MasterText: Running Shoes
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: c0ab06f3d996ba348a0e3c1d2f053992, type: 3}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 2

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 13.Influencer
   m_EditorClassIdentifier: 
   MasterText: Influencer
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: a46785b0ceed41a488f9df6209678f38, type: 3}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 2

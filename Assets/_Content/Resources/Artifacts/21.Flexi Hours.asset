@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 21.Flexi Hours
   m_EditorClassIdentifier: 
   MasterText: Flexi Hours
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: e3e7a3e7cdda40d4db441ae33dba2dda, type: 3}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 2

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 18.Yoga
   m_EditorClassIdentifier: 
   MasterText: Yoga
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: afdab751a1aeb4940bc1577716b8b0ec, type: 3}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 2

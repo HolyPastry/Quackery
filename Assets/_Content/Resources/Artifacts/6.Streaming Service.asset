@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 6.Streaming Service
   m_EditorClassIdentifier: 
   MasterText: Streaming Service
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ad5d40bde68d4234cad900b66efe79ee, type: 3}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 1

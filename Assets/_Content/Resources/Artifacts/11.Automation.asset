@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 11.Automation
   m_EditorClassIdentifier: 
   MasterText: Automation
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: d0b0934b6201bb047be4b154997b704b, type: 3}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 2

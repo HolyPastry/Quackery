@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 1.Work Desk
   m_EditorClassIdentifier: 
   MasterText: Work Desk
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: a2b50a8e57f946d44994660f2919d7f9, type: 3}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 1

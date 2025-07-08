@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 23.Ergonomic Office
   m_EditorClassIdentifier: 
   MasterText: Ergonomic Office
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 3ef7b5119070d1648a4757196ab8725c, type: 3}
   Description: 
   UpgradeFor: {fileID: 11400000, guid: 09c2003b11fdd4728b1dc27fcc20d977, type: 2}
   Level: 2

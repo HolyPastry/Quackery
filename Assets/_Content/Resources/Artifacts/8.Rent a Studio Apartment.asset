@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 8.Rent a Studio Apartment
   m_EditorClassIdentifier: 
   MasterText: Rent a Studio Apartment
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 70a874172ce3f8f44896d93d54606696, type: 3}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 1

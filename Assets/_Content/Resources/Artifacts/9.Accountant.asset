@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 9.Accountant
   m_EditorClassIdentifier: 
   MasterText: Accountant
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 53a2be4213b9ae84aa6fff8582915450, type: 3}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 2
