@@ -13,6 +13,6 @@ namespace Quackery.Inventories
         Ayurveda,
         Chinese,
         Skills,
-        Fatigues
+        Curses
     }
 }

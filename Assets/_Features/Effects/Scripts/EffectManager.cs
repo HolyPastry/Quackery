@@ -6,6 +6,7 @@ using Ink.Parsed;
 using Quackery.Artifacts;
 using Quackery.Decks;
 using Quackery.Inventories;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.Assertions;
@@ -123,11 +124,11 @@ namespace Quackery.Effects
         {
             if (card == null) return false;
 
-            var requirements = card.Effects.FindAll(effect => effect.Data is RequirementEffectData);
+            var requirements = card.Effects.FindAll(effect => effect.Data is IEffectRequirement);
 
-            requirements.AddRange(_effects.FindAll(effect => effect.Data is RequirementEffectData));
+            requirements.AddRange(_effects.FindAll(effect => effect.Data is IEffectRequirement));
 
-            return requirements.TrueForAll(r => (r.Data as RequirementEffectData).IsFulfilled(r, card));
+            return requirements.TrueForAll(r => (r.Data as IEffectRequirement).IsFulfilled(r, card));
         }
 
         private int GetStackPrice(Card topCard, List<Item> stack)
@@ -187,7 +188,7 @@ namespace Quackery.Effects
             {
                 var effect = card.Effects.Find(e => e.Data is CategoryInCartPriceEffect);
 
-                int numCards = CartServices.GetNumCardInCart((effect.Data as CategoryInCartPriceEffect).Category);
+                int numCards = CartServices.GetNumCardInCart((effect.Data as ICategoryEffect).Category);
                 basePrice = numCards * effect.Value;
             }
 
@@ -277,8 +278,6 @@ namespace Quackery.Effects
                 var newEffect = new Effect(data)
                 {
                     Value = arg2,
-                    Trigger = EnumEffectTrigger.Continous
-
                 };
                 newEffect.Tags.Add(EnumEffectTag.Activated);
 
@@ -323,16 +322,20 @@ namespace Quackery.Effects
 
             foreach (var effect in _effects)
             {
+                if (effect.Data is not IPriceModifierEffect modifierEffectData)
+                    continue;
+
+
                 //Look for all possible amplifiers for this effect
                 int effectAmplifiers = _effects.FindAll(e => e.Data is EffectAmplifierEffect amplifierEffect &&
-                                           amplifierEffect.EffectToAmplify == effect.Data).Sum<Effect>(e => e.Value);
+                                       amplifierEffect.EffectToAmplify == effect.Data).Sum<Effect>(e => e.Value);
                 effectAmplifiers += card.Effects.FindAll(e => e.Data is EffectAmplifierEffect amplifierEffect &&
                amplifierEffect.EffectToAmplify == effect.Data).Sum<Effect>(e => e.Value);
 
                 if (effectAmplifiers <= 0)
                     effectAmplifiers = 1; // Ensure at least one multiplier is applied
 
-                priceModifier += effect.PriceModifier(card) * effectAmplifiers;
+                priceModifier += modifierEffectData.PriceModifier(effect, card) * effectAmplifiers;
             }
 
             foreach (var effect in card.Effects)
@@ -342,6 +345,8 @@ namespace Quackery.Effects
                     Debug.LogWarning($"Effect is null when calculating price modifier: {card.Item.Data.name}");
                     continue;
                 }
+                if (effect.Data is not IPriceModifierEffect modifierEffectData)
+                    continue;
                 int effectAmplifiers = _effects.FindAll(e => e.Data is EffectAmplifierEffect amplifierEffect &&
                                                         amplifierEffect.EffectToAmplify == effect.Data).Sum<Effect>(e => e.Value);
                 effectAmplifiers += card.Effects.FindAll(e => e.Data is EffectAmplifierEffect amplifierEffect &&
@@ -351,7 +356,7 @@ namespace Quackery.Effects
                     effectAmplifiers = 1; // Ensure at least one multiplier is applied
 
                 //                Debug.Log($"Effect: {effect.Data.name}, Amplifiers: {effectAmplifiers}, Price Modifier: {effect.PriceModifier(card)}");
-                priceModifier += effect.PriceModifier(card) * effectAmplifiers;
+                priceModifier += modifierEffectData.PriceModifier(effect, card) * effectAmplifiers;
             }
 
             return priceModifier;
@@ -362,11 +367,20 @@ namespace Quackery.Effects
             float priceRatioModifier = 1.0f;
             foreach (var effect in _effects)
             {
-                priceRatioModifier += effect.PriceRatioModifier(card);
+                if (effect.Data is not IPriceModifierEffect modifierEffectData)
+                    continue;
+                priceRatioModifier += modifierEffectData.PriceMultiplier(effect, card);
             }
             foreach (var effect in card.Effects)
             {
-                priceRatioModifier += effect.PriceRatioModifier(card);
+                if (effect.Data == null)
+                {
+                    Debug.LogWarning($"Effect is null when calculating price ratio modifier: {card.Item.Data.name}");
+                    continue;
+                }
+                if (effect.Data is not IPriceModifierEffect modifierEffectData)
+                    continue;
+                priceRatioModifier += modifierEffectData.PriceMultiplier(effect, card);
             }
             return priceRatioModifier;
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Quackery.Effects
 {
-    [CreateAssetMenu(fileName = "DrawXPickOne", menuName = "Quackery/Effects/Draw X Pick One", order = 1)]
+    [CreateAssetMenu(fileName = "DrawXPickOne", menuName = "Quackery/Effects/Deck/Draw X Pick One", order = 1)]
     public class DrawXPickOne : EffectData
     {
         // public override string Description => "Draw two cards from the deck, select one to keep, and discard the other.";

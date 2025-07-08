@@ -634,7 +634,7 @@ namespace Quackery.Decks
                     else
                         pile.Playable = CartServices.CanCartAfford(-topCard.Price);
                 }
-                else if (topCard.Category == EnumItemCategory.Fatigues)
+                else if (topCard.Category == EnumItemCategory.Curses)
                 {
                     pile.Playable = false;
                 }

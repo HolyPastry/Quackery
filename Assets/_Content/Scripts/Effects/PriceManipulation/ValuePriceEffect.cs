@@ -6,18 +6,13 @@ namespace Quackery.Effects
 {
 
 
-    [CreateAssetMenu(fileName = "BoostPriceEffect", menuName = "Quackery/Effects/ValuePrice")]
-    public class ValuePriceEffect : CategoryEffectData
+    [CreateAssetMenu(fileName = "BoostPriceEffect", menuName = "Quackery/Effects/Price/ValuePrice")]
+    public class ValuePriceEffect : EffectData, IPriceModifierEffect, ICategoryEffect
     {
+        [SerializeField] private EnumItemCategory _category = EnumItemCategory.Unset;
+        public EnumItemCategory Category => _category;
 
-
-        // public override string GetDescription()
-        // {
-        //     return Sprites.Replace(Category, Description);
-        // }
-
-
-        public override int PriceModifier(Effect effect, Card card)
+        public int PriceModifier(Effect effect, Card card)
         {
             if (card.Category == Category || Category == EnumItemCategory.Unset)
             {
@@ -26,6 +21,7 @@ namespace Quackery.Effects
             return 0;
         }
 
+        public float PriceMultiplier(Effect effect, Card card) => 0;
 
     }
 }

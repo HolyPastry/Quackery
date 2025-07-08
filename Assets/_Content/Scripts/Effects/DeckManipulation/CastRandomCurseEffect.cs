@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Quackery.Effects
 {
-    [CreateAssetMenu(fileName = "Cast Random Curse Effect", menuName = "Quackery/Effects/Cast Random Curse Effect")]
+    [CreateAssetMenu(fileName = "Cast Random Curse Effect", menuName = "Quackery/Effects/Deck/Cast Random Curse Effect")]
     public class CastRandomCurseEffect : EffectData
     {
         [SerializeField] private List<Effect> _curseEffect;

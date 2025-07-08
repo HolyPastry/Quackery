@@ -4,10 +4,11 @@ using UnityEngine;
 
 namespace Quackery.Effects
 {
-    [CreateAssetMenu(fileName = "DrawCategoryCard", menuName = "Quackery/Effects/Draw Category Card", order = 0)]
-    public class DrawCategoryCardEffect : CategoryEffectData
+    [CreateAssetMenu(fileName = "DrawCategoryCard", menuName = "Quackery/Effects/Deck/Draw Category Card", order = 0)]
+    public class DrawCategoryCardEffect : EffectData, ICategoryEffect
     {
-
+        [SerializeField] private EnumItemCategory _category = EnumItemCategory.Unset;
+        public EnumItemCategory Category => _category;
         public override void Execute(Effect effect)
         {
             DeckServices.InterruptDraw();

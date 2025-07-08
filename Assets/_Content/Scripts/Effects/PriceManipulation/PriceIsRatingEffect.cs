@@ -4,12 +4,17 @@ using UnityEngine;
 
 namespace Quackery.Effects
 {
-    [CreateAssetMenu(fileName = "PriceIsRatingEffect", menuName = "Quackery/Effects/PriceIsRating", order = 1)]
-    public class PriceIsRatingEffect : CategoryEffectData
+    [CreateAssetMenu(fileName = "PriceIsRatingEffect", menuName = "Quackery/Effects/Price/PriceIsRating", order = 1)]
+    public class PriceIsRatingEffect : EffectData, IPriceModifierEffect
     {
-        public override int PriceModifier(Effect effect, Card card)
+        public int PriceModifier(Effect effect, Card card)
         {
             return RatingServices.GetRating();
+        }
+
+        public float PriceMultiplier(Effect effect, Card card)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

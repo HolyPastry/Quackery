@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Quackery.Effects
 {
-    [CreateAssetMenu(fileName = "EffectAmplifierEffect", menuName = "Quackery/Effects/Effect Amplifier")]
+    [CreateAssetMenu(fileName = "EffectAmplifierEffect", menuName = "Quackery/Effects/Status/Effect Amplifier")]
     public class EffectAmplifierEffect : EffectData
     {
         [SerializeField] private EffectData _effectToAmplify;

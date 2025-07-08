@@ -8,13 +8,14 @@ using UnityEngine;
 namespace Quackery
 {
 
-
     [Serializable]
     public class Effect
     {
         public EffectData Data;
         public int Value;
-        public EnumEffectTrigger Trigger;
+        public EnumEffectTrigger Trigger => Data.Trigger;
+
+        [HideInInspector]
         public List<EnumEffectTag> Tags = new();
 
         public Sprite Icon => Data.Icon;
@@ -42,8 +43,8 @@ namespace Quackery
             Data.Execute(this);
         }
 
-        public int PriceModifier(Card card) => Data.PriceModifier(this, card);
-        public float PriceRatioModifier(Card card) => Data.RatioPriceModifier(this, card);
+        // public int PriceModifier(Card card) => Data.PriceModifier(this, card);
+        // public float PriceRatioModifier(Card card) => Data.RatioPriceModifier(this, card);
 
         internal bool ContainsTag(EnumEffectTag effectTag)
         {

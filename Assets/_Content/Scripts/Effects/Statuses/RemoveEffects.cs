@@ -8,7 +8,7 @@ namespace Quackery.Effects
 {
     [CreateAssetMenu(
         fileName = "RemoveEffects",
-        menuName = "Quackery/Effects/RemoveEffects",
+        menuName = "Quackery/Effects/Status/RemoveEffects",
         order = 2)]
     public class RemoveEffects : EffectData
     {

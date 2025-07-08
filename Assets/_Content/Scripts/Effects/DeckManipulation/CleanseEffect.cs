@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Quackery.Effects
 {
 
-    [CreateAssetMenu(fileName = "CleanseEffect", menuName = "Quackery/Effects/Cleanse", order = 1)]
+    [CreateAssetMenu(fileName = "CleanseEffect", menuName = "Quackery/Effects/Deck/Cleanse", order = 1)]
     public class CleanseEffect : EffectData
     {
         public override void Execute(Effect effect)

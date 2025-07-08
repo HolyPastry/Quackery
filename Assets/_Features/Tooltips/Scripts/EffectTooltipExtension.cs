@@ -21,7 +21,7 @@ namespace Quackery
         {
             string description = effect.Description;
             string title = effect.Data.MasterText;
-            if (effect.Data is CategoryEffectData categoryEffectData)
+            if (effect.Data is ICategoryEffect categoryEffectData)
             {
                 description = Sprites.ReplaceCategory(description, categoryEffectData.Category);
                 title = Sprites.ReplaceCategory(title, categoryEffectData.Category);

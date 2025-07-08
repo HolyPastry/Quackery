@@ -17,8 +17,13 @@ namespace Quackery.Artifacts
         public string Description;
 
         public ArtifactData UpgradeFor;
+
+        public int Level;
+
+        public List<ArtifactData> Requirements = new();
+        public List<Explanation> Explanations = new();
         public bool IsUpgrade => UpgradeFor != null;
 
-        public List<Effect> Effects;
+        public List<Effect> Effects = new();
     }
 }

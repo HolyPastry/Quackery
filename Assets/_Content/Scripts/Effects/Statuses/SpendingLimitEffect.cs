@@ -6,7 +6,7 @@ namespace Quackery.Effects
 {
 
 
-    [CreateAssetMenu(fileName = "SpendingLimitEffect", menuName = "Quackery/Effects/SpendingLimitEffect", order = 1)]
+    [CreateAssetMenu(fileName = "SpendingLimitEffect", menuName = "Quackery/Effects/Status/SpendingLimitEffect", order = 1)]
     public class SpendingLimitEffect : EffectData
     {
 

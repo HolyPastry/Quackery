@@ -58,8 +58,8 @@ namespace Quackery.Decks
         private void UpdatePrice()
         {
 
-            _PriceBackground.gameObject.SetActive(_item.Category != EnumItemCategory.Fatigues);
-            _cardPrice.gameObject.SetActive(_item.Category != EnumItemCategory.Fatigues);
+            _PriceBackground.gameObject.SetActive(_item.Category != EnumItemCategory.Curses);
+            _cardPrice.gameObject.SetActive(_item.Category != EnumItemCategory.Curses);
             _cardPrice.text = Price.ToString();
 
             if (Price > _item.BasePrice)

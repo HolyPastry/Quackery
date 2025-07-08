@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Quackery.Effects
 {
 
-    [CreateAssetMenu(fileName = "DuplicateAndDiscardEffect", menuName = "Quackery/Effects/Duplicate And Discard")]
+    [CreateAssetMenu(fileName = "DuplicateAndDiscardEffect", menuName = "Quackery/Effects/Deck/Duplicate And Discard")]
     public class DuplicateAndDiscardEffect : EffectData
     {
         public enum CardPosition

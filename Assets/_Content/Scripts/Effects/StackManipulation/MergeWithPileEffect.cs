@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Quackery.Effects
 {
     [CreateAssetMenu(fileName = "MergeWithPile", menuName = "Quackery/Effects/Stack/MergeWithPreviousPile", order = 0)]
-    public class MergeWithPileEffect : CategoryEffectData
+    public class MergeWithPileEffect : EffectData, ICategoryEffect
     {
         public enum EnumTargetStack
         {
@@ -28,7 +28,7 @@ namespace Quackery.Effects
         [Tooltip("The location where the card will be placed in the pile.\n" +
                  "OnTop will place the card on top of the pile, while Underneath will place it underneath.")]
         public EnumPileLocation Location;
-
-
+        [SerializeField] private EnumItemCategory _category = EnumItemCategory.Unset;
+        public EnumItemCategory Category => _category;
     }
 }

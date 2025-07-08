@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Quackery.Effects
 {
 
-    [CreateAssetMenu(fileName = "Cast Curse Effect", menuName = "Quackery/Effects/Cast Curse Effect")]
+    [CreateAssetMenu(fileName = "Cast Curse Effect", menuName = "Quackery/Effects/Deck/Cast Curse Effect")]
     public class CastCurseEffect : EffectData
     {
         [SerializeField] private EffectData _counterEffect;

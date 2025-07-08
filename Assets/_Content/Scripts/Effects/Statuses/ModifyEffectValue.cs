@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Quackery.Effects
 {
 
-    [CreateAssetMenu(fileName = "ModifyEffectValue", menuName = "Quackery/Effects/Modify Effect Value", order = 1)]
+    [CreateAssetMenu(fileName = "ModifyEffectValue", menuName = "Quackery/Effects/Status/Modify Effect Value", order = 1)]
     public class ModifyEffectValue : EffectData
     {
         [SerializeField] private EffectData _effectToModify;

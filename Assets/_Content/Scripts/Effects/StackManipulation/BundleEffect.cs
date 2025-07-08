@@ -6,7 +6,7 @@ namespace Quackery.Effects
 {
     [CreateAssetMenu(
          fileName = "BundlePower",
-         menuName = "Quackery/Effects/Bundle",
+         menuName = "Quackery/Effects/Stack/Bundle",
          order = 1)]
     public class BundleEffect : EffectData
     {

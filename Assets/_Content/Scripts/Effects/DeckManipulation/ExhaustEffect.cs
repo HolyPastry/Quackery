@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Quackery
 {
-    [CreateAssetMenu(fileName = "ExhaustEffect", menuName = "Quackery/Effects/Exhaust", order = 0)]
+    [CreateAssetMenu(fileName = "ExhaustEffect", menuName = "Quackery/Effects/Deck/Exhaust", order = 0)]
     public class ExhaustEffect : EffectData
     {
         public override void Execute(Effect effect)

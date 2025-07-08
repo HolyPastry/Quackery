@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Quackery.Effects
 {
 
-    [CreateAssetMenu(fileName = "DiscardCard", menuName = "Quackery/Effects/Discard Card", order = 0)]
+    [CreateAssetMenu(fileName = "DiscardCard", menuName = "Quackery/Effects/Deck/Discard Card", order = 0)]
     public class DiscardCardEffect : EffectData
     {
         //[Tooltip("The amount of cards to discard. If -1, discard all cards in hand.")]

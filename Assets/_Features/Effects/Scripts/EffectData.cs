@@ -10,9 +10,17 @@ using UnityEngine;
 
 namespace Quackery.Effects
 {
-    public abstract class CategoryEffectData : EffectData
+    public interface ICategoryEffect
     {
-        public EnumItemCategory Category = EnumItemCategory.Unset;
+        public EnumItemCategory Category { get; }
+    }
+
+    public interface IPriceModifierEffect
+    {
+        public int PriceModifier(Effect effect, Card card);
+
+        public float PriceMultiplier(Effect effect, Card card);
+
     }
     public abstract class EffectData : ContentTag
     {
@@ -22,15 +30,12 @@ namespace Quackery.Effects
 
         public bool CanBeNegative = false;
 
+        public EnumEffectTrigger Trigger = EnumEffectTrigger.OnCardPlayed;
+
         public List<Explanation> Explanations;
 
         public virtual void Execute(Effect effect) { }
         public virtual void Cancel(Effect effect) { }
-
-        public virtual int PriceModifier(Effect effect, Card card) => 0;
-
-        public virtual float RatioPriceModifier(Effect effect, Card card) => 0f;
-
         public virtual void ExecutePile(Effect effect, CardPile pile) { }
 
     }

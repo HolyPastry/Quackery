@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace Quackery.Effects
 {
-    [CreateAssetMenu(fileName = "PriceModifierBasedOnPriceEffect", menuName = "Quackery/Effects/Price Modifier Based On Price", order = 0)]
-    public class PriceModifierBasedOnPriceEffect : EffectData
+    [CreateAssetMenu(fileName = "PriceModifierBasedOnPriceEffect", menuName = "Quackery/Effects/Price/Price Modifier Based On Price", order = 0)]
+    public class PriceModifierBasedOnPriceEffect : EffectData, IPriceModifierEffect
     {
         [SerializeField] private int _priceToMatch = 1;
 
 
-        public override int PriceModifier(Effect effect, Card card)
+        public int PriceModifier(Effect effect, Card card)
         {
             if (card.Item.BasePrice == _priceToMatch)
             {
@@ -18,6 +18,7 @@ namespace Quackery.Effects
             return 0;
         }
 
+        public float PriceMultiplier(Effect effect, Card card) => 0;
 
     }
 }
