@@ -1,3 +1,4 @@
+using Quackery.Artifacts;
 using Quackery.Bills;
 using Quackery.Inventories;
 using UnityEngine;
@@ -22,6 +23,7 @@ namespace Quackery.QualityOfLife
         public int RatingBonus = 0;
 
         public ItemData CardBonus = null;
+        public ArtifactData ArtifactBonus = null;
         public BillData Bill = null;
     }
 }

@@ -9,9 +9,12 @@ namespace Quackery.Effects
     {
         public enum EnumTargetStack
         {
-            Previous,
+            Unset,
+            LowestStack,
+            HighestStack,
             LowestValue,
-            SameCategory
+            HighestValue,
+
         }
         [Tooltip("If true, the card will go in the cart on an empty stack if it cannot match any other stack.\n" +
                  "If false, the card will not be playable if it cannot match any other stack.")]

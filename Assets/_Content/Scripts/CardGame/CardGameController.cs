@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Holypastry.Bakery;
 using Quackery.Clients;
 using Quackery.Ratings;
 using TMPro;
@@ -21,10 +22,10 @@ namespace Quackery.Decks
         [SerializeField] private CartValueUI _cartValue;
         [SerializeField] private BudgetCartValueUI _budgetCartValue;
 
-        [SerializeField] private Transform _purseTransform;
+        // [SerializeField] private Transform _purseTransform;
 
         [SerializeField] private CardPool _cardSelectPanel;
-        [SerializeField] private GameObject _cardBonusRealization;
+        // [SerializeField] private GameObject _cardBonusRealization;
 
         [SerializeReference] private Button _EndRoundButton;
 
@@ -132,7 +133,6 @@ namespace Quackery.Decks
             _cardSelectPanel.Show();
         }
 
-
         public void TransfertCartToPurse()
         {
             CartServices.ValidateCart();
@@ -140,16 +140,20 @@ namespace Quackery.Decks
             if (cashInCart <= 0) return;
             CartValueUI cartValueUI = _client.Budget > 0 ? _budgetCartValue : _cartValue;
 
-            cartValueUI.MoveTo(_purseTransform, () =>
-            {
-                PurseServices.Modify(cashInCart);
-                _purseTransform.DOPunchScale(Vector3.one * 0.2f, 0.2f, 10, 0.1f);
+            PurseServices.Modify(cashInCart);
+            _gameStats.DayYield += cashInCart;
+            CartServices.SetCartValue(0);
+            _gameStats.TotalRating += 5;
+            // cartValueUI.MoveTo(_purseTransform, () =>
+            // {
+            //     PurseServices.Modify(cashInCart);
+            //     _purseTransform.DOPunchScale(Vector3.one * 0.2f, 0.2f, 10, 0.1f);
 
-                _gameStats.DayYield += cashInCart;
-                CartServices.SetCartValue(0);
-                _gameStats.TotalRating += 5; // Assuming each round gives a fixed rating of 5
+            //     _gameStats.DayYield += cashInCart;
+            //     CartServices.SetCartValue(0);
+            //     _gameStats.TotalRating += 5; // Assuming each round gives a fixed rating of 5
 
-            });
+            // });
         }
 
         internal void StartNewRound(Client client)
@@ -171,7 +175,7 @@ namespace Quackery.Decks
 
         private IEnumerator RoundRoutine()
         {
-            yield return StartCoroutine(ApplyRatingBonus());
+            // yield return StartCoroutine(ApplyRatingBonus());
 
             yield return StartCoroutine(ApplyClientEffects());
             yield return new WaitForSeconds(0.5f);
@@ -221,36 +225,38 @@ namespace Quackery.Decks
             foreach (var effect in _client.Effects)
             {
                 yield return new WaitForSeconds(0.2f);
-                EffectServices.AddStatus(effect);
+                effect.Tags.AddUnique(Effects.EnumEffectTag.Client);
+                effect.Tags.AddUnique(Effects.EnumEffectTag.Status);
+                EffectServices.AddEffect(effect);
                 if (effect.Trigger == Effects.EnumEffectTrigger.OnRoundStart)
                     effect.Execute(null);
             }
         }
 
-        private IEnumerator ApplyRatingBonus()
-        {
-            var cardBonus = RatingServices.GetCardBonus();
+        // private IEnumerator ApplyRatingBonus()
+        // {
+        //     var cardBonus = RatingServices.GetCardBonus();
 
-            if (cardBonus == -1)
-            {
-                CartServices.SetRatingCartSizeModifier(cardBonus);
-                _cardBonusRealization.SetActive(true);
+        //     if (cardBonus == -1)
+        //     {
+        //         CartServices.SetRatingCartSizeModifier(cardBonus);
+        //         _cardBonusRealization.SetActive(true);
 
-                yield return new WaitForSeconds(1f);
+        //         yield return new WaitForSeconds(1f);
 
-                _cardBonusRealization.SetActive(false);
-            }
-            else if (cardBonus >= 1)
-            {
-                CartServices.SetRatingCartSizeModifier(0);
-                _cardBonusRealization.SetActive(true);
-                yield return new WaitForSeconds(1f);
-                _cardBonusRealization.SetActive(false);
-                CartServices.SetRatingCartSizeModifier(cardBonus);
-            }
-            else
-                CartServices.SetRatingCartSizeModifier(cardBonus);
-        }
+        //         _cardBonusRealization.SetActive(false);
+        //     }
+        //     else if (cardBonus >= 1)
+        //     {
+        //         CartServices.SetRatingCartSizeModifier(0);
+        //         _cardBonusRealization.SetActive(true);
+        //         yield return new WaitForSeconds(1f);
+        //         _cardBonusRealization.SetActive(false);
+        //         CartServices.SetRatingCartSizeModifier(cardBonus);
+        //     }
+        //     else
+        //         CartServices.SetRatingCartSizeModifier(cardBonus);
+        // }
 
         internal WaitUntil WaitUntilEndOfRound()
         {

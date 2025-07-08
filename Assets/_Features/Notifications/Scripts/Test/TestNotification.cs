@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Quackery.Notifications
 {
-    public record TestNotificationInfo : NotificationInfo
+    public class TestNotificationInfo : NotificationData
     {
         public string Message;
     }
@@ -14,7 +14,7 @@ namespace Quackery.Notifications
         [SerializeField] private TextMeshProUGUI _message;
         protected override void SetInfo(NotificationInfo info)
         {
-            var testInfo = info as TestNotificationInfo;
+            var testInfo = info.Data as TestNotificationInfo;
             _message.text = testInfo.Message;
         }
     }

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717888303b8c849fca7cb62350fef4ab, type: 3}
+  m_Name: BankNotificationData
+  m_EditorClassIdentifier: 
+  IsPersistent: 1
+  Prefab: {fileID: 390518207298447700, guid: 578766a5c9e28458f9ab3d223f597a31, type: 3}
+  ExpandedPanelPrefab: {fileID: -8668529674809029725, guid: c5719e0550a974623ae4b3c4b01a5ba4, type: 3}

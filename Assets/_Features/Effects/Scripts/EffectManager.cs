@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Holypastry.Bakery;
 using Ink.Parsed;
+using Quackery.Artifacts;
 using Quackery.Decks;
 using Quackery.Inventories;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace Quackery.Effects
 
         void OnDisable()
         {
-            EffectServices.AddStatus = (effectData) => { };
+            EffectServices.AddEffect = (effectData) => { };
             EffectServices.Cancel = delegate { };
 
             EffectServices.Execute = (trigger, card) => 0;
@@ -47,6 +48,7 @@ namespace Quackery.Effects
             EffectServices.ChangePreference = (category) => { };
             EffectServices.CounterEffect = (itemData, numCard) => 0;
             EffectServices.GetCartSizeModifier = () => 0;
+            EffectServices.RemoveArtifactEffects = (artifactData) => { };
 
             EffectEvents.OnAdded -= ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved -= ExecuteOnAppliedEffect;
@@ -56,7 +58,7 @@ namespace Quackery.Effects
 
         void OnEnable()
         {
-            EffectServices.AddStatus = Add;
+            EffectServices.AddEffect = Add;
             EffectServices.Cancel = Cancel;
             EffectServices.Execute = Execute;
             EffectServices.ExecutePile = ExecutePile;
@@ -82,12 +84,26 @@ namespace Quackery.Effects
 
             EffectServices.GetCartSizeModifier = GetCartSizeModifier;
 
+            EffectServices.RemoveArtifactEffects = RemoveArtifactEffects;
+
             EffectEvents.OnAdded += ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved += ExecuteOnAppliedEffect;
             EffectEvents.OnUpdated += ExecuteOnAppliedEffect;
         }
 
+        private void RemoveArtifactEffects(ArtifactData data)
+        {
+            if (data == null) return;
 
+            var effectsToRemove = _effects.FindAll(effect =>
+                effect.LinkedArtifact == data);
+
+            foreach (var effect in effectsToRemove)
+            {
+                _effects.Remove(effect);
+                EffectEvents.OnRemoved?.Invoke(effect);
+            }
+        }
 
         private int CounterEffect(EffectData data, int valueToCounter)
         {

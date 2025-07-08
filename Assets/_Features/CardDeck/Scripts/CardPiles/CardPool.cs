@@ -1,8 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Quackery.Decks;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace Quackery
 {
@@ -12,7 +12,7 @@ namespace Quackery
         [SerializeField] private Transform _container;
         [SerializeField] private EnumCardPile _cardPileType;
         [SerializeField] private CardPileUI _cardPilePrefab;
-        private readonly List<CardPileUI> _cardPileUIs = new();
+        protected readonly List<CardPileUI> _cardPileUIs = new();
 
         void OnEnable()
         {
@@ -53,16 +53,29 @@ namespace Quackery
                 {
                     CardPileUI newCardPileUI = Instantiate(_cardPilePrefab, _container.transform);
                     _cardPileUIs.Add(newCardPileUI);
+                    newCardPileUI.OnCardPressed += BringToFront;
                     newCardPileUI.PileIndex = _cardPileUIs.Count - 1;
                     newCardPileUI.Type = _cardPileType;
                 }
             }
-
-            for (int i = 0; i < _cardPileUIs.Count; i++)
+            while (newSize < _cardPileUIs.Count)
             {
-                _cardPileUIs[i].gameObject.SetActive(i < newSize);
+                DestroyCardPile(_cardPileUIs.Count - 1);
             }
         }
 
+        protected virtual void DestroyCardPile(int index)
+        {
+            CardPileUI lastCardPileUI = _cardPileUIs[index];
+
+            lastCardPileUI.OnCardPressed -= BringToFront;
+            _cardPileUIs.RemoveAt(index);
+            Destroy(lastCardPileUI.gameObject);
+        }
+
+        protected virtual void BringToFront(CardPileUI pileUI)
+        {
+
+        }
     }
 }

@@ -1,6 +1,8 @@
 using System;
 
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -37,6 +39,7 @@ namespace Quackery
 
         bool _isAnimating = false;
         private Action _callback = delegate { };
+        private TweenerCore<Vector3, Vector3, VectorOptions> _inprogressZoomTween;
 
         void Awake()
         {
@@ -78,6 +81,22 @@ namespace Quackery
             return this;
         }
 
+        public AnimatedRect FloatUp(float distance, float duration, Action callback = null)
+        {
+            _isAnimating = true;
+            _rectTransform.gameObject.SetActive(true);
+            _rectTransform.DOLocalMoveY(_rectTransform.localPosition.y + distance, duration)
+                .SetEase(Ease.OutQuad)
+                .OnComplete(() =>
+                {
+                    callback?.Invoke();
+                    EndAnimation();
+                    _rectTransform.gameObject.SetActive(false);
+                    _rectTransform.localPosition = new Vector3(_rectTransform.localPosition.x, _rectTransform.localPosition.y - distance, _rectTransform.localPosition.z);
+                });
+            return this;
+        }
+
         private void EndAnimation()
         {
             _callback();
@@ -105,14 +124,15 @@ namespace Quackery
         {
             _isAnimating = true;
             var targetPosition = _overridePositionEnabled ? _overridePosition : DirectionVector(to);
+            _inprogressZoomTween.Kill();
             _rectTransform
-                .DOAnchorPos(targetPosition, _animationDuration)
-                .SetEase(_animationEaseOut)
-                .OnComplete(() =>
-                {
-                    _rectTransform.gameObject.SetActive(false);
-                    EndAnimation();
-                });
+               .DOAnchorPos(targetPosition, _animationDuration)
+               .SetEase(_animationEaseOut)
+               .OnComplete(() =>
+               {
+                   _rectTransform.gameObject.SetActive(false);
+                   EndAnimation();
+               });
             return this;
         }
 
@@ -120,7 +140,8 @@ namespace Quackery
         {
             _isAnimating = true;
             _rectTransform.gameObject.SetActive(true);
-            _rectTransform.transform.DOScale(Vector3.one, _animationDuration).SetEase(_animationEaseIn)
+            _inprogressZoomTween.Kill();
+            _inprogressZoomTween = _rectTransform.transform.DOScale(Vector3.one, _animationDuration).SetEase(_animationEaseIn)
                 .OnComplete(() =>
                 {
                     EndAnimation();
@@ -137,12 +158,13 @@ namespace Quackery
                 return this;
             }
             _isAnimating = true;
-            _rectTransform.transform.DOScale(Vector3.zero, _animationDuration).SetEase(_animationEaseOut)
-                .OnComplete(() =>
-                {
-                    _rectTransform.gameObject.SetActive(false);
-                    EndAnimation();
-                });
+            _inprogressZoomTween.Kill();
+            _inprogressZoomTween = _rectTransform.transform.DOScale(Vector3.zero, _animationDuration).SetEase(_animationEaseOut)
+                 .OnComplete(() =>
+                 {
+                     _rectTransform.gameObject.SetActive(false);
+                     EndAnimation();
+                 });
             return this;
         }
 
@@ -156,16 +178,6 @@ namespace Quackery
             _overridePosition = position;
             _overridePositionEnabled = true;
             return SlideIn(Direction.Right);
-        }
-
-        internal void ScaleUp()
-        {
-            _rectTransform.DOScale(_scaleFactor, _scaleDuration);
-        }
-
-        internal void ScaleDown()
-        {
-            _rectTransform.DOScale(Vector3.one, _scaleDuration);
         }
 
         internal void Punch()

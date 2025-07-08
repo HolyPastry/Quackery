@@ -66,7 +66,7 @@ namespace Quackery.Clients
 
         public bool QuestFullfilled => FirstQuest == null || QuestServices.IsQuestCompleted(FirstQuest);
 
-
+        public object RevealCondition { get; internal set; }
 
         public void InitUnknown(UnknownClientsData unknownClientsData, Effect effect = null)
         {
@@ -92,7 +92,11 @@ namespace Quackery.Clients
             Data = data;
             Key = data.name;
             Budget = data.Budget;
+
+            RevealCondition = FirstQuest.Steps?[1].Conditions?[0];
+
             State = EnumState.Revealed;
+
             if (data.Effects != null)
                 Effects = new List<Effect>(data.Effects);
             else

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Holypastry.Bakery.Flow;
+using Holypastry.Bakery.Quests;
 using Quackery.Shops;
 using UnityEditor;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace Quackery.Clients
         private Client _selectedClient;
         private bool _infiniteQueue;
         private Client _clientToSwap;
+        private int _dailyQueueSize;
 
         void OnEnable()
         {
@@ -40,6 +42,8 @@ namespace Quackery.Clients
             ClientServices.SetInfiniteQueue = (infinite) => { };
             ClientServices.GetRevealedClient = () => _clientToSwap;
             ClientServices.AddUnknownClient = AddUnknownClient;
+
+            ClientServices.NumClientsToday = () => _dailyQueueSize;
 
             ClientServices.SwapClients = SwapClients;
             ClientServices.GetBudget = () => _selectedClient?.Budget ?? -1;
@@ -75,6 +79,8 @@ namespace Quackery.Clients
             ClientServices.SwapClients = () => { };
             ClientServices.AddUnknownClient = (effect) => { };
 
+            ClientServices.NumClientsToday = () => 0;
+
             ClientServices.SetClientState = (clientData, state) => { };
             ClientServices.CheckStatus = (clientData, state) => false;
 
@@ -94,15 +100,15 @@ namespace Quackery.Clients
         private void SwapClients()
         {
             _clientList.Remove(_selectedClient);
-            _clientList.Add(_clientToSwap);
             _selectedClient = _clientToSwap;
         }
 
         private void SwapCurrentClientTo(ClientData data)
         {
             _clientToSwap = new Client();
-
+            _clientList.Add(_clientToSwap);
             _clientToSwap.InitKnownClient(data);
+
         }
         private bool CheckClientStatus(ClientData data, Client.EnumState state)
         {
@@ -158,9 +164,7 @@ namespace Quackery.Clients
             ResetClientQueue();
 
             int missingClients = _queueSize;
-
             missingClients -= AddKnownClientsToQueue(_queueSize);
-
 
             if (missingClients > _clientList.UnknownClients.Count)
             {
@@ -177,6 +181,8 @@ namespace Quackery.Clients
                 if (missingClients <= 0) break;
 
             }
+
+            _dailyQueueSize = _clientList.Clients.FindAll(c => c.IsInQueue).Count;
             ClientEvents.ClientListUpdated?.Invoke();
         }
 

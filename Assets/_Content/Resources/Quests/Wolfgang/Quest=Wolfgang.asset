@@ -25,6 +25,7 @@ MonoBehaviour:
     Results:
     - {fileID: 11400000, guid: fa278da5cbcd6483fad53be35f7308ed, type: 2}
     - {fileID: 11400000, guid: c030493fec7044dc49c57ac73d71b251, type: 2}
+    - {fileID: 11400000, guid: 305babc10e05143bfb0e093297803cec, type: 2}
   - StepTitle: Condition First Encounter
     AnyCondition: 0
     Conditions:
@@ -36,4 +37,4 @@ MonoBehaviour:
     Conditions:
     - {fileID: 11400000, guid: 1dff9cad5ecd04289932f73695f1485d, type: 2}
     Results:
-    - {fileID: 0}
+    - {fileID: 11400000, guid: 23aeb2b6f4d54440fa4ebf87127d9d3a, type: 2}

@@ -10,12 +10,12 @@ namespace Quackery.Notifications
 
         IEnumerator Start()
         {
-            yield return FlowServices.WaitUntilReady();
+            yield return FlowServices.WaitUntilEndOfSetup();
 
             _notificationApp.Show();
         }
 
-        private void NotificationOnTapped(NotificationInfo info)
+        private void NotificationOnTapped(NotificationData info)
         {
             Debug.Log($"Notification tapped: {info}");
         }

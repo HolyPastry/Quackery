@@ -67,7 +67,7 @@ namespace Quackery
             At(sleepState, notificationState, () => !SleepApp.IsOn);
 
             At(clientListState, passiveClientChatState, () => PassiveClientSelected);
-            At(passiveClientChatState, clientListState, () => SelectedClient == null);
+            //  At(passiveClientChatState, clientListState, () => SelectedClient == null);
 
             ChangeState(notificationState);
 

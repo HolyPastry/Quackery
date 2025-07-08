@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Quackery
 {
+
+
+
     [CreateAssetMenu(fileName = "ClientReadyResult", menuName = "Quackery/Quests/Set Client State")]
     public class SetClientStateResult : Result
     {

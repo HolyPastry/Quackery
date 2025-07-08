@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using UnityEditor;
-
 namespace Quackery.Notifications
 {
-    [Serializable]
-    public record NotificationInfo
+    public class NotificationInfo
     {
-        public bool IsPersistent = false;
-        public Notification Prefab;
-        public NotificationExpandedPanel ExpandedPanelPrefab;
-        public Action<NotificationInfo> OnTapped;
+        public NotificationData Data;
+
+        public NotificationInfo(NotificationData data)
+        {
+            Data = data;
+        }
     }
 }

@@ -38,6 +38,7 @@ namespace Quackery.Decks
         }
 
         private CardPile _lastCartPile;
+        private CardPile _selectedPile;
 
         void OnEnable()
         {
@@ -72,6 +73,13 @@ namespace Quackery.Decks
             CartServices.GetTopCard = GetTopCard;
 
             CartServices.ValidateCart = Validate;
+
+            CartServices.SetStacksHighlights = SetStacksHighlights;
+            CartServices.GetSelectedPile = GetSelectedPile;
+            CartServices.SelectPile = SelectPile;
+            CartServices.DeselectPile = DeselectPile;
+            CartServices.AddCardToCartPile = AddCardToCartPile;
+
 
             EffectEvents.OnAdded += UpdateCardUI;
             EffectEvents.OnRemoved += UpdateCardUI;
@@ -114,6 +122,13 @@ namespace Quackery.Decks
 
             CartServices.ValidateCart = () => { };
 
+            CartServices.SetStacksHighlights = delegate { };
+            CartServices.GetSelectedPile = () => null;
+            CartServices.SelectPile = (index) => { };
+            CartServices.DeselectPile = (index) => { };
+            // CartServices.AddCardToCartPile = (card, pile) => true;
+            CartServices.AddCardToCartPile = (card, pile) => false;
+
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
             EffectEvents.OnUpdated -= UpdateCardUI;
@@ -144,6 +159,35 @@ namespace Quackery.Decks
             }
 
             return _lastCartPile.TopCard;
+        }
+
+
+
+        private CardPile GetSelectedPile()
+        {
+            return _selectedPile;
+        }
+
+        private void SelectPile(int index)
+        {
+            _selectedPile = _cartPiles.Find(p => p.Index == index);
+        }
+        private void DeselectPile(int index)
+        {
+            if (_selectedPile != null && _selectedPile.Index == index)
+                _selectedPile = null;
+        }
+
+        private void SetStacksHighlights(Card card)
+        {
+            if (card == null)
+            {
+                CartEvents.OnStacksHighlighted(null);
+                return;
+            }
+            List<CardPile> compatiblePiles = CompatibleCardPile(card);
+            CartEvents.OnStacksHighlighted(compatiblePiles.ConvertAll(p => p.Index).ToList());
+
         }
 
         private void ReplaceTopCard(Card card)
@@ -309,7 +353,6 @@ namespace Quackery.Decks
             DeckEvents.OnCardPoolSizeUpdate(EnumCardPile.Cart);
         }
 
-
         private void MergeCart(int amount, EnumItemCategory category)
         {
             int index = _lastCartPile != null ? _cartPiles.IndexOf(_lastCartPile) : -1;
@@ -377,6 +420,28 @@ namespace Quackery.Decks
             return pile.CalculateCartRewards(otherCartPiles);
         }
 
+        private bool AddCardToCartPile(Card topCard, CardPile pile)
+        {
+            var effect = topCard.Effects.Find(effect => effect.Data is MergeWithPileEffect);
+            if (effect == null)
+            {
+                pile.AddAtTheTop(topCard);
+                _lastCartPile = pile;
+                UpdateUI();
+                return true; // If no effect, just add to the pile
+            }
+
+            var effectData = effect.Data as MergeWithPileEffect;
+
+            if (effectData.Location == EnumPileLocation.AtTheBottom)
+                pile.AddAtTheBottom(topCard);
+            else
+                pile.AddAtTheTop(topCard);
+            _lastCartPile = pile;
+            UpdateUI();
+            return true; // Exit after adding to the specified pile
+        }
+
         private bool MergeWithPrevious(Card topCard)
         {
 
@@ -386,30 +451,30 @@ namespace Quackery.Decks
             var effectData = effect.Data as MergeWithPileEffect;
             CardPile cardPileRef = null;
 
-            if (effectData.TargetStack == MergeWithPileEffect.EnumTargetStack.Previous)
-            {
-                if (_lastCartPile == null || _lastCartPile.IsEmpty)
-                {
-                    if (!effectData.AllowEmptyPiles)
-                        Debug.LogWarning(
-                            "MergeWithPreviousPileEffect: No last cart pile to merge with. This card should not be playable");
-                    return false;
-                }
-                cardPileRef = _lastCartPile;
-            }
-            else if (effectData.TargetStack == MergeWithPileEffect.EnumTargetStack.LowestValue)
+            // if (effectData.TargetStack == MergeWithPileEffect.EnumTargetStack.Previous)
+            // {
+            //     if (_lastCartPile == null || _lastCartPile.IsEmpty)
+            //     {
+            //         if (!effectData.AllowEmptyPiles)
+            //             Debug.LogWarning(
+            //                 "MergeWithPreviousPileEffect: No last cart pile to merge with. This card should not be playable");
+            //         return false;
+            //     }
+            //     cardPileRef = _lastCartPile;
+            // }
+            if (effectData.TargetStack == MergeWithPileEffect.EnumTargetStack.LowestStack)
             {
                 cardPileRef = _cartPiles
                     .Where(p => p.Enabled && !p.IsEmpty)
                     .OrderBy(p => p.TopCard.Price)
                     .FirstOrDefault();
             }
-            else if (effectData.TargetStack == MergeWithPileEffect.EnumTargetStack.SameCategory)
-            {
-                cardPileRef = _cartPiles
-                    .Where(p => p.Enabled && !p.IsEmpty && p.Category == topCard.Category)
-                    .FirstOrDefault();
-            }
+            // else if (effectData.TargetStack == MergeWithPileEffect.EnumTargetStack.SameCategory)
+            // {
+            //     cardPileRef = _cartPiles
+            //         .Where(p => p.Enabled && !p.IsEmpty && p.Category == topCard.Category)
+            //         .FirstOrDefault();
+            // }
             if (cardPileRef == null || cardPileRef.IsEmpty)
             {
                 if (!effectData.AllowEmptyPiles)
@@ -449,10 +514,6 @@ namespace Quackery.Decks
 
             cartPile.AddAtTheTop(card);
             _lastCartPile = cartPile;
-            //card.ExecutePowerInCart(cartPile);
-            // DeckEvents.OnPileMoved(cartPile.Type, cartPile.Index);
-            // DeckEvents.OnCalculatingCartPile(cartPile.Type, cartPile.Index);
-
             return true;
         }
 
@@ -471,25 +532,82 @@ namespace Quackery.Decks
 
         private bool CanAddToCart(Card topCard)
         {
+            return CompatibleCardPile(topCard).Count > 0;
+        }
 
-            var mergeEffects = topCard.Effects.FindAll(effect => effect.Data is MergeWithPileEffect);
+
+        private List<CardPile> CompatibleCardPile(Card card)
+        {
+
+            var emptyPiles = _cartPiles.FindAll(p => p.Enabled && p.IsEmpty);
+            var mergeEffects = card.Effects.FindAll(effect => effect.Data is MergeWithPileEffect);
             if (mergeEffects.Count == 0)
-                return !CartIsFull;
-            // If there are merge effects, check if the last cart pile is compatible
-            if (_lastCartPile == null || _lastCartPile.IsEmpty) return false;
+                return emptyPiles;
+
+            if (mergeEffects.Count > 1)
+            {
+                Debug.LogWarning($"Multiple merge effects found for card {card.Item.Data.name}. Only the first one will be used.");
+            }
+
+            List<CardPile> compatiblePiles = new();
+
             var mergeEffect = mergeEffects[0];
             var mergeEffectData = mergeEffect.Data as MergeWithPileEffect;
 
-            if (mergeEffectData.AllowEmptyPiles && !CartIsFull)
-                return true; // If the last cart pile is empty and the effect allows it, we can add
+            if (mergeEffectData.AllowEmptyPiles)
+                compatiblePiles.AddRange(emptyPiles);
 
-            if (mergeEffectData.Location == EnumPileLocation.OnTop &&
-                 _lastCartPile.TopCard.CannotBeCovered)
-                return false;
-            if (mergeEffectData.Category != EnumItemCategory.Unset &&
-                _lastCartPile.Category != mergeEffectData.Category) return false;
-            return true;
+
+            if (mergeEffectData.Location == EnumPileLocation.OnTop)
+                compatiblePiles.AddRange(_cartPiles.FindAll(p =>
+                            p.Enabled &&
+                             !p.IsEmpty &&
+                             !p.TopCard.CannotBeCovered &&
+                             (mergeEffectData.Category == EnumItemCategory.Unset ||
+                                p.Category == mergeEffectData.Category)));
+
+            if (mergeEffectData.Location == EnumPileLocation.AtTheBottom)
+                compatiblePiles.AddRange(_cartPiles.FindAll(p =>
+                                p.Enabled &&
+                                 !p.IsEmpty &&
+                                 (mergeEffectData.Category == EnumItemCategory.Unset ||
+                                    p.Category == mergeEffectData.Category)));
+
+            if (compatiblePiles.Count == 0) return compatiblePiles;
+
+            if (mergeEffectData.TargetStack == MergeWithPileEffect.EnumTargetStack.LowestStack)
+            {
+                var lowestStack = compatiblePiles.FindAll(p => p.Enabled && !p.IsEmpty)
+                    .OrderBy(p => p.Count)
+                    .LastOrDefault();
+                return new() { lowestStack };
+            }
+            if (mergeEffectData.TargetStack == MergeWithPileEffect.EnumTargetStack.HighestValue)
+            {
+                var lowestStack = compatiblePiles.FindAll(p => p.Enabled && !p.IsEmpty)
+                    .OrderBy(p => p.Count)
+                    .FirstOrDefault();
+                return new() { lowestStack };
+            }
+            if (mergeEffectData.TargetStack == MergeWithPileEffect.EnumTargetStack.LowestValue)
+            {
+                var lowestValue = compatiblePiles.FindAll(p => p.Enabled && !p.IsEmpty)
+                    .OrderBy(p => p.TopCard.Price)
+                    .LastOrDefault();
+                return new() { lowestValue };
+            }
+            if (mergeEffectData.TargetStack == MergeWithPileEffect.EnumTargetStack.HighestValue)
+            {
+                var lowestValue = compatiblePiles.FindAll(p => p.Enabled && !p.IsEmpty)
+                    .OrderBy(p => p.TopCard.Price)
+                    .FirstOrDefault();
+                return new() { lowestValue };
+            }
+
+
+            return compatiblePiles;
         }
+
 
     }
 }

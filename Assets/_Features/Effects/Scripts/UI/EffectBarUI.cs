@@ -63,6 +63,7 @@ namespace Quackery
 
         public void AddStatusUI(Effect effect)
         {
+            if (!effect.Tags.Contains(Effects.EnumEffectTag.Status)) return;
             foreach (var statusUI in _statusUIPool)
             {
                 if (statusUI.gameObject.activeSelf) continue;

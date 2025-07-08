@@ -41,8 +41,6 @@ namespace Quackery
 
         internal static Action<Card> DestroyCard = (cards) => { };
 
-
-
         internal static Action<List<ItemData>> DrawSpecificCards = (cards) => { };
 
         internal static Action<EnumItemCategory, EnumCardSelection> ChangeCardCategory = delegate { };
@@ -50,9 +48,6 @@ namespace Quackery
         internal static Action<int> DiscardCards = (amount) => { };
 
         internal static Action RestoreCardCategories = () => { };
-
-
-
 
 
         internal static Func<EnumItemCategory, Card> DrawCategory = (category) => null;
@@ -77,6 +72,10 @@ namespace Quackery
         internal static Func<ItemData, Card> CreateCard = (itemData) => null;
 
         internal static Action PopulateDeck = () => { };
+
+        internal static Action<Card> StartPlayCardLoop = delegate { };
+
+        internal static Action StopPlayCardLoop = delegate { };
 
     }
 }

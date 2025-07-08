@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Holypastry.Bakery.Flow;
 using TMPro;
 using UnityEngine;
 
 namespace Quackery.Notifications
 {
-
-
-    public class NotificationManager : MonoBehaviour
+    public class NotificationManager : Service
     {
         [SerializeField] private TextMeshProUGUI _dayCountText; // Text to display the current day count
         [SerializeField] private float _notificationLifetime = 5f; // Lifetime of notifications in seconds
@@ -16,11 +15,12 @@ namespace Quackery.Notifications
         [SerializeField] private float _minimumDisplayInterval = 0.2f; // Minimum interval between notifications
         [SerializeField] private float _tapTimeOut = 0.5f; // Threshold for tap detection
         [SerializeField] private Transform _expandedPanelParent;
-
-        [SerializeField] private List<NotificationInfo> _dailyNotificationInfos = new();
+        private List<NotificationExtension> _extensions = new();
+        private bool _initialized;
         private readonly List<Timer> _displayedNotifications = new();
-
         private readonly Queue<NotificationInfo> _notificationQueue = new();
+
+        private bool IsExpandedPanelOn => _expandedPanelParent.gameObject.activeSelf;
 
         private struct Timer
         {
@@ -28,47 +28,69 @@ namespace Quackery.Notifications
             public float CreationTime;
         }
 
+        void Awake()
+        {
+            GetComponentsInChildren(true, _extensions);
+        }
+
         void OnDisable()
         {
             NotificationServices.ShowNotification = delegate { };
 
             NotificationServices.RemoveAllNotifications = delegate { };
-            NotificationServices.CloseNotification = delegate { };
+
             NotificationServices.ArchiveNotification = delegate { };
-            NotificationServices.ShowNotificationWithDelay = delegate { };
+
             NotificationServices.ShowExpandedPanel = delegate { };
             NotificationServices.GenerateDailyNotification = delegate { };
 
+            NotificationServices.WaitUntilReady = () => new WaitUntil(() => true);
+
+            StopAllCoroutines();
         }
 
         void OnEnable()
         {
             NotificationServices.ShowNotification = QueueNotification;
             NotificationServices.RemoveAllNotifications = RemoveAllNotifications;
-            NotificationServices.CloseNotification = CloseNotification;
+
             NotificationServices.ArchiveNotification = ArchiveNotification;
-            NotificationServices.ShowNotificationWithDelay = (info, delay) =>
-                StartCoroutine(DelayedShowNotification(info, delay));
+
             NotificationServices.ShowExpandedPanel = ShowExpandedPanel;
             NotificationServices.GenerateDailyNotification = GenerateDailyNotification;
+            NotificationServices.WaitUntilReady = () => WaitUntilReady;
+
+            if (_initialized)
+                StartCoroutine(StaggeredDisplayRoutine());
 
         }
 
         private void GenerateDailyNotification()
         {
             _dayCountText.text = $"Week {CalendarServices.Today()}";
-            foreach (var info in _dailyNotificationInfos)
+
+            foreach (var extension in _extensions)
             {
-                ShowNotification(info);
+                extension.GenerateDailyNotification();
             }
         }
 
         private void ShowExpandedPanel(NotificationInfo info)
         {
+            if (IsExpandedPanelOn) return;
+            StartCoroutine(ExpandedPanelRoutine(info));
+        }
 
-            NotificationExpandedPanel panel
-                = Instantiate(info.ExpandedPanelPrefab, _expandedPanelParent);
-
+        private IEnumerator ExpandedPanelRoutine(NotificationInfo info)
+        {
+            _expandedPanelParent.gameObject.SetActive(true);
+            foreach (var extension in _extensions)
+            {
+                if (!extension.MatchType(info)) continue;
+                yield return StartCoroutine(extension.ExpandedPanelRoutine(info, _expandedPanelParent));
+                break;
+            }
+            _expandedPanelParent.gameObject.SetActive(false);
         }
 
         private IEnumerator DelayedShowNotification(NotificationInfo info, float delay)
@@ -77,9 +99,11 @@ namespace Quackery.Notifications
             ShowNotification(info);
         }
 
-        void Start()
+        protected override IEnumerator Start()
         {
+            yield return FlowServices.WaitUntilReady();
             StartCoroutine(StaggeredDisplayRoutine());
+            _initialized = true;
         }
 
         private IEnumerator StaggeredDisplayRoutine()
@@ -133,11 +157,11 @@ namespace Quackery.Notifications
 
         private void ShowNotification(NotificationInfo info)
         {
-            Notification notification = Instantiate(info.Prefab, _parentPanel.transform);
+            Notification notification = Instantiate(info.Data.Prefab, _parentPanel.transform);
 
             notification.transform.SetAsLastSibling();
             notification.Show(info, _tapTimeOut);
-            if (info.IsPersistent)
+            if (info.Data.IsPersistent)
             {
                 _displayedNotifications.Add(new Timer
                 {
@@ -160,12 +184,12 @@ namespace Quackery.Notifications
 
             while (_parentPanel.transform.childCount > 0)
             {
-
                 var child = _parentPanel.transform.GetChild(0);
                 child.gameObject.SetActive(false);
                 child.SetParent(null);
                 Destroy(child.gameObject);
             }
+            _displayedNotifications.Clear();
         }
 
         private void ShowAllNotifications()

@@ -90,15 +90,10 @@ namespace Quackery
             if (Client.State != Client.EnumState.Revealed &&
                 Client.State != Client.EnumState.Ready) return;
 
-            var step = QuestServices.GetCurrentStep(Client.FirstQuest);
-            var firstCondition = step?.Conditions[0];
-
-            if (firstCondition == null) return;
-
             if (_client.State == Client.EnumState.Revealed)
                 _questBackground.color = Color.green;
 
-            _questText.text = firstCondition.ToString();
+            _questText.text = _client.RevealCondition?.ToString();
             _questLinePanel.SetActive(true);
 
         }

@@ -46,5 +46,13 @@ namespace Quackery.Decks
 
         internal static Action ValidateCart = () => { };
 
+        internal static Func<Card, CardPile, bool> AddCardToCartPile = (card, pile) => false;
+
+        internal static Action<Card> SetStacksHighlights = (card) => { };
+        internal static Func<CardPile> GetSelectedPile = () => null;
+
+        public static Action<int> SelectPile = (index) => { };
+
+        public static Action<int> DeselectPile = (index) => { };
     }
 }

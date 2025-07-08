@@ -13,7 +13,7 @@ namespace Quackery.Effects
         {
             foreach (var effect in _initialEffects)
             {
-                EffectServices.AddStatus(effect);
+                EffectServices.AddEffect(effect);
             }
             yield return null;
         }

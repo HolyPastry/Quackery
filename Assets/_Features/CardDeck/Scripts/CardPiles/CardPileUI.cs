@@ -4,12 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 namespace Quackery.Decks
 {
 
-    public class CardPileUI : MonoBehaviour
+    public class CardPileUI : MonoBehaviour, IPointerDownHandler
     {
         [SerializeField] EnumCardPile _pileType;
         [SerializeField] protected float _moveSpeed = 0.5f;
@@ -37,6 +38,8 @@ namespace Quackery.Decks
         public event Action OnCardMovedIn = delegate { };
         public event Action OnCardMovedOut = delegate { };
         public event Action OnPileUpdated = delegate { };
+
+        public event Action<CardPileUI> OnCardPressed = delegate { };
 
         protected virtual void OnEnable()
         {
@@ -200,6 +203,9 @@ namespace Quackery.Decks
             Destroy(card.gameObject);
         }
 
-
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            OnCardPressed?.Invoke(this);
+        }
     }
 }

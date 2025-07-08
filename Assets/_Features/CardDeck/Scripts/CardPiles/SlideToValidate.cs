@@ -1,71 +1,76 @@
 
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 
 namespace Quackery.Decks
 {
     public class SlideToValidate : ValidatedMonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        [SerializeField, Self] private CardPileUI _cardPileUI;
-        private Vector3 _originalPosition;
-        private bool _sliding;
 
-        void Awake()
-        {
-            _originalPosition = transform.localPosition;
-        }
+        [SerializeField] private float _cardSpeed = 15f;
+        [SerializeField] private float _maxSlideDistance = 420f;
+        [SerializeField] private float _maxSlideDistanceY = 300f;
+        [SerializeField] private float _smallDeltaThreshold = 0.01f;
+        [SerializeField, Self] private CardPileUI _cardPileUI;
+
+
+        private bool _isSliding;
+
+
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (!_cardPileUI.Activated || _cardPileUI.IsEmpty) return;
+            if (!_cardPileUI.Activated ||
+                 _cardPileUI.IsEmpty ||
+                 _isSliding) return;
 
-            _sliding = true;
+            _isSliding = true;
+
+            DeckServices.StartPlayCardLoop(_cardPileUI.TopCard);
             StartCoroutine(SlideWithFinger());
         }
 
         private IEnumerator SlideWithFinger()
         {
-            var mouseStartPosition = Input.mousePosition;
-            _originalPosition = transform.localPosition;
+
+            var originalPosition = transform.position;
 
             while (true)
             {
-                var deltaY = Input.mousePosition.y - mouseStartPosition.y;
-                deltaY = Mathf.Clamp(deltaY, 0, 400);
-                if (deltaY > 370)
-                {
-                    ValidateCard();
-                    yield break;
-                }
-                var targetPosition = new Vector2(_originalPosition.x, _originalPosition.y + deltaY);
 
-                transform.localPosition =
-                    Vector2.Lerp(transform.localPosition,
-                                targetPosition,
-                                Time.deltaTime * 10f);
+                var targetPosition = Input.mousePosition;
+                var distanceFromOrigin = targetPosition - originalPosition;
 
+                distanceFromOrigin = Vector2.ClampMagnitude(distanceFromOrigin, _maxSlideDistance);
+                targetPosition = originalPosition + distanceFromOrigin;
+                if (distanceFromOrigin.y > _maxSlideDistanceY)
+                    OverlayCanvas.GenerateDottedLine(targetPosition, Input.mousePosition);
+                else
+                    OverlayCanvas.HideDottedLine();
+
+                transform.position = targetPosition;
                 yield return null;
-            }
-        }
 
-        private void ValidateCard()
-        {
-            DeckServices.PileClicked(_cardPileUI.Type, _cardPileUI.PileIndex);
-            ResetMovements();
+            }
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (!_sliding) return;
+            if (!_isSliding) return;
+            OverlayCanvas.HideDottedLine();
             ResetMovements();
+            DeckServices.StopPlayCardLoop();
         }
         private void ResetMovements()
         {
-            _sliding = false;
+            _isSliding = false;
             StopAllCoroutines();
-            transform.localPosition = _originalPosition;
+            // transform.localPosition = Vector3.zero;
         }
     }
 }

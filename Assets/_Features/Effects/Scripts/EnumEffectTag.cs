@@ -7,5 +7,6 @@ namespace Quackery.Effects
         Client,
         Status,
         Stack,
+        Artifact
     }
 }

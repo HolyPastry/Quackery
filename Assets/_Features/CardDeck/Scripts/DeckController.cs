@@ -37,6 +37,7 @@ namespace Quackery.Decks
         private DrawPile _drawPile;
         private bool _drawInterrupted;
         private bool _isReady;
+        private Card _cardBeingPlayed;
 
         private CardPile _discardPile => _cardPiles.Find(p => p.Type == EnumCardPile.Discard);
         private List<CardPile> _handPiles => _cardPiles.FindAll(p => p.Type == EnumCardPile.Hand);
@@ -93,6 +94,9 @@ namespace Quackery.Decks
 
             DeckServices.PopulateDeck = () => { };
 
+            DeckServices.StartPlayCardLoop = delegate { };
+            DeckServices.StopPlayCardLoop = () => { };
+
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
             EffectEvents.OnUpdated -= UpdateCardUI;
@@ -145,20 +149,17 @@ namespace Quackery.Decks
             DeckServices.MoveToPile = MovePileTo;
             DeckServices.CreateCard = CreateCard;
 
+            DeckServices.StartPlayCardLoop = StartPlayCardLoop;
+            DeckServices.StopPlayCardLoop = StopPlayCardLoop;
+
             EffectEvents.OnAdded += UpdateCardUI;
             EffectEvents.OnRemoved += UpdateCardUI;
             EffectEvents.OnUpdated += UpdateCardUI;
         }
 
-        private void PopulateDeck()
-        {
 
-        }
 
-        private Card CreateCard(ItemData data)
-        {
-            return _cardFactory.Create(data);
-        }
+
 
         IEnumerator Start()
         {
@@ -183,6 +184,31 @@ namespace Quackery.Decks
             _isReady = true;
         }
 
+        private void PopulateDeck()
+        {
+
+        }
+
+        private Card CreateCard(ItemData data)
+        {
+            return _cardFactory.Create(data);
+        }
+        private void StopPlayCardLoop()
+        {
+            CartServices.SetStacksHighlights(null);
+            var selectedPile = CartServices.GetSelectedPile();
+            if (selectedPile == null) return;
+            StartCoroutine(PlayCardRoutine(_cardBeingPlayed, selectedPile));
+
+        }
+
+        private void StartPlayCardLoop(Card card)
+        {
+            _cardBeingPlayed = card;
+            CartServices.SetStacksHighlights(card);
+
+
+        }
         private int GetCardPoolSize(EnumCardPile cardPileType)
         {
             if (cardPileType == EnumCardPile.Cart)
@@ -366,14 +392,42 @@ namespace Quackery.Decks
             Assert.IsTrue(pile != null && !pile.IsEmpty,
                 $"called pile is null or Empty: {type} - {index}");
 
-            var card = pile.TopCard;
-            DeckEvents.OnCardPlayed?.Invoke(card);
-            StartCoroutine(PlayCardRoutine(card));
+            StartCoroutine(PlayCardRoutine(pile.TopCard));
 
+        }
+
+        private IEnumerator PlayCardRoutine(Card card, CardPile selectedPile)
+        {
+            DeckEvents.OnCardPlayed?.Invoke(card);
+
+            RemoveFromAllPiles(card);
+
+            yield return StartCoroutine(OnPlayEffectRoutine(card));
+
+            CartServices.AddToCartValue(card.Price);
+            if (ExecuteSkills(card))
+            {
+
+            }
+
+            else if (CartServices.AddCardToCartPile(card, selectedPile))
+            {
+                yield return CartServices.CalculateCart();
+            }
+            else
+            {
+                Debug.LogWarning("Could not do anything with: " + card.Name);
+                Discard(card);
+            }
+            if (!_drawInterrupted)
+                _cardPlayed = true;
+            _cardBeingPlayed = null;
+            UpdateCardUI();
         }
 
         private IEnumerator PlayCardRoutine(Card card)
         {
+            DeckEvents.OnCardPlayed?.Invoke(card);
             // var meDialog = card.Item.Data.name + "Me";
             // string clientResponse = ClientServices.SelectedClient().DialogName + "Answer";
             // DialogQueueServices.QueueDialog(meDialog);
@@ -422,7 +476,7 @@ namespace Quackery.Decks
                 if (onPlayEffects[i].Tags.Contains(EnumEffectTag.Status))
                 {
                     onPlayEffects[i].LinkedCard = card;
-                    EffectServices.AddStatus(onPlayEffects[i]);
+                    EffectServices.AddEffect(onPlayEffects[i]);
                 }
 
                 onPlayEffects[i].Execute(card);

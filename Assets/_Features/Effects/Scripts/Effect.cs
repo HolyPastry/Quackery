@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Quackery.Artifacts;
 using Quackery.Decks;
 using Quackery.Effects;
 using UnityEngine;
@@ -19,10 +20,13 @@ namespace Quackery
         public Sprite Icon => Data.Icon;
 
         public Card LinkedCard { get; set; }
+        public ArtifactData LinkedArtifact { get; internal set; }
 
         public string Description => Data == null ?
                          "No Effect Data Assigned" :
                  Data.Description.Replace("#Value", Value.ToString());
+
+
 
         public Effect()
         { }

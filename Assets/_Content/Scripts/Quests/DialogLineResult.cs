@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Quackery
 {
+
+
     [CreateAssetMenu(fileName = "DialogLineResult", menuName = "Quackery/Quests/Play Dialog Line")]
     public class DialogLineResult : Result
     {

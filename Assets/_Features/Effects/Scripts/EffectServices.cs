@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Quackery.Artifacts;
 using Quackery.Decks;
 using Quackery.Effects;
 using Quackery.Inventories;
@@ -9,7 +10,7 @@ namespace Quackery
 {
     public static class EffectServices
     {
-        public static Action<Effect> AddStatus = (data) => { };
+        public static Action<Effect> AddEffect = (data) => { };
         public static Action<EffectData> Cancel = delegate { };
 
         // public static Action<int> RemoveById = delegate { };
@@ -50,5 +51,6 @@ namespace Quackery
 
         internal static Func<int> GetCartSizeModifier = () => 0;
 
+        internal static Action<ArtifactData> RemoveArtifactEffects = (artifactData) => { };
     }
 }

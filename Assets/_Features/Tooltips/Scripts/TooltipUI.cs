@@ -17,6 +17,8 @@ namespace Quackery
         [SerializeField] private GameObject _hiddable;
         public static Action<GameObject> ShowTooltipRequest = delegate { };
         public static Action HideTooltipRequest = delegate { };
+
+        public static event Action<GameObject> OnShowTooltip = delegate { };
         private List<TooltipExtension> _extensions = new();
 
         void Awake()
@@ -40,6 +42,7 @@ namespace Quackery
         {
             foreach (var extension in _extensions)
                 extension.SetTooltip(hoveredObject);
+
         }
 
         private void HideTooltip()
@@ -63,6 +66,7 @@ namespace Quackery
                 }
             }
             _hiddable.SetActive(true);
+            OnShowTooltip.Invoke(_hiddable);
             LayoutRebuilder.ForceRebuildLayoutImmediate(_hiddable.transform as RectTransform);
 
         }

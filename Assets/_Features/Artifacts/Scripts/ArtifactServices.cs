@@ -1,0 +1,14 @@
+
+using System;
+using UnityEngine;
+
+namespace Quackery.Artifacts
+{
+    public static class ArtifactServices
+    {
+        public static Action<ArtifactData> Add = delegate { };
+
+        internal static Func<WaitUntil> WaitUntilReady = () => new WaitUntil(() => true);
+
+    }
+}
