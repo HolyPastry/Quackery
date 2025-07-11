@@ -12,9 +12,6 @@ namespace Quackery.Effects
             return RatingServices.GetRating();
         }
 
-        public float PriceMultiplier(Effect effect, Card card)
-        {
-            throw new System.NotImplementedException();
-        }
+
     }
 }

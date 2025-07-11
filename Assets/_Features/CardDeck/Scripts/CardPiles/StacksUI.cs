@@ -1,5 +1,7 @@
 
 
+using System.Collections.Generic;
+using System.Linq;
 using Quackery.Decks;
 using Quackery.Inventories;
 using UnityEngine;
@@ -24,12 +26,14 @@ namespace Quackery
             _cartPileUI.OnCardMovedIn += UpdateUI;
             _cartPileUI.OnCardMovedOut += UpdateUI;
             _cartPileUI.OnPileUpdated += UpdateUI;
+            CartEvents.OnCartCleared += ClearCounts;
         }
         void OnDisable()
         {
             _cartPileUI.OnCardMovedIn -= UpdateUI;
             _cartPileUI.OnCardMovedOut -= UpdateUI;
             _cartPileUI.OnPileUpdated -= UpdateUI;
+            CartEvents.OnCartCleared -= ClearCounts;
         }
 
         private void UpdateUI()
@@ -39,36 +43,29 @@ namespace Quackery
                 ClearCounts();
                 return;
             }
+            List<Card> cards = new();
+            _cartPileUI.GetComponentsInChildren(true, cards);
 
-            var cards = _cartPileUI.GetComponentsInChildren<Card>();
-            int herbCount = 0;
-            int magicCount = 0;
-            int chineseCount = 0;
-            int crystalCount = 0;
-
-            for (int i = 0; i < cards.Length - 1; i++)
+            if (cards.Count == 0)
             {
-                var card = cards[i];
-                if (card == null) continue;
-
-                switch (card.Category)
-                {
-                    case EnumItemCategory.Herbs:
-                        herbCount++;
-                        break;
-                    case EnumItemCategory.Magic:
-                        magicCount++;
-                        break;
-                    case EnumItemCategory.Chinese:
-                        chineseCount++;
-                        break;
-                    case EnumItemCategory.Crystals:
-                        crystalCount++;
-                        break;
-                }
+                ClearCounts();
+                return;
             }
 
+            int herbCount = cards.Sum(card => card.Category == EnumItemCategory.Herbs ? 1 : 0);
+            int magicCount = cards.Sum(card => card.Category == EnumItemCategory.Magic ? 1 : 0);
+            int chineseCount = cards.Sum(card => card.Category == EnumItemCategory.Chinese ? 1 : 0);
+            int crystalCount = cards.Sum(card => card.Category == EnumItemCategory.Crystals ? 1 : 0);
+
             SetCounts(herbCount, magicCount, chineseCount, crystalCount);
+
+            if (cards.TrueForAll(card => cards[0].Category == card.Category))
+            {
+                _herbStackInfo.SetSynergy(cards[0].Category == EnumItemCategory.Herbs);
+                _magicStackInfo.SetSynergy(cards[0].Category == EnumItemCategory.Magic);
+                _chineseStackInfo.SetSynergy(cards[0].Category == EnumItemCategory.Chinese);
+                _crystalStackInfo.SetSynergy(cards[0].Category == EnumItemCategory.Crystals);
+            }
 
         }
 

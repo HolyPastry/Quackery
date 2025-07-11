@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Holypastry.Bakery;
-using Ink.Parsed;
+
 using Quackery.Artifacts;
 using Quackery.Decks;
 using Quackery.Inventories;
-using Unity.Cinemachine;
+
 using UnityEngine;
-using UnityEngine.Android;
 using UnityEngine.Assertions;
 
 namespace Quackery.Effects
@@ -51,6 +50,8 @@ namespace Quackery.Effects
             EffectServices.GetCartSizeModifier = () => 0;
             EffectServices.RemoveArtifactEffects = (artifactData) => { };
 
+            EffectServices.GetSynergyBonuses = (card, subItems) => (0, 0);
+
             EffectEvents.OnAdded -= ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved -= ExecuteOnAppliedEffect;
             EffectEvents.OnUpdated -= ExecuteOnAppliedEffect;
@@ -86,10 +87,39 @@ namespace Quackery.Effects
             EffectServices.GetCartSizeModifier = GetCartSizeModifier;
 
             EffectServices.RemoveArtifactEffects = RemoveArtifactEffects;
+            EffectServices.GetSynergyBonuses = GetSynergyBonuses;
 
             EffectEvents.OnAdded += ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved += ExecuteOnAppliedEffect;
             EffectEvents.OnUpdated += ExecuteOnAppliedEffect;
+        }
+
+        private (int multiplier, int bonus) GetSynergyBonuses(Card card, List<Item> list)
+        {
+            bool synergyPredicate(Effect effect) =>
+                effect.Data is SynergyEffect synergyEffect &&
+                (synergyEffect.Category == card.Item.Category ||
+                    synergyEffect.Category == EnumItemCategory.Unset);
+
+            var synergyEffects = card.Effects.FindAll(synergyPredicate);
+
+            synergyEffects.AddRange(_effects.FindAll(synergyPredicate));
+
+            if (synergyEffects.Count == 0) return (0, 0);
+
+            int multiplier = synergyEffects
+                .Where(effect => effect.Data is SynergyEffect synergyEffect &&
+                        synergyEffect.Operation == EnumOperation.Multiply)
+                .Sum(effect => effect.Value);
+
+            int bonus = synergyEffects
+                .Where(effect => effect.Data is SynergyEffect synergyEffect &&
+                        synergyEffect.Operation == EnumOperation.Add)
+                .Sum(effect => effect.Value);
+
+            if (multiplier <= 0) multiplier = 1; // Ensure at least one multiplier is applied
+            return (multiplier, bonus);
+
         }
 
         private void RemoveArtifactEffects(ArtifactData data)
@@ -137,12 +167,12 @@ namespace Quackery.Effects
 
 
 
-            List<Effect> stackEffects = _effects.FindAll(effect => effect.Data is StackMultiplierEffect stackEffect &&
+            List<Effect> stackEffects = _effects.FindAll(effect => effect.Data is SynergyEffect stackEffect &&
                                                (effect.Trigger == EnumEffectTrigger.Passive) &&
                                                (stackEffect.Category == topCard.Item.Category || stackEffect.Category == EnumItemCategory.Unset));
 
 
-            stackEffects.AddRange(topCard.Effects.FindAll(effect => effect.Data is StackMultiplierEffect stackEffect &&
+            stackEffects.AddRange(topCard.Effects.FindAll(effect => effect.Data is SynergyEffect stackEffect &&
                                         (effect.Trigger == EnumEffectTrigger.Passive) &&
                                         (!effect.Tags.Contains(EnumEffectTag.Status)) &&
                                         (stackEffect.Category == topCard.Item.Category || stackEffect.Category == EnumItemCategory.Unset)));
@@ -151,7 +181,7 @@ namespace Quackery.Effects
             int stackPrice = 0;
             foreach (var item in stack)
             {
-                int stackBonus = stackEffects.Where(effect => effect.Data is StackMultiplierEffect stackEffect &&
+                int stackBonus = stackEffects.Where(effect => effect.Data is SynergyEffect stackEffect &&
                                 (stackEffect.Category == item.Category || stackEffect.Category == EnumItemCategory.Unset))
                                 .Sum(effect => effect.Value);
                 stackPrice += topCard.Price * stackBonus;

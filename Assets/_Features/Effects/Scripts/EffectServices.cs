@@ -52,5 +52,8 @@ namespace Quackery
         internal static Func<int> GetCartSizeModifier = () => 0;
 
         internal static Action<ArtifactData> RemoveArtifactEffects = (artifactData) => { };
+
+        internal static Func<Card, List<Item>, (int multiplier, int bonus)> GetSynergyBonuses
+                        = (card, subItems) => (0, 0);
     }
 }

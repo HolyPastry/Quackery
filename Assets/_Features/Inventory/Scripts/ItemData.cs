@@ -1,7 +1,7 @@
 
 
 using System.Collections.Generic;
-
+using System.Linq;
 using Holypastry.Bakery;
 using Quackery.Decks;
 
@@ -52,6 +52,16 @@ namespace Quackery.Inventories
             //         Value = topCard.Price
             //     }
             // };
+            (int multiplier, int bonus) = EffectServices.GetSynergyBonuses(topCard, subItems);
+            if (subItems.TrueForAll(i => i.Category == topCard.Category))
+            {
+                rewards.Add(new()
+                {
+                    Type = EnumCardReward.SynergyReward,
+                    Value = subItems.Sum(i => i.BasePrice + bonus) * multiplier
+                });
+            }
+
             int value = EffectServices.GetStackPrice(topCard, subItems);
             if (value > 0)
             {

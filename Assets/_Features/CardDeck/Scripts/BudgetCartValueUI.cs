@@ -20,9 +20,10 @@ namespace Quackery.Decks
             _originalColor = _budgetGauge.color;
         }
 
-        protected override void UpdateCartValue(int value)
+        protected override void UpdateCartValue()
         {
             int budget = ClientServices.GetBudget();
+            int value = CartServices.GetCartValue();
             _cartValueText.text = $"<sprite name=Coin> {value}/{budget}";
             _budgetGauge.fillAmount = (float)value / budget;
             if (value > budget)

@@ -15,6 +15,11 @@ namespace Quackery.Artifacts
 
             foreach (var artifact in _artifacts)
             {
+                if (artifact == null)
+                {
+                    Debug.LogWarning("Artifact is null, skipping.", this);
+                    continue;
+                }
                 ArtifactServices.Add(artifact);
             }
         }

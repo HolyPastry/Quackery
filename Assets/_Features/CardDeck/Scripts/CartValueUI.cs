@@ -18,16 +18,15 @@ namespace Quackery.Decks
             CartEvents.OnCartValueChanged -= UpdateCartValue;
         }
 
-        protected virtual void UpdateCartValue(int value)
+        protected virtual void UpdateCartValue()
         {
-            _cartValueText.text = $"<sprite name=Coin> {value}";
+            _cartValueText.text = $"<sprite name=Coin> {CartServices.GetCartValue()}";
         }
         public void Show()
         {
-
             gameObject.SetActive(true);
 
-            UpdateCartValue(CartServices.GetCartValue());
+            UpdateCartValue();
             ResetPosition();
         }
 

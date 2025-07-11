@@ -14,14 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Wild Flower Soda
   Icon: {fileID: 21300000, guid: bd5a12abb8f754bc2bc4633601f0fc6c, type: 3}
-  StartPrice: 5
+  BasePrice: 1
   ShortDescription: Cart Size +1
   LongDescription: 'Expand the size of the cart for this client. '
+  ShopDescription: 
+  Explanations: []
   SubscriptionCost: 0
   Category: 1
-  Effects:
-  - Data: {fileID: 11400000, guid: da18516747cf443f3918d3bb8b47f66c, type: 2}
-    Value: 1
-    Trigger: 1
-    Tags: 
+  Effects: []
   ValueEvaluator: {fileID: 0}

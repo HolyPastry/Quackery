@@ -4,24 +4,11 @@ using System.Collections.Generic;
 using Holypastry.Bakery;
 
 using Quackery.Decks;
-using Quackery.Inventories;
 using UnityEngine;
 
 
 namespace Quackery.Effects
 {
-    public interface ICategoryEffect
-    {
-        public EnumItemCategory Category { get; }
-    }
-
-    public interface IPriceModifierEffect
-    {
-        public int PriceModifier(Effect effect, Card card);
-
-        public float PriceMultiplier(Effect effect, Card card);
-
-    }
     public abstract class EffectData : ContentTag
     {
         public Sprite Icon;

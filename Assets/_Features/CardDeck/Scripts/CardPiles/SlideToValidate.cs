@@ -13,10 +13,9 @@ namespace Quackery.Decks
     public class SlideToValidate : ValidatedMonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
 
-        [SerializeField] private float _cardSpeed = 15f;
         [SerializeField] private float _maxSlideDistance = 420f;
         [SerializeField] private float _maxSlideDistanceY = 300f;
-        [SerializeField] private float _smallDeltaThreshold = 0.01f;
+
         [SerializeField, Self] private CardPileUI _cardPileUI;
 
 

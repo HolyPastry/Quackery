@@ -148,6 +148,7 @@ namespace Quackery.Decks
 
         internal List<CardReward> CalculateCartRewards(List<CardPile> otherPiles)
         {
+            if (IsEmpty || !Enabled) return new();
             var allCards = new List<Card>(Cards);
             allCards.Remove(TopCard);
             return TopCard.CalculateCardReward(allCards, otherPiles);
@@ -179,5 +180,7 @@ namespace Quackery.Decks
             if (IsEmpty || !Enabled) return;
             TopCard.UpdateUI();
         }
+
+
     }
 }

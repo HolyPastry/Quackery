@@ -19,15 +19,20 @@ namespace Quackery.Decks
         private float _oldValue;
 
 
-        protected override void UpdateCartValue(int value)
+        protected override void UpdateCartValue()
         {
             float bestValue = (float)BillServices.GetAmountDueToday() / ClientServices.NumClientsToday();
 
-            float newValue = value / bestValue;
+            var baseValue = CartServices.GetCartValue();
+            var bonusValue = CartServices.GetCartBonus();
+
+            var totalValue = baseValue + bonusValue;
+
+            float newValue = totalValue / bestValue;
             if (_oldValue == -1) _oldValue = newValue;
 
-            _cartValueText.text = $"<sprite name=Coin> {value}/{bestValue}";
-            _valueGauge.fillAmount = (float)value / (bestValue * 0.8f);
+            _cartValueText.text = $"<sprite name=Coin> {baseValue} + <size=80%><color=#00FFFF>+{bonusValue}</color></size>";
+            _valueGauge.fillAmount = (float)totalValue / (bestValue * 0.8f);
 
             _valueGauge.color = _valueColors[^1];
 

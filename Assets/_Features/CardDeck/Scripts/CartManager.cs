@@ -33,7 +33,7 @@ namespace Quackery.Decks
             private set
             {
                 _cartValue = value;
-                CartEvents.OnCartValueChanged?.Invoke(_cartValue);
+                CartEvents.OnCartValueChanged?.Invoke();
             }
         }
 
@@ -63,6 +63,7 @@ namespace Quackery.Decks
             CartServices.ChangeCardCategory = ChangeCardCategory;
             CartServices.RemoveCard = RemoveCard;
             CartServices.GetPileRewards = GetPileRewards;
+            CartServices.GetCartBonus = GetCartBonus;
 
             CartServices.AddToCartValue = value => CartValue += value;
             CartServices.SetCartValue = value => CartValue = value;
@@ -87,7 +88,16 @@ namespace Quackery.Decks
 
         }
 
-
+        private int GetCartBonus()
+        {
+            List<CardReward> rewards = new();
+            foreach (var pile in _cartPiles)
+            {
+                rewards.AddRange(
+                    pile.CalculateCartRewards(_cartPiles.FindAll(p => p.Enabled && p.Index != pile.Index)));
+            }
+            return rewards.Sum(r => r.Value);
+        }
 
         void OnDisable()
         {
@@ -526,6 +536,7 @@ namespace Quackery.Decks
                     cardsToDiscard.Add(card);
 
             DeckServices.Discard(cardsToDiscard);
+            CartEvents.OnCartCleared?.Invoke();
 
             _lastCartPile = null;
         }

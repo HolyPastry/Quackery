@@ -54,5 +54,7 @@ namespace Quackery.Decks
         public static Action<int> SelectPile = (index) => { };
 
         public static Action<int> DeselectPile = (index) => { };
+
+        public static Func<int> GetCartBonus = () => 0;
     }
 }

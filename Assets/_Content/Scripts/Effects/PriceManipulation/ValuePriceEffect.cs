@@ -21,7 +21,5 @@ namespace Quackery.Effects
             return 0;
         }
 
-        public float PriceMultiplier(Effect effect, Card card) => 0;
-
     }
 }

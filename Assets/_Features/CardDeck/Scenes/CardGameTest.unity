@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f45e82bade64f41b3de8262928d963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollectionKey: CardItems
+  CollectionKey: Cards
 --- !u!4 &82441503
 Transform:
   m_ObjectHideFlags: 0
@@ -291,35 +291,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4660157603779145979, guid: 6bac9e74e24044a748242056d33070d6, type: 3}
   m_PrefabInstance: {fileID: 303375775}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &333968129 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8062147880335789057, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
-  m_PrefabInstance: {fileID: 849324600}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &333968134 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4930862716556118010, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
-  m_PrefabInstance: {fileID: 849324600}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 333968129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d62765596c05f4984905ee9520a6ffb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &333968135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 333968129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10d6916f8c415446683afb473b411dc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _tooltipManager: {fileID: 333968134}
 --- !u!1 &369808123
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,10 +600,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8062147880335789057, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 333968135}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
 --- !u!1 &956917137
 GameObject:
@@ -1066,9 +1034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _disable: 0
-  _artifacts:
-  - {fileID: 11400000, guid: b37eec1f292ff4c099dee670cb0b0771, type: 2}
-  - {fileID: 11400000, guid: 2bd2beb53ac5843b4b7fdf35e471b563, type: 2}
+  _artifacts: []
 --- !u!1 &1956133995
 GameObject:
   m_ObjectHideFlags: 0

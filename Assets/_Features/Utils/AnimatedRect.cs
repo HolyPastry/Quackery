@@ -28,7 +28,7 @@ namespace Quackery
 
         [Header("Animation Settings")]
         [SerializeField] private float _animationDuration = 0.5f;
-        [SerializeField] private float _scaleFactor = 1.1f;
+        //[SerializeField] private float _scaleFactor = 1.1f;
         [SerializeField] private float _scaleDuration = 0.2f;
         [SerializeField] private Ease _animationEaseIn = Ease.OutBack;
         [SerializeField] private Ease _animationEaseOut = Ease.InBack;
