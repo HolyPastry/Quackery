@@ -142,7 +142,7 @@ namespace Quackery.Decks
                     var cardTransform = _moveQueue.Dequeue();
                     if (cardTransform == null)
                         continue; // Skip if the card transform is null
-                    cardTransform.DOScale(scaleRatio, _moveSpeed);
+                    cardTransform.DOScale(scaleRatio, _moveSpeed).SetEase(Ease.Linear);
                     cardTransform.DOAnchorPos(Vector3.zero, _moveSpeed).SetEase(_easeType);
                     cardTransform.DOLocalRotate(Vector3.zero, _moveSpeed);
 
@@ -155,14 +155,14 @@ namespace Quackery.Decks
             }
         }
 
-        private void OnCardMoved(Card card, EnumCardPile type, int pileIndex, bool atTheTop)
+        private void OnCardMoved(Card card, EnumCardPile type, int pileIndex, bool atTheTop, bool isInstant)
         {
             if (!IsItMe(type, pileIndex)) return;
 
-            MoveCardToPile(card, atTheTop);
+            MoveCardToPile(card, atTheTop, isInstant);
         }
 
-        internal void MoveCardToPile(Card card, bool atTheTop)
+        internal void MoveCardToPile(Card card, bool atTheTop, bool isInstant)
         {
             card.transform.SetParent(transform);
             card.transform.localScale = Vector3.one;
@@ -174,7 +174,14 @@ namespace Quackery.Decks
             {
                 card.transform.SetAsFirstSibling();
             }
-            _moveQueue.Enqueue(card.transform as RectTransform);
+            if (isInstant)
+            {
+                card.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                card.transform.localScale = Vector3.one;
+                OnCardMovedIn?.Invoke();
+            }
+            else
+                _moveQueue.Enqueue(card.transform as RectTransform);
             OnCardMovedIn?.Invoke();
         }
 

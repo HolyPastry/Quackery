@@ -4,7 +4,7 @@ namespace Quackery.Decks
 {
     public static class DeckEvents
     {
-        public static Action<Card, EnumCardPile, int, bool> OnCardMovedTo = (card, pileType, index, placeOnTop) => { };
+        public static Action<Card, EnumCardPile, int, bool, bool> OnCardMovedTo = (card, pileType, index, placeOnTop, isInstant) => { };
         public static Action<EnumCardPile, int> OnPileMoved = (destinationPile, index) => { };
         public static Action<EnumCardPile, int> OnPileDestroyed = (pileType, index) => { };
 

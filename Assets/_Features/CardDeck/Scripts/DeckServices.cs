@@ -60,7 +60,7 @@ namespace Quackery
 
         // internal static Action<ItemData, int> AddMultipleInstancesToDrawDeck = (card, amount) => { };
         // public static Action<List<ItemData>> AddToDrawPile = (cards) => { };
-        public static Action<ItemData, bool> AddNewToDraw = (card, isPermanent) => { };
+        public static Action<ItemData, bool, Transform> AddNewToDraw = (card, isPermanent, origin) => { };
 
         internal static Func<bool> CardPlayed = () => false;
         internal static Func<EnumCardPile, int> GetCardPoolSize = (cardPileType) => 0;
@@ -77,5 +77,6 @@ namespace Quackery
 
         internal static Action StopPlayCardLoop = delegate { };
 
+        internal static Action<Card, bool> MoveCardToEffect = (card, teleport) => { };
     }
 }

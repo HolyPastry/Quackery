@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
+  m_Name: 53.StressRelief
+  m_EditorClassIdentifier: 
+  MasterText: Stress Relief
+  Icon: {fileID: 0}
+  BasePrice: 0
+  ShortDescription: Exhaust all curse cards in hand. -1 cart size.
+  LongDescription: Exhaust all curse cards in hand. Cart size reduced by 1.
+  ShopDescription: 
+  Explanations:
+  - {fileID: 11400000, guid: 590bc11476e504a66a2cb2a727530c95, type: 2}
+  SubscriptionCost: 0
+  Category: 7
+  Effects:
+  - Data: {fileID: 11400000, guid: 50827194806454ba8a638dbac3936c41, type: 2}
+    Value: -1
+    Tags: 
+  ValueEvaluator: {fileID: 0}

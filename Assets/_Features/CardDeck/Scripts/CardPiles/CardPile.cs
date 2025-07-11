@@ -103,17 +103,17 @@ namespace Quackery.Decks
             Cards.Remove(card);
         }
 
-        public void AddAtTheTop(Card card)
+        public void AddAtTheTop(Card card, bool isInstant = false)
         {
             if (card == null) return;
             Cards.Insert(0, card);
-            DeckEvents.OnCardMovedTo(card, Type, Index, true);
+            DeckEvents.OnCardMovedTo(card, Type, Index, true, isInstant);
         }
-        public void AddAtTheBottom(Card card)
+        public void AddAtTheBottom(Card card, bool isInstant = false)
         {
             if (card == null) return;
             Cards.Add(card);
-            DeckEvents.OnCardMovedTo(card, Type, Index, false);
+            DeckEvents.OnCardMovedTo(card, Type, Index, false, isInstant);
         }
 
         public void MergeOnTop(CardPile pile)

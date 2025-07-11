@@ -90,6 +90,7 @@ namespace Quackery.Decks
             DeckServices.NoPlayableCards = () => false;
 
             DeckServices.MoveToPile = (source, target) => { };
+            DeckServices.MoveCardToEffect = (card, teleport) => { };
             DeckServices.CreateCard = (itemData) => null;
 
             DeckServices.PopulateDeck = () => { };
@@ -134,6 +135,7 @@ namespace Quackery.Decks
 
             DeckServices.MoveToCardSelect = MoveToCardSelectionPile;
             DeckServices.MoveToTable = AddCardToTable;
+            DeckServices.MoveCardToEffect = MoveToEffectPile;
             DeckServices.ActivateTableCards = ActivateTableCards;
 
             DeckServices.ChangeCardCategory = ChangeCardCategory;
@@ -156,8 +158,6 @@ namespace Quackery.Decks
             EffectEvents.OnRemoved += UpdateCardUI;
             EffectEvents.OnUpdated += UpdateCardUI;
         }
-
-
 
 
 
@@ -195,9 +195,9 @@ namespace Quackery.Decks
         }
         private void StopPlayCardLoop()
         {
-            CartServices.SetStacksHighlights(null);
             var selectedPile = CartServices.GetSelectedPile();
             if (selectedPile == null) return;
+            CartServices.SetStacksHighlights(null);
             StartCoroutine(PlayCardRoutine(_cardBeingPlayed, selectedPile));
 
         }
@@ -463,7 +463,7 @@ namespace Quackery.Decks
 
         private IEnumerator OnPlayEffectRoutine(Card card)
         {
-            var onPlayEffects = card.Effects.FindAll(e => e.Trigger == EnumEffectTrigger.OnCardPlayed ||
+            var onPlayEffects = card.Effects.FindAll(e => e != null && e.Trigger == EnumEffectTrigger.OnCardPlayed ||
                                                             e.Tags.Contains(EnumEffectTag.Status));
             if (onPlayEffects.Count == 0)
                 yield break;
@@ -485,11 +485,11 @@ namespace Quackery.Decks
         }
 
 
-        private void MoveToEffectPile(Card card)
+        private void MoveToEffectPile(Card card, bool isInstant = false)
         {
             var effectPile = _cardPiles.Find(p => p.Type == EnumCardPile.Effect);
 
-            effectPile.AddAtTheTop(card);
+            effectPile.AddAtTheTop(card, isInstant);
         }
 
         private bool ExecuteSkills(Card card)

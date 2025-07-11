@@ -31,7 +31,7 @@ namespace Quackery.Decks
             float newValue = totalValue / bestValue;
             if (_oldValue == -1) _oldValue = newValue;
 
-            _cartValueText.text = $"<sprite name=Coin> {baseValue} + <size=80%><color=#00FFFF>+{bonusValue}</color></size>";
+            _cartValueText.text = $"<sprite name=Coin> {baseValue} <size=80%><color=#000000>+{bonusValue}</color></size>";
             _valueGauge.fillAmount = (float)totalValue / (bestValue * 0.8f);
 
             _valueGauge.color = _valueColors[^1];

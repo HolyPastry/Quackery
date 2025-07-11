@@ -24,7 +24,7 @@ namespace Quackery.Shops
 
         public override void ApplyReward()
         {
-            DeckServices.AddNewToDraw(ItemData, true);
+            DeckServices.AddNewToDraw(ItemData, true, null);
         }
     }
 }

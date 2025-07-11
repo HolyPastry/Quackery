@@ -25,5 +25,6 @@ namespace Quackery.Effects
         public virtual void Cancel(Effect effect) { }
         public virtual void ExecutePile(Effect effect, CardPile pile) { }
 
+        internal virtual void CheckValidity() { }
     }
 }

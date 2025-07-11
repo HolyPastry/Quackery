@@ -190,6 +190,7 @@ namespace Quackery.Decks
 
         private void SetStacksHighlights(Card card)
         {
+            _selectedPile = null;
             if (card == null)
             {
                 CartEvents.OnStacksHighlighted(null);
@@ -588,31 +589,33 @@ namespace Quackery.Decks
 
             if (mergeEffectData.TargetStack == MergeWithPileEffect.EnumTargetStack.LowestStack)
             {
-                var lowestStack = compatiblePiles.FindAll(p => p.Enabled && !p.IsEmpty)
+                int lowestStack = compatiblePiles.Where(p => p.Enabled && !p.IsEmpty)
                     .OrderBy(p => p.Count)
-                    .LastOrDefault();
-                return new() { lowestStack };
+                    .LastOrDefault()?.Count ?? 0;
+
+                return compatiblePiles.FindAll(p => p.Enabled && !p.IsEmpty && p.Count == lowestStack);
             }
-            if (mergeEffectData.TargetStack == MergeWithPileEffect.EnumTargetStack.HighestValue)
+            if (mergeEffectData.TargetStack == MergeWithPileEffect.EnumTargetStack.HighestStack)
             {
-                var lowestStack = compatiblePiles.FindAll(p => p.Enabled && !p.IsEmpty)
+                var highestStack = compatiblePiles.Where(p => p.Enabled && !p.IsEmpty)
                     .OrderBy(p => p.Count)
-                    .FirstOrDefault();
-                return new() { lowestStack };
+                    .FirstOrDefault()?.Count ?? 0;
+                return compatiblePiles.FindAll(p => p.Enabled && !p.IsEmpty && p.Count == highestStack);
             }
+
             if (mergeEffectData.TargetStack == MergeWithPileEffect.EnumTargetStack.LowestValue)
             {
-                var lowestValue = compatiblePiles.FindAll(p => p.Enabled && !p.IsEmpty)
+                var lowestValue = compatiblePiles.Where(p => p.Enabled && !p.IsEmpty)
                     .OrderBy(p => p.TopCard.Price)
-                    .LastOrDefault();
-                return new() { lowestValue };
+                    .LastOrDefault()?.TopCard.Price ?? 0;
+                return compatiblePiles.FindAll(p => p.Enabled && !p.IsEmpty && p.TopCard.Price == lowestValue);
             }
             if (mergeEffectData.TargetStack == MergeWithPileEffect.EnumTargetStack.HighestValue)
             {
-                var lowestValue = compatiblePiles.FindAll(p => p.Enabled && !p.IsEmpty)
+                var highestValue = compatiblePiles.Where(p => p.Enabled && !p.IsEmpty)
                     .OrderBy(p => p.TopCard.Price)
-                    .FirstOrDefault();
-                return new() { lowestValue };
+                    .FirstOrDefault()?.TopCard.Price ?? 0;
+                return compatiblePiles.FindAll(p => p.Enabled && !p.IsEmpty && p.TopCard.Price == highestValue);
             }
 
 

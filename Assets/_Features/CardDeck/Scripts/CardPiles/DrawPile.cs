@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Quackery.Effects;
 using Quackery.Inventories;
@@ -42,7 +43,7 @@ namespace Quackery.Decks
 
             // DeckServices.AddMultipleInstancesToDrawDeck = delegate { };
             // DeckServices.AddToDrawPile = delegate { };
-            DeckServices.AddNewToDraw = (itemData, isPermanent) => { };
+            DeckServices.AddNewToDraw = (itemData, isPermanent, origin) => { };
             DeckServices.DrawSpecificCards = delegate { };
             DeckServices.DrawCategory = category => null;
             DeckServices.Draw = number => new List<Card>();
@@ -53,11 +54,25 @@ namespace Quackery.Decks
             foreach (var item in items)
                 AddToDeck(item);
         }
-        private void AddToDeck(Item item)
+        private void AddToDeck(Item item, Transform origin = null)
         {
             Card card = _cardFactory.Create(item);
-            AddAtTheBottom(card);
+
+            if (origin != null)
+                card.StartCoroutine(DramaMoveRoutine(card));
+            else AddAtTheBottom(card);
+
         }
+
+        private IEnumerator DramaMoveRoutine(Card card)
+        {
+
+            DeckServices.MoveCardToEffect(card, true);
+            yield return new WaitForSeconds(1f); // Wait for the effect to complete
+            AddAtTheBottom(card);
+
+        }
+
         public void DrawSpecificCards(List<ItemData> list)
         {
             if (list == null || list.Count == 0) return;
@@ -122,14 +137,14 @@ namespace Quackery.Decks
         }
 
 
-        private void AddNewCard(ItemData data, bool isPermanent)
+        private void AddNewCard(ItemData data, bool isPermanent, Transform origin)
         {
             if (isPermanent)
 
-                AddToDeck(InventoryServices.AddNewItem(data));
+                AddToDeck(InventoryServices.AddNewItem(data), origin);
             else
 
-                AddToDeck(new Item(data));
+                AddToDeck(new Item(data), origin);
         }
 
         // internal void AddMultipleNew(ItemData data, int numCards)

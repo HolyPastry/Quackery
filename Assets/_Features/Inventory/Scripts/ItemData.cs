@@ -1,5 +1,6 @@
 
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Holypastry.Bakery;
@@ -94,6 +95,29 @@ namespace Quackery.Inventories
                 rewards.AddRange(ValueEvaluator.Evaluate(topCard, subItems, otherPiles));
             }
             return rewards;
+        }
+
+        internal void CheckValidity()
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                Debug.LogWarning("ItemData must have a name.");
+            }
+            if (Icon == null)
+            {
+                Debug.LogWarning($"ItemData {name} must have an icon.");
+            }
+            Effects.ForEach(effect =>
+            {
+                if (effect == null)
+                {
+                    Debug.LogWarning($"ItemData {name} has a null effect.");
+                }
+                else
+                {
+                    effect.CheckValidity();
+                }
+            });
         }
     }
 }

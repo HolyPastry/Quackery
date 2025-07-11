@@ -12,8 +12,6 @@ namespace Quackery.Effects
         [SerializeField] private EnumItemCategory _category = EnumItemCategory.Unset;
         public EnumItemCategory Category => _category;
 
-        public int PriceModifier(Effect effect, Card card) => 0;
-
         public float PriceMultiplier(Effect effect, Card card)
         {
             if (card.Category == Category || Category == EnumItemCategory.Unset)

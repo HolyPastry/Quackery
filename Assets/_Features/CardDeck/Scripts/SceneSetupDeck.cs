@@ -8,25 +8,21 @@ namespace Quackery.Decks
     public class SceneSetupDeck : SceneSetupScript
     {
         [SerializeField] private List<ItemData> _cardInHands = new();
-        [SerializeField] private List<ItemData> _cardsInDeck = new();
 
-        [SerializeField] private bool _addAllCards = true;
+        [Tooltip("Import all cards if _deck is left empty.")]
+        [SerializeField] private DeckData _deck;
 
         public override IEnumerator Routine()
         {
             yield return InventoryServices.WaitUntilReady();
-            //   yield return DeckServices.WaitUntilReady();
-            if (_addAllCards)
+            if (_deck == null)
             {
                 InventoryServices.AddNewItems(null);
             }
             else
             {
-                InventoryServices.AddNewItems(_cardsInDeck);
+                _deck.AddToInventory();
             }
-
-            yield return null;
-
         }
 
         public void DrawCards()

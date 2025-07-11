@@ -14,12 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Crystal Ring
   Icon: {fileID: 21300000, guid: ebc18aa93726541bab4c09558a4afd9c, type: 3}
-  BasePrice: 0
-  ShortDescription: 
-  LongDescription: 
+  BasePrice: 11
+  ShortDescription: Chamed affects this card 3X.
+  LongDescription: Chamed affects this card 3X.
   ShopDescription: 
-  Explanations: []
-  SubscriptionCost: 0
+  Explanations:
+  - {fileID: 11400000, guid: 48f617e1041c14b9d855f83da3a9fb1e, type: 2}
+  SubscriptionCost: 33
   Category: 3
-  Effects: []
+  Effects:
+  - Data: {fileID: 11400000, guid: 1682d1d9dda21408f875ac1db50be104, type: 2}
+    Value: 0
+    Tags: 
   ValueEvaluator: {fileID: 0}

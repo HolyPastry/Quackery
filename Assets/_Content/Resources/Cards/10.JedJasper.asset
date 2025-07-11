@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Jed Jasper
   Icon: {fileID: 21300000, guid: 6039a9ed2f6b44a45950772e2c8a07b7, type: 3}
-  BasePrice: 0
-  ShortDescription: 
-  LongDescription: 
+  BasePrice: 1
+  ShortDescription: Can cover crystal cards.
+  LongDescription: Can cover crystal cards.
   ShopDescription: 
-  Explanations: []
-  SubscriptionCost: 0
+  Explanations:
+  - {fileID: 11400000, guid: c1335b97d67394f8da53d1020c816505, type: 2}
+  SubscriptionCost: 3
   Category: 3
   Effects: []
   ValueEvaluator: {fileID: 0}

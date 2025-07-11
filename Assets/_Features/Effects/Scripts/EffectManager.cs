@@ -97,7 +97,7 @@ namespace Quackery.Effects
         private (int multiplier, int bonus) GetSynergyBonuses(Card card, List<Item> list)
         {
             bool synergyPredicate(Effect effect) =>
-                effect.Data is SynergyEffect synergyEffect &&
+                effect.Data is StackMultiplierEffect synergyEffect &&
                 (synergyEffect.Category == card.Item.Category ||
                     synergyEffect.Category == EnumItemCategory.Unset);
 
@@ -108,12 +108,12 @@ namespace Quackery.Effects
             if (synergyEffects.Count == 0) return (0, 0);
 
             int multiplier = synergyEffects
-                .Where(effect => effect.Data is SynergyEffect synergyEffect &&
+                .Where(effect => effect.Data is StackMultiplierEffect synergyEffect &&
                         synergyEffect.Operation == EnumOperation.Multiply)
                 .Sum(effect => effect.Value);
 
             int bonus = synergyEffects
-                .Where(effect => effect.Data is SynergyEffect synergyEffect &&
+                .Where(effect => effect.Data is StackMultiplierEffect synergyEffect &&
                         synergyEffect.Operation == EnumOperation.Add)
                 .Sum(effect => effect.Value);
 
@@ -167,12 +167,12 @@ namespace Quackery.Effects
 
 
 
-            List<Effect> stackEffects = _effects.FindAll(effect => effect.Data is SynergyEffect stackEffect &&
+            List<Effect> stackEffects = _effects.FindAll(effect => effect.Data is StackMultiplierEffect stackEffect &&
                                                (effect.Trigger == EnumEffectTrigger.Passive) &&
                                                (stackEffect.Category == topCard.Item.Category || stackEffect.Category == EnumItemCategory.Unset));
 
 
-            stackEffects.AddRange(topCard.Effects.FindAll(effect => effect.Data is SynergyEffect stackEffect &&
+            stackEffects.AddRange(topCard.Effects.FindAll(effect => effect.Data is StackMultiplierEffect stackEffect &&
                                         (effect.Trigger == EnumEffectTrigger.Passive) &&
                                         (!effect.Tags.Contains(EnumEffectTag.Status)) &&
                                         (stackEffect.Category == topCard.Item.Category || stackEffect.Category == EnumItemCategory.Unset)));
@@ -181,7 +181,7 @@ namespace Quackery.Effects
             int stackPrice = 0;
             foreach (var item in stack)
             {
-                int stackBonus = stackEffects.Where(effect => effect.Data is SynergyEffect stackEffect &&
+                int stackBonus = stackEffects.Where(effect => effect.Data is StackMultiplierEffect stackEffect &&
                                 (stackEffect.Category == item.Category || stackEffect.Category == EnumItemCategory.Unset))
                                 .Sum(effect => effect.Value);
                 stackPrice += topCard.Price * stackBonus;
@@ -394,12 +394,12 @@ namespace Quackery.Effects
 
         private float GetPriceRatioModifier(Card card)
         {
-            float priceRatioModifier = 1.0f;
+            float priceMultiplier = 0f;
             foreach (var effect in _effects)
             {
                 if (effect.Data is not IPriceModifierEffect modifierEffectData)
                     continue;
-                priceRatioModifier += modifierEffectData.PriceMultiplier(effect, card);
+                priceMultiplier += modifierEffectData.PriceMultiplier(effect, card);
             }
             foreach (var effect in card.Effects)
             {
@@ -410,9 +410,9 @@ namespace Quackery.Effects
                 }
                 if (effect.Data is not IPriceModifierEffect modifierEffectData)
                     continue;
-                priceRatioModifier += modifierEffectData.PriceMultiplier(effect, card);
+                priceMultiplier += modifierEffectData.PriceMultiplier(effect, card);
             }
-            return priceRatioModifier;
+            return (priceMultiplier == 0f) ? 1f : priceMultiplier;
         }
 
         private void RemoveEffectsLinkedToPiles(List<CardPile> list)

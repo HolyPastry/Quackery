@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Cover
   m_EditorClassIdentifier: 
   Name: Cover
-  Definition: Increase all items' price
+  Definition: To place on top of a card

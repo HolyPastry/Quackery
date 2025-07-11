@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2160312547959784313}
   - component: {fileID: 2096500566912678911}
   - component: {fileID: 7121373417181115228}
+  - component: {fileID: 5319855413675142210}
   m_Layer: 5
   m_Name: HandPilePrefab
   m_TagString: Untagged
@@ -53,8 +54,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pileType: 2
-  _moveSpeed: 0.5
-  _easeType: 27
+  _moveSpeed: 0.6
+  _easeType: 1
   _staggerDelay: 0.1
 --- !u!222 &7717654291948065718
 CanvasRenderer:
@@ -106,10 +107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a80f1769fa1e46c8ad8b394fff6e310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardSpeed: 15
   _maxSlideDistance: 300
   _maxSlideDistanceY: 150
-  _smallDeltaThreshold: 0.01
   _cardPileUI: {fileID: 7113968437140955085}
 --- !u!114 &7121373417181115228
 MonoBehaviour:
@@ -118,8 +117,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9131822354248330560}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9bfb169f2bbc498ca9cc5ca439b03f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5319855413675142210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9131822354248330560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21f75b345cbd245928c951ff6084a41d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _holdingTime: 0

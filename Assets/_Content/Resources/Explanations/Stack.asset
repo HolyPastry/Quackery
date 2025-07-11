@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Stack
   m_EditorClassIdentifier: 
   Name: Stack
-  Definition: Multiply the top card price by the size of the stacks
+  Definition: A lane in the cart. The smallest stack is an empty stack.

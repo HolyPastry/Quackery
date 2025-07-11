@@ -55,5 +55,16 @@ namespace Quackery
         {
             Data.ExecutePile(this, pile);
         }
+
+        internal void CheckValidity()
+        {
+            if (Data == null)
+            {
+                Debug.LogWarning($"Effect {this} has no Data assigned.");
+                return;
+            }
+            Data.CheckValidity();
+
+        }
     }
 }

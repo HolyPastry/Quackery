@@ -61,6 +61,7 @@ namespace Quackery.Inventories
 
         private void AddNewItems(List<ItemData> list)
         {
+
             if (list == null)
                 _itemDataCollection.Data.ForEach(itemData => AddItem(itemData));
             else
@@ -130,6 +131,8 @@ namespace Quackery.Inventories
                 Debug.LogWarning("Cannot add null item data to inventory.");
                 return null;
             }
+
+            data.CheckValidity();
 
             var item = new Item(data);
 

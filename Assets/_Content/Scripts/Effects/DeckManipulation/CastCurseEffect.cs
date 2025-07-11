@@ -20,7 +20,7 @@ namespace Quackery.Effects
             {
                 for (int i = 0; i < effect.Value - countered; i++)
                 {
-                    DeckServices.AddNewToDraw(_curseCard, false);
+                    DeckServices.AddNewToDraw(_curseCard, false, effect.LinkedCard.transform);
                 }
                 DeckServices.Shuffle();
             }

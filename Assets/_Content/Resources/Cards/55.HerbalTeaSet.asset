@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
+  m_Name: 55.HerbalTeaSet
+  m_EditorClassIdentifier: 
+  MasterText: Herbal Tea Set
+  Icon: {fileID: 0}
+  BasePrice: 1
+  ShortDescription: '[Bundle] Apply Calm'
+  LongDescription: Tucks all herbalism cards in hand when played and apply Calm
+  ShopDescription: 
+  Explanations:
+  - {fileID: 11400000, guid: 760c3bfef0017439c9584611bb013c30, type: 2}
+  - {fileID: 11400000, guid: a4d43131ca9454711ba9ffabcfda5be2, type: 2}
+  SubscriptionCost: 6
+  Category: 1
+  Effects: []
+  ValueEvaluator: {fileID: 0}

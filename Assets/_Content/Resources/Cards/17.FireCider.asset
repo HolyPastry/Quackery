@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Fire Cider
   Icon: {fileID: 21300000, guid: 1a37e7223f6374a7abc18d10e376e98f, type: 3}
-  BasePrice: 0
-  ShortDescription: 
-  LongDescription: 
+  BasePrice: 1
+  ShortDescription: '[ACTIVE] Double synergy bonus of herb card stacks.'
+  LongDescription: Doubles synergy bonus of herb cards stacks if visible in cart.
   ShopDescription: 
-  Explanations: []
-  SubscriptionCost: 0
+  Explanations:
+  - {fileID: 11400000, guid: f5a1e322e38544357a9bf8cad73ac1da, type: 2}
+  SubscriptionCost: 12
   Category: 1
   Effects: []
   ValueEvaluator: {fileID: 0}

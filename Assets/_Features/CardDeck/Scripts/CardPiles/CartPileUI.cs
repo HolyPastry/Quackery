@@ -20,6 +20,7 @@ namespace Quackery.Decks
             CartEvents.OnCalculatingCartPile += CalculateCartPile;
             CartEvents.OnStacksHighlighted += HighlightStack;
 
+
         }
 
 
@@ -58,6 +59,7 @@ namespace Quackery.Decks
         {
             _highlighted = list != null && list.Contains(PileIndex);
 
+            _highlightObject.transform.SetAsLastSibling();
             _highlightObject.SetActive(_highlighted);
 
         }
