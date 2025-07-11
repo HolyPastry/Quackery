@@ -54,24 +54,25 @@ namespace Quackery.Inventories
             //     }
             // };
             (int multiplier, int bonus) = EffectServices.GetSynergyBonuses(topCard, subItems);
+
             if (subItems.TrueForAll(i => i.Category == topCard.Category))
             {
                 rewards.Add(new()
                 {
                     Type = EnumCardReward.SynergyReward,
-                    Value = subItems.Sum(i => i.BasePrice + bonus) * multiplier
+                    Value = subItems.Sum(i => topCard.Price + bonus) * multiplier
                 });
             }
 
-            int value = EffectServices.GetStackPrice(topCard, subItems);
-            if (value > 0)
-            {
-                rewards.Add(new()
-                {
-                    Type = EnumCardReward.StackReward,
-                    Value = value
-                });
-            }
+            // int value = EffectServices.GetStackPrice(topCard, subItems);
+            // if (value > 0)
+            // {
+            //     rewards.Add(new()
+            //     {
+            //         Type = EnumCardReward.StackReward,
+            //         Value = value
+            //     });
+            // }
             // int numSameCategory = 0;
             // foreach (var pile in otherPiles)
             // {

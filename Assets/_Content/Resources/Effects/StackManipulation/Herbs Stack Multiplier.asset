@@ -15,4 +15,9 @@ MonoBehaviour:
   MasterText: Stack Multiplier
   Icon: {fileID: 21300000, guid: 4e898b28f8393415ab4670b5c8115e57, type: 3}
   Description: '#Herbs card stack bonus is doubled'
+  CanBeNegative: 0
+  Trigger: 0
+  Explanations:
+  - {fileID: 11400000, guid: f5a1e322e38544357a9bf8cad73ac1da, type: 2}
   _category: 1
+  _operation: 1

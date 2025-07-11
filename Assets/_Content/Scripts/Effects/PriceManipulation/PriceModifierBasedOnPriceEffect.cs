@@ -4,19 +4,14 @@ using UnityEngine;
 namespace Quackery.Effects
 {
     [CreateAssetMenu(fileName = "PriceModifierBasedOnPriceEffect", menuName = "Quackery/Effects/Price/Price Modifier Based On Price", order = 0)]
-    public class PriceModifierBasedOnPriceEffect : EffectData, IPriceModifierEffect
+    public class PriceModifierBasedOnPriceEffect : EffectData
     {
         [SerializeField] private int _priceToMatch = 1;
 
-
-        public int PriceModifier(Effect effect, Card card)
+        public override void Execute(Effect effect)
         {
-            if (card.Item.BasePrice == _priceToMatch)
-            {
-                return effect.Value;
-            }
-            return 0;
-        }
 
+            DeckServices.BoostPriceOfCardsInHand(effect.Value, Card => Card.Price == _priceToMatch);
+        }
     }
 }

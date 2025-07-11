@@ -1,3 +1,4 @@
+using System;
 using Quackery.Inventories;
 
 namespace Quackery.Shops
@@ -24,7 +25,10 @@ namespace Quackery.Shops
 
         public override void ApplyReward()
         {
-            DeckServices.AddNewToDraw(ItemData, true, null);
+            DeckServices.AddNew(ItemData,
+                            Decks.EnumCardPile.Discard,
+                            EnumPlacement.OnTop,
+                            EnumLifetime.Permanent, false);
         }
     }
 }

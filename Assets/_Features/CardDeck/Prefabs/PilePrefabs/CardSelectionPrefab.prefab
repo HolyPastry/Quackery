@@ -56,7 +56,6 @@ MonoBehaviour:
   _moveSpeed: 0.5
   _easeType: 27
   _staggerDelay: 0.1
-  _rewardPanel: {fileID: 0}
 --- !u!222 &5574267186347531703
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -120,4 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a80f1769fa1e46c8ad8b394fff6e310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxSlideDistance: 420
+  _maxSlideDistanceY: 300
+  _useDottedLine: 0
   _cardPileUI: {fileID: 5853307154099770628}

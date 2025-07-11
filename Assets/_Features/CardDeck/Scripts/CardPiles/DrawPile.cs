@@ -28,7 +28,7 @@ namespace Quackery.Decks
 
         private void RegisterServices()
         {
-            DeckServices.AddNewToDraw = AddNewCard;
+            // DeckServices.AddNewToDraw = AddNewCard;
             // DeckServices.AddMultipleInstancesToDrawDeck = AddMultipleNew;
             // DeckServices.AddToDrawPile = AddNewCardsToDeck;
             DeckServices.DrawSpecificCards = DrawSpecificCards;
@@ -43,7 +43,7 @@ namespace Quackery.Decks
 
             // DeckServices.AddMultipleInstancesToDrawDeck = delegate { };
             // DeckServices.AddToDrawPile = delegate { };
-            DeckServices.AddNewToDraw = (itemData, isPermanent, origin) => { };
+            // DeckServices.AddNewToDraw = (itemData, isPermanent, origin) => { };
             DeckServices.DrawSpecificCards = delegate { };
             DeckServices.DrawCategory = category => null;
             DeckServices.Draw = number => new List<Card>();
@@ -128,6 +128,7 @@ namespace Quackery.Decks
                 }
             }
             card.UpdateUI();
+            card.Item.NumberOfDraws++;
             return card;
         }
 
@@ -146,6 +147,8 @@ namespace Quackery.Decks
 
                 AddToDeck(new Item(data), origin);
         }
+
+
 
         // internal void AddMultipleNew(ItemData data, int numCards)
         // {

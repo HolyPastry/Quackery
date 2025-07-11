@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Holypastry.Bakery.Flow;
 using Quackery.Inventories;
+using Quackery.Effects;
 namespace Quackery.Decks
 {
     public class SceneSetupDeck : SceneSetupScript
@@ -11,6 +12,8 @@ namespace Quackery.Decks
 
         [Tooltip("Import all cards if _deck is left empty.")]
         [SerializeField] private DeckData _deck;
+
+        [SerializeField] private List<ItemData> _placeOnTopOfDeck = new();
 
         public override IEnumerator Routine()
         {
@@ -22,6 +25,13 @@ namespace Quackery.Decks
             else
             {
                 _deck.AddToInventory();
+            }
+            foreach (var itemData in _placeOnTopOfDeck)
+            {
+                DeckServices.AddNew(itemData,
+                        EnumCardPile.Draw,
+                        EnumPlacement.OnTop,
+                        EnumLifetime.Temporary, true);
             }
         }
 

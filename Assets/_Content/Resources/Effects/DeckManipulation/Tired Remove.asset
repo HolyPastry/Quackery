@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 824fe55fd1e144674ba4c03fc8505cc6, type: 3}
-  m_Name: Duplicate And Discard Effect
+  m_Script: {fileID: 11500000, guid: f3c94cffc1b3945aaa43285805ce370e, type: 3}
+  m_Name: Tired Remove
   m_EditorClassIdentifier: 
   MasterText: 
   Icon: {fileID: 0}
-  Description: Duplicate the top card of the cart and discard the duplicate
+  Description: 
   CanBeNegative: 0
-  Explanations: []
-  _position: 1
+  Trigger: 1
+  Explanations:
+  - {fileID: 11400000, guid: 066b5876e6e4c4d7995404d3cf2f7fd4, type: 2}
+  _effectsToRemove:
+  - {fileID: 11400000, guid: b1c76def04c044b178222a46aef9bcdd, type: 2}

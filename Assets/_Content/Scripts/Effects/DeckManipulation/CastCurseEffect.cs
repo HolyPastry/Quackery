@@ -1,5 +1,7 @@
+using System;
 using Ink.Runtime;
 using Quackery.Decks;
+using Quackery.GameStats;
 using Quackery.Inventories;
 using UnityEngine;
 
@@ -11,22 +13,26 @@ namespace Quackery.Effects
     {
         [SerializeField] private EffectData _counterEffect;
         [SerializeField] private ItemData _curseCard;
+
         public EnumCardPile TargetDeck = EnumCardPile.Discard;
+        public EnumLifetime Lifetime = EnumLifetime.Permanent;
+        public EnumPlacement Placement = EnumPlacement.OnTop;
 
         public override void Execute(Effect effect)
         {
             int countered = EffectServices.CounterEffect(_counterEffect, effect.Value);
-            if (TargetDeck == EnumCardPile.Draw)
+
+
+            for (int i = 0; i < effect.Value - countered; i++)
             {
-                for (int i = 0; i < effect.Value - countered; i++)
-                {
-                    DeckServices.AddNewToDraw(_curseCard, false, effect.LinkedCard.transform);
-                }
-                DeckServices.Shuffle();
-            }
-            else if (TargetDeck == EnumCardPile.Discard)
-            {
-                DeckServices.AddNewToDiscard(_curseCard, effect.Value - countered);
+                DeckServices.AddNew(_curseCard,
+                                        TargetDeck,
+                                        Placement,
+                                        Lifetime, true);
+                Card card = DeckServices.CreateCard(_curseCard);
+                card.Item.Lifetime = Lifetime;
+                DeckServices.MoveCardToEffect(card, true);
+                //DeckServices.MoveCardTo
             }
         }
     }

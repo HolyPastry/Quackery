@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
   m_Name: 35.Bundle
   m_EditorClassIdentifier: 
-  MasterText: Bundle
+  MasterText: Special Offer!
   Icon: {fileID: 0}
   BasePrice: 0
-  ShortDescription: 
-  LongDescription: 
+  ShortDescription: Merge stacks of the same type. Reduce cart value by 50%
+  LongDescription: Merge stacks of the same type. Reduce cart value by 50%
   ShopDescription: 
   Explanations: []
-  SubscriptionCost: 0
+  SubscriptionCost: 5
   Category: 7
-  Effects: []
+  Effects:
+  - Data: {fileID: 11400000, guid: 263fde966d9864a73892b13c1ccb9add, type: 2}
+    Value: 0
+    Tags: 
   ValueEvaluator: {fileID: 0}

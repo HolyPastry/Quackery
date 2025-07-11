@@ -15,8 +15,10 @@ namespace Quackery.Decks
 
         [SerializeField] private float _maxSlideDistance = 420f;
         [SerializeField] private float _maxSlideDistanceY = 300f;
+        [SerializeField] private bool _useDottedLine = true;
 
         [SerializeField, Self] private CardPileUI _cardPileUI;
+
 
 
         private bool _isSliding;
@@ -47,11 +49,21 @@ namespace Quackery.Decks
 
                 distanceFromOrigin = Vector2.ClampMagnitude(distanceFromOrigin, _maxSlideDistance);
                 targetPosition = originalPosition + distanceFromOrigin;
-                if (distanceFromOrigin.y > _maxSlideDistanceY)
-                    OverlayCanvas.GenerateDottedLine(targetPosition, Input.mousePosition);
+                if (_useDottedLine)
+                {
+                    if (distanceFromOrigin.y > _maxSlideDistanceY)
+                        OverlayCanvas.GenerateDottedLine(targetPosition, Input.mousePosition);
+                    else
+                        OverlayCanvas.HideDottedLine();
+                }
                 else
-                    OverlayCanvas.HideDottedLine();
-
+                {
+                    if (distanceFromOrigin.y > _maxSlideDistanceY)
+                    {
+                        DeckServices.PileClicked(_cardPileUI.Type, _cardPileUI.PileIndex);
+                        ResetMovements();
+                    }
+                }
                 transform.position = targetPosition;
                 yield return null;
 
@@ -61,6 +73,7 @@ namespace Quackery.Decks
         public void OnPointerUp(PointerEventData eventData)
         {
             if (!_isSliding) return;
+
             OverlayCanvas.HideDottedLine();
             ResetMovements();
             DeckServices.StopPlayCardLoop();

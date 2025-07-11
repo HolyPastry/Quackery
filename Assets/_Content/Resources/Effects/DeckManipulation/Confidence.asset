@@ -15,3 +15,6 @@ MonoBehaviour:
   MasterText: Confidence
   Icon: {fileID: 21300000, guid: 3158c148912f54896b99aa1f70214f21, type: 3}
   Description: each point of confidence negate one suspicious
+  CanBeNegative: 0
+  Trigger: 6
+  Explanations: []

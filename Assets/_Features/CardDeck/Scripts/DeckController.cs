@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Holypastry.Bakery.Flow;
+
 using Quackery.Inventories;
 using System.Linq;
 using Quackery.Effects;
-using Quackery.Clients;
+
 using UnityEngine.Assertions;
 
 
@@ -56,7 +56,7 @@ namespace Quackery.Decks
         {
             DeckServices.WaitUntilReady = () => new WaitUntil(() => true);
 
-            DeckServices.AddNewToDiscard = (itemData, amount) => { };
+            //  DeckServices.AddNewToDiscard = (itemData, amount) => { };
             DeckServices.Shuffle = () => { };
 
             DeckServices.DrawBackToFull = () => null;
@@ -98,6 +98,12 @@ namespace Quackery.Decks
             DeckServices.StartPlayCardLoop = delegate { };
             DeckServices.StopPlayCardLoop = () => { };
 
+            DeckServices.BoostPriceOfCardsInHand = (value, predicate) => { };
+            DeckServices.AddNew =
+                (itemData, pileType, pileLocation, lifetime, sendToEffectPileFirst) => null;
+
+            DeckServices.ReplaceCard = (card, replacementCard) => { };
+
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
             EffectEvents.OnUpdated -= UpdateCardUI;
@@ -110,7 +116,7 @@ namespace Quackery.Decks
         {
             DeckServices.WaitUntilReady = () => new WaitUntil(() => _isReady);
 
-            DeckServices.AddNewToDiscard = AddNewToDiscard;
+            //DeckServices.AddNewToDiscard = AddNewToDiscard;
             DeckServices.Shuffle = ShuffleDiscardPileIn;
 
             DeckServices.DrawBackToFull = DrawBackToFull;
@@ -154,12 +160,66 @@ namespace Quackery.Decks
             DeckServices.StartPlayCardLoop = StartPlayCardLoop;
             DeckServices.StopPlayCardLoop = StopPlayCardLoop;
 
+            DeckServices.BoostPriceOfCardsInHand = BoostPriceOfCardsInHand;
+            DeckServices.AddNew = AddNew;
+            DeckServices.ReplaceCard = ReplaceACard;
+
             EffectEvents.OnAdded += UpdateCardUI;
             EffectEvents.OnRemoved += UpdateCardUI;
             EffectEvents.OnUpdated += UpdateCardUI;
         }
 
+        private void ReplaceACard(Card card, ItemData data)
+        {
+            StartCoroutine(CardReplaceRoutine(card, data));
+        }
 
+        private IEnumerator CardReplaceRoutine(Card card, ItemData data)
+        {
+            DeckServices.DestroyCard(card);
+
+            yield return StartCoroutine(DeckServices.AddNew(data,
+                                   EnumCardPile.Discard,
+                                   EnumPlacement.OnTop,
+                                   EnumLifetime.Permanent, true));
+
+
+            DeckServices.DrawBackToFull();
+        }
+
+        private IEnumerator AddNew(ItemData data,
+                         EnumCardPile pile,
+                          EnumPlacement placement,
+                           EnumLifetime lifetime,
+                           bool sendToEffectPileFirst = false)
+        {
+            if (data == null) yield break;
+
+            Card card = _cardFactory.Create(data);
+            if (lifetime == EnumLifetime.Permanent)
+                InventoryServices.AddItem(card.Item);
+
+            card.Item.Lifetime = lifetime;
+
+            if (sendToEffectPileFirst)
+            {
+                MoveToEffectPile(card, true);
+                yield return new WaitForSeconds(1f);
+            }
+
+            switch (pile)
+            {
+                case EnumCardPile.Draw:
+                    _drawPile.Add(card, placement);
+                    break;
+                case EnumCardPile.Discard:
+                    _discardPile.Add(card, placement);
+                    break;
+                default:
+                    Debug.LogWarning("Cannot Add new cart to: " + pile);
+                    break;
+            }
+        }
 
         IEnumerator Start()
         {
@@ -189,15 +249,32 @@ namespace Quackery.Decks
 
         }
 
+        private void BoostPriceOfCardsInHand(int bonus, System.Predicate<Card> predicate)
+        {
+            foreach (var pile in _handPiles)
+            {
+                if (pile.IsEmpty || !pile.Enabled) continue;
+
+                if (predicate(pile.TopCard))
+                {
+                    pile.TopCard.InHandPriceBonus += bonus;
+                    pile.TopCard.UpdateUI();
+                }
+            }
+        }
+
+
         private Card CreateCard(ItemData data)
         {
             return _cardFactory.Create(data);
         }
         private void StopPlayCardLoop()
         {
+
             var selectedPile = CartServices.GetSelectedPile();
             if (selectedPile == null) return;
             CartServices.SetStacksHighlights(null);
+            DeactivateAllPiles();
             StartCoroutine(PlayCardRoutine(_cardBeingPlayed, selectedPile));
 
         }
@@ -326,7 +403,6 @@ namespace Quackery.Decks
         private void RecountPile(CardPile pile)
         {
             if (pile.IsEmpty || !pile.Enabled) return;
-            DeckEvents.OnCashingPile(pile);
         }
 
         private void DestroyPile(EnumCardPile type)
@@ -409,7 +485,6 @@ namespace Quackery.Decks
             {
 
             }
-
             else if (CartServices.AddCardToCartPile(card, selectedPile))
             {
                 yield return CartServices.CalculateCart();
@@ -422,11 +497,14 @@ namespace Quackery.Decks
             if (!_drawInterrupted)
                 _cardPlayed = true;
             _cardBeingPlayed = null;
+            card.InHandPriceBonus = 0;
+            card.UpdateUI();
             UpdateCardUI();
         }
 
         private IEnumerator PlayCardRoutine(Card card)
         {
+
             DeckEvents.OnCardPlayed?.Invoke(card);
             // var meDialog = card.Item.Data.name + "Me";
             // string clientResponse = ClientServices.SelectedClient().DialogName + "Answer";
@@ -463,8 +541,10 @@ namespace Quackery.Decks
 
         private IEnumerator OnPlayEffectRoutine(Card card)
         {
+            Debug.Log(card);
             var onPlayEffects = card.Effects.FindAll(e => e != null && e.Trigger == EnumEffectTrigger.OnCardPlayed ||
-                                                            e.Tags.Contains(EnumEffectTag.Status));
+                                                            e.Tags.Contains(EnumEffectTag.Status)
+                                                             || e.Trigger == EnumEffectTrigger.OnActivated);
             if (onPlayEffects.Count == 0)
                 yield break;
 
@@ -478,8 +558,14 @@ namespace Quackery.Decks
                     onPlayEffects[i].LinkedCard = card;
                     EffectServices.AddEffect(onPlayEffects[i]);
                 }
-
-                onPlayEffects[i].Execute(card);
+                else if (onPlayEffects[i].Trigger == EnumEffectTrigger.OnActivated)
+                {
+                    onPlayEffects[i].Tags.Add(EnumEffectTag.Status);
+                    onPlayEffects[i].Tags.Add(EnumEffectTag.Card);
+                    onPlayEffects[i].LinkedCard = card;
+                    EffectServices.AddEffect(onPlayEffects[i]);
+                }
+                else onPlayEffects[i].Execute(card);
                 yield return new WaitForSeconds(0.5f);
             }
         }
@@ -489,7 +575,7 @@ namespace Quackery.Decks
         {
             var effectPile = _cardPiles.Find(p => p.Type == EnumCardPile.Effect);
 
-            effectPile.AddAtTheTop(card, isInstant);
+            effectPile.AddOnTop(card, isInstant);
         }
 
         private bool ExecuteSkills(Card card)
@@ -541,7 +627,9 @@ namespace Quackery.Decks
         private void Discard(Card card)
         {
             RemoveFromAllPiles(card);
-            _discardPile.AddAtTheTop(card);
+            _discardPile.AddOnTop(card);
+            card.InHandPriceBonus = 0;
+            card.UpdateUI();
             card.Discard();
 
             //DeckEvents.OnCardMovedTo(card, EnumCardPile.Discard, _discardPile.Index, true);
@@ -597,7 +685,7 @@ namespace Quackery.Decks
             {
                 if (pile.IsEmpty)
                 {
-                    pile.AddAtTheTop(card);
+                    pile.AddOnTop(card);
 
                     return; // Exit after adding to the first empty table pile
                 }
@@ -659,7 +747,7 @@ namespace Quackery.Decks
                 {
                     if (pile.IsEmpty)
                     {
-                        pile.AddAtTheTop(card);
+                        pile.AddOnTop(card);
 
                         break;
                     }
@@ -683,7 +771,6 @@ namespace Quackery.Decks
             if (pile1 == null || pile2 == null || pile1.IsEmpty) return;
 
             pile2.MergeBelow(pile1);
-            DeckEvents.OnPileMoved(pile2.Type, pile2.Index);
         }
 
         internal IEnumerator DrawBackToFull()

@@ -44,7 +44,7 @@ namespace Quackery
                 if (effectData == null)
                 {
                     Debug.LogWarning($"Effect '{effectName}' not found in collection '{EffectCollectionKey}' for item '{itemData.name}' at index {IndexOf}.");
-                    continue;
+                    //continue;
                 }
                 var newEffect = new Effect(effectData)
                 {

@@ -122,7 +122,9 @@ namespace Quackery.Decks
 
         private Item _item;
 
-        public int Price => EffectServices.GetCardPrice(this);
+        public int Price => EffectServices.GetCardPrice(this) + InHandPriceBonus;
+
+        public int InHandPriceBonus = 0;
 
         public bool CannotBeCovered
         {
@@ -248,7 +250,7 @@ namespace Quackery.Decks
 
         public override string ToString()
         {
-            return $"{_item.Name} - {_item.BasePrice} ";
+            return $"{_item.Name} - {_item.BasePrice}  - {Effects.ToString()} ";
         }
     }
 }

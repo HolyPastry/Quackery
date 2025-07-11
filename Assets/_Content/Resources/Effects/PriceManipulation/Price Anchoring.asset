@@ -16,5 +16,6 @@ MonoBehaviour:
   Icon: {fileID: 0}
   Description: Add #Value to all value 1 card in hand
   CanBeNegative: 0
+  Trigger: 1
   Explanations: []
   _priceToMatch: 1

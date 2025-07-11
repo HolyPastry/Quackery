@@ -5,6 +5,7 @@ namespace Quackery.Effects
         Activated,
         Client,
         Status,
-        Artifact
+        Artifact,
+        Card
     }
 }

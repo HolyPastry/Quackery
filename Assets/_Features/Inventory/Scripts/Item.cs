@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Quackery.Decks;
+using Quackery.Effects;
 
 namespace Quackery.Inventories
 {
@@ -10,6 +11,8 @@ namespace Quackery.Inventories
         [NonSerialized]
         public ItemData Data;
         public string Key;
+
+        public int NumberOfDraws = 0;
 
         public Item(ItemData data)
         {
@@ -23,6 +26,7 @@ namespace Quackery.Inventories
                                             Data.Category : OverrideCategory;
 
         public EnumItemCategory OverrideCategory = EnumItemCategory.Unset;
+        public EnumLifetime Lifetime;
 
         public int BasePrice => Data.BasePrice;
 

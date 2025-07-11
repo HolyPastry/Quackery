@@ -12,14 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
   m_Name: 13.RoseQuartzCrystal
   m_EditorClassIdentifier: 
-  MasterText: Rose Quartz Crystal
+  MasterText: A Big Crystal
   Icon: {fileID: 21300000, guid: 924378c9a205d4ae4a6da4df1f61810c, type: 3}
-  BasePrice: 0
-  ShortDescription: 
-  LongDescription: 
+  BasePrice: 12
+  ShortDescription: Apply 2 Charmed. Reduce Cart Size by 1
+  LongDescription: Apply 2 Charmed. Reduce Cart Size by 1
   ShopDescription: 
-  Explanations: []
-  SubscriptionCost: 0
+  Explanations:
+  - {fileID: 11400000, guid: 48f617e1041c14b9d855f83da3a9fb1e, type: 2}
+  SubscriptionCost: 15
   Category: 3
-  Effects: []
+  Effects:
+  - Data: {fileID: 11400000, guid: 50827194806454ba8a638dbac3936c41, type: 2}
+    Value: -1
+    Tags: 
+  - Data: {fileID: 11400000, guid: 3595818e79b0a41709da42f7deae28b8, type: 2}
+    Value: 2
+    Tags: 
   ValueEvaluator: {fileID: 0}

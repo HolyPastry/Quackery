@@ -211,7 +211,7 @@ namespace Quackery.Decks
 
             DeckServices.MoveToTable(_lastCartPile.TopCard);
 
-            _lastCartPile.AddAtTheTop(card);
+            _lastCartPile.AddOnTop(card);
             DeckEvents.OnPileUpdated(_lastCartPile.Type, _lastCartPile.Index);
         }
 
@@ -240,6 +240,9 @@ namespace Quackery.Decks
             {
 
                 UpdateUI();
+                EffectServices.UpdateCardEffects(
+                        _cartPiles.FindAll(p => p.Enabled && !p.IsEmpty)
+                                .ConvertAll(p => p.TopCard));
                 return true;
             }
 
@@ -430,25 +433,34 @@ namespace Quackery.Decks
 
             return pile.CalculateCartRewards(otherCartPiles);
         }
-
+        private void UpdateEffects()
+        {
+            EffectServices.UpdateCardEffects(
+                      _cartPiles.FindAll(p => p.Enabled && !p.IsEmpty)
+                              .ConvertAll(p => p.TopCard));
+        }
         private bool AddCardToCartPile(Card topCard, CardPile pile)
         {
             var effect = topCard.Effects.Find(effect => effect.Data is MergeWithPileEffect);
             if (effect == null)
             {
-                pile.AddAtTheTop(topCard);
+
+                pile.AddOnTop(topCard);
                 _lastCartPile = pile;
+                UpdateEffects();
                 UpdateUI();
+                CartEvents.OnNewCartPileUsed(topCard);
                 return true; // If no effect, just add to the pile
             }
 
             var effectData = effect.Data as MergeWithPileEffect;
 
-            if (effectData.Location == EnumPileLocation.AtTheBottom)
+            if (effectData.Location == EnumPlacement.AtTheBottom)
                 pile.AddAtTheBottom(topCard);
             else
-                pile.AddAtTheTop(topCard);
+                pile.AddOnTop(topCard);
             _lastCartPile = pile;
+            UpdateEffects();
             UpdateUI();
             return true; // Exit after adding to the specified pile
         }
@@ -500,14 +512,14 @@ namespace Quackery.Decks
                 return false;
             }
 
-            if (effectData.Location == EnumPileLocation.AtTheBottom)
+            if (effectData.Location == EnumPlacement.AtTheBottom)
             {
                 cardPileRef.AddAtTheBottom(topCard);
                 return true;
             }
-            else if (effectData.Location == EnumPileLocation.OnTop)
+            else if (effectData.Location == EnumPlacement.OnTop)
             {
-                cardPileRef.AddAtTheTop(topCard);
+                cardPileRef.AddOnTop(topCard);
                 return true; // Exit after merging to the last cart pile
             }
             else
@@ -523,7 +535,7 @@ namespace Quackery.Decks
             if (cartPile == null) return false;
 
 
-            cartPile.AddAtTheTop(card);
+            cartPile.AddOnTop(card);
             _lastCartPile = cartPile;
             return true;
         }
@@ -570,7 +582,7 @@ namespace Quackery.Decks
                 compatiblePiles.AddRange(emptyPiles);
 
 
-            if (mergeEffectData.Location == EnumPileLocation.OnTop)
+            if (mergeEffectData.Location == EnumPlacement.OnTop)
                 compatiblePiles.AddRange(_cartPiles.FindAll(p =>
                             p.Enabled &&
                              !p.IsEmpty &&
@@ -578,7 +590,7 @@ namespace Quackery.Decks
                              (mergeEffectData.Category == EnumItemCategory.Unset ||
                                 p.Category == mergeEffectData.Category)));
 
-            if (mergeEffectData.Location == EnumPileLocation.AtTheBottom)
+            if (mergeEffectData.Location == EnumPlacement.AtTheBottom)
                 compatiblePiles.AddRange(_cartPiles.FindAll(p =>
                                 p.Enabled &&
                                  !p.IsEmpty &&

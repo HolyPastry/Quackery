@@ -27,7 +27,7 @@ namespace Quackery.Effects
 
         [Tooltip("The location where the card will be placed in the pile.\n" +
                  "OnTop will place the card on top of the pile, while Underneath will place it underneath.")]
-        public EnumPileLocation Location;
+        public EnumPlacement Location;
         [SerializeField] private EnumItemCategory _category = EnumItemCategory.Unset;
         public EnumItemCategory Category => _category;
     }

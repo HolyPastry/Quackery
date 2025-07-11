@@ -15,11 +15,16 @@ MonoBehaviour:
   MasterText: Herbalist Certificate
   Icon: {fileID: 0}
   BasePrice: 0
-  ShortDescription: 
+  ShortDescription: Apply 1 Confidence. If there are only herbal cards in the cart,
+    remove all suspicion in hand.
   LongDescription: 
   ShopDescription: 
-  Explanations: []
-  SubscriptionCost: 0
+  Explanations:
+  - {fileID: 11400000, guid: d0ff6f583391a43baa8a79818f910d2f, type: 2}
+  SubscriptionCost: 15
   Category: 7
-  Effects: []
+  Effects:
+  - Data: {fileID: 11400000, guid: 0efb1bb5a0fe24d2e9a540c5bbc4b250, type: 2}
+    Value: 1
+    Tags: 
   ValueEvaluator: {fileID: 0}

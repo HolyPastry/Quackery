@@ -18,7 +18,8 @@ MonoBehaviour:
   ShortDescription: 
   LongDescription: 
   ShopDescription: 
-  Explanations: []
+  Explanations:
+  - {fileID: 11400000, guid: 6a88eaf0137fd44388d07980a3253e71, type: 2}
   SubscriptionCost: 0
   Category: 8
   Effects: []

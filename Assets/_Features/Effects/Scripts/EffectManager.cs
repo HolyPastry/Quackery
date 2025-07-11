@@ -51,10 +51,15 @@ namespace Quackery.Effects
             EffectServices.RemoveArtifactEffects = (artifactData) => { };
 
             EffectServices.GetSynergyBonuses = (card, subItems) => (0, 0);
+            EffectServices.UpdateCardEffects = (topCards) => { };
 
             EffectEvents.OnAdded -= ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved -= ExecuteOnAppliedEffect;
             EffectEvents.OnUpdated -= ExecuteOnAppliedEffect;
+
+            CartEvents.OnNewCartPileUsed -= ExecuteNewCartPileEffects;
+
+
 
         }
 
@@ -89,9 +94,32 @@ namespace Quackery.Effects
             EffectServices.RemoveArtifactEffects = RemoveArtifactEffects;
             EffectServices.GetSynergyBonuses = GetSynergyBonuses;
 
+            EffectServices.UpdateCardEffects = UpdateCardEffects;
+
             EffectEvents.OnAdded += ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved += ExecuteOnAppliedEffect;
             EffectEvents.OnUpdated += ExecuteOnAppliedEffect;
+
+            CartEvents.OnNewCartPileUsed += ExecuteNewCartPileEffects;
+
+        }
+
+        private void ExecuteNewCartPileEffects(Card card)
+        {
+            Execute(EnumEffectTrigger.OnNewCartPileUsed, card);
+        }
+
+        private void UpdateCardEffects(List<Card> topCardList)
+        {
+            var effectToRemove = _effects.Where(e => e.Tags.Contains(EnumEffectTag.Card) &&
+                        !topCardList.Contains(e.LinkedCard)).ToList();
+            foreach (var effect in effectToRemove)
+            {
+                if (!effect.Tags.Contains(EnumEffectTag.Card)) continue;
+                if (!topCardList.Contains(effect.LinkedCard))
+                    _effects.Remove(effect);
+                EffectEvents.OnRemoved?.Invoke(effect);
+            }
         }
 
         private (int multiplier, int bonus) GetSynergyBonuses(Card card, List<Item> list)
@@ -105,7 +133,7 @@ namespace Quackery.Effects
 
             synergyEffects.AddRange(_effects.FindAll(synergyPredicate));
 
-            if (synergyEffects.Count == 0) return (0, 0);
+            if (synergyEffects.Count == 0) return (list.Count, 0);
 
             int multiplier = synergyEffects
                 .Where(effect => effect.Data is StackMultiplierEffect synergyEffect &&
@@ -117,8 +145,8 @@ namespace Quackery.Effects
                         synergyEffect.Operation == EnumOperation.Add)
                 .Sum(effect => effect.Value);
 
-            if (multiplier <= 0) multiplier = 1; // Ensure at least one multiplier is applied
-            return (multiplier, bonus);
+            if (multiplier <= 0) multiplier = list.Count; // Ensure at least one multiplier is applied
+            return (multiplier + list.Count, bonus);
 
         }
 
@@ -141,9 +169,8 @@ namespace Quackery.Effects
             var counterEffect = _effects.Find(effect => effect.Data == data);
             if (counterEffect != null)
             {
-                var counteredValue = Math.Min(0, counterEffect.Value - valueToCounter);
-                counterEffect.Value -= counteredValue;
-                EffectEvents.OnUpdated?.Invoke(counterEffect);
+                var counteredValue = Math.Min(valueToCounter, counterEffect.Value);
+                ModifyValue(data, -counteredValue);
                 return counteredValue;
             }
             return 0;
@@ -309,7 +336,7 @@ namespace Quackery.Effects
                 {
                     Value = arg2,
                 };
-                newEffect.Tags.Add(EnumEffectTag.Activated);
+                newEffect.Tags.Add(EnumEffectTag.Status);
 
                 _effects.Add(newEffect);
                 EffectEvents.OnAdded?.Invoke(newEffect);
@@ -488,33 +515,11 @@ namespace Quackery.Effects
 
         private int Execute(EnumEffectTrigger trigger, Card card)
         {
-            // List<int> _effectToRemove = new();
-            // var effectToExecute = _effects.FindAll(effect => effect.Trigger == trigger);
 
-            // foreach (var effect in effectToExecute)
-            // {
-            //     if (effect.Trigger != trigger) continue;
-            //     effect.Execute(pile);
-            //     if (effect.Tags.Contains(EnumEffectTag.OneTime))
-            //     {
-            //         _effects.Remove(effect);
-            //         EffectEvents.OnRemoved?.Invoke(effect);
-            //     }
-            // }
+            var effectToExecute = _effects.FindAll(effect => effect.Trigger == trigger);
+            effectToExecute.AddRange(card.Effects.FindAll(effect => effect.Trigger == trigger));
+            effectToExecute.ForEach(e => e.Execute(card));
 
-            if (card == null)
-            {
-                Debug.LogWarning("Card is null when executing effects.");
-                return 0; ;
-            }
-
-            var effectToExecute = card.Effects.FindAll(effect => effect.Trigger == trigger);
-
-            foreach (var effect in card.Effects)
-            {
-                if (effect.Trigger != trigger) continue;
-                effect.Execute(card);
-            }
             return effectToExecute.Count();
 
         }

@@ -15,11 +15,11 @@ MonoBehaviour:
   MasterText: Crystal Book
   Icon: {fileID: 0}
   BasePrice: 0
-  ShortDescription: 
-  LongDescription: 
+  ShortDescription: Value is based on no. of crystal cards in cart x2.
+  LongDescription: Value is based on no. of crystal cards in cart x2.
   ShopDescription: 
   Explanations: []
-  SubscriptionCost: 0
+  SubscriptionCost: 12
   Category: 3
   Effects: []
   ValueEvaluator: {fileID: 0}

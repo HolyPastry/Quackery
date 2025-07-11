@@ -56,11 +56,11 @@ namespace Quackery
 
         internal static Func<Card, Card> DuplicateCard = (card) => null;
 
-        internal static Action<ItemData, int> AddNewToDiscard = (card, amount) => { };
+        // internal static Action<ItemData, int> AddNewToDiscard = (card, amount) => { };
 
         // internal static Action<ItemData, int> AddMultipleInstancesToDrawDeck = (card, amount) => { };
         // public static Action<List<ItemData>> AddToDrawPile = (cards) => { };
-        public static Action<ItemData, bool, Transform> AddNewToDraw = (card, isPermanent, origin) => { };
+        //   public static Action<ItemData, bool, Transform> AddNewToDraw = (card, isPermanent, origin) => { };
 
         internal static Func<bool> CardPlayed = () => false;
         internal static Func<EnumCardPile, int> GetCardPoolSize = (cardPileType) => 0;
@@ -78,5 +78,22 @@ namespace Quackery
         internal static Action StopPlayCardLoop = delegate { };
 
         internal static Action<Card, bool> MoveCardToEffect = (card, teleport) => { };
+
+        internal static Action<int, Predicate<Card>> BoostPriceOfCardsInHand = (value, predicate) => { };
+
+        internal static Func<ItemData,
+                            EnumCardPile,
+                            EnumPlacement,
+                            EnumLifetime,
+                             bool,
+                             IEnumerator>
+                                AddNew = (itemData,
+                                        pileType,
+                                        pileLocation,
+                                        lifetime,
+                                        sendToEffectPileFirst)
+                                => null;
+
+        internal static Action<Card, ItemData> ReplaceCard = (card, replacementCard) => { };
     }
 }

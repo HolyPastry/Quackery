@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+
 using Quackery.Inventories;
 
 
@@ -103,7 +104,7 @@ namespace Quackery.Decks
             Cards.Remove(card);
         }
 
-        public void AddAtTheTop(Card card, bool isInstant = false)
+        public void AddOnTop(Card card, bool isInstant = false)
         {
             if (card == null) return;
             Cards.Insert(0, card);
@@ -124,7 +125,7 @@ namespace Quackery.Decks
             {
                 if (card != null)
                 {
-                    AddAtTheTop(card);
+                    AddOnTop(card);
                     //DeckEvents.OnCardMovedTo(card, Type, Index, true);
                 }
             }
@@ -179,6 +180,33 @@ namespace Quackery.Decks
         {
             if (IsEmpty || !Enabled) return;
             TopCard.UpdateUI();
+
+        }
+
+        internal void Add(Card card, EnumPlacement placement)
+        {
+            switch (placement)
+            {
+                case EnumPlacement.OnTop:
+                    AddOnTop(card);
+                    break;
+                case EnumPlacement.AtTheBottom:
+                    AddAtTheBottom(card);
+                    break;
+                case EnumPlacement.ShuffledIn:
+                    AddShuffledIn(card);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(placement), placement, null);
+            }
+        }
+
+        private void AddShuffledIn(Card card)
+        {
+            int index = UnityEngine.Random.Range(0, Cards.Count);
+            Cards.Insert(index, card);
+            DeckEvents.OnCardMovedTo(card, Type, Index, true, false);
+
         }
 
 

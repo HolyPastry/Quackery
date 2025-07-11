@@ -55,5 +55,7 @@ namespace Quackery
 
         internal static Func<Card, List<Item>, (int multiplier, int bonus)> GetSynergyBonuses
                         = (card, subItems) => (0, 0);
+
+        internal static Action<List<Card>> UpdateCardEffects = (topCards) => { };
     }
 }

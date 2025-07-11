@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Stress
   Icon: {fileID: 21300000, guid: c4779e5389de6df45aa859141741752d, type: 3}
-  Trigger: 9
-  StartValue: -1
-  UseValue: 1
   Description: Decrease the size of the cart by #Value. Min 2.
-  Tags: 02000000
+  CanBeNegative: 0
+  Trigger: 6
+  Explanations: []

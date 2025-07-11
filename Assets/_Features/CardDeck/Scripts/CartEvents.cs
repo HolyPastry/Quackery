@@ -13,5 +13,7 @@ namespace Quackery.Decks
 
         internal static Action<List<int>> OnStacksHighlighted = delegate { };
 
+        public static Action<Card> OnNewCartPileUsed = delegate { };
+
     }
 }

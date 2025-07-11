@@ -96,7 +96,10 @@ namespace Quackery.Shops
                 _description.text += $"New Card added to Deck.\n";
                 _cardAnimated.SlideOut(Direction.Left);
 
-                DeckServices.AddNewToDraw(data.CardBonus, true, null);
+                DeckServices.AddNew(data.CardBonus,
+                                EnumCardPile.Discard,
+                                EnumPlacement.OnTop,
+                                EnumLifetime.Permanent, false);
                 yield return _cardAnimated.WaitForAnimation();
 
             }
