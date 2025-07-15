@@ -514,7 +514,7 @@ MonoBehaviour:
 
     Coin (<sprite name=Coin>) checked
 
-    Rating (<sprite name=Rating>)
+    Curse (<sprite name=Curse>)
     checked
 
     Bill (<sprite name=Bill>) checked
