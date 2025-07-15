@@ -66,6 +66,13 @@ namespace Quackery
                 _chineseStackInfo.SetSynergy(cards[0].Category == EnumItemCategory.Chinese);
                 _crystalStackInfo.SetSynergy(cards[0].Category == EnumItemCategory.Crystals);
             }
+            else
+            {
+                _herbStackInfo.SetSynergy(false);
+                _magicStackInfo.SetSynergy(false);
+                _chineseStackInfo.SetSynergy(false);
+                _crystalStackInfo.SetSynergy(false);
+            }
 
         }
 

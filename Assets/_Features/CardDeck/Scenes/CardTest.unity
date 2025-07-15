@@ -1033,7 +1033,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &595379330
 Transform:
   m_ObjectHideFlags: 0
@@ -1243,8 +1243,8 @@ MonoBehaviour:
   _disable: 0
   clients: []
   UnknownEffectsToAdd:
-  - Data: {fileID: 11400000, guid: 288c7482b65634ba0b357db9bef530a9, type: 2}
-    Value: -2
+  - Data: {fileID: 11400000, guid: 861ac0bc84a78446c827fec2cb151274, type: 2}
+    Value: 2
     Tags: 
   GenerateDailyQueue: 1
   InfiniteQueue: 0
@@ -1664,9 +1664,6 @@ MonoBehaviour:
   UnknownEffectsToAdd:
   - Data: {fileID: 11400000, guid: b1c76def04c044b178222a46aef9bcdd, type: 2}
     Value: 2
-    Tags: 
-  - Data: {fileID: 11400000, guid: 9fd96427358ac4196af546c123289864, type: 2}
-    Value: 1
     Tags: 
   GenerateDailyQueue: 1
   InfiniteQueue: 0
@@ -2788,7 +2785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2029186337
 Transform:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e52bba3ecf2b43beaed4325c4d0f009, type: 3}
   m_Name: Tired
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Tired
   Icon: {fileID: 21300000, guid: 7a81a173358744e7b90e3f8ae9682452, type: 3}
   Description: 
   CanBeNegative: 0

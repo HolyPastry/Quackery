@@ -179,6 +179,7 @@ namespace Quackery.Decks
         public void UpdateUI()
         {
             UpdatePrice();
+            _cardName.text = Sprites.Replace(_item.ShortDescription);
         }
 
         // internal void ExecutePowerInCart(CardPile pile)

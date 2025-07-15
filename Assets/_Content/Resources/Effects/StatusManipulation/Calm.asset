@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ce05065af35c430c9d3026d3e974a45, type: 3}
   m_Name: Calm
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Calm
   Icon: {fileID: 0}
   Description: 
   CanBeNegative: 0
-  Trigger: 1
-  Explanations: []
+  Trigger: 6
+  Explanations:
+  - {fileID: 11400000, guid: a4d43131ca9454711ba9ffabcfda5be2, type: 2}

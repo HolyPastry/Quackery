@@ -579,8 +579,7 @@ namespace Quackery.Decks
         private IEnumerator OnPlayEffectRoutine(Card card)
         {
             Debug.Log(card);
-            var onPlayEffects = card.Effects.FindAll(e => e != null && e.Trigger == EnumEffectTrigger.OnCardPlayed ||
-                                                            e.Tags.Contains(EnumEffectTag.Status)
+            var onPlayEffects = card.Effects.FindAll(e => e != null && e.Trigger == EnumEffectTrigger.OnCardPlayed
                                                              || e.Trigger == EnumEffectTrigger.OnActivated);
             if (onPlayEffects.Count == 0)
                 yield break;
@@ -590,12 +589,7 @@ namespace Quackery.Decks
 
             for (int i = 0; i < onPlayEffects.Count; i++)
             {
-                if (onPlayEffects[i].Tags.Contains(EnumEffectTag.Status))
-                {
-                    onPlayEffects[i].LinkedCard = card;
-                    EffectServices.AddEffect(onPlayEffects[i]);
-                }
-                else if (onPlayEffects[i].Trigger == EnumEffectTrigger.OnActivated)
+                if (onPlayEffects[i].Trigger == EnumEffectTrigger.OnActivated)
                 {
                     onPlayEffects[i].Tags.Add(EnumEffectTag.Status);
                     onPlayEffects[i].Tags.Add(EnumEffectTag.Card);

@@ -60,7 +60,7 @@ namespace Quackery.Inventories
                 rewards.Add(new()
                 {
                     Type = EnumCardReward.SynergyReward,
-                    Value = subItems.Sum(i => topCard.Price + bonus) * multiplier
+                    Value = (topCard.Price + bonus) * multiplier
                 });
             }
 

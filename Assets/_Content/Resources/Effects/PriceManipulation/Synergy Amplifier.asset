@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faef7460c8089417eb1a2ecb68b74f5c, type: 3}
   m_Name: Synergy Amplifier
   m_EditorClassIdentifier: 
-  MasterText: 
+  MasterText: Synergy Amplifier
   Icon: {fileID: 0}
-  Description: 
+  Description: Synergy Bonus x#Value
   CanBeNegative: 0
-  Trigger: 6
+  Trigger: 0
   Explanations: []
-  _category: 0
+  _category: 1
   _operation: 1

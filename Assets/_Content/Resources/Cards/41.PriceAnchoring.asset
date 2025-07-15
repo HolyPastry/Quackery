@@ -15,15 +15,15 @@ MonoBehaviour:
   MasterText: PriceAnchoring
   Icon: {fileID: 21300000, guid: 6e3fee687cf1e48ee944b7430ec810f2, type: 3}
   BasePrice: 0
-  ShortDescription: 'Add 7 value to all 1 value cards in hand. Receive 1 suspicion
-    in the draw pile. '
-  LongDescription: 
+  ShortDescription: +#EffectValue1#Coin to all 1 #coin cards in hand. +1 suspicion
+  LongDescription: All 1 #Coin cards receives an instant #EffectValue1#Coin bonus
+    for this transaction. Receive 1 suspicion in your hand
   ShopDescription: 
   Explanations: []
   SubscriptionCost: 0
   Category: 7
   Effects:
   - Data: {fileID: 11400000, guid: 2af380b045bc34ed2a6a5b7acf7de466, type: 2}
-    Value: 0
+    Value: 7
     Tags: 
   ValueEvaluator: {fileID: 0}

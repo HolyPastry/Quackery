@@ -44,6 +44,13 @@ namespace Quackery.Inventories
                 text = text.Replace("#EffectValue2", Data.Effects[0].Value.ToString());
             if (Data.Effects.Count > 2)
                 text = text.Replace("#EffectValue3", Data.Effects[0].Value.ToString());
+            if (text.Contains("#NumberDrawRemaining"))
+            {
+                //TODO:: really hacky, needs to find a way to do this systematically
+                text = text.Replace("#NumberDrawRemaining",
+                    (Data.Effects[0].Value - NumberOfDraws).ToString());
+            }
+
             return text;
         }
 

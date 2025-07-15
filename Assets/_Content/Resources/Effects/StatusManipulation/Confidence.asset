@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ce05065af35c430c9d3026d3e974a45, type: 3}
   m_Name: Confidence
   m_EditorClassIdentifier: 
-  MasterText: 
-  Icon: {fileID: 0}
+  MasterText: Confidence
+  Icon: {fileID: 21300000, guid: 3158c148912f54896b99aa1f70214f21, type: 3}
   Description: 
   CanBeNegative: 0
-  Trigger: 1
-  Explanations: []
+  Trigger: 6
+  Explanations:
+  - {fileID: 11400000, guid: d0ff6f583391a43baa8a79818f910d2f, type: 2}

@@ -203,41 +203,37 @@ MonoBehaviour:
   Effects:
   - Data: {fileID: 11400000, guid: 800b97147ddac41c6ae43562328104db, type: 2}
     Value: 1
-    Trigger: 6
-    Tags: 0300000002000000
+    Tags: 030000000200000001000000
   - Data: {fileID: 11400000, guid: 0c626a7a36b8a460b8d88aab4412ca1c, type: 2}
     Value: 2
-    Trigger: 6
-    Tags: 0300000002000000
+    Tags: 030000000200000001000000
   - Data: {fileID: 11400000, guid: 20ce1060ae6814fe092e901535c4d6be, type: 2}
     Value: 1
-    Trigger: 6
-    Tags: 0300000002000000
+    Tags: 030000000200000001000000
   - Data: {fileID: 11400000, guid: f46eaadc5c50444de8d8e4db6280921c, type: 2}
     Value: 3
-    Trigger: 6
-    Tags: 0300000002000000
-  - Data: {fileID: 11400000, guid: 288c7482b65634ba0b357db9bef530a9, type: 2}
-    Value: 2
-    Trigger: 6
-    Tags: 0300000002000000
+    Tags: 030000000200000001000000
+  - Data: {fileID: 11400000, guid: 861ac0bc84a78446c827fec2cb151274, type: 2}
+    Value: 1
+    Tags: 030000000200000001000000
   - Data: {fileID: 11400000, guid: 3595818e79b0a41709da42f7deae28b8, type: 2}
     Value: 2
-    Trigger: 6
-    Tags: 0300000002000000
+    Tags: 030000000200000001000000
   - Data: {fileID: 11400000, guid: 20ce1060ae6814fe092e901535c4d6be, type: 2}
     Value: 1
-    Trigger: 6
-    Tags: 0300000002000000
+    Tags: 030000000200000001000000
   - Data: {fileID: 11400000, guid: f46eaadc5c50444de8d8e4db6280921c, type: 2}
     Value: -1
-    Trigger: 6
-    Tags: 0300000002000000
+    Tags: 030000000200000001000000
   - Data: {fileID: 11400000, guid: 0c626a7a36b8a460b8d88aab4412ca1c, type: 2}
     Value: 0
-    Trigger: 6
-    Tags: 0300000002000000
+    Tags: 030000000200000001000000
   - Data: {fileID: 11400000, guid: 800b97147ddac41c6ae43562328104db, type: 2}
     Value: -1
-    Trigger: 6
-    Tags: 0300000002000000
+    Tags: 030000000200000001000000
+  - Data: {fileID: 11400000, guid: b1c76def04c044b178222a46aef9bcdd, type: 2}
+    Value: 1
+    Tags: 030000000200000001000000
+  - Data: {fileID: 11400000, guid: 0efb1bb5a0fe24d2e9a540c5bbc4b250, type: 2}
+    Value: 1
+    Tags: 030000000200000001000000

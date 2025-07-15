@@ -18,6 +18,6 @@ MonoBehaviour:
   CanBeNegative: 0
   Trigger: 1
   Explanations: []
-  _effectToModify: {fileID: 11400000}
+  _effectToModify: {fileID: 11400000, guid: a41f266a420974768bd7f1e0253653d5, type: 2}
   _counterEffects:
-  - {fileID: 11400000, guid: 288c7482b65634ba0b357db9bef530a9, type: 2}
+  - {fileID: 11400000, guid: 861ac0bc84a78446c827fec2cb151274, type: 2}

@@ -152,7 +152,7 @@ namespace Quackery.Effects
                         synergyEffect.Operation == EnumOperation.Add)
                 .Sum(effect => effect.Value);
 
-            if (multiplier <= 0) multiplier = list.Count; // Ensure at least one multiplier is applied
+            if (multiplier <= 0) multiplier = 1; // Ensure at least one multiplier is applied
             return (multiplier + list.Count, bonus);
 
         }
@@ -173,10 +173,13 @@ namespace Quackery.Effects
 
         private int CounterEffect(EffectData data, int valueToCounter)
         {
+            valueToCounter = Mathf.Abs(valueToCounter);
             var counterEffect = _effects.Find(effect => effect.Data == data);
+
             if (counterEffect != null)
             {
-                var counteredValue = Math.Min(valueToCounter, counterEffect.Value);
+                int counteredValue = Math.Abs(counterEffect.Value);
+                counteredValue = Math.Min(valueToCounter, counteredValue);
                 ModifyValue(data, -counteredValue);
                 return counteredValue;
             }
@@ -229,8 +232,14 @@ namespace Quackery.Effects
             int cartSizeModifier = 0;
 
             foreach (var effect in _effects)
+            {
+                if (effect.Data is StressEffect)
+                    cartSizeModifier -= effect.Value;
+
                 if (effect.Data is CartSizeModifierEffect)
                     cartSizeModifier += effect.Value;
+            }
+
 
             return cartSizeModifier;
         }
