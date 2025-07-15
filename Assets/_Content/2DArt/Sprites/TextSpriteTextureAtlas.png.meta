@@ -189,7 +189,7 @@ TextureImporter:
       name: Herbs
       rect:
         serializedVersion: 2
-        x: 191
+        x: 192
         y: 448
         width: 64
         height: 64
@@ -231,7 +231,7 @@ TextureImporter:
       name: Chinese
       rect:
         serializedVersion: 2
-        x: 321
+        x: 320
         y: 448
         width: 64
         height: 64
@@ -252,7 +252,7 @@ TextureImporter:
       name: Coin
       rect:
         serializedVersion: 2
-        x: 385
+        x: 384
         y: 448
         width: 64
         height: 64
@@ -270,13 +270,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rating
+      name: Curse
       rect:
         serializedVersion: 2
-        x: 453
-        y: 450
-        width: 54
-        height: 57
+        x: 448
+        y: 448
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -294,10 +294,10 @@ TextureImporter:
       name: Bill
       rect:
         serializedVersion: 2
-        x: 10
-        y: 386
-        width: 42
-        height: 59
+        x: 0
+        y: 384
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -315,10 +315,10 @@ TextureImporter:
       name: Heart
       rect:
         serializedVersion: 2
-        x: 77
-        y: 396
-        width: 38
-        height: 37
+        x: 64
+        y: 384
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -336,10 +336,10 @@ TextureImporter:
       name: Fire
       rect:
         serializedVersion: 2
-        x: 144
-        y: 395
-        width: 32
-        height: 40
+        x: 128
+        y: 384
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -357,10 +357,10 @@ TextureImporter:
       name: Crying
       rect:
         serializedVersion: 2
-        x: 205
-        y: 395
-        width: 39
-        height: 40
+        x: 192
+        y: 384
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -378,10 +378,10 @@ TextureImporter:
       name: Laughing
       rect:
         serializedVersion: 2
-        x: 268
-        y: 395
-        width: 40
-        height: 40
+        x: 256
+        y: 384
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -399,10 +399,10 @@ TextureImporter:
       name: Happy
       rect:
         serializedVersion: 2
-        x: 333
-        y: 395
-        width: 39
-        height: 40
+        x: 320
+        y: 384
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -420,10 +420,10 @@ TextureImporter:
       name: Eyes
       rect:
         serializedVersion: 2
-        x: 396
-        y: 398
-        width: 42
-        height: 33
+        x: 384
+        y: 384
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -441,10 +441,10 @@ TextureImporter:
       name: Skull
       rect:
         serializedVersion: 2
-        x: 463
-        y: 395
-        width: 34
-        height: 40
+        x: 448
+        y: 384
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -462,10 +462,10 @@ TextureImporter:
       name: Warning
       rect:
         serializedVersion: 2
-        x: 12
-        y: 335
-        width: 40
-        height: 35
+        x: 0
+        y: 320
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -483,10 +483,10 @@ TextureImporter:
       name: Wink
       rect:
         serializedVersion: 2
-        x: 77
-        y: 332
-        width: 39
-        height: 40
+        x: 64
+        y: 320
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -504,10 +504,10 @@ TextureImporter:
       name: BrokenHeart
       rect:
         serializedVersion: 2
-        x: 141
-        y: 334
-        width: 38
-        height: 35
+        x: 128
+        y: 320
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -525,10 +525,10 @@ TextureImporter:
       name: CallOfDuty
       rect:
         serializedVersion: 2
-        x: 206
-        y: 333
-        width: 38
-        height: 37
+        x: 192
+        y: 320
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -538,6 +538,27 @@ TextureImporter:
       bones: []
       spriteID: b8af072f05b20407bb20b6db71e037cc
       internalID: -1878822817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TextSpriteTextureAtlas_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 255
+        width: 512
+        height: 257
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af22e3f4c6aa8da40a1568ac04bf1db5
+      internalID: 1809708526
       vertices: []
       indices: 
       edges: []
@@ -561,6 +582,7 @@ TextureImporter:
       Coin: -1950653382
       Crying: -1336030159
       Crystals: -1127092780
+      Curse: -1742062740
       Energy: 329415838
       Eyes: -1687553497
       Fire: -88798742
@@ -569,11 +591,12 @@ TextureImporter:
       Herbs: 1902273417
       Laughing: 486200474
       Magic: -56568269
-      Rating: -1742062740
       Skull: -301436299
+      TextSpriteTextureAtlas_0: 1809708526
       TextSpriteTextureAtlas_6: -517696095
       Warning: -825293456
       Wink: -593761484
+      testdot: 871313739
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
