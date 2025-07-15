@@ -49,12 +49,16 @@ namespace Quackery.Decks
         internal static Func<Card, CardPile, bool> AddCardToCartPile = (card, pile) => false;
 
         internal static Action<Card> SetStacksHighlights = (card) => { };
-        internal static Func<CardPile> GetSelectedPile = () => null;
+        internal static Func<CardPile> GetHoveredPile = () => null;
 
-        public static Action<int> SelectPile = (index) => { };
+        public static Action<int> HoverPile = (index) => { };
 
-        public static Action<int> DeselectPile = (index) => { };
+        public static Action<int> UnhoverPile = (index) => { };
 
         public static Func<int> GetCartBonus = () => 0;
+
+        public static Action RandomizeCart = () => { };
+
+        //  internal static Action<int> ModifyCartSize = (amount) => { };
     }
 }

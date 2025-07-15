@@ -5,7 +5,6 @@ namespace Quackery.Effects
         OnActivated = 0,
         OnCardPlayed = 1,
         OnDraw = 2,
-        Continous = 3,
         BeforeCartCalculation = 4,
         OnEffectApplied = 5,
         Passive = 6,

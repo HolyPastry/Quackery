@@ -25,14 +25,13 @@ namespace Quackery.Effects
 
             for (int i = 0; i < effect.Value - countered; i++)
             {
-                DeckServices.AddNew(_curseCard,
-                                        TargetDeck,
-                                        Placement,
-                                        Lifetime, true);
-                Card card = DeckServices.CreateCard(_curseCard);
-                card.Item.Lifetime = Lifetime;
-                DeckServices.MoveCardToEffect(card, true);
-                //DeckServices.MoveCardTo
+                Card card = DeckServices.AddNew(_curseCard,
+                                        EnumCardPile.Effect,
+                                        EnumPlacement.OnTop,
+                                        Lifetime);
+
+                DeckServices.MoveCard(card, TargetDeck, Placement, 2f);
+
             }
         }
     }

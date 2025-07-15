@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Quackery.Effects
 {
+
     public abstract class EffectData : ContentTag
     {
         public Sprite Icon;

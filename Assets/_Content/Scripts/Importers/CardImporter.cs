@@ -14,9 +14,12 @@ namespace Quackery
     [CreateAssetMenu(fileName = "CardImporter", menuName = "Quackery/GoogleSheet/CardImporter")]
     public class CardImporter : DataImporter<ItemData>
     {
-        [SerializeField] private string _iconPath = "Assets/_Content/2DArt/Sprites/Artifacts";
+        [SerializeField] private string _itemPath = "Assets/_Content/2DArt/Sprites/CardItems";
+        [SerializeField] private string _skillPath = "Assets/_Content/2DArt/Sprites/Skills";
         [SerializeField] private string EffectCollectionKey = "Effects";
         [SerializeField] private string ExplanationCollectionKey = "Explanations";
+        [SerializeField] private string _cardPrefix = "CardType=";
+        [SerializeField] private string _skillPrefix = "Skill=";
 
         private DataCollection<EffectData> _effectCollection;
         private DataCollection<Explanation> _explanationCollection;
@@ -26,8 +29,15 @@ namespace Quackery
             itemData.MasterText = fields[3];
             itemData.Category = (EnumItemCategory)System.Enum.Parse(typeof(EnumItemCategory), fields[5]);
             itemData.BasePrice = IntParse(fields[6]);
+            if (itemData.Category == EnumItemCategory.Skills)
+            {
+                itemData.Icon = AssetDatabase.LoadAssetAtPath<Sprite>(Path.Join(_skillPath, _skillPrefix + fields[2] + ".png"));
+            }
+            else
+            {
+                itemData.Icon = AssetDatabase.LoadAssetAtPath<Sprite>(Path.Join(_itemPath, _cardPrefix + fields[2] + ".png"));
+            }
 
-            itemData.Icon = AssetDatabase.LoadAssetAtPath<Sprite>(Path.Join(_iconPath, "CardType=" + fields[2] + ".png"));
             itemData.SubscriptionCost = IntParse(fields[7]);
 
             int index = 8;

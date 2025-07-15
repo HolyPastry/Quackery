@@ -7,7 +7,7 @@ namespace Quackery.Effects
     [CreateAssetMenu(fileName = "DrawCategoryCard", menuName = "Quackery/Effects/Deck/Draw Category Card", order = 0)]
     public class DrawCategoryCardEffect : EffectData, ICategoryEffect
     {
-        [SerializeField] private EnumItemCategory _category = EnumItemCategory.Unset;
+        [SerializeField] private EnumItemCategory _category = EnumItemCategory.Any;
         public EnumItemCategory Category => _category;
         public override void Execute(Effect effect)
         {

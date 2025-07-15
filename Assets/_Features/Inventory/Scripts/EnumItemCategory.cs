@@ -5,7 +5,7 @@ namespace Quackery.Inventories
 
     public enum EnumItemCategory
     {
-        Unset,
+        Any,
         Herbs,
         Magic,
         Crystals,

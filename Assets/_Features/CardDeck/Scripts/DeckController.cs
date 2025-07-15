@@ -43,6 +43,8 @@ namespace Quackery.Decks
         private List<CardPile> _handPiles => _cardPiles.FindAll(p => p.Type == EnumCardPile.Hand);
         private List<CardPile> _selectPiles => _cardPiles.FindAll(p => p.Type == EnumCardPile.Selection);
 
+        private CardPile _exhaustPile => _cardPiles.Find(p => p.Type == EnumCardPile.Exhaust);
+
         #endregion
 
 
@@ -100,17 +102,17 @@ namespace Quackery.Decks
 
             DeckServices.BoostPriceOfCardsInHand = (value, predicate) => { };
             DeckServices.AddNew =
-                (itemData, pileType, pileLocation, lifetime, sendToEffectPileFirst) => null;
+                (itemData, pileType, pileLocation, lifetime) => null;
+            DeckServices.MoveCard = (card, pileType, placement, delay) => { };
 
             DeckServices.ReplaceCard = (card, replacementCard) => { };
+            DeckServices.GetMatchingCards = (condition, pile) => new List<Card>();
 
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
             EffectEvents.OnUpdated -= UpdateCardUI;
 
         }
-
-
 
         void OnEnable()
         {
@@ -162,64 +164,18 @@ namespace Quackery.Decks
 
             DeckServices.BoostPriceOfCardsInHand = BoostPriceOfCardsInHand;
             DeckServices.AddNew = AddNew;
-            DeckServices.ReplaceCard = ReplaceACard;
+            DeckServices.MoveCard = MoveCard;
+            DeckServices.ReplaceCard = (card, data) => StartCoroutine(CardReplaceRoutine(card, data)); ;
+
+            DeckServices.GetMatchingCards = GetMatchingCards;
+
 
             EffectEvents.OnAdded += UpdateCardUI;
             EffectEvents.OnRemoved += UpdateCardUI;
             EffectEvents.OnUpdated += UpdateCardUI;
         }
 
-        private void ReplaceACard(Card card, ItemData data)
-        {
-            StartCoroutine(CardReplaceRoutine(card, data));
-        }
 
-        private IEnumerator CardReplaceRoutine(Card card, ItemData data)
-        {
-            DeckServices.DestroyCard(card);
-
-            yield return StartCoroutine(DeckServices.AddNew(data,
-                                   EnumCardPile.Discard,
-                                   EnumPlacement.OnTop,
-                                   EnumLifetime.Permanent, true));
-
-
-            DeckServices.DrawBackToFull();
-        }
-
-        private IEnumerator AddNew(ItemData data,
-                         EnumCardPile pile,
-                          EnumPlacement placement,
-                           EnumLifetime lifetime,
-                           bool sendToEffectPileFirst = false)
-        {
-            if (data == null) yield break;
-
-            Card card = _cardFactory.Create(data);
-            if (lifetime == EnumLifetime.Permanent)
-                InventoryServices.AddItem(card.Item);
-
-            card.Item.Lifetime = lifetime;
-
-            if (sendToEffectPileFirst)
-            {
-                MoveToEffectPile(card, true);
-                yield return new WaitForSeconds(1f);
-            }
-
-            switch (pile)
-            {
-                case EnumCardPile.Draw:
-                    _drawPile.Add(card, placement);
-                    break;
-                case EnumCardPile.Discard:
-                    _discardPile.Add(card, placement);
-                    break;
-                default:
-                    Debug.LogWarning("Cannot Add new cart to: " + pile);
-                    break;
-            }
-        }
 
         IEnumerator Start()
         {
@@ -243,6 +199,97 @@ namespace Quackery.Decks
             }
             _isReady = true;
         }
+
+        private IEnumerable<Card> GetMatchingCards(System.Predicate<Card> predicate, EnumCardPile pile)
+        {
+            return pile switch
+            {
+                EnumCardPile.Draw => _drawPile.Cards.FindAll(predicate),
+                EnumCardPile.Discard => _discardPile.Cards.FindAll(predicate),
+                EnumCardPile.Exhaust => _exhaustPile.Cards.FindAll(predicate),
+                EnumCardPile.Hand => _handPiles.SelectMany(p => p.Cards).Where(c => predicate(c)),
+
+                _ => _cardPiles.FindAll(p => p.Type == pile).SelectMany(p => p.Cards).Where(c => predicate(c)),
+            };
+        }
+
+        private IEnumerator CardReplaceRoutine(Card card, ItemData data)
+        {
+            MoveCard(card, EnumCardPile.Effect, EnumPlacement.OnTop);
+            yield return new WaitForSeconds(0.5f);
+
+            Card newCard = DeckServices.AddNew(data,
+                                    EnumCardPile.Effect,
+                                    EnumPlacement.OnTop,
+                                    EnumLifetime.Permanent);
+
+
+            yield return DelayedMoveCard(newCard, EnumCardPile.Discard, EnumPlacement.OnTop, 2f);
+            DeckServices.DestroyCard(card);
+            yield return null;
+
+            StartCoroutine(DrawBackToFull());
+
+        }
+        private void MoveCard(Card card, EnumCardPile pile, EnumPlacement placement, float delay)
+        {
+            if (delay < 0)
+            {
+                MoveCard(card, pile, placement);
+            }
+            else
+                StartCoroutine(DelayedMoveCard(card, pile, placement, delay));
+
+        }
+
+        private IEnumerator DelayedMoveCard(Card card, EnumCardPile pile, EnumPlacement placement, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            MoveCard(card, pile, placement);
+        }
+
+
+
+        private void MoveCard(Card card, EnumCardPile pile, EnumPlacement placement)
+        {
+            RemoveFromAllPiles(card);
+            switch (pile)
+            {
+                case EnumCardPile.Draw:
+                    _drawPile.Add(card, placement);
+                    break;
+                case EnumCardPile.Discard:
+                    _discardPile.Add(card, placement);
+                    break;
+                case EnumCardPile.Exhaust:
+                    _exhaustPile.Add(card, placement);
+                    break;
+
+                case EnumCardPile.Effect:
+                    MoveToEffectPile(card, true);
+                    break;
+                default:
+                    Debug.LogWarning("Cannot add card to: " + pile);
+                    break;
+            }
+        }
+        private Card AddNew(ItemData data,
+                         EnumCardPile pile,
+                          EnumPlacement placement,
+                           EnumLifetime lifetime)
+        {
+
+            Card card = _cardFactory.Create(data);
+            if (lifetime == EnumLifetime.Permanent)
+                InventoryServices.AddItem(card.Item);
+
+            card.Item.Lifetime = lifetime;
+
+            MoveCard(card, pile, placement);
+            return card;
+        }
+
+
 
         private void PopulateDeck()
         {
@@ -271,7 +318,7 @@ namespace Quackery.Decks
         private void StopPlayCardLoop()
         {
 
-            var selectedPile = CartServices.GetSelectedPile();
+            var selectedPile = CartServices.GetHoveredPile();
             if (selectedPile == null) return;
             CartServices.SetStacksHighlights(null);
             DeactivateAllPiles();
@@ -318,11 +365,6 @@ namespace Quackery.Decks
             return pile?.TopCard;
         }
 
-        private void AddToDiscard(Card card)
-        {
-            if (card == null) return;
-            Discard(card);
-        }
 
         private Card DuplicateCard(Card card)
         {
@@ -336,11 +378,6 @@ namespace Quackery.Decks
 
             return duplicate;
         }
-
-
-
-
-
 
 
         #endregion
@@ -565,7 +602,11 @@ namespace Quackery.Decks
                     onPlayEffects[i].LinkedCard = card;
                     EffectServices.AddEffect(onPlayEffects[i]);
                 }
-                else onPlayEffects[i].Execute(card);
+                else
+                {
+                    onPlayEffects[i].Execute(card);
+                    yield return new WaitForSeconds(0.5f);
+                }
                 yield return new WaitForSeconds(0.5f);
             }
         }

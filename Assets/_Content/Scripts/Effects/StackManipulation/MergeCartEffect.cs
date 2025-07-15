@@ -9,7 +9,7 @@ namespace Quackery.Effects
     [CreateAssetMenu(fileName = "MergeCart", menuName = "Quackery/Effects/Stack/MergeCart", order = 0)]
     public class MergeCartEffect : EffectData, ICategoryEffect
     {
-        [SerializeField] private EnumItemCategory _category = EnumItemCategory.Unset;
+        [SerializeField] private EnumItemCategory _category = EnumItemCategory.Any;
         public EnumItemCategory Category => _category;
         public override void Execute(Effect effect)
         {

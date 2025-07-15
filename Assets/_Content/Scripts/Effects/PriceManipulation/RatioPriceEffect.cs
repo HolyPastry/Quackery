@@ -9,12 +9,12 @@ namespace Quackery.Effects
     {
         public float Ratio = 1.0f;
 
-        [SerializeField] private EnumItemCategory _category = EnumItemCategory.Unset;
+        [SerializeField] private EnumItemCategory _category = EnumItemCategory.Any;
         public EnumItemCategory Category => _category;
 
         public float PriceMultiplier(Effect effect, Card card)
         {
-            if (card.Category == Category || Category == EnumItemCategory.Unset)
+            if (card.Category == Category || Category == EnumItemCategory.Any)
             {
                 return Ratio;
             }

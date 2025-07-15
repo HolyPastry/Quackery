@@ -7,7 +7,7 @@ namespace Quackery.Effects
     [CreateAssetMenu(fileName = "ChangePreference", menuName = "Quackery/Effects/ChangePreference")]
     public class ChangePreferenceEffect : EffectData, ICategoryEffect
     {
-        [SerializeField] private EnumItemCategory _category = EnumItemCategory.Unset;
+        [SerializeField] private EnumItemCategory _category = EnumItemCategory.Any;
         public EnumItemCategory Category => _category;
 
         public override void Execute(Effect effect)

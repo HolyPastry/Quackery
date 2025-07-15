@@ -123,10 +123,10 @@ namespace Quackery.Bills
 
                 _animatedCardRect.SlideOut(Direction.Left)
                                 .DoComplete(() => Destroy(card.gameObject));
-                yield return DeckServices.AddNew(_overdueCurse,
-                                    EnumCardPile.Draw,
-                                    EnumPlacement.ShuffledIn,
-                                    EnumLifetime.Permanent, false);
+                DeckServices.AddNew(_overdueCurse,
+                                   EnumCardPile.Draw,
+                                   EnumPlacement.ShuffledIn,
+                                   EnumLifetime.Permanent);
 
             }
             yield return new WaitForSeconds(0.5f);

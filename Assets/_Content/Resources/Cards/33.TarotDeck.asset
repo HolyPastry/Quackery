@@ -26,4 +26,7 @@ MonoBehaviour:
   - Data: {fileID: 11400000, guid: f37afcb2051834735b52b1b8f77631b2, type: 2}
     Value: 4
     Tags: 
+  - Data: {fileID: 11400000, guid: 9fd96427358ac4196af546c123289864, type: 2}
+    Value: 1
+    Tags: 
   ValueEvaluator: {fileID: 0}

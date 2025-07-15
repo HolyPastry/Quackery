@@ -66,8 +66,7 @@ namespace Quackery.Decks
 
         private IEnumerator DramaMoveRoutine(Card card)
         {
-
-            DeckServices.MoveCardToEffect(card, true);
+            DeckServices.MoveCard(card, EnumCardPile.Effect, EnumPlacement.OnTop, 1);
             yield return new WaitForSeconds(1f); // Wait for the effect to complete
             AddAtTheBottom(card);
 
@@ -127,8 +126,10 @@ namespace Quackery.Decks
                     return null;
                 }
             }
+
             card.UpdateUI();
             card.Item.NumberOfDraws++;
+            EffectServices.Execute(EnumEffectTrigger.OnDraw, card);
             return card;
         }
 

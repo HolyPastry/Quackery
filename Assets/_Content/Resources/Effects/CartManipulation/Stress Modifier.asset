@@ -15,6 +15,10 @@ MonoBehaviour:
   MasterText: 
   Icon: {fileID: 0}
   Description: 
+  CanBeNegative: 0
+  Trigger: 1
   Explanations:
   - {fileID: 11400000, guid: 087b2f6255ad244ceaf0e3f2e3391556, type: 2}
   _effectToModify: {fileID: 11400000, guid: 288c7482b65634ba0b357db9bef530a9, type: 2}
+  _counterEffects:
+  - {fileID: 11400000, guid: a41f266a420974768bd7f1e0253653d5, type: 2}

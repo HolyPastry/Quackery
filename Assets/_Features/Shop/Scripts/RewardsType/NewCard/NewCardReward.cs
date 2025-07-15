@@ -28,7 +28,7 @@ namespace Quackery.Shops
             DeckServices.AddNew(ItemData,
                             Decks.EnumCardPile.Discard,
                             EnumPlacement.OnTop,
-                            EnumLifetime.Permanent, false);
+                            EnumLifetime.Permanent);
         }
     }
 }

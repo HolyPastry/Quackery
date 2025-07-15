@@ -15,9 +15,9 @@ namespace Quackery.Effects
 
         [SerializeField] private EnumCondition _condition;
         [SerializeField] private ItemData _replacementCard;
-        [SerializeField] private EnumPlacement _placement = EnumPlacement.OnTop;
-        [SerializeField] private EnumLifetime _lifetime = EnumLifetime.Permanent;
-        [SerializeField] private EnumCardPile _targetDeck = EnumCardPile.Discard;
+        // [SerializeField] private EnumPlacement _placement = EnumPlacement.OnTop;
+        // [SerializeField] private EnumLifetime _lifetime = EnumLifetime.Permanent;
+        // [SerializeField] private EnumCardPile _targetDeck = EnumCardPile.Discard;
         public override void Execute(Effect effect)
         {
             if (effect.LinkedCard == null)

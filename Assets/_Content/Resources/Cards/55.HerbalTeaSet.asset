@@ -23,5 +23,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a4d43131ca9454711ba9ffabcfda5be2, type: 2}
   SubscriptionCost: 6
   Category: 1
-  Effects: []
+  Effects:
+  - Data: {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}
+    Value: 0
+    Tags: 
+  - Data: {fileID: 11400000, guid: b9dcb72a5f4df46d69899f87a4ae5cc9, type: 2}
+    Value: 1
+    Tags: 
   ValueEvaluator: {fileID: 0}

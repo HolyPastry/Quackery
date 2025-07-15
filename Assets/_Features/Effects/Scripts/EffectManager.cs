@@ -58,6 +58,7 @@ namespace Quackery.Effects
             EffectEvents.OnUpdated -= ExecuteOnAppliedEffect;
 
             CartEvents.OnNewCartPileUsed -= ExecuteNewCartPileEffects;
+            CartEvents.OnStackHovered -= OnStackHovered;
 
 
 
@@ -101,6 +102,12 @@ namespace Quackery.Effects
             EffectEvents.OnUpdated += ExecuteOnAppliedEffect;
 
             CartEvents.OnNewCartPileUsed += ExecuteNewCartPileEffects;
+            CartEvents.OnStackHovered += OnStackHovered;
+
+        }
+
+        private void OnStackHovered(Card card, CardPile pile)
+        {
 
         }
 
@@ -127,7 +134,7 @@ namespace Quackery.Effects
             bool synergyPredicate(Effect effect) =>
                 effect.Data is StackMultiplierEffect synergyEffect &&
                 (synergyEffect.Category == card.Item.Category ||
-                    synergyEffect.Category == EnumItemCategory.Unset);
+                    synergyEffect.Category == EnumItemCategory.Any);
 
             var synergyEffects = card.Effects.FindAll(synergyPredicate);
 
@@ -196,20 +203,20 @@ namespace Quackery.Effects
 
             List<Effect> stackEffects = _effects.FindAll(effect => effect.Data is StackMultiplierEffect stackEffect &&
                                                (effect.Trigger == EnumEffectTrigger.Passive) &&
-                                               (stackEffect.Category == topCard.Item.Category || stackEffect.Category == EnumItemCategory.Unset));
+                                               (stackEffect.Category == topCard.Item.Category || stackEffect.Category == EnumItemCategory.Any));
 
 
             stackEffects.AddRange(topCard.Effects.FindAll(effect => effect.Data is StackMultiplierEffect stackEffect &&
                                         (effect.Trigger == EnumEffectTrigger.Passive) &&
                                         (!effect.Tags.Contains(EnumEffectTag.Status)) &&
-                                        (stackEffect.Category == topCard.Item.Category || stackEffect.Category == EnumItemCategory.Unset)));
+                                        (stackEffect.Category == topCard.Item.Category || stackEffect.Category == EnumItemCategory.Any)));
             if (stackEffects.Count == 0) return 0;
 
             int stackPrice = 0;
             foreach (var item in stack)
             {
                 int stackBonus = stackEffects.Where(effect => effect.Data is StackMultiplierEffect stackEffect &&
-                                (stackEffect.Category == item.Category || stackEffect.Category == EnumItemCategory.Unset))
+                                (stackEffect.Category == item.Category || stackEffect.Category == EnumItemCategory.Any))
                                 .Sum(effect => effect.Value);
                 stackPrice += topCard.Price * stackBonus;
             }
@@ -222,12 +229,8 @@ namespace Quackery.Effects
             int cartSizeModifier = 0;
 
             foreach (var effect in _effects)
-            {
                 if (effect.Data is CartSizeModifierEffect)
-                {
                     cartSizeModifier += effect.Value;
-                }
-            }
 
             return cartSizeModifier;
         }
@@ -478,8 +481,6 @@ namespace Quackery.Effects
             else
             {
                 _effects.Add(effect);
-                if (effect.Trigger == EnumEffectTrigger.Continous)
-                    effect.Execute(null);
             }
 
             EffectEvents.OnAdded?.Invoke(effect);

@@ -1,6 +1,6 @@
 namespace Quackery.Effects
 {
-    internal enum EnumCardSelection
+    public enum EnumCardSelection
     {
         Random,
         // Stack,

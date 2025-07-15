@@ -3,6 +3,7 @@ using System.Collections;
 using Quackery.Clients;
 using Quackery.Decks;
 using UnityEngine;
+using UnityEngine.Android;
 
 namespace Quackery
 {
@@ -21,10 +22,17 @@ namespace Quackery
         private IEnumerator Routine()
         {
             yield return null;
+
+            //TODO:: Find a way to make this work in a generic fashion
             var deckSetup = FindObjectOfType<SceneSetupDeck>();
             if (deckSetup != null)
                 deckSetup.DrawCards();
 
+            DeckServices.Shuffle();
+            deckSetup.AddOnTopOfDeck();
+            // ------------------------------------------------------
+
+            bool firstTime = true;
 
             var client = ClientServices.GetNextClient();
             _controller.Show();
@@ -33,7 +41,10 @@ namespace Quackery
             yield return new WaitForSeconds(1f);
             while (true)
             {
-                DeckServices.Shuffle();
+                if (firstTime)
+                    firstTime = false;
+                else DeckServices.Shuffle();
+
                 yield return new WaitForSeconds(1f);
                 client = ClientServices.SelectedClient();
 

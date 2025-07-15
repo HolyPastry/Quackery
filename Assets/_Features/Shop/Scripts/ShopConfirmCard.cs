@@ -99,7 +99,7 @@ namespace Quackery.Shops
                 DeckServices.AddNew(data.CardBonus,
                                 EnumCardPile.Discard,
                                 EnumPlacement.OnTop,
-                                EnumLifetime.Permanent, false);
+                                EnumLifetime.Permanent);
                 yield return _cardAnimated.WaitForAnimation();
 
             }

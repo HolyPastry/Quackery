@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Quackery.Decks;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace Quackery.Effects
     public class ModifyEffectValue : EffectData
     {
         [SerializeField] private EffectData _effectToModify;
+        [SerializeField] private List<EffectData> _counterEffects = new();
 
         public override void Cancel(Effect effect)
         {
@@ -16,7 +18,12 @@ namespace Quackery.Effects
 
         public override void Execute(Effect effect)
         {
-            EffectServices.ModifyValue(_effectToModify, effect.Value);
+            int countered = 0;
+            if (effect.Value > 0)
+                foreach (var counterEffect in _counterEffects)
+                    countered += EffectServices.CounterEffect(counterEffect, effect.Value - countered);
+
+            EffectServices.ModifyValue(_effectToModify, effect.Value - countered);
         }
     }
 }

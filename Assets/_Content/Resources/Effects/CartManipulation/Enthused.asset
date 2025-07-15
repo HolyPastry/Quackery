@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be27fb51dba2a453d935213998b9e72b, type: 3}
-  m_Name: Modify Cart Size
+  m_Name: Enthused
   m_EditorClassIdentifier: 
-  MasterText: Modify Cart Size
-  Icon: {fileID: 0}
-  Description: 
+  MasterText: Enthused
+  Icon: {fileID: 21300000, guid: d8924788b4ef14c868b781a1a3c0ee14, type: 3}
+  Description: Increase Cart Size
   CanBeNegative: 0
+  Trigger: 6
   Explanations: []

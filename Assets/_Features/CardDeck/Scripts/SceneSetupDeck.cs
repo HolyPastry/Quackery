@@ -26,18 +26,22 @@ namespace Quackery.Decks
             {
                 _deck.AddToInventory();
             }
-            foreach (var itemData in _placeOnTopOfDeck)
-            {
-                DeckServices.AddNew(itemData,
-                        EnumCardPile.Draw,
-                        EnumPlacement.OnTop,
-                        EnumLifetime.Temporary, true);
-            }
+
         }
 
         public void DrawCards()
         {
             DeckServices.DrawSpecificCards(_cardInHands);
+        }
+        public void AddOnTopOfDeck()
+        {
+            foreach (var itemData in _placeOnTopOfDeck)
+            {
+                DeckServices.AddNew(itemData,
+                        EnumCardPile.Draw,
+                        EnumPlacement.OnTop,
+                        EnumLifetime.Temporary);
+            }
         }
 
 

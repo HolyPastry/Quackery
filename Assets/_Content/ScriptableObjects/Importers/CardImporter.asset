@@ -15,6 +15,9 @@ MonoBehaviour:
   _googleSheetAPI: {fileID: 11400000, guid: 03b7f9bb2d0a640628f3bb6b6aa8c506, type: 2}
   DATA_PATH: Assets/_Content/Resources/Cards
   SHEET_NAME: Cards
-  _iconPath: Assets/_Content/2DArt/Sprites/CardArt
+  _itemPath: Assets/_Content/2DArt/Sprites/CardArt
+  _skillPath: Assets/_Content/2DArt/Sprites/Skills
   EffectCollectionKey: Effects
   ExplanationCollectionKey: Explanations
+  _cardPrefix: CardType=
+  _skillPrefix: Skill=

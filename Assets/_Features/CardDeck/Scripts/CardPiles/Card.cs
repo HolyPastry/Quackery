@@ -45,7 +45,7 @@ namespace Quackery.Decks
 
                 //  UpdateEffects();
                 _cardForeground.sprite = _item.Data.Icon;
-                _cardName.text = Sprites.Replace(_item.Data.ShortDescription); //Data.GetDescription();
+                _cardName.text = Sprites.Replace(_item.ShortDescription); //Data.GetDescription();
 
                 if (IsSkill) return;
                 _cardBackground.color = Colors.Get(_item.Category.ToString());
@@ -76,7 +76,7 @@ namespace Quackery.Decks
             if (_categoryIcon == null) return;
 
             if (
-                _item.Category == EnumItemCategory.Unset ||
+                _item.Category == EnumItemCategory.Any ||
                  _item.Category == EnumItemCategory.Skills)
             {
                 _categoryIcon.gameObject.SetActive(false);
@@ -105,21 +105,6 @@ namespace Quackery.Decks
 
         public List<Effect> Effects => _item.Data.Effects;
 
-        // public bool HasActivatableEffects
-        // {
-        //     get
-        //     {
-        //         foreach (var effect in Effects)
-        //         {
-        //             if (effect.Tags.Contains(EnumEffectTag.Activated)
-        //             && !_activatedEffects.Contains(effect))
-        //                 return true;
-
-        //         }
-        //         return false;
-        //     }
-        // }
-
         private Item _item;
 
         public int Price => EffectServices.GetCardPrice(this) + InHandPriceBonus;
@@ -134,7 +119,7 @@ namespace Quackery.Decks
             }
         }
 
-        // public bool FullfillRequirements { get; internal set; }
+        public bool HasCartTarget => Category != EnumItemCategory.Skills;
 
         private List<EffectIcon> _effectIconPool = new();
         private readonly List<Effect> _activatedEffects = new();
@@ -212,7 +197,7 @@ namespace Quackery.Decks
         internal void Destroy()
         {
             transform.SetParent(null);
-            transform.DOMoveX(Screen.width * 2, 0.5f).OnComplete(() =>
+            transform.DOScale(Vector3.zero, 0.5f).OnComplete(() =>
             {
                 Destroy(gameObject, 1f);
             });
@@ -245,7 +230,7 @@ namespace Quackery.Decks
 
         internal void RemoveCategoryOverride()
         {
-            _item.OverrideCategory = EnumItemCategory.Unset;
+            _item.OverrideCategory = EnumItemCategory.Any;
         }
 
         public override string ToString()

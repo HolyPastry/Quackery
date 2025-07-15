@@ -32,6 +32,9 @@ namespace Quackery.Decks
         public Card TopCard => IsEmpty ? null : GetComponentsInChildren<Card>()[^1];
 
         public float Height => (transform as RectTransform).sizeDelta.y;
+
+        public bool HasCartTarget => !IsEmpty && TopCard.HasCartTarget;
+
         public const float CardOriginalHeight = 512;
         protected readonly Queue<RectTransform> _moveQueue = new();
 

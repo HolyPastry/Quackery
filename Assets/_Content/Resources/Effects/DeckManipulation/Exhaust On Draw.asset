@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd1be057a7f294f0ea21ce0cbc32fe03, type: 3}
-  m_Name: Crystal In Cart Price
+  m_Script: {fileID: 11500000, guid: 9ce2f928e6c0c4b59bae45c4b7efdd4e, type: 3}
+  m_Name: Exhaust On Draw
   m_EditorClassIdentifier: 
   MasterText: 
   Icon: {fileID: 0}
-  Description: Base price equals num cart of #Category x#Value
-  _category: 3
+  Description: 
+  CanBeNegative: 0
+  Trigger: 2
+  Explanations: []

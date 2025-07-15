@@ -11,7 +11,7 @@ namespace Quackery.Effects
 
         public bool IsFulfilled(Effect effect, Card card)
         {
-            return CartServices.GetNumCardInCart(EnumItemCategory.Unset) >= effect.Value;
+            return CartServices.GetNumCardInCart(EnumItemCategory.Any) >= effect.Value;
         }
     }
 }

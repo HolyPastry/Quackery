@@ -15,5 +15,6 @@ namespace Quackery.Decks
 
         public static Action<Card> OnNewCartPileUsed = delegate { };
 
+        public static Action<Card, CardPile> OnStackHovered = delegate { };
     }
 }

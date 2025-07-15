@@ -1,23 +1,22 @@
 
+using System;
+using System.Collections.Generic;
 using Quackery.Decks;
 using Quackery.Effects;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Quackery
 {
+
+
     [CreateAssetMenu(fileName = "ExhaustEffect", menuName = "Quackery/Effects/Deck/Exhaust", order = 0)]
     public class ExhaustEffect : EffectData
     {
         public override void Execute(Effect effect)
         {
-            if (effect.LinkedCard != null)
-            {
-                //DeckServices.MoveCardTo(effect.LinkedCard);
-            }
-            else
-            {
-                Debug.LogWarning("Card to be destroyed is null.");
-            }
+            Assert.IsNotNull(effect.LinkedCard, "ExhaustEffect requires a linked card to execute.");
+            DeckServices.MoveCard(effect.LinkedCard, EnumCardPile.Exhaust, EnumPlacement.OnTop, 1f);
         }
     }
 }

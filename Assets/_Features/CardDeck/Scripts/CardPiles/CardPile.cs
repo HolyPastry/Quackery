@@ -17,7 +17,7 @@ namespace Quackery.Decks
 
         public Card TopCard => PeekTopCard();
 
-        public EnumItemCategory Category => IsEmpty ? EnumItemCategory.Unset : TopCard.Category;
+        public EnumItemCategory Category => IsEmpty ? EnumItemCategory.Any : TopCard.Category;
 
         public int Count => Cards.Count;
 

@@ -15,14 +15,21 @@ MonoBehaviour:
   MasterText: Technical Difficulties
   Icon: {fileID: 0}
   BasePrice: 0
-  ShortDescription: 
-  LongDescription: 
+  ShortDescription: Shuffle Cart. End Transaction. Exhaust
+  LongDescription: 'Shuffle the cards in the cart and immediately end the transaction.
+    Exhaust this card. '
   ShopDescription: 
   Explanations: []
   SubscriptionCost: 0
   Category: 8
   Effects:
-  - Data: {fileID: 11400000, guid: 801a0a2ba11034396948a755cdf973ab, type: 2}
+  - Data: {fileID: 11400000, guid: 52b121de6356a4387b25b353d7107949, type: 2}
+    Value: 0
+    Tags: 
+  - Data: {fileID: 11400000, guid: 52b121de6356a4387b25b353d7107949, type: 2}
+    Value: 0
+    Tags: 
+  - Data: {fileID: 11400000, guid: 55d9b9303bf8742adb56b4931f73e366, type: 2}
     Value: 0
     Tags: 
   ValueEvaluator: {fileID: 0}

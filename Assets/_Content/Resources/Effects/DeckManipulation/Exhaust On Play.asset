@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7a61d5f4b4d6487dad4cbe930ac768a, type: 3}
-  m_Name: Confidence Modifier
+  m_Script: {fileID: 11500000, guid: 9ce2f928e6c0c4b59bae45c4b7efdd4e, type: 3}
+  m_Name: Exhaust On Play
   m_EditorClassIdentifier: 
-  MasterText: Modify Confidence
+  MasterText: 
   Icon: {fileID: 0}
-  Description: Modify Confidence
-  _effectToModify: {fileID: 11400000, guid: 0efb1bb5a0fe24d2e9a540c5bbc4b250, type: 2}
+  Description: 

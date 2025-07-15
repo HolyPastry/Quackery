@@ -1,11 +1,9 @@
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
+
 
 
 namespace Quackery.Decks
@@ -49,10 +47,12 @@ namespace Quackery.Decks
 
                 distanceFromOrigin = Vector2.ClampMagnitude(distanceFromOrigin, _maxSlideDistance);
                 targetPosition = originalPosition + distanceFromOrigin;
-                if (_useDottedLine)
+                if (_useDottedLine && _cardPileUI.HasCartTarget)
                 {
                     if (distanceFromOrigin.y > _maxSlideDistanceY)
+                    {
                         OverlayCanvas.GenerateDottedLine(targetPosition, Input.mousePosition);
+                    }
                     else
                         OverlayCanvas.HideDottedLine();
                 }

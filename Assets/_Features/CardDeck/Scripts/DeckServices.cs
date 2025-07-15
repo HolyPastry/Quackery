@@ -20,41 +20,38 @@ namespace Quackery
         public static Action Shuffle = () => { };
         public static Action<List<Card>> Discard = (card) => { };
         public static Func<IEnumerator> DiscardHand = () => null;
+        public static Func<List<CardPile>> GetTablePile = () => new();
 
+        public static Action<EnumCardPile, int> PileClicked = (pileType, index) => { };
 
-        internal static Func<List<CardPile>> GetTablePile = () => new();
-
-        internal static Action<EnumCardPile, int> PileClicked = (pileType, index) => { };
-
-
-        internal static Action<EnumCardPile, EnumCardPile> MovePileType = (sourcePile, targetPile) => { };
+        public static Action<EnumCardPile, EnumCardPile> MovePileType = (sourcePile, targetPile) => { };
         public static Action<CardPile, CardPile> MoveToPile = (source, target) => { };
-        internal static Func<EnumCardPile, Card> GetTopCard = (pileType) => null;
+        public static Func<EnumCardPile, Card> GetTopCard = (pileType) => null;
 
-        internal static Action<List<Card>> MoveToCardSelect = (cards) => { };
-        internal static Action InterruptDraw = delegate { };
+        public static Action<List<Card>> MoveToCardSelect = (cards) => { };
+        public static Action InterruptDraw = delegate { };
 
-        internal static Action ResumeDraw = delegate { };
-        internal static Action<Card> MoveToTable = delegate { };
-        internal static Func<IEnumerator> DrawBackToFull = () => null;
+        public static Action ResumeDraw = delegate { };
+        public static Action<Card> MoveToTable = delegate { };
+        public static Func<IEnumerator> DrawBackToFull = () => null;
         public static Func<int, List<Card>> Draw = (numberCards) => new();
 
-        internal static Action<Card> DestroyCard = (cards) => { };
+        public static Action<Card> DestroyCard = (cards) => { };
 
-        internal static Action<List<ItemData>> DrawSpecificCards = (cards) => { };
+        public static Action<List<ItemData>> DrawSpecificCards = (cards) => { };
 
-        internal static Action<EnumItemCategory, EnumCardSelection> ChangeCardCategory = delegate { };
+        public static Action<EnumItemCategory, EnumCardSelection> ChangeCardCategory = delegate { };
 
-        internal static Action<int> DiscardCards = (amount) => { };
+        public static Action<int> DiscardCards = (amount) => { };
 
-        internal static Action RestoreCardCategories = () => { };
+        public static Action RestoreCardCategories = () => { };
 
 
-        internal static Func<EnumItemCategory, Card> DrawCategory = (category) => null;
+        public static Func<EnumItemCategory, Card> DrawCategory = (category) => null;
 
         public static Action ActivateTableCards = delegate { };
 
-        internal static Func<Card, Card> DuplicateCard = (card) => null;
+        public static Func<Card, Card> DuplicateCard = (card) => null;
 
         // internal static Action<ItemData, int> AddNewToDiscard = (card, amount) => { };
 
@@ -62,38 +59,33 @@ namespace Quackery
         // public static Action<List<ItemData>> AddToDrawPile = (cards) => { };
         //   public static Action<ItemData, bool, Transform> AddNewToDraw = (card, isPermanent, origin) => { };
 
-        internal static Func<bool> CardPlayed = () => false;
-        internal static Func<EnumCardPile, int> GetCardPoolSize = (cardPileType) => 0;
+        public static Func<bool> CardPlayed = () => false;
+        public static Func<EnumCardPile, int> GetCardPoolSize = (cardPileType) => 0;
 
         public static Func<int> GetLastCartPileIndex = () => 0;
 
-        internal static Func<bool> NoPlayableCards = () => false;
+        public static Func<bool> NoPlayableCards = () => false;
 
-        internal static Func<ItemData, Card> CreateCard = (itemData) => null;
+        public static Func<ItemData, Card> CreateCard = (itemData) => null;
 
-        internal static Action PopulateDeck = () => { };
+        public static Action PopulateDeck = () => { };
 
-        internal static Action<Card> StartPlayCardLoop = delegate { };
+        public static Action<Card> StartPlayCardLoop = delegate { };
 
-        internal static Action StopPlayCardLoop = delegate { };
+        public static Action StopPlayCardLoop = delegate { };
 
-        internal static Action<Card, bool> MoveCardToEffect = (card, teleport) => { };
+        public static Action<Card, bool> MoveCardToEffect = (card, teleport) => { };
 
-        internal static Action<int, Predicate<Card>> BoostPriceOfCardsInHand = (value, predicate) => { };
 
-        internal static Func<ItemData,
-                            EnumCardPile,
-                            EnumPlacement,
-                            EnumLifetime,
-                             bool,
-                             IEnumerator>
-                                AddNew = (itemData,
-                                        pileType,
-                                        pileLocation,
-                                        lifetime,
-                                        sendToEffectPileFirst)
-                                => null;
 
-        internal static Action<Card, ItemData> ReplaceCard = (card, replacementCard) => { };
+        public static Action<int, Predicate<Card>> BoostPriceOfCardsInHand = (value, predicate) => { };
+
+        public static Func<ItemData, EnumCardPile, EnumPlacement, EnumLifetime, Card>
+                                AddNew = (itemData, pileType, pileLocation, lifetime) => null;
+
+        public static Action<Card, EnumCardPile, EnumPlacement, float> MoveCard = (card, pileType, placement, delay) => { };
+        public static Action<Card, ItemData> ReplaceCard = (card, replacementCard) => { };
+
+        internal static Func<Predicate<Card>, EnumCardPile, IEnumerable<Card>> GetMatchingCards = (condition, pile) => new List<Card>();
     }
 }

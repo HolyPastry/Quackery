@@ -9,14 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11eea11e72be9426e9109144024784cc, type: 3}
-  m_Name: ReplaceStiffBack
+  m_Script: {fileID: 11500000, guid: 6e52bba3ecf2b43beaed4325c4d0f009, type: 3}
+  m_Name: Add Fatigue To Discard Pile
   m_EditorClassIdentifier: 
   MasterText: 
   Icon: {fileID: 0}
   Description: 
   CanBeNegative: 0
-  Trigger: 2
+  Trigger: 1
   Explanations: []
-  _condition: 0
-  _replacementCard: {fileID: 11400000, guid: d1dd6d98e8dcf481389e0bfb879565e1, type: 2}
+  _counterEffect: {fileID: 0}
+  _curseCard: {fileID: 11400000, guid: c2aac245a114f43b280e5fa21c5e580c, type: 2}
+  TargetDeck: 1
+  Lifetime: 1
+  Placement: 0

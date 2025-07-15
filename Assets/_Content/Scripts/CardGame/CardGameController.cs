@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using Holypastry.Bakery;
 using Quackery.Clients;
-using Quackery.Ratings;
-using TMPro;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -58,6 +56,7 @@ namespace Quackery.Decks
         private GameStats _gameStats;
         private bool _endOfDay;
         public static Action InterruptRoundRequest = delegate { };
+        public static Action EndTransactionRequest = delegate { };
         private bool _endOfRound;
 
 
@@ -78,6 +77,8 @@ namespace Quackery.Decks
             //  DeckEvents.OnCashingPile += OnCashingPile;
             _endDayScreen.OnCloseGame += EndTheDay;
             InterruptRoundRequest = () => RoundInterrupted = true;
+            EndTransactionRequest = () => _endButtonPressed = true;
+
             _EndRoundButton.onClick.AddListener(() => _endButtonPressed = true);
         }
 
@@ -91,6 +92,7 @@ namespace Quackery.Decks
 
             _endDayScreen.OnCloseGame -= EndTheDay;
             InterruptRoundRequest = delegate { };
+            EndTransactionRequest = delegate { };
             _EndRoundButton.onClick.RemoveAllListeners();
             StopAllCoroutines();
 

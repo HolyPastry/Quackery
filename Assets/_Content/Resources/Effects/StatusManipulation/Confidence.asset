@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 408a2d3614ab349b8987541a85f4ddaf, type: 3}
-  m_Name: Confidence Set
+  m_Script: {fileID: 11500000, guid: 8ce05065af35c430c9d3026d3e974a45, type: 3}
+  m_Name: Confidence
   m_EditorClassIdentifier: 
   MasterText: 
   Icon: {fileID: 0}
-  Description: Set Confidence
-  _effectToModify: {fileID: 11400000, guid: 0efb1bb5a0fe24d2e9a540c5bbc4b250, type: 2}
+  Description: 
+  CanBeNegative: 0
+  Trigger: 1
+  Explanations: []

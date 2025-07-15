@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e52bba3ecf2b43beaed4325c4d0f009, type: 3}
-  m_Name: Cast Suspicious Effect in DrawPile
+  m_Name: Cast Suspicious Effect In Draw Pile
   m_EditorClassIdentifier: 
   MasterText: 
   Icon: {fileID: 0}
@@ -22,3 +22,5 @@ MonoBehaviour:
   _counterEffect: {fileID: 11400000, guid: 0efb1bb5a0fe24d2e9a540c5bbc4b250, type: 2}
   _curseCard: {fileID: 11400000, guid: 622e59d8ce0864e5dbd0a5a57249a751, type: 2}
   TargetDeck: 0
+  Lifetime: 1
+  Placement: 0

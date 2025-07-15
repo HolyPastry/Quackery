@@ -15,14 +15,14 @@ MonoBehaviour:
   MasterText: Stiff Back
   Icon: {fileID: 0}
   BasePrice: 0
-  ShortDescription: 
-  LongDescription: Upgrades to backpain when drawn 30 times.
+  ShortDescription: Becomes backpain the next #DrawnTime draw.
+  LongDescription: Upgrades to backpain when drawn #EffectValue1 times. Drawn #DrawnTime.
   ShopDescription: 
   Explanations: []
   SubscriptionCost: 0
   Category: 8
   Effects:
   - Data: {fileID: 11400000, guid: f4649cd32b2564e8990e3d8d125257c7, type: 2}
-    Value: 1
+    Value: 0
     Tags: 
   ValueEvaluator: {fileID: 0}

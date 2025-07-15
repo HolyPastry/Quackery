@@ -67,13 +67,13 @@ namespace Quackery.Decks
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (!_highlighted) return;
-            CartServices.SelectPile(PileIndex);
+            CartServices.HoverPile(PileIndex);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             if (!_highlighted) return;
-            CartServices.DeselectPile(PileIndex);
+            CartServices.UnhoverPile(PileIndex);
         }
     }
 }

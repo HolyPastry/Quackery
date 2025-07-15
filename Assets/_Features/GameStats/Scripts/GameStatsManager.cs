@@ -111,7 +111,7 @@ namespace Quackery.GameStats
 
         private bool MatchCategoryCondition(CardStats card, CardStats conditions)
         {
-            if (conditions.Category == EnumItemCategory.Unset) return true;
+            if (conditions.Category == EnumItemCategory.Any) return true;
             return card.Category == conditions.Category;
         }
 

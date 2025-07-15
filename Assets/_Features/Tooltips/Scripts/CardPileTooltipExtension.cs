@@ -16,7 +16,7 @@ namespace Quackery
             var card = cardPileUI.TopCard;
             if (card == null) return;
 
-            _tooltipManager.AddTooltip(card.Name, card.Item.Data.LongDescription, card.Item.Data.Explanations);
+            _tooltipManager.AddTooltip(card.Name, card.Item.LongDescription, card.Item.Data.Explanations);
 
         }
     }
