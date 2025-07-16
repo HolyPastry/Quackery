@@ -148,9 +148,9 @@ namespace Quackery.Effects
                 (synergyEffect.Category == card.Item.Category ||
                     synergyEffect.Category == EnumItemCategory.Any);
 
-            var synergyEffects = card.Effects.FindAll(synergyPredicate);
+            //   var synergyEffects = card.Effects.FindAll(synergyPredicate);
 
-            synergyEffects.AddRange(_effects.FindAll(synergyPredicate));
+            var synergyEffects = _effects.FindAll(synergyPredicate);
 
             if (synergyEffects.Count == 0) return (list.Count + 1, 0);
 

@@ -410,18 +410,42 @@ namespace Quackery.Decks
 
         private void UpdateCartSize()
         {
-            int cartSize = _initialCartSize + _ratingCartSizeModifier + EffectServices.GetCartSizeModifier();
-            cartSize = Mathf.Max(cartSize, 2);
+            int newCartSize = _initialCartSize + _ratingCartSizeModifier + EffectServices.GetCartSizeModifier();
+            newCartSize = Mathf.Max(newCartSize, 2);
 
-            while (_cartPiles.Count <= cartSize)
+            while (_cartPiles.Count < newCartSize)
             {
                 _cartPiles.Add(new CardPile(EnumCardPile.Cart, _cartPiles.Count));
             }
-            for (int i = 0; i < _cartPiles.Count; i++)
+
+            //if the cart is too big, first try to disable empty piles starting from the right.
+            for (int i = _cartPiles.Count - 1; i >= 0; i--)
             {
-                _cartPiles[i].Enabled = i < cartSize;
+                if (CartSize <= newCartSize) break;
+                var pile = _cartPiles[i];
+                if (pile.IsEmpty && pile.Enabled)
+                {
+                    pile.Enabled = false;
+                }
             }
+
+            //if it is still too big, disable the last piles until it fits and discard the cards. 
+            if (CartSize > newCartSize)
+            {
+                for (int i = _cartPiles.Count - 1; i >= 0; i--)
+                {
+                    if (_cartPiles[i].Enabled && !_cartPiles[i].IsEmpty)
+                    {
+                        DeckServices.Discard(new(_cartPiles[i].Cards));
+                        DeckEvents.OnPileUpdated(_cartPiles[i].Type, _cartPiles[i].Index);
+                        _cartPiles[i].Enabled = false;
+                    }
+                    if (CartSize <= newCartSize) break;
+                }
+            }
+
             DeckEvents.OnCardPoolSizeUpdate(EnumCardPile.Cart);
+
         }
 
         private void MergeCart(int amount, EnumItemCategory category)

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+
 using Quackery.Decks;
 using Quackery.Effects;
+using UnityEngine;
 
 namespace Quackery.Inventories
 {
@@ -21,6 +23,11 @@ namespace Quackery.Inventories
             Effects = new List<Effect>();
             foreach (var effect in Data.Effects)
             {
+                if (effect == null)
+                {
+                    Debug.LogError($"Effect is null for item {Data.name}. This may cause issues.");
+                    continue;
+                }
                 Effects.Add(new Effect(effect));
             }
         }

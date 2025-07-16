@@ -15,5 +15,5 @@ MonoBehaviour:
   MasterText: Food
   Background: {fileID: 0}
   Icon: {fileID: 21300000, guid: 5ed6d52a6d7ce469399a7d993ca660a0, type: 3}
-  _startPrice: 10
+  _startPrice: 5
   PaymentInterval: 1
