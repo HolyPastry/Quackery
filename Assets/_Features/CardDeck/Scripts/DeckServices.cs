@@ -73,5 +73,8 @@ namespace Quackery
         public static Action<Card, ItemData> ReplaceCard = (card, replacementCard) => { };
 
         internal static Func<Predicate<Card>, EnumCardPile, List<Card>> GetMatchingCards = (condition, pile) => new List<Card>();
+
+        internal static Action ShuffleInExhaustedCards = () => { };
+
     }
 }

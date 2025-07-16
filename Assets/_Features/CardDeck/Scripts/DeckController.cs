@@ -7,6 +7,7 @@ using System.Linq;
 using Quackery.Effects;
 
 using UnityEngine.Assertions;
+using System;
 
 
 namespace Quackery.Decks
@@ -106,6 +107,7 @@ namespace Quackery.Decks
 
             DeckServices.ReplaceCard = (card, replacementCard) => { };
             DeckServices.GetMatchingCards = (condition, pile) => new List<Card>();
+            DeckServices.ShuffleInExhaustedCards = () => { };
 
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
@@ -144,6 +146,7 @@ namespace Quackery.Decks
 
             DeckServices.ChangeCardCategory = ChangeCardCategory;
             DeckServices.RestoreCardCategories = RestoreCardCategories;
+            DeckServices.ShuffleInExhaustedCards = ShuffleExhaustIntoDrawPile;
 
 
             DeckServices.CardPlayed = () => _cardPlayed;
@@ -554,6 +557,7 @@ namespace Quackery.Decks
         }
         private void Discard(List<Card> cards)
         {
+
             foreach (var card in cards)
             {
                 Discard(card);
@@ -610,6 +614,13 @@ namespace Quackery.Decks
         {
             SetPileActivation(_handPiles, false);
             _drawPile.MergeBelow(_discardPile);
+            _drawPile.Shuffle();
+            DeckEvents.OnShuffle(EnumCardPile.Draw, _drawPile.Index, _drawPile.Cards);
+        }
+
+        private void ShuffleExhaustIntoDrawPile()
+        {
+            _drawPile.MergeBelow(_exhaustPile);
             _drawPile.Shuffle();
             DeckEvents.OnShuffle(EnumCardPile.Draw, _drawPile.Index, _drawPile.Cards);
         }

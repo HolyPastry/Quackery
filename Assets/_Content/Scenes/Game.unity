@@ -2378,10 +2378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _disable: 0
   clients: []
-  UnknownEffectsToAdd:
-  - Data: {fileID: 11400000, guid: 20ce1060ae6814fe092e901535c4d6be, type: 2}
-    Value: -1
-    Tags: 0300000002000000
+  UnknownEffectsToAdd: []
   GenerateDailyQueue: 0
   InfiniteQueue: 0
 --- !u!114 &1072491527

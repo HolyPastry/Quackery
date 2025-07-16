@@ -70,6 +70,7 @@ namespace Quackery
                 // yield return new WaitForSeconds(1f);
                 // controller.ResetDeck();
                 CartServices.DiscardCart();
+
                 EffectServices.CleanEffects();
                 yield return new WaitForSeconds(1f);
 
@@ -78,6 +79,8 @@ namespace Quackery
                     controller.ShowEndDayScreen();
                     yield return controller.WaitUntilEndOfDayValidated();
                     ClientServices.ClientLeaves();
+                    DeckServices.ShuffleInExhaustedCards();
+
                     break;
                 }
                 else

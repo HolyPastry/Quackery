@@ -942,7 +942,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &584916076
 Transform:
   m_ObjectHideFlags: 0
@@ -992,9 +992,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _disable: 0
   _cardInHands:
-  - {fileID: 11400000, guid: 622e59d8ce0864e5dbd0a5a57249a751, type: 2}
   - {fileID: 11400000, guid: c2aac245a114f43b280e5fa21c5e580c, type: 2}
-  - {fileID: 11400000, guid: 3a87d8c44683c4bd7ab97a2b0dd0a292, type: 2}
+  - {fileID: 11400000, guid: 22058101169e345ec9fc9eef0d6b7657, type: 2}
   - {fileID: 11400000, guid: 625a1d63dc5274ce684a1e6195337d3b, type: 2}
   _deck: {fileID: 11400000, guid: 63373c9f699884c0a8cccee147f0975b, type: 2}
   _placeOnTopOfDeck:
@@ -1086,9 +1085,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6940872ebe534c18a20c744fb0f2210, type: 2}
   - {fileID: 11400000, guid: 9f1ede9a0fa20454baf46129446812a7, type: 2}
   - {fileID: 11400000, guid: 587beb3a50f5f405e9af09d99d962e43, type: 2}
-  - {fileID: 11400000, guid: c100aa9e416a24e0dae31eb22da289c8, type: 2}
+  - {fileID: 11400000, guid: 3bb551ceda0e64b84bcff21e3fafb5c4, type: 2}
   _deck: {fileID: 11400000, guid: 63373c9f699884c0a8cccee147f0975b, type: 2}
-  _placeOnTopOfDeck: []
+  _placeOnTopOfDeck:
+  - {fileID: 11400000, guid: 625a1d63dc5274ce684a1e6195337d3b, type: 2}
 --- !u!114 &595379333
 MonoBehaviour:
   m_ObjectHideFlags: 0
