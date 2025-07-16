@@ -418,6 +418,15 @@ namespace Quackery.Decks
                 _cartPiles.Add(new CardPile(EnumCardPile.Cart, _cartPiles.Count));
             }
 
+
+            for (int i = 0; i < _cartPiles.Count; i++)
+            {
+                if (CartSize >= newCartSize) break;
+                var pile = _cartPiles[i];
+                if (!pile.Enabled)
+                    pile.Enabled = true;
+            }
+
             //if the cart is too big, first try to disable empty piles starting from the right.
             for (int i = _cartPiles.Count - 1; i >= 0; i--)
             {

@@ -26,8 +26,8 @@ MonoBehaviour:
   - Data: {fileID: 11400000, guid: ae795ef46d110457dbb25d3c4c07f67f, type: 2}
     Value: 0
     Tags: 
-  - Data: {fileID: 11400000, guid: 941b13ba70d4b4b9d923d3a35d86ba36, type: 2}
-    Value: 1
+  - Data: {fileID: 11400000, guid: ab38ab34b9e4f40a292f4e187fc18f90, type: 2}
+    Value: -1
     Tags: 
   - Data: {fileID: 11400000, guid: 801a0a2ba11034396948a755cdf973ab, type: 2}
     Value: 0

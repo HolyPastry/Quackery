@@ -164,7 +164,7 @@ namespace Quackery.Effects
                         synergyEffect.Operation == EnumOperation.Add)
                 .Sum(effect => effect.Value);
 
-            return (multiplier + list.Count + 1, bonus);
+            return (multiplier * list.Count + 1, bonus);
 
         }
 

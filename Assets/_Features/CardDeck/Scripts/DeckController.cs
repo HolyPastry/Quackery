@@ -488,7 +488,7 @@ namespace Quackery.Decks
                (selectedPile == null && CartServices.AddCardToCart(card)) ||
                 (selectedPile != null && CartServices.AddCardToCartPile(card, selectedPile)))
             {
-                if (selectedPile != null)
+                if (selectedPile != null && (selectedPile.TopCard == card))
                     yield return EffectServices.ExecutePile(EnumEffectTrigger.BeforeCartCalculation, selectedPile);
 
                 yield return CartServices.CalculateCart();

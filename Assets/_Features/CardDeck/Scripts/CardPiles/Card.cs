@@ -176,11 +176,13 @@ namespace Quackery.Decks
         {
             if (IsSkill) return;
             _item.OverrideCategory = EnumItemCategory.Any;
+            SetCategoryIcon();
             // Rating = _item.Rating;
             UpdatePrice();
 
             // _cardRating.text = Rating.ToString();
             _cardBackground.color = Colors.Get(_item.Category.ToString());
+
             _activatedEffects.Clear();
             _effectIconPool.ForEach(icon => icon.Activated = false);
         }

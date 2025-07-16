@@ -20,7 +20,7 @@ MonoBehaviour:
   LongDescription: 'Discard & redraw your hand. Receive 1 suspicion in the draw pile. '
   ShopDescription: 
   Explanations: []
-  SubscriptionCost: 32
+  SubscriptionCost: 15
   Category: 2
   Effects:
   - Data: {fileID: 11400000, guid: 24cbe2973429146c782ff147d747f9d2, type: 2}
