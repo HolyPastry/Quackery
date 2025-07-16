@@ -60,17 +60,17 @@ namespace Quackery
                 }
                 else
                 {
-                    _controller.TransfertCartToPurse();
                     yield return new WaitForSeconds(1f);
                     client.GoodReview();
                     ClientServices.ClientServed(client, true);
                 }
+
+                _controller.ShowEndRoundScreen(!_controller.RoundInterrupted, out bool wasBoss);
+                yield return new WaitForSeconds(3f);
+                _controller.HideEndRoundScreen();
+                _controller.TransfertCartToPurse();
                 CartServices.DiscardCart();
                 EffectServices.CleanEffects();
-                _controller.ShowEndRoundScreen(!_controller.RoundInterrupted, out bool wasBoss);
-
-                yield return new WaitForSeconds(5f);
-                _controller.HideEndRoundScreen();
 
                 yield return new WaitForSeconds(1f);
                 if (ClientServices.HasNextClient())

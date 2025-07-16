@@ -55,5 +55,8 @@ namespace Quackery.Decks
         public static Func<int> GetCartBonus = () => 0;
 
         public static Action RandomizeCart = () => { };
+
+        internal static Func<CartEvaluation> GetCartEvaluation = () => default;
+
     }
 }

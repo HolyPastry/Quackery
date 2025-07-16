@@ -48,17 +48,18 @@ namespace Quackery.Decks
                 _cardForeground.sprite = _item.Data.Icon;
                 _cardName.text = Sprites.Replace(_item.ShortDescription); //Data.GetDescription();
 
-                if (IsSkill) return;
-                _cardBackground.color = Colors.Get(_item.Category.ToString());
                 InitEffects();
                 UpdatePrice();
+
+                if (IsSkill) return;
                 SetCategoryIcon();
+                _cardBackground.color = Colors.Get(_item.Category.ToString());
             }
         }
 
         private void InitEffects()
         {
-            foreach (var effect in _item.Data.Effects)
+            foreach (var effect in _item.Effects)
             {
                 effect.LinkedCard = this;
                 effect.Tags.Add(EnumEffectTag.Card);
@@ -116,7 +117,7 @@ namespace Quackery.Decks
 
         public EnumItemCategory Category => _item.Category;
 
-        public List<Effect> Effects => _item.Data.Effects;
+        public List<Effect> Effects => _item.Effects;
 
         private Item _item;
 

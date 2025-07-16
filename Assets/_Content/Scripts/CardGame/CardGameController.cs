@@ -209,6 +209,7 @@ namespace Quackery.Decks
 
             }
             yield return DeckServices.DiscardHand();
+            // EffectServices.CleanEffects();
 
             //EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundEnd, null);
             _endOfRound = true;

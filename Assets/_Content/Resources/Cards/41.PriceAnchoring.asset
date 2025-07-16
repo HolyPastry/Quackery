@@ -19,11 +19,15 @@ MonoBehaviour:
   LongDescription: All 1 #Coin cards receives an instant #EffectValue1#Coin bonus
     for this transaction. Receive 1 suspicion in your hand
   ShopDescription: 
-  Explanations: []
+  Explanations:
+  - {fileID: 11400000, guid: 8940ffcbd8b7a416eb34dcafcd8c4948, type: 2}
   SubscriptionCost: 0
   Category: 7
   Effects:
   - Data: {fileID: 11400000, guid: 2af380b045bc34ed2a6a5b7acf7de466, type: 2}
     Value: 7
+    Tags: 
+  - Data: {fileID: 11400000, guid: 801a0a2ba11034396948a755cdf973ab, type: 2}
+    Value: 0
     Tags: 
   ValueEvaluator: {fileID: 0}

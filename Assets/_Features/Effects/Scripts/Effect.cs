@@ -38,6 +38,21 @@ namespace Quackery
             Data = data;
         }
 
+        public Effect(Effect effect)
+        {
+            Data = effect.Data;
+            Value = effect.Value;
+            Tags = new List<EnumEffectTag>(effect.Tags);
+            LinkedCard = effect.LinkedCard;
+            LinkedArtifact = effect.LinkedArtifact;
+        }
+
+        public Effect(EffectData data, int value)
+        {
+            Data = data;
+            Value = value;
+        }
+
         // public int PriceModifier(Card card) => Data.PriceModifier(this, card);
         // public float PriceRatioModifier(Card card) => Data.RatioPriceModifier(this, card);
 

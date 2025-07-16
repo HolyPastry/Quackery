@@ -57,21 +57,20 @@ namespace Quackery
                 {
                     DialogQueueServices.QueueDialog("MeConclusion");
                     DialogQueueServices.QueueDialog($"{client.DialogName}Success");
-                    controller.TransfertCartToPurse();
-                    yield return new WaitForSeconds(1f);
+
                     client.GoodReview();
                     ClientServices.ClientServed(client, true);
                     yield return DialogQueueServices.WaitUntilAllDialogEnds();
                 }
 
-
-                // controller.ResetDeck();
-                CartServices.DiscardCart();
-                EffectServices.CleanEffects();
-
                 controller.ShowEndRoundScreen(!controller.RoundInterrupted, out bool wasBoss);
                 yield return controller.WaitUntilEndOfRoundScreenClosed();
                 controller.HideEndRoundScreen();
+                controller.TransfertCartToPurse();
+                // yield return new WaitForSeconds(1f);
+                // controller.ResetDeck();
+                CartServices.DiscardCart();
+                EffectServices.CleanEffects();
                 yield return new WaitForSeconds(1f);
 
                 if (!ClientServices.HasNextClient() || wasBoss)

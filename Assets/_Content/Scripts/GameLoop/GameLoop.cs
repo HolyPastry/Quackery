@@ -66,7 +66,7 @@ namespace Quackery
             At(billState, gameOverState, () => !BillApp.IsOn && BillApp.IsGameOver);
             At(sleepState, notificationState, () => !SleepApp.IsOn);
 
-            At(clientListState, passiveClientChatState, () => PassiveClientSelected);
+            // At(clientListState, passiveClientChatState, () => PassiveClientSelected);
             //  At(passiveClientChatState, clientListState, () => SelectedClient == null);
 
             ChangeState(notificationState);

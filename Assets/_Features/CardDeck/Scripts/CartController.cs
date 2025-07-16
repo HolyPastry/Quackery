@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Holypastry.Bakery;
+using Quackery.Clients;
 using Quackery.Effects;
 using Quackery.Inventories;
 using UnityEngine;
@@ -10,17 +11,32 @@ using UnityEngine.PlayerLoop;
 
 namespace Quackery.Decks
 {
-
-    public class CartManager : MonoBehaviour
+    [Serializable]
+    public struct CartEvaluation
+    {
+        public int Index;
+        public float Value;
+        public Color Color;
+        public string Description;
+    }
+    public class CartController : MonoBehaviour
     {
 
         [SerializeField] private int _initialCartSize = 3;
+        [SerializeField]
+        private List<CartEvaluation> _cartEvaluations = new()
+        {
+            new () { Index = 0, Value = 0.8f, Color = Color.yellow, Description = "Amazing" },
+            new () {  Index = 1,Value = 0.6f, Color = Color.cyan, Description = "Good" },
+            new () {  Index = 2,Value = 0.4f, Color = Color.green, Description = "Poor" },
+            new () {  Index = 3,Value = 0.2f, Color = Color.blue, Description = "Terrible"  },
+            new () {  Index = 4, Value = 0.0f, Color = Color.red, Description = "Catastrophic" }
+        };
+
 
         private int _ratingCartSizeModifier;
         private int _cardCartSizeModifier;
         private int _cartBonus;
-        private bool _cartCalculated;
-
         private int _cartValue;
 
         private readonly List<CardPile> _cartPiles = new();
@@ -86,6 +102,7 @@ namespace Quackery.Decks
 
 
             CartServices.RandomizeCart = RandomizeCart;
+            CartServices.GetCartEvaluation = GetCartEvaluation;
 
 
             EffectEvents.OnAdded += UpdateCardUI;
@@ -93,6 +110,8 @@ namespace Quackery.Decks
             EffectEvents.OnUpdated += UpdateCardUI;
 
         }
+
+
 
         void OnDisable()
         {
@@ -134,6 +153,7 @@ namespace Quackery.Decks
             CartServices.AddCardToCartPile = (card, pile) => false;
 
             CartServices.RandomizeCart = delegate { };
+            CartServices.GetCartEvaluation = () => default;
 
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
@@ -153,6 +173,19 @@ namespace Quackery.Decks
         private int GetCartBonus()
         {
             return _cartBonus;
+        }
+
+        private CartEvaluation GetCartEvaluation()
+        {
+            float bestValue = (float)BillServices.GetAmountDueToday() / ClientServices.NumClientsToday();
+
+            var totalValue = _cartValue + _cartBonus;
+            float percValue = totalValue / bestValue;
+            return _cartEvaluations
+                 .Where(e => e.Value > percValue)
+                 .OrderBy(e => e.Value)
+                 .FirstOrDefault();
+
         }
 
         private void RandomizeCart()

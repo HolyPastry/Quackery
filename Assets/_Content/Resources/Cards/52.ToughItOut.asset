@@ -30,4 +30,7 @@ MonoBehaviour:
   - Data: {fileID: 11400000, guid: 0ca3b421aead9463a9c45a7f35408073, type: 2}
     Value: 2
     Tags: 
+  - Data: {fileID: 11400000, guid: 801a0a2ba11034396948a755cdf973ab, type: 2}
+    Value: 0
+    Tags: 
   ValueEvaluator: {fileID: 0}

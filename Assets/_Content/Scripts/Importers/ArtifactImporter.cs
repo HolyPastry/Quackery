@@ -47,10 +47,7 @@ namespace Quackery
                     Debug.LogWarning($"Effect '{effectName}' not found in collection '{EffectCollectionKey}' for item '{artifactData.name}' at index {IndexOf}.");
                     continue;
                 }
-                var newEffect = new Effect(effectData)
-                {
-                    Value = effectValue
-                };
+                var newEffect = new Effect(effectData, effectValue);
                 artifactData.Effects.Add(newEffect);
             }
             var explanations = fields[index++];

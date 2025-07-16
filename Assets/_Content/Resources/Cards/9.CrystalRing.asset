@@ -24,6 +24,6 @@ MonoBehaviour:
   Category: 3
   Effects:
   - Data: {fileID: 11400000, guid: 1682d1d9dda21408f875ac1db50be104, type: 2}
-    Value: 0
+    Value: 2
     Tags: 
   ValueEvaluator: {fileID: 0}

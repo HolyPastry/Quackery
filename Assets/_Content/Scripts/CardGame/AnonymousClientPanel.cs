@@ -21,15 +21,20 @@ namespace Quackery
             _portrait.sprite = client.Portrait;
             _portrait.color = Color.white;
             _nameText.text = client.LoginName;
+            var evaluation = CartServices.GetCartEvaluation();
+            var cartValue = CartServices.GetCartValue();
+            var cartBonus = CartServices.GetCartBonus();
+
+
             if (isSuccess)
             {
-                _resultString.text = Sprites.Replace("Successful Transaction");
-                _cartAmount.text = Sprites.Replace("+ #Coin " + CartServices.GetLastCartValue().ToString("C0"));
+                _resultString.text = Sprites.Replace($"{evaluation.Description} Transaction");
+                _cartAmount.text = Sprites.Replace($"{cartValue + cartBonus}#Coin");
             }
             else
             {
                 _resultString.text = Sprites.Replace("Client left without paying!");
-                _cartAmount.text = Sprites.Replace("+ #Coin 0");
+                _cartAmount.text = Sprites.Replace("0#Coin");
             }
             _hiddable.SetActive(true);
 

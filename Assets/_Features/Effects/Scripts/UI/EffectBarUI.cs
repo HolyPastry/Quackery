@@ -52,7 +52,7 @@ namespace Quackery
         {
             for (int i = 0; i < _statusUIPool.Count; i++)
             {
-                if (_statusUIPool[i].Effect == effect)
+                if (_statusUIPool[i].Effect.Data == effect.Data)
                 {
                     _statusUIPool[i].Hide();
                     return;
@@ -82,7 +82,7 @@ namespace Quackery
             for (int i = 0; i < effects.Count; i++)
             {
                 var statusUI = _statusUIPool.Find(ui
-                        => ui.Effect == effects[i] &&
+                        => ui.Effect.Data == effects[i].Data &&
                             ui.gameObject.activeSelf == true
                             );
                 if (statusUI != null)

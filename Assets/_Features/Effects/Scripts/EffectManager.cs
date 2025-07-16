@@ -328,38 +328,38 @@ namespace Quackery.Effects
             }
             else
             {
-                var newEffect = new Effect(data) { Value = value };
+                var newEffect = new Effect(data, value);
                 _effects.Add(newEffect);
                 EffectEvents.OnAdded?.Invoke(newEffect);
             }
         }
 
-        private void ModifyValue(EffectData data, int arg2)
+        private void ModifyValue(EffectData data, int value)
         {
             var existingEffect = _effects.Find(e
                 => e.Data == data);
             if (existingEffect != null)
             {
-                if (!data.CanBeNegative && existingEffect.Value + arg2 <= 0)
+                if (!data.CanBeNegative && existingEffect.Value + value <= 0)
                 {
                     _effects.Remove(existingEffect);
                     EffectEvents.OnRemoved?.Invoke(existingEffect);
                     return;
                 }
-                existingEffect.Value += arg2;
+                existingEffect.Value += value;
                 EffectEvents.OnUpdated?.Invoke(existingEffect);
             }
             else
             {
-                if (!data.CanBeNegative && arg2 <= 0)
+                if (!data.CanBeNegative && value <= 0)
                 {
                     return;
                 }
-                var newEffect = new Effect(data)
-                {
-                    Value = arg2,
-                };
+                var newEffect = new Effect(data, value);
+
                 newEffect.Tags.Add(EnumEffectTag.Status);
+
+
 
                 _effects.Add(newEffect);
                 EffectEvents.OnAdded?.Invoke(newEffect);
@@ -384,9 +384,9 @@ namespace Quackery.Effects
 
         private void CleanEffect()
         {
-            var effectToClean = _effects.FindAll(effect =>
-                effect.Tags.Contains(EnumEffectTag.Activated) ||
-                effect.Tags.Contains(EnumEffectTag.Client));
+            var effectToClean = new List<Effect>(_effects); // _effects.FindAll(effect =>
+                                                            //effect.Tags.Contains(EnumEffectTag.Client) ||
+                                                            // effect.Tags.Contains(EnumEffectTag.Card));
 
             foreach (var effect in effectToClean)
             {
@@ -473,9 +473,7 @@ namespace Quackery.Effects
                 if (pile == null) continue;
                 List<int> idsToRemove = new();
                 var effectToRemove = _effects.FindAll(effect =>
-                    effect.LinkedCard != null &&
-                    effect.Tags.Contains(EnumEffectTag.Activated) &&
-                    effect.LinkedCard == pile.TopCard);
+                    effect.Tags.Contains(EnumEffectTag.Card));
 
                 foreach (var effect in effectToRemove)
                 {
@@ -500,7 +498,7 @@ namespace Quackery.Effects
             }
             else
             {
-                _effects.Add(effect);
+                _effects.Add(new(effect));
             }
 
             EffectEvents.OnAdded?.Invoke(effect);
@@ -529,7 +527,7 @@ namespace Quackery.Effects
             foreach (var effect in card.Effects)
             {
                 if (effect.Trigger != trigger) continue;
-                effect.LinkedCard = card;
+                // effect.LinkedCard = card;
 
                 yield return StartCoroutine(effect.Data.ExecutePile(effect, pile));
             }
@@ -543,7 +541,7 @@ namespace Quackery.Effects
 
             foreach (var effect in effectToExecute)
             {
-                effect.LinkedCard = card;
+                //effect.LinkedCard = card;
                 if (effect.Trigger == EnumEffectTrigger.Passive)
                 {
                     Add(effect);
