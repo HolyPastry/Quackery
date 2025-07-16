@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Quackery.Decks;
 using Quackery.Inventories;
 using UnityEngine;
@@ -14,10 +15,10 @@ namespace Quackery.Effects
         [SerializeField] private EnumItemCategory _category;
         public EnumItemCategory Category => _category;
 
-        public override void ExecutePile(Effect effect, CardPile pile)
+        public override IEnumerator ExecutePile(Effect effect, CardPile pile)
         {
-            if (pile.Count <= 1) return;
-            if (pile.Cards[1].Category != _category) return;
+            if (pile.Count <= 1) yield break;
+            if (pile.Cards[1].Category != _category) yield break;
             int price = EffectServices.GetCardPrice(pile.TopCard);
             CartServices.AddToCartValue(price);
         }

@@ -84,6 +84,17 @@ namespace Quackery.Clients
             IsNew = true;
             ChatHistory = string.Empty;
 
+            InitEffects();
+
+        }
+
+        private void InitEffects()
+        {
+            foreach (var effect in Effects)
+            {
+                effect.Tags.AddUnique(Quackery.Effects.EnumEffectTag.Client);
+                effect.Tags.AddUnique(Quackery.Effects.EnumEffectTag.Status);
+            }
         }
 
         public void InitKnownClient(ClientData data)
@@ -107,6 +118,7 @@ namespace Quackery.Clients
             LastReviewText = data.FirstReward.Review;
             LastRating = data.FirstReward.Rating;
             LastFollowersBonus = data.FirstReward.FollowerBonus;
+            InitEffects();
         }
 
         internal void GoodReview()

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,8 @@ namespace Quackery
         [SerializeField] private RectTransform _dottedLinePrefab;
         public static Action<Vector3, Vector3> GenerateDottedLine = delegate { };
         public static Action HideDottedLine = delegate { };
-
+        public static Action<RectTransform, float, Action<RectTransform>> MoveOnTop = delegate { };
+        private Transform _previousParent;
         private readonly List<RectTransform> _dottedLineObjects = new();
 
 
@@ -19,12 +21,31 @@ namespace Quackery
             GenerateDottedLine += Generate;
             HideDottedLine += Hide;
 
+            MoveOnTop += MoveOnTopHandler;
         }
+
 
         void OnDisable()
         {
             GenerateDottedLine -= Generate;
             HideDottedLine -= Hide;
+            MoveOnTop -= MoveOnTopHandler;
+        }
+
+        private void MoveOnTopHandler(RectTransform transform, float duration, Action<RectTransform> action)
+        {
+            StartCoroutine(MoveOnTopCoroutine(transform, duration, action));
+
+        }
+
+        private IEnumerator MoveOnTopCoroutine(RectTransform transform, float duration, Action<RectTransform> action)
+        {
+            _previousParent = transform.parent;
+            transform.SetParent(this.transform, false);
+            transform.SetAsLastSibling();
+            action?.Invoke(transform);
+            yield return new WaitForSeconds(duration);
+            transform.SetParent(_previousParent, false);
         }
 
         private void Generate(Vector3 originPosition, Vector3 mousePosition)
@@ -78,5 +99,7 @@ namespace Quackery
                 dot.gameObject.SetActive(false);
             }
         }
+
+
     }
 }

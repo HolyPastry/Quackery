@@ -6,7 +6,7 @@ namespace Quackery.Decks
         NeighborReward,
         RatingReward,
         StackReward,
-        SynergyReward
+        Synergy
     }
 
 }

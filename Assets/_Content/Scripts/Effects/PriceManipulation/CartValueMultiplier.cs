@@ -1,3 +1,4 @@
+using System.Collections;
 using Quackery.Decks;
 using UnityEngine;
 
@@ -8,9 +9,9 @@ namespace Quackery.Effects
     public class CartValueMultiplier : EffectData
     {
 
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
-            if (effect.LinkedCard == null) return;
+            if (effect.LinkedCard == null) yield break;
 
             int value = CartServices.GetCartValue();
             CartServices.AddToCartValue(Mathf.FloorToInt(value * ((float)effect.Value / 100)));

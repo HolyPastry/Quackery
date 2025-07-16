@@ -1,5 +1,6 @@
 
 
+using System.Collections;
 using System.Collections.Generic;
 using Quackery.Decks;
 using UnityEngine;
@@ -17,11 +18,12 @@ namespace Quackery.Effects
 
         // public override string GetDescription() => $"Remove effects";
 
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
             foreach (var effectToRemove in _effectsToRemove)
             {
                 EffectServices.Cancel(effectToRemove);
+                yield return new WaitForSeconds(0.5f);
             }
         }
     }

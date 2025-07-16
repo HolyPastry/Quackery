@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Holypastry.Bakery;
@@ -27,8 +28,8 @@ namespace Quackery.Effects
             EffectServices.AddEffect = (effectData) => { };
             EffectServices.Cancel = delegate { };
 
-            EffectServices.Execute = (trigger, card) => 0;
-            EffectServices.ExecutePile = (trigger, cardPile) => { };
+            EffectServices.Execute = (trigger, card) => null;
+            EffectServices.ExecutePile = (trigger, cardPile) => null;
 
             EffectServices.GetCurrent = () => new();
 
@@ -53,15 +54,14 @@ namespace Quackery.Effects
             EffectServices.GetSynergyBonuses = (card, subItems) => (0, 0);
             EffectServices.UpdateCardEffects = (topCards) => { };
 
+            EffectServices.AddEffectsFromCard = (card) => null;
+
             EffectEvents.OnAdded -= ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved -= ExecuteOnAppliedEffect;
             EffectEvents.OnUpdated -= ExecuteOnAppliedEffect;
 
             CartEvents.OnNewCartPileUsed -= ExecuteNewCartPileEffects;
             CartEvents.OnStackHovered -= OnStackHovered;
-
-
-
         }
 
         void OnEnable()
@@ -96,6 +96,7 @@ namespace Quackery.Effects
             EffectServices.GetSynergyBonuses = GetSynergyBonuses;
 
             EffectServices.UpdateCardEffects = UpdateCardEffects;
+            EffectServices.AddEffectsFromCard = AddEffectsFromCard;
 
             EffectEvents.OnAdded += ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved += ExecuteOnAppliedEffect;
@@ -103,12 +104,23 @@ namespace Quackery.Effects
 
             CartEvents.OnNewCartPileUsed += ExecuteNewCartPileEffects;
             CartEvents.OnStackHovered += OnStackHovered;
+        }
 
+        private IEnumerator AddEffectsFromCard(Card card)
+        {
+            foreach (var effect in card.Effects)
+            {
+                if (effect.Trigger != EnumEffectTrigger.Passive) continue;
+
+                Add(effect);
+                yield return new WaitForSeconds(0.5f);
+
+            }
         }
 
         private void OnStackHovered(Card card, CardPile pile)
         {
-
+            //TODO: Show the effects of the hovered card
         }
 
         private void ExecuteNewCartPileEffects(Card card)
@@ -140,7 +152,7 @@ namespace Quackery.Effects
 
             synergyEffects.AddRange(_effects.FindAll(synergyPredicate));
 
-            if (synergyEffects.Count == 0) return (list.Count, 0);
+            if (synergyEffects.Count == 0) return (list.Count + 1, 0);
 
             int multiplier = synergyEffects
                 .Where(effect => effect.Data is StackMultiplierEffect synergyEffect &&
@@ -152,8 +164,7 @@ namespace Quackery.Effects
                         synergyEffect.Operation == EnumOperation.Add)
                 .Sum(effect => effect.Value);
 
-            if (multiplier <= 0) multiplier = 1; // Ensure at least one multiplier is applied
-            return (multiplier + list.Count, bonus);
+            return (multiplier + list.Count + 1, bonus);
 
         }
 
@@ -365,10 +376,10 @@ namespace Quackery.Effects
 
         private void ExecuteOnAppliedEffect(Effect _)
         {
-            foreach (var effect in _effects)
-                if (effect.Trigger == EnumEffectTrigger.OnEffectApplied)
-                    effect.Execute(null);
-
+            //TODO:: Check who is using this and if it is still needed
+            // foreach (var effect in _effects)
+            //     if (effect.Trigger == EnumEffectTrigger.OnEffectApplied)
+            //         effect.Execute(null);
         }
 
         private void CleanEffect()
@@ -508,9 +519,9 @@ namespace Quackery.Effects
             EffectEvents.OnRemoved?.Invoke(effect);
         }
 
-        private void ExecutePile(EnumEffectTrigger trigger, CardPile pile)
+        private IEnumerator ExecutePile(EnumEffectTrigger trigger, CardPile pile)
         {
-            if (pile.IsEmpty) return;
+            if (pile.IsEmpty) yield break;
             var card = pile.TopCard;
 
             var effectToExecute = card.Effects.FindAll(effect => effect.Trigger == trigger);
@@ -519,18 +530,29 @@ namespace Quackery.Effects
             {
                 if (effect.Trigger != trigger) continue;
                 effect.LinkedCard = card;
-                effect.ExecutePile(pile);
+
+                yield return StartCoroutine(effect.Data.ExecutePile(effect, pile));
             }
         }
 
-        private int Execute(EnumEffectTrigger trigger, Card card)
+        private IEnumerator Execute(EnumEffectTrigger trigger, Card card)
         {
-
             var effectToExecute = _effects.FindAll(effect => effect.Trigger == trigger);
-            effectToExecute.AddRange(card.Effects.FindAll(effect => effect.Trigger == trigger));
-            effectToExecute.ForEach(e => e.Execute(card));
+            if (card != null)
+                effectToExecute.AddRange(card.Effects.FindAll(effect => effect.Trigger == trigger));
 
-            return effectToExecute.Count();
+            foreach (var effect in effectToExecute)
+            {
+                effect.LinkedCard = card;
+                if (effect.Trigger == EnumEffectTrigger.Passive)
+                {
+                    Add(effect);
+                    yield return new WaitForSeconds(0.5f);
+                }
+                else
+
+                    yield return StartCoroutine(effect.Data.Execute(effect));
+            }
 
         }
     }

@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Holypastry.Bakery;
 
@@ -19,13 +20,13 @@ namespace Quackery.Effects
         public bool CanBeNegative = false;
 
         public EnumEffectTrigger Trigger = EnumEffectTrigger.OnCardPlayed;
-
         public List<Explanation> Explanations;
+        public WaitForSeconds DefaultWaitTime = new(0.5f);
 
-        public virtual void Execute(Effect effect) { }
+        public virtual IEnumerator Execute(Effect effect) { yield break; }
+        public virtual IEnumerator ExecutePile(Effect effect, CardPile pile) => null;
+
         public virtual void Cancel(Effect effect) { }
-        public virtual void ExecutePile(Effect effect, CardPile pile) { }
-
         internal virtual void CheckValidity() { }
     }
 }

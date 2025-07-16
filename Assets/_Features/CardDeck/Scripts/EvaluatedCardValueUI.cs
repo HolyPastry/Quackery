@@ -1,7 +1,10 @@
 
+using System;
+using DG.Tweening;
 using Quackery.Clients;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace Quackery.Decks
@@ -17,7 +20,6 @@ namespace Quackery.Decks
         [SerializeField] private Color[] _valueColors = new Color[] { Color.yellow, Color.cyan, Color.green, Color.blue, Color.red };
 
         private float _oldValue;
-
 
         protected override void UpdateCartValue()
         {
@@ -35,6 +37,16 @@ namespace Quackery.Decks
             _valueGauge.fillAmount = (float)totalValue / (bestValue * 0.8f);
 
             _valueGauge.color = _valueColors[^1];
+            PlayRealization(newValue);
+
+            _oldValue = newValue;
+
+
+        }
+
+        private void PlayRealization(float newValue)
+        {
+            if (newValue <= _oldValue) return;
 
             for (int i = 0; i < _valueThresholds.Length; i++)
             {
@@ -47,9 +59,8 @@ namespace Quackery.Decks
                 }
             }
 
-            _oldValue = newValue;
-
-
+            _cartValueText.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f, 1, 1f)
+                .SetEase(Ease.OutElastic);
         }
 
         private void TriggerThresholdReward(int i)

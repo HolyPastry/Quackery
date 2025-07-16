@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Ink.Runtime;
 using Quackery.Decks;
 using Quackery.GameStats;
@@ -18,7 +19,7 @@ namespace Quackery.Effects
         public EnumLifetime Lifetime = EnumLifetime.Permanent;
         public EnumPlacement Placement = EnumPlacement.OnTop;
 
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
             int countered = EffectServices.CounterEffect(_counterEffect, effect.Value);
 
@@ -31,7 +32,7 @@ namespace Quackery.Effects
                                         Lifetime);
 
                 DeckServices.MoveCard(card, TargetDeck, Placement, 2f);
-
+                yield return DefaultWaitTime;
             }
         }
     }

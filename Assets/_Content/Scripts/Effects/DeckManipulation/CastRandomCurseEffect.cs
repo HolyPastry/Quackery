@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Quackery.Decks;
 using UnityEngine;
@@ -9,10 +10,11 @@ namespace Quackery.Effects
     {
         [SerializeField] private List<Effect> _curseEffect;
 
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
             var curseEffect = _curseEffect[Random.Range(0, _curseEffect.Count)];
             curseEffect.Data.Execute(curseEffect);
+            yield return DefaultWaitTime;
         }
     }
 }

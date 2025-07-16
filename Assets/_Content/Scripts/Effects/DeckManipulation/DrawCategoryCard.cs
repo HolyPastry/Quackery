@@ -1,3 +1,4 @@
+using System.Collections;
 using Quackery.Decks;
 using Quackery.Inventories;
 using UnityEngine;
@@ -9,13 +10,17 @@ namespace Quackery.Effects
     {
         [SerializeField] private EnumItemCategory _category = EnumItemCategory.Any;
         public EnumItemCategory Category => _category;
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
             DeckServices.InterruptDraw();
             Card drawnCard = DeckServices.DrawCategory(Category);
-            if (drawnCard != null)
-                DeckServices.MoveToTable(drawnCard);
-            //DeckServices.DrawBackToFull();
+            if (drawnCard == null) yield break;
+
+            DeckServices.MoveCard(drawnCard, EnumCardPile.Effect, EnumPlacement.OnTop, 0);
+            yield return DefaultWaitTime;
+            DeckServices.MoveToTable(drawnCard);
+            yield return DefaultWaitTime;
+
         }
     }
 }

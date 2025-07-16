@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Quackery.Artifacts;
 using Quackery.Decks;
@@ -19,8 +20,8 @@ namespace Quackery
 
         public static Func<List<Effect>> GetCurrent = () => new();
 
-        internal static Func<EnumEffectTrigger, Card, int> Execute = (trigger, card) => 0;
-        public static Action<EnumEffectTrigger, CardPile> ExecutePile = (trigger, cardPile) => { };
+        internal static Func<EnumEffectTrigger, Card, IEnumerator> Execute = (trigger, card) => null;
+        public static Func<EnumEffectTrigger, CardPile, IEnumerator> ExecutePile = (trigger, cardPile) => null;
 
         internal static Action<List<CardPile>> RemoveEffectsLinkedToPiles = delegate { };
 
@@ -54,8 +55,11 @@ namespace Quackery
         internal static Action<ArtifactData> RemoveArtifactEffects = (artifactData) => { };
 
         internal static Func<Card, List<Item>, (int multiplier, int bonus)> GetSynergyBonuses
-                        = (card, subItems) => (0, 0);
+                        = (card, subItems) => (1, 0);
 
         internal static Action<List<Card>> UpdateCardEffects = (topCards) => { };
+
+        internal static Func<Card, IEnumerator> AddEffectsFromCard = (Card) => null;
+
     }
 }

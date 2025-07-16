@@ -17,42 +17,21 @@ namespace Quackery.Decks
         protected override void OnEnable()
         {
             base.OnEnable();
-            CartEvents.OnCalculatingCartPile += CalculateCartPile;
+            CartEvents.OnCartRewardCalculated += ShowReward;
             CartEvents.OnStacksHighlighted += HighlightStack;
-
-
         }
-
-
 
         protected override void OnDisable()
         {
             base.OnDisable();
-            CartEvents.OnCalculatingCartPile -= CalculateCartPile;
+            CartEvents.OnCartRewardCalculated -= ShowReward;
             CartEvents.OnStacksHighlighted -= HighlightStack;
         }
 
-        private void CalculateCartPile(int index)
+        private void ShowReward(int index, CardReward reward, float duration)
         {
             if (!IsItMe(EnumCardPile.Cart, index)) return;
-            var rewards = CartServices.GetPileRewards(index);
-
-            _rewardPanel.transform.SetAsLastSibling();
-
-            StartCoroutine(ShowRewardsRoutine(rewards));
-        }
-
-        private IEnumerator ShowRewardsRoutine(List<CardReward> rewards)
-        {
-            yield return new WaitForSeconds(1f);
-            foreach (var cardReward in rewards)
-            {
-                _rewardPanel.ShowReward(cardReward);
-                CartServices.AddToCartValue(cardReward.Value);
-                yield return new WaitForSeconds(2f);
-            }
-            CartServices.CompleteCartPileCalculation();
-            _rewardPanel.Hide();
+            _rewardPanel.ShowReward(reward);
         }
 
         private void HighlightStack(List<int> list)

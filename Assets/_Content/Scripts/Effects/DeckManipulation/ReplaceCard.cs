@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Quackery.Decks;
 using Quackery.Inventories;
 using UnityEngine;
@@ -18,10 +19,10 @@ namespace Quackery.Effects
         // [SerializeField] private EnumPlacement _placement = EnumPlacement.OnTop;
         // [SerializeField] private EnumLifetime _lifetime = EnumLifetime.Permanent;
         // [SerializeField] private EnumCardPile _targetDeck = EnumCardPile.Discard;
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
             if (effect.LinkedCard == null)
-                return;
+                yield break;
 
             Card card = effect.LinkedCard;
             Item item = card.Item;
@@ -30,6 +31,7 @@ namespace Quackery.Effects
             {
                 DeckServices.ReplaceCard(card, _replacementCard);
             }
+            yield return DefaultWaitTime;
         }
     }
 }

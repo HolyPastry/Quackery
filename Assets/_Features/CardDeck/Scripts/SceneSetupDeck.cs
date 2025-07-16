@@ -40,7 +40,7 @@ namespace Quackery.Decks
                 DeckServices.AddNew(itemData,
                         EnumCardPile.Draw,
                         EnumPlacement.OnTop,
-                        EnumLifetime.Temporary);
+                        EnumLifetime.Effemeral);
             }
         }
 

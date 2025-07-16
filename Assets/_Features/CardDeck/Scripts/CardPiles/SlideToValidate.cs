@@ -60,7 +60,7 @@ namespace Quackery.Decks
                 {
                     if (distanceFromOrigin.y > _maxSlideDistanceY)
                     {
-                        DeckServices.PileClicked(_cardPileUI.Type, _cardPileUI.PileIndex);
+                        DeckServices.SelectCard(_cardPileUI.Type, _cardPileUI.PileIndex);
                         ResetMovements();
                     }
                 }

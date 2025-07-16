@@ -1,3 +1,4 @@
+using System.Collections;
 using Quackery.Decks;
 using Quackery.Effects;
 using Quackery.Inventories;
@@ -14,7 +15,7 @@ namespace Quackery
 
 
 
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
             bool predicate(Card card) => card.Category == _category || _category == EnumItemCategory.Any;
 
@@ -24,10 +25,8 @@ namespace Quackery
             {
                 DeckServices.MoveCard(card, EnumCardPile.Effect, EnumPlacement.OnTop, 0);
                 DeckServices.MoveCard(card, EnumCardPile.Exhaust, EnumPlacement.OnTop, 2);
+                yield return DefaultWaitTime;
             }
-
-
         }
-
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using Quackery.Decks;
 using UnityEngine;
 
@@ -9,9 +10,10 @@ namespace Quackery.Effects
     {
         //[Tooltip("The amount of cards to discard. If -1, discard all cards in hand.")]
         // [SerializeField] private int _amount = -1;
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
             DeckServices.DiscardCards(effect.Value);
+            yield return DefaultWaitTime;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Quackery.Decks;
 using Quackery.Inventories;
 using UnityEngine;
@@ -11,9 +12,10 @@ namespace Quackery.Effects
     {
         [SerializeField] private EnumItemCategory _category = EnumItemCategory.Any;
         public EnumItemCategory Category => _category;
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
             CartServices.MergeCart(effect.Value, Category);
+            yield return DefaultWaitTime;
         }
     }
 }

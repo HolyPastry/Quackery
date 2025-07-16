@@ -2,7 +2,6 @@ namespace Quackery.Effects
 {
     public enum EnumEffectTrigger
     {
-        OnActivated = 0,
         OnCardPlayed = 1,
         OnDraw = 2,
         BeforeCartCalculation = 4,

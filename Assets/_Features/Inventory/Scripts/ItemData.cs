@@ -40,8 +40,6 @@ namespace Quackery.Inventories
 
         public ValueEvaluator ValueEvaluator;
 
-
-
         internal List<CardReward> CalculateCardRewards(Card topCard, List<Item> subItems, List<CardPile> otherPiles)
         {
 
@@ -55,11 +53,11 @@ namespace Quackery.Inventories
             // };
             (int multiplier, int bonus) = EffectServices.GetSynergyBonuses(topCard, subItems);
 
-            if (subItems.TrueForAll(i => i.Category == topCard.Category))
+            if (subItems.Count > 0 && subItems.TrueForAll(i => i.Category == topCard.Category))
             {
                 rewards.Add(new()
                 {
-                    Type = EnumCardReward.SynergyReward,
+                    Type = EnumCardReward.Synergy,
                     Value = (topCard.Price + bonus) * multiplier
                 });
             }

@@ -18,16 +18,17 @@ namespace Quackery
         [SerializeField, Child] private TextMeshProUGUI _countText;
         private bool _synergyOn;
         private TweenerCore<Color, Color, ColorOptions> _colorTween;
+        private int _count;
 
-        public void SetCount(int herbCount)
+        public void SetCount(int count)
         {
-            gameObject.SetActive(herbCount > 0);
-            _countText.text = herbCount.ToString();
+            _count = count;
+            gameObject.SetActive(count > 0);
+            _countText.text = count.ToString();
         }
         public void ClearCount()
         {
-            gameObject.SetActive(false);
-            _countText.text = "0";
+            SetCount(0);
         }
         public void SetSynergy(bool isOn)
         {
@@ -38,10 +39,12 @@ namespace Quackery
                 _colorTween = _background.DOFade(0.5f, 0.5f)
                     .SetEase(Ease.InOutSine)
                     .SetLoops(-1, LoopType.Yoyo);
+                // SetCount(_count + 1);
 
             }
             if (!isOn)
             {
+                // SetCount(_count);
                 _synergyOn = false;
                 _colorTween?.Kill();
                 _colorTween = null;

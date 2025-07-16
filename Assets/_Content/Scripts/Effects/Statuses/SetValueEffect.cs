@@ -1,3 +1,4 @@
+using System.Collections;
 using Quackery.Decks;
 using UnityEngine;
 
@@ -7,9 +8,10 @@ namespace Quackery.Effects
     public class SetValueEffect : EffectData
     {
         [SerializeField] private EffectData _effectToModify;
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
             EffectServices.SetValue(_effectToModify, effect.Value);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }

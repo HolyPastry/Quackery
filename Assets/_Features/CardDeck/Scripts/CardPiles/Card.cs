@@ -9,6 +9,7 @@ using Quackery.Effects;
 
 using DG.Tweening;
 using UnityEngine.Assertions;
+using Holypastry.Bakery;
 
 
 namespace Quackery.Decks
@@ -49,9 +50,21 @@ namespace Quackery.Decks
 
                 if (IsSkill) return;
                 _cardBackground.color = Colors.Get(_item.Category.ToString());
-
+                InitEffects();
                 UpdatePrice();
                 SetCategoryIcon();
+            }
+        }
+
+        private void InitEffects()
+        {
+            foreach (var effect in _item.Data.Effects)
+            {
+                effect.LinkedCard = this;
+                effect.Tags.Add(EnumEffectTag.Card);
+                if (effect.Trigger == EnumEffectTrigger.Passive)
+                    effect.Tags.AddUnique(EnumEffectTag.Status);
+
             }
         }
 
@@ -111,13 +124,7 @@ namespace Quackery.Decks
 
         public int InHandPriceBonus = 0;
 
-        public bool CannotBeCovered
-        {
-            get
-            {
-                return Effects.Exists(e => e.Data is CoverProtection);
-            }
-        }
+        public bool CannotBeCovered => Effects.Exists(e => e.Data is CoverProtection);
 
         public bool HasCartTarget => Category != EnumItemCategory.Skills;
 
@@ -167,11 +174,12 @@ namespace Quackery.Decks
         public void Discard()
         {
             if (IsSkill) return;
+            _item.OverrideCategory = EnumItemCategory.Any;
             // Rating = _item.Rating;
             UpdatePrice();
+
             // _cardRating.text = Rating.ToString();
             _cardBackground.color = Colors.Get(_item.Category.ToString());
-
             _activatedEffects.Clear();
             _effectIconPool.ForEach(icon => icon.Activated = false);
         }

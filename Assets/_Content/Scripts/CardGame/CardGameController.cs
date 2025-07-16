@@ -179,8 +179,9 @@ namespace Quackery.Decks
         {
             // yield return StartCoroutine(ApplyRatingBonus());
 
-            yield return StartCoroutine(ApplyClientEffects());
+            yield return StartCoroutine(AddClientEffects());
             yield return new WaitForSeconds(0.5f);
+            yield return StartCoroutine(EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundStart, null));
 
             while (true)
             {
@@ -222,16 +223,12 @@ namespace Quackery.Decks
                 _EndRoundButton.GetComponent<Image>().color = Color.white;
         }
 
-        private IEnumerator ApplyClientEffects()
+        private IEnumerator AddClientEffects()
         {
             foreach (var effect in _client.Effects)
             {
                 yield return new WaitForSeconds(0.2f);
-                effect.Tags.AddUnique(Effects.EnumEffectTag.Client);
-                effect.Tags.AddUnique(Effects.EnumEffectTag.Status);
                 EffectServices.AddEffect(effect);
-                if (effect.Trigger == Effects.EnumEffectTrigger.OnRoundStart)
-                    effect.Execute(null);
             }
         }
 

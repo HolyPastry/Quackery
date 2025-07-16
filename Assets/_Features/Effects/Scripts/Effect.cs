@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Quackery.Artifacts;
 using Quackery.Decks;
@@ -37,23 +38,12 @@ namespace Quackery
             Data = data;
         }
 
-        internal void Execute(Card card)
-        {
-            LinkedCard = card;
-            Data.Execute(this);
-        }
-
         // public int PriceModifier(Card card) => Data.PriceModifier(this, card);
         // public float PriceRatioModifier(Card card) => Data.RatioPriceModifier(this, card);
 
         internal bool ContainsTag(EnumEffectTag effectTag)
         {
             return Tags.Contains(effectTag);
-        }
-
-        internal void ExecutePile(CardPile pile)
-        {
-            Data.ExecutePile(this, pile);
         }
 
         internal void CheckValidity()

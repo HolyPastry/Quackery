@@ -22,7 +22,7 @@ namespace Quackery
         public static Func<IEnumerator> DiscardHand = () => null;
         public static Func<List<CardPile>> GetTablePile = () => new();
 
-        public static Action<EnumCardPile, int> PileClicked = (pileType, index) => { };
+        public static Action<EnumCardPile, int> SelectCard = (pileType, index) => { };
 
         public static Action<EnumCardPile, EnumCardPile> MovePileType = (sourcePile, targetPile) => { };
         public static Action<CardPile, CardPile> MoveToPile = (source, target) => { };
@@ -53,30 +53,16 @@ namespace Quackery
 
         public static Func<Card, Card> DuplicateCard = (card) => null;
 
-        // internal static Action<ItemData, int> AddNewToDiscard = (card, amount) => { };
-
-        // internal static Action<ItemData, int> AddMultipleInstancesToDrawDeck = (card, amount) => { };
-        // public static Action<List<ItemData>> AddToDrawPile = (cards) => { };
-        //   public static Action<ItemData, bool, Transform> AddNewToDraw = (card, isPermanent, origin) => { };
-
         public static Func<bool> CardPlayed = () => false;
         public static Func<EnumCardPile, int> GetCardPoolSize = (cardPileType) => 0;
-
-        public static Func<int> GetLastCartPileIndex = () => 0;
 
         public static Func<bool> NoPlayableCards = () => false;
 
         public static Func<ItemData, Card> CreateCard = (itemData) => null;
 
-        public static Action PopulateDeck = () => { };
-
         public static Action<Card> StartPlayCardLoop = delegate { };
 
         public static Action StopPlayCardLoop = delegate { };
-
-        public static Action<Card, bool> MoveCardToEffect = (card, teleport) => { };
-
-
 
         public static Action<int, Predicate<Card>> BoostPriceOfCardsInHand = (value, predicate) => { };
 
@@ -86,6 +72,6 @@ namespace Quackery
         public static Action<Card, EnumCardPile, EnumPlacement, float> MoveCard = (card, pileType, placement, delay) => { };
         public static Action<Card, ItemData> ReplaceCard = (card, replacementCard) => { };
 
-        internal static Func<Predicate<Card>, EnumCardPile, IEnumerable<Card>> GetMatchingCards = (condition, pile) => new List<Card>();
+        internal static Func<Predicate<Card>, EnumCardPile, List<Card>> GetMatchingCards = (condition, pile) => new List<Card>();
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using Quackery.Decks;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace Quackery.Effects
 
         [SerializeField] private CardPosition _position = CardPosition.TopDraw;
 
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
             Card card = null;
             switch (_position)
@@ -31,10 +32,12 @@ namespace Quackery.Effects
                     card = DeckServices.GetTopCard(EnumCardPile.Cart);
                     break;
             }
-            if (card == null) return;
+            if (card == null) yield break;
 
             Card duplicate = DeckServices.DuplicateCard(card);
+            yield return DefaultWaitTime;
             DeckServices.Discard(new() { duplicate });
+            yield return DefaultWaitTime;
 
 
         }

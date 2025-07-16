@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Quackery.Decks;
 using Quackery.Inventories;
 using UnityEngine;
@@ -12,9 +13,10 @@ namespace Quackery.Effects
         public EnumItemCategory Category => _category;
         [SerializeField] private EnumCardSelection _cardSelection = EnumCardSelection.Random;
 
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
             DeckServices.ChangeCardCategory(Category, _cardSelection);
+            yield return DefaultWaitTime;
         }
 
         public override void Cancel(Effect effect)

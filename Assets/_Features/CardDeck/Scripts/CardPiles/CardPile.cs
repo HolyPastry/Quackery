@@ -169,7 +169,7 @@ namespace Quackery.Decks
 
         internal void OverrideStackCategory(EnumItemCategory category)
         {
-            for (int i = 1; i < Cards.Count; i++)
+            for (int i = 0; i < Cards.Count; i++)
             {
                 Cards[i].OverrideCategory(category);
             }

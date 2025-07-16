@@ -8,14 +8,20 @@ namespace Quackery.Decks
     public class CartValueUI : MonoBehaviour
     {
         [SerializeField] protected TMPro.TextMeshProUGUI _cartValueText;
+
+        public static Func<Transform> Transform = () => null;
+
+
         void OnEnable()
         {
             CartEvents.OnCartValueChanged += UpdateCartValue;
+            Transform = () => transform;
         }
 
         void OnDisable()
         {
             CartEvents.OnCartValueChanged -= UpdateCartValue;
+            Transform = () => null;
         }
 
         protected virtual void UpdateCartValue()

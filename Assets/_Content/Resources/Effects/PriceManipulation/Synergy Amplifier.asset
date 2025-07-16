@@ -16,7 +16,7 @@ MonoBehaviour:
   Icon: {fileID: 0}
   Description: Synergy Bonus x#Value
   CanBeNegative: 0
-  Trigger: 0
+  Trigger: 6
   Explanations: []
   _category: 1
   _operation: 1

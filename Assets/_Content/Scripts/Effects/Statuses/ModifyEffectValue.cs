@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Quackery.Decks;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace Quackery.Effects
             EffectServices.ModifyValue(_effectToModify, -effect.Value);
         }
 
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
             int countered = 0;
             if (effect.Value > 0)
@@ -24,6 +25,7 @@ namespace Quackery.Effects
                     countered += EffectServices.CounterEffect(counterEffect, effect.Value - countered);
 
             EffectServices.ModifyValue(_effectToModify, effect.Value - countered);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Quackery.Decks;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace Quackery.Effects
 
         // public override string Description => "<b>Bundle:</b> Allows you to bundle up to #Value cards together.";
 
-        public override void ExecutePile(Effect effect, CardPile owningPile)
+        public override IEnumerator ExecutePile(Effect effect, CardPile owningPile)
         {
             List<CardPile> piles = DeckServices.GetTablePile();
 
@@ -27,6 +28,7 @@ namespace Quackery.Effects
                 DeckServices.MoveToPile(pile, owningPile);
 
             }
+            yield return null;
 
         }
     }

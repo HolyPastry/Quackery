@@ -20,14 +20,21 @@ namespace Quackery.Decks
         }
         public void ShowReward(CardReward cardReward)
         {
+            // OverlayCanvas.MoveOnTop(_rectTransform, _duration, (rect) =>
+            // {
             _rectTransform.localScale = Vector3.zero;
+            _rectTransform.SetAsLastSibling();
 
-            _rewardPanelUI.text = $"{cardReward.Type}: {cardReward.Value}$";
+            _rewardPanelUI.text = $"{cardReward.Type}\n{cardReward.Value}<sprite name=Coin>";
             _rectTransform.DOScale(Vector3.one, _easeDuration).SetEase(_easeType).OnComplete(() =>
             {
                 // Optionally, you can add a delay before hiding the panel
                 StartCoroutine(HideAfterDelay(_duration));
             });
+
+            //                if (CartValueUI.Transform() != null)
+            //                  transform.DOMove(CartValueUI.Transform().position, _easeDuration).SetEase(_easeType);
+            // });
         }
 
         private IEnumerator HideAfterDelay(float v)
@@ -40,6 +47,7 @@ namespace Quackery.Decks
         {
             // Implement the logic to hide the reward panel
             _rectTransform.localScale = Vector3.zero;
+            _rectTransform.localPosition = Vector3.zero;
         }
     }
 }

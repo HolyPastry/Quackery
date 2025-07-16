@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Quackery.Decks;
 using UnityEngine;
@@ -10,9 +11,9 @@ namespace Quackery.Effects
     public class SpendingLimitEffect : EffectData
     {
 
-        public override void Execute(Effect effect)
+        public override IEnumerator Execute(Effect effect)
         {
-            if (CartServices.GetCartValue() >= effect.Value) return;
+            if (CartServices.GetCartValue() >= effect.Value) yield break;
 
             CardGameController.InterruptRoundRequest();
         }
