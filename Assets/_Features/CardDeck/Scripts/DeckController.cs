@@ -233,10 +233,8 @@ namespace Quackery.Decks
         }
         private void MoveCard(Card card, EnumCardPile pile, EnumPlacement placement, float delay)
         {
-            if (delay < 0)
-            {
+            if (delay <= 0)
                 MoveCard(card, pile, placement);
-            }
             else
                 StartCoroutine(DelayedMoveCard(card, pile, placement, delay));
 

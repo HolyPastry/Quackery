@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Tired
   m_EditorClassIdentifier: 
   Name: Tired
-  Definition: Recieve 1 Irritation with every new stack
+  Definition: Receive 1 Irritation with every new stack
