@@ -142,6 +142,7 @@ PlayerSettings:
   bundleVersion: 0.0.0
   preloadedAssets:
   - {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  - {fileID: -4409506786468950787, guid: 5e0327dcf3bae4dfd9a0e00ad05f9f03, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -164,7 +165,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.DefaultCompany.com.unity.template.mobile2D
     Lumin: com.DefaultCompany.com.unity.template.mobile2D
-    Standalone: com.DefaultCompany.com.unity.template.mobile2D
+    Standalone: com.nhnt.quackery
     iPhone: com.DefaultCompany.com.unity.template.mobile2D
     tvOS: com.DefaultCompany.com.unity.template.mobile2D
   buildNumber:
@@ -812,7 +813,7 @@ PlayerSettings:
     PS5: DOTWEEN
     QNX: DOTWEEN
     Stadia: DOTWEEN
-    Standalone: INK_RUNTIME;INK_EDITOR;DOTWEEN
+    Standalone: BUILD_TYPE_TEST;BUILD_PLATFORM_WINDOWS;BUILD_TARGET_PLAYER;BUILD_BACKEND_MONO;INK_RUNTIME;INK_EDITOR;DOTWEEN
     VisionOS: DOTWEEN
     WebGL: DOTWEEN
     Windows Store Apps: DOTWEEN
