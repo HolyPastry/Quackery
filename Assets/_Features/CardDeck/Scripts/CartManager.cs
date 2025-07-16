@@ -393,17 +393,16 @@ namespace Quackery.Decks
 
         private void MergeCart(int amount, EnumItemCategory category)
         {
-            int index = _lastCartPile != null ? _cartPiles.IndexOf(_lastCartPile) : -1;
-            if (index == -1 || index == 0) return; // No other pile to merge into
+            // int index = _lastCartPile != null ? _cartPiles.IndexOf(_lastCartPile) : -1;
+            //if (index == -1 || index == 0) return; // No other pile to merge into
 
             if (category == EnumItemCategory.Any)
             {
                 while (CartPilesHaveSameCategory(out List<CardPile> piles))
                 {
-                    for (int i = 1; i < piles.Count; i++)
+                    for (int i = piles.Count - 2; i >= 0; i--)
                     {
-                        DeckController.MovePileTo(piles[i], piles[0]);
-
+                        DeckController.MovePileTo(piles[i], piles[^1]);
                     }
                 }
             }
@@ -411,7 +410,7 @@ namespace Quackery.Decks
             {
                 CardPile firstPile = null;
                 List<CardPile> pilesToMerge = new();
-                for (int i = 0; i <= _cartPiles.Count; i++)
+                for (int i = _cartPiles.Count - 1; i >= 0; i--)
                 {
                     if (_cartPiles[i].IsEmpty ||
                         !_cartPiles[i].Enabled ||
@@ -429,7 +428,7 @@ namespace Quackery.Decks
                 }
             }
 
-            _lastCartPile = _cartPiles[index - 1];
+            // _lastCartPile = _cartPiles[index - 1];
             UpdateUI();
             UpdateEffects();
             // DeckEvents.OnCalculatingCartPile(_lastCartPile.Type, _lastCartPile.Index);
