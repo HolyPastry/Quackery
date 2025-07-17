@@ -15,11 +15,12 @@ MonoBehaviour:
   MasterText: Fire Cider
   Icon: {fileID: 21300000, guid: 1a37e7223f6374a7abc18d10e376e98f, type: 3}
   BasePrice: 1
-  ShortDescription: '[ACTIVE] X2 #Herbs synergy bonus '
+  ShortDescription: 'Activated. X2 #Herbs synergy bonus '
   LongDescription: Doubles synergy bonus of herb cards stacks if visible in cart.
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: f5a1e322e38544357a9bf8cad73ac1da, type: 2}
+  - {fileID: 11400000, guid: 80149061fd2094753a91aab7dc57adc9, type: 2}
   SubscriptionCost: 3
   Category: 1
   Effects:

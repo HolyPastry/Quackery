@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 39.GoodListener
   m_EditorClassIdentifier: 
   MasterText: Good Listener
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 337452db5a5d4bd49bfb35b94b6f89bc, type: 3}
   BasePrice: 0
   ShortDescription: 
   LongDescription: 

@@ -188,11 +188,12 @@ MonoBehaviour:
   _disable: 0
   _cardInHands:
   - {fileID: 11400000, guid: 622e59d8ce0864e5dbd0a5a57249a751, type: 2}
-  - {fileID: 11400000, guid: 622e59d8ce0864e5dbd0a5a57249a751, type: 2}
+  - {fileID: 11400000, guid: acd0f52858def499a8e663d954798c7e, type: 2}
   - {fileID: 11400000, guid: 6030a02c9a3b147fd858dcbd3c542ed4, type: 2}
   - {fileID: 11400000, guid: 625a1d63dc5274ce684a1e6195337d3b, type: 2}
   _deck: {fileID: 11400000, guid: 63373c9f699884c0a8cccee147f0975b, type: 2}
   _placeOnTopOfDeck:
+  - {fileID: 11400000, guid: 622e59d8ce0864e5dbd0a5a57249a751, type: 2}
   - {fileID: 11400000, guid: 622e59d8ce0864e5dbd0a5a57249a751, type: 2}
 --- !u!114 &13117067
 MonoBehaviour:

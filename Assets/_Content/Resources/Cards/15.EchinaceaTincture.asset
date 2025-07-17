@@ -15,7 +15,7 @@ MonoBehaviour:
   MasterText: Echinacea Tincture
   Icon: {fileID: 21300000, guid: 7d50294e308a34d54b85c363081ea242, type: 3}
   BasePrice: 5
-  ShortDescription: Apply 1 Confidence
+  ShortDescription: + 1 Confidence
   LongDescription: Apply 1 Confidence
   ShopDescription: 
   Explanations:
