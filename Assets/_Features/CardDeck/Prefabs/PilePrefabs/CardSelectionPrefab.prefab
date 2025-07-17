@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a80f1769fa1e46c8ad8b394fff6e310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mousePositionAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   _maxSlideDistance: 420
   _maxSlideDistanceY: 300
   _useDottedLine: 0

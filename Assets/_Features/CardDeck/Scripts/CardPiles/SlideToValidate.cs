@@ -3,6 +3,7 @@ using System.Collections;
 using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 
 
@@ -10,14 +11,12 @@ namespace Quackery.Decks
 {
     public class SlideToValidate : ValidatedMonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-
+        [SerializeField] private InputActionReference _mousePositionAction;
         [SerializeField] private float _maxSlideDistance = 420f;
         [SerializeField] private float _maxSlideDistanceY = 300f;
         [SerializeField] private bool _useDottedLine = true;
 
         [SerializeField, Self] private CardPileUI _cardPileUI;
-
-
 
         private bool _isSliding;
 
@@ -37,21 +36,23 @@ namespace Quackery.Decks
         private IEnumerator SlideWithFinger()
         {
 
-            var originalPosition = transform.position;
+            Vector2 originalPosition = transform.position;
 
             while (true)
             {
+                //read the mouse position from the InputActionReference
 
-                var targetPosition = Input.mousePosition;
-                var distanceFromOrigin = targetPosition - originalPosition;
+                var mousePosition = _mousePositionAction.action.ReadValue<Vector2>();
+                //   var targetPosition = Input.mousePosition;
+                var distanceFromOrigin = mousePosition - originalPosition;
 
                 distanceFromOrigin = Vector2.ClampMagnitude(distanceFromOrigin, _maxSlideDistance);
-                targetPosition = originalPosition + distanceFromOrigin;
+                var targetPosition = originalPosition + distanceFromOrigin;
                 if (_useDottedLine && _cardPileUI.HasCartTarget)
                 {
                     if (distanceFromOrigin.y > _maxSlideDistanceY)
                     {
-                        OverlayCanvas.GenerateDottedLine(targetPosition, Input.mousePosition);
+                        OverlayCanvas.GenerateDottedLine(targetPosition, mousePosition);
                     }
                     else
                         OverlayCanvas.HideDottedLine();

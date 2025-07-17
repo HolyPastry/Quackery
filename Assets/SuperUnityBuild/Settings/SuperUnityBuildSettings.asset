@@ -66,20 +66,20 @@ MonoBehaviour:
     openFolderPostBuild: 1
     constantsFileLocation: Assets/SuperUnityBuild
   _productParameters:
-    buildCounter: 1
-    buildVersion: 0.0.0
-    versionTemplate: 0.0.0
+    buildCounter: 4
+    buildVersion: 0.0.3
+    versionTemplate: 0.0.3
     autoGenerate: 0
     syncWithPlayerSettings: 0
   _releaseTypeList:
     releaseTypes:
-    - typeName: Test
+    - typeName: Prototype
       bundleIdentifier: com.nhnt.quackery
       companyName: Not Here, Not There
       productName: Quackery
       syncAppNameWithProduct: 1
       appBuildName: Quackery
-      buildOptions: 1
+      buildOptions: 0
       customDefines: 
       sceneList:
         releaseScenes:
@@ -92,24 +92,24 @@ MonoBehaviour:
     - {fileID: 3426505695556247613}
   _projectConfigurations:
     configSet:
-      _Buckets: ffffffff030000000700000004000000ffffffff08000000ffffffffffffffff06000000ffffffff090000000200000001000000ffffffffffffffffffffffffffffffff
-      _HashCodes: eb61b16172aba76810dceb65f049c27bceb7a84b8c621d73f1c25f27b8918a4f9aad0b186678124c00000000000000000000000000000000000000000000000000000000
-      _Next: ffffffffffffffff00000000ffffffffffffffffffffffff05000000ffffffffffffffffffffffff00000000000000000000000000000000000000000000000000000000
+      _Buckets: ffffffffffffffff02000000ffffffff07000000ffffffffffffffff080000000100000003000000ffffffffffffffffffffffff090000000400000005000000ffffffff
+      _HashCodes: c389d5180c3e293fd2c1b540665747046013e53d86f3fd3036fc8a7c5140943358c73a356c1dc87600000000000000000000000000000000000000000000000000000000
+      _Next: ffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff06000000ffffffff00000000000000000000000000000000000000000000000000000000
       _Count: 10
       _Version: 10
       _FreeList: -1
       _FreeCount: 0
       _Keys:
-      - Test/macOS/Player (Intel 64-bit,App)/IL2CPP
-      - Test/macOS/Player (Intel 64-bit,App)
-      - Test/macOS
-      - Test/Windows/Player (Intel 64-bit,App)/Mono
-      - Test/Windows/Player (Intel 64-bit,App)
-      - Test/Windows
-      - Test/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single Binary,Auto,Auto,Debugging)/IL2CPP
-      - Test/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single Binary,Auto,Auto,Debugging)
-      - Test/Android
-      - Test
+      - Prototype/macOS/Player (Intel 64-bit,App)/IL2CPP
+      - Prototype/macOS/Player (Intel 64-bit,App)
+      - Prototype/macOS
+      - Prototype/Windows/Player (Intel 64-bit,App)/Mono
+      - Prototype/Windows/Player (Intel 64-bit,App)
+      - Prototype/Windows
+      - Prototype/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single Binary,Auto,Auto,Public)/IL2CPP
+      - Prototype/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single Binary,Auto,Auto,Public)
+      - Prototype/Android
+      - Prototype
       - 
       - 
       - 
@@ -122,31 +122,31 @@ MonoBehaviour:
         childKeys: []
       - enabled: 1
         childKeys:
-        - Test/macOS/Player (Intel 64-bit,App)/IL2CPP
+        - Prototype/macOS/Player (Intel 64-bit,App)/IL2CPP
       - enabled: 1
         childKeys:
-        - Test/macOS/Player (Intel 64-bit,App)
+        - Prototype/macOS/Player (Intel 64-bit,App)
       - enabled: 1
         childKeys: []
       - enabled: 1
         childKeys:
-        - Test/Windows/Player (Intel 64-bit,App)/Mono
+        - Prototype/Windows/Player (Intel 64-bit,App)/Mono
       - enabled: 1
         childKeys:
-        - Test/Windows/Player (Intel 64-bit,App)
+        - Prototype/Windows/Player (Intel 64-bit,App)
       - enabled: 1
         childKeys: []
       - enabled: 1
         childKeys:
-        - Test/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single Binary,Auto,Auto,Debugging)/IL2CPP
+        - Prototype/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single Binary,Auto,Auto,Public)/IL2CPP
       - enabled: 1
         childKeys:
-        - Test/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single Binary,Auto,Auto,Debugging)
+        - Prototype/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single Binary,Auto,Auto,Public)
       - enabled: 1
         childKeys:
-        - Test/macOS
-        - Test/Windows
-        - Test/Android
+        - Prototype/macOS
+        - Prototype/Windows
+        - Prototype/Android
       - enabled: 1
         childKeys: []
       - enabled: 1
@@ -166,7 +166,8 @@ MonoBehaviour:
     showBuildInfo: 0
     hideDisabled: 0
     treeView: 0
-    selectedKeyChain: Test/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single Binary,Auto,Auto,Debugging)/IL2CPP
+    selectedKeyChain: Prototype/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single
+      Binary,Auto,Auto,Public)/IL2CPP
   _preBuildActions:
     buildActions: []
   _postBuildActions:
@@ -280,7 +281,7 @@ MonoBehaviour:
     - 35
     isFlag: 0
   - variantName: Create symbols.zip
-    selectedIndex: 2
+    selectedIndex: 1
     values:
     - Disabled
     - Public
