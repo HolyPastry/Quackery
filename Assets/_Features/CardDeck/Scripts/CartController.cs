@@ -18,6 +18,8 @@ namespace Quackery.Decks
         public float Value;
         public Color Color;
         public string Description;
+
+        public AudioClip SoundBite;
     }
     public class CartController : MonoBehaviour
     {

@@ -1,4 +1,5 @@
 using System;
+using KBCore.Refs;
 using Quackery.Clients;
 using Quackery.Decks;
 using Quackery.Followers;
@@ -8,9 +9,11 @@ using UnityEngine.UI;
 
 namespace Quackery
 {
-    public class AnonymousClientPanel : MonoBehaviour
+    public class AnonymousClientPanel : ValidatedMonoBehaviour
     {
+        [SerializeField, Self] private AudioSource _audioSource;
         [SerializeField] private GameObject _hiddable;
+
         [SerializeField] private Image _portrait;
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _cartAmount;
@@ -30,6 +33,7 @@ namespace Quackery
             int newFollowers = FollowerServices.RewardFollowers(evaluation.Index);
 
             StartCoroutine(_followerBadge.CountFollowersUpRoutine(newFollowers));
+            _audioSource.PlayOneShot(evaluation.SoundBite);
 
             if (isSuccess)
             {

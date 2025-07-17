@@ -63,6 +63,7 @@ namespace Quackery.Chats
 
         public void AddText(string text, float duration = 0f)
         {
+            text = Sprites.Replace(text);
             if (_text.text.Length > 0)
                 _text.text += "\n";
             StartCoroutine(TypeTextRoutine(text, duration));

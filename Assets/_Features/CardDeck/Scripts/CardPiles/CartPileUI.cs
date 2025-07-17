@@ -3,14 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
 namespace Quackery.Decks
 {
     public class CartPileUI : CardPileUI, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField] private GameObject _highlightObject;
+        [SerializeField] private Image _highlightObject;
         [SerializeField] protected RewardPanel _rewardPanel;
+
+        [SerializeField] private Color _highlightColor = Color.yellow;
+        [SerializeField] private Color _defaultColor = Color.green;
         private bool _highlighted;
 
 
@@ -38,21 +42,31 @@ namespace Quackery.Decks
         {
             _highlighted = list != null && list.Contains(PileIndex);
 
-            _highlightObject.transform.SetAsLastSibling();
-            _highlightObject.SetActive(_highlighted);
+            if (_highlighted)
+            {
+                _highlightObject.gameObject.SetActive(true);
+                _highlightObject.transform.SetAsLastSibling();
 
+            }
+            else
+            {
+                _highlightObject.gameObject.SetActive(false);
+                _highlightObject.color = _defaultColor;
+            }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (!_highlighted) return;
             CartServices.HoverPile(PileIndex);
+            _highlightObject.color = _highlightColor;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             if (!_highlighted) return;
             CartServices.UnhoverPile(PileIndex);
+            _highlightObject.color = _defaultColor;
         }
     }
 }

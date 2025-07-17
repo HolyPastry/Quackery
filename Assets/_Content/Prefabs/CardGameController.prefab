@@ -14602,23 +14602,28 @@ MonoBehaviour:
   - Index: 0
     Value: 0.8
     Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-    Description: Amazing
+    Description: Outstanding
+    SoundBite: {fileID: 8300000, guid: 79572c5da53484caaa6b79968770d1da, type: 3}
   - Index: 1
     Value: 0.6
     Color: {r: 0, g: 1, b: 1, a: 1}
     Description: Good
+    SoundBite: {fileID: 8300000, guid: 2862237a2b66d4cef80b3ca2fee85f88, type: 3}
   - Index: 2
     Value: 0.4
     Color: {r: 0, g: 1, b: 0, a: 1}
-    Description: Poor
+    Description: Mediocre
+    SoundBite: {fileID: 8300000, guid: 613c54594735149619d745c761170ff3, type: 3}
   - Index: 3
     Value: 0.2
     Color: {r: 0, g: 0, b: 1, a: 1}
-    Description: Terrible
+    Description: Poor
+    SoundBite: {fileID: 8300000, guid: df7085e67f6034d9dbe042430e601f08, type: 3}
   - Index: 4
     Value: 0
     Color: {r: 1, g: 0, b: 0, a: 1}
     Description: Catastrophic
+    SoundBite: {fileID: 8300000, guid: 8be34761369a946959846bfb2eee81d7, type: 3}
 --- !u!1 &9006865925902269961
 GameObject:
   m_ObjectHideFlags: 0

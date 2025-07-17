@@ -1320,8 +1320,10 @@ MonoBehaviour:
   _moveSpeed: 0.5
   _easeType: 27
   _staggerDelay: 0.1
-  _highlightObject: {fileID: 9207656679645803720}
+  _highlightObject: {fileID: 1206179121465467313}
   _rewardPanel: {fileID: 5235328855767992039}
+  _highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.5882353}
+  _defaultColor: {r: 0.29803923, g: 0.6627451, b: 0.20392157, a: 0.49019608}
 --- !u!1 &9207656679645803720
 GameObject:
   m_ObjectHideFlags: 0
@@ -1380,7 +1382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.29970273, g: 0.6627451, b: 0.20392156, a: 0.23921569}
+  m_Color: {r: 0.29970273, g: 0.6627451, b: 0.20392156, a: 0.49019608}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

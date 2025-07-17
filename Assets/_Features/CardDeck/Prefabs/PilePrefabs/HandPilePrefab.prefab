@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mousePositionAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  _maxSlideDistance: 300
-  _maxSlideDistanceY: 150
+  _maxSlideDistance: 250
+  _maxSlideDistanceY: 125
   _useDottedLine: 1
   _cardPileUI: {fileID: 7113968437140955085}
 --- !u!114 &7121373417181115228

@@ -1,6 +1,6 @@
 === RevealWolfgang ===
 Me: How does it feel to see your cart piling up with the good stuff?
-Client: That price... <sprite name="Stress">
+Client: That price... <sprite name=Skull>
 ->DONE
 
 === WolfFirstReview ===

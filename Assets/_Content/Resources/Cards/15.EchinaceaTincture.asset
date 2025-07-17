@@ -20,7 +20,7 @@ MonoBehaviour:
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: d0ff6f583391a43baa8a79818f910d2f, type: 2}
-  SubscriptionCost: 4
+  SubscriptionCost: 3
   Category: 1
   Effects:
   - Data: {fileID: 11400000, guid: 0efb1bb5a0fe24d2e9a540c5bbc4b250, type: 2}
