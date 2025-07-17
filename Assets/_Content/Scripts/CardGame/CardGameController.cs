@@ -181,7 +181,7 @@ namespace Quackery.Decks
 
             yield return StartCoroutine(AddClientEffects());
             yield return new WaitForSeconds(0.5f);
-            yield return StartCoroutine(EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundStart, null));
+            yield return EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundStart, null);
 
             while (true)
             {

@@ -79,7 +79,7 @@ namespace Quackery
                     controller.ShowEndDayScreen();
                     yield return controller.WaitUntilEndOfDayValidated();
                     ClientServices.ClientLeaves();
-                    DeckServices.ShuffleInExhaustedCards();
+                    DeckServices.ResetDecks();
 
                     break;
                 }

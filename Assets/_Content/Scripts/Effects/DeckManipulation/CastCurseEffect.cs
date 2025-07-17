@@ -28,7 +28,7 @@ namespace Quackery.Effects
             {
                 Card card = DeckServices.AddNew(_curseCard,
                                         EnumCardPile.Effect,
-                                        EnumPlacement.OnTop,
+                                       Placement,
                                         Lifetime);
 
                 DeckServices.MoveCard(card, TargetDeck, Placement, 2f);

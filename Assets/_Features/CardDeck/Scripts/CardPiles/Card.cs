@@ -35,6 +35,8 @@ namespace Quackery.Decks
         //[SerializeField] private TextMeshProUGUI _cardRating;
         [SerializeField] private Image _outline;
 
+
+
         public Item Item
         {
             get => _item;
