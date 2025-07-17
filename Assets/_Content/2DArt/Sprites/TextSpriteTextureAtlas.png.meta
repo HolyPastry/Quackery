@@ -235,8 +235,8 @@ TextureImporter:
         y: 448
         width: 64
         height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.42967653, y: 0.5037017}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -543,13 +543,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TextSpriteTextureAtlas_0
+      name: Tired
       rect:
         serializedVersion: 2
-        x: 0
-        y: 255
-        width: 512
-        height: 257
+        x: 256
+        y: 320
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -559,6 +559,69 @@ TextureImporter:
       bones: []
       spriteID: af22e3f4c6aa8da40a1568ac04bf1db5
       internalID: 1809708526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Calm
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24866e3bd02307643b977242bd1fa4af
+      internalID: 65103523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stress
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2b693495b57c9c448650f642a93a9b9
+      internalID: 867504517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charm
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 835eb7509f1fe5c42938eaf073209355
+      internalID: -1595031548
       vertices: []
       indices: 
       edges: []
@@ -578,6 +641,8 @@ TextureImporter:
       Bill: -387669950
       BrokenHeart: -1567840025
       CallOfDuty: -1878822817
+      Calm: 65103523
+      Charm: -1595031548
       Chinese: -203676584
       Coin: -1950653382
       Crying: -1336030159
@@ -592,8 +657,9 @@ TextureImporter:
       Laughing: 486200474
       Magic: -56568269
       Skull: -301436299
-      TextSpriteTextureAtlas_0: 1809708526
+      Stress: 867504517
       TextSpriteTextureAtlas_6: -517696095
+      Tired: 1809708526
       Warning: -825293456
       Wink: -593761484
       testdot: 871313739

@@ -162,16 +162,16 @@ MonoBehaviour:
     m_HashCode: -2129747465
   - m_ElementType: 2
     m_Unicode: 65534
-    m_GlyphIndex: 20
-    m_Scale: 1
-    m_Name: testdot2
-    m_HashCode: 2029711419
-  - m_ElementType: 2
-    m_Unicode: 65534
     m_GlyphIndex: 21
     m_Scale: 1
-    m_Name: TextSpriteTextureAtlas_0
-    m_HashCode: -477633585
+    m_Name: Tired
+    m_HashCode: 98743758
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 22
+    m_Scale: 1
+    m_Name: Calm
+    m_HashCode: 2445123
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -261,7 +261,7 @@ MonoBehaviour:
       m_HorizontalBearingY: 50
       m_HorizontalAdvance: 40
     m_GlyphRect:
-      m_X: 320
+      m_X: 322
       m_Y: 448
       m_Width: 64
       m_Height: 64
@@ -422,7 +422,7 @@ MonoBehaviour:
       m_HorizontalAdvance: 34
     m_GlyphRect:
       m_X: 448
-      m_Y: 384
+      m_Y: 385
       m_Width: 64
       m_Height: 64
     m_Scale: 1
@@ -517,14 +517,30 @@ MonoBehaviour:
       m_HorizontalBearingY: 128.5
       m_HorizontalAdvance: 512
     m_GlyphRect:
-      m_X: 0
-      m_Y: 255
-      m_Width: 512
-      m_Height: 257
+      m_X: 256
+      m_Y: 320
+      m_Width: 64
+      m_Height: 64
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: 1809708526, guid: cce829a7674b34fb8a65df088679a633, type: 3}
+  - m_Index: 22
+    m_Metrics:
+      m_Width: 64
+      m_Height: 64
+      m_HorizontalBearingX: -32
+      m_HorizontalBearingY: 32
+      m_HorizontalAdvance: 64
+    m_GlyphRect:
+      m_X: 320
+      m_Y: 320
+      m_Width: 64
+      m_Height: 64
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: 65103523, guid: cce829a7674b34fb8a65df088679a633, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []
 --- !u!21 &1750353925529120539
