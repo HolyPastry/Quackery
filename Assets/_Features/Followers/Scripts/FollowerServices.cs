@@ -11,5 +11,11 @@ namespace Quackery.Followers
         public static Action<int> ModifyFollowers = delegate { };
         public static Action<int> SetNumberOfFollowers = delegate { };
 
+        public static Func<int, int> RewardFollowers = (SuccessRating) => 0;
+
+        public static Func<LevelDefinition> GetCurrentLevel = () => default;
+
+        public static Func<bool> HasLeveledUp = () => false;
+        public static Action ConsumeLeveledUp = () => { };
     }
 }

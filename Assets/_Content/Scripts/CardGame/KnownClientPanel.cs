@@ -16,7 +16,7 @@ namespace Quackery
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _ratingText;
         [SerializeField] private RatingPanel _ratingPanel;
-        [SerializeField] private FollowerBadge _followerBadge;
+        //. [SerializeField] private FollowerBadge _followerBadge;
 
         public void Show(Client client, Client revealedClient)
         {
@@ -38,7 +38,7 @@ namespace Quackery
             _ratingText.text = client.LastReviewText;
 
             yield return StartCoroutine(_ratingPanel.SetRatingRoutine(client.LastRating));
-            yield return StartCoroutine(_followerBadge.CountFollowersUpRoutine(client.LastFollowersBonus));
+            //      yield return StartCoroutine(_followerBadge.CountFollowersUpRoutine(client.LastFollowersBonus));
 
         }
 
@@ -67,7 +67,7 @@ namespace Quackery
             yield return new WaitForSeconds(1f);
             _ratingPanel.gameObject.SetActive(true);
             yield return StartCoroutine(_ratingPanel.SetRatingRoutine(revealedClient.LastRating));
-            yield return StartCoroutine(_followerBadge.CountFollowersUpRoutine(revealedClient.LastFollowersBonus));
+            //  yield return StartCoroutine(_followerBadge.CountFollowersUpRoutine(revealedClient.LastFollowersBonus));
 
         }
 
@@ -80,7 +80,7 @@ namespace Quackery
             _nameText.text = string.Empty;
             _ratingText.text = string.Empty;
             _ratingPanel.SetEmpty();
-            _followerBadge.Hide();
+            //   _followerBadge.Hide();
         }
     }
 }

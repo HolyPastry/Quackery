@@ -17,11 +17,10 @@ MonoBehaviour:
   Effects:
   - Data: {fileID: 11400000, guid: f46eaadc5c50444de8d8e4db6280921c, type: 2}
     Value: 2
-    Trigger: 6
     Tags: 0200000003000000
   FirstReward:
     Review: 
     Rating: 0
     FollowerBonus: 0
-  FirstQuest: {fileID: 0}
+  FirstQuest: {fileID: 11400000, guid: 4bd2be26a488043b982c790a2487491f, type: 2}
   Budget: -1

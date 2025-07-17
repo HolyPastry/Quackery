@@ -13,34 +13,59 @@ namespace Quackery.Notifications
         [SerializeField] private List<MaskedImage> _portraitImages;
         [SerializeField] private GameObject _morePortraits;
         [SerializeField] private TextMeshProUGUI _numCustomersText;
-        [SerializeField] private TextMeshProUGUI _numNewCustomersText;
+        [SerializeField] private TextMeshProUGUI _numVIPOnlineText;
 
         protected override void SetInfo(NotificationInfo _)
         {
 
-            var clients = ClientServices.GetClients();
-            List<Client> activateClients = new();
-            List<Client> newClients = new();
-            foreach (var client in clients)
+            var clientList = ClientServices.GetAllClients();
+            List<Client> onlineVIP = new();
+            List<Client> clientInQueue = new();
+            foreach (var client in clientList)
             {
+                if (!client.IsAnonymous && client.IsOnline)
+                    onlineVIP.Add(client);
+
                 if (client.IsInQueue)
-                    activateClients.Add(client);
-
-                if (client.IsNew)
-                    newClients.Add(client);
+                    clientInQueue.Add(client);
             }
-            _numCustomersText.text = $"{activateClients.Count} Customers waiting";
-            _numNewCustomersText.text = $"{newClients.Count} New Customers!";
-
-            for (int i = 0; i < _portraitImages.Count; i++)
+            if (clientInQueue.Count > 1)
+                _numCustomersText.text = $"{clientInQueue.Count} Customers waiting";
+            else
+                _numCustomersText.text = $"1 Customer waiting";
+            if (onlineVIP.Count > 0)
             {
-                if (i < activateClients.Count)
-                    _portraitImages[i].Show(activateClients[i].Portrait);
-                else
-                    _portraitImages[i].Hide();
-
+                _numVIPOnlineText.gameObject.SetActive(true);
+                _numVIPOnlineText.text = $"{onlineVIP.Count} VIP Members Online!";
             }
-            _morePortraits.SetActive(activateClients.Count > _portraitImages.Count);
+            else
+            {
+                _numVIPOnlineText.gameObject.SetActive(false);
+                _numVIPOnlineText.text = "";
+            }
+            int portraitIndex = 0;
+            _portraitImages.ForEach(image => image.Hide());
+            foreach (var vipClient in onlineVIP)
+            {
+                if (portraitIndex < _portraitImages.Count)
+                {
+                    _portraitImages[portraitIndex].Show(vipClient.Portrait);
+                    portraitIndex++;
+                }
+                else
+                    break;
+            }
+            foreach (var client in clientInQueue)
+            {
+                if (portraitIndex < _portraitImages.Count)
+                {
+                    _portraitImages[portraitIndex].Show(client.Portrait);
+                    portraitIndex++;
+                }
+                else
+                    break;
+            }
+            _morePortraits.SetActive(onlineVIP.Count + clientInQueue.Count > _portraitImages.Count);
         }
     }
 

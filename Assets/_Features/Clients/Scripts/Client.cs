@@ -59,14 +59,14 @@ namespace Quackery.Clients
         public int LastRating = 0;
 
         public string ChatHistory;
-        public bool IsOnline;
+        public bool IsOnline => State == EnumState.Ready;
         public EnumState State = EnumState.Unknown;
 
         public QuestData FirstQuest => (Data == null) ? null : Data.FirstQuest;
 
         public bool QuestFullfilled => FirstQuest == null || QuestServices.IsQuestCompleted(FirstQuest);
 
-        public object RevealCondition { get; internal set; }
+        public Condition RevealCondition { get; internal set; }
 
         public void InitUnknown(UnknownClientsData unknownClientsData, Effect effect = null)
         {
@@ -104,7 +104,8 @@ namespace Quackery.Clients
             Key = data.name;
             Budget = data.Budget;
 
-            RevealCondition = FirstQuest.Steps?[1].Conditions?[0];
+            if (FirstQuest != null)
+                RevealCondition = FirstQuest.Steps?[1].Conditions?[0];
 
             State = EnumState.Revealed;
 

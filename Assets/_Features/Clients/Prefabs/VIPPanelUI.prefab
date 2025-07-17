@@ -1558,7 +1558,7 @@ GameObject:
   - component: {fileID: 69022146663840160}
   - component: {fileID: 1049377001675092409}
   m_Layer: 5
-  m_Name: ClientPanelUI
+  m_Name: VIPPanelUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

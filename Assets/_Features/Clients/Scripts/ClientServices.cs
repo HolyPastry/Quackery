@@ -11,7 +11,7 @@ namespace Quackery.Clients
         internal static Action<ClientData> AddKnownClient = delegate { };
         internal static Action<int> AddUnknownClients = (count) => { };
 
-        public static Func<List<Client>> GetClients = () => new();
+        public static Func<List<Client>> GetVIPClients = () => new();
 
         public static Func<Client> GetNextClient = () => null;
         public static Action<Client, bool> ClientServed = (client, success) => { };
@@ -20,7 +20,7 @@ namespace Quackery.Clients
 
         internal static Func<WaitUntil> WaitUntilReady = () => new WaitUntil(() => true);
 
-        internal static Action<Client> SelectClient = (client) => { };
+        internal static Action<Client> SelectVIPClient = (client) => { };
         public static Func<Client> SelectedClient = () => null;
 
         internal static Action ClientLeaves = () => { };
@@ -44,6 +44,11 @@ namespace Quackery.Clients
         internal static Func<ClientData, Client.EnumState, bool> CheckStatus = (clientData, state) => false;
 
         internal static Func<int> NumClientsToday = () => 0;
+
+        internal static Func<int> GetQueueSize = () => 0;
+        internal static Action StartNormalWeek = () => { };
+
+        internal static Func<List<Client>> GetAllClients = () => new();
 
     }
 }

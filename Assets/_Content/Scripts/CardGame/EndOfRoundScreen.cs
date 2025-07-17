@@ -17,32 +17,32 @@ namespace Quackery
         [SerializeField] private BossFailedPanel _bossFailedPanel;
 
         [SerializeField, Self] private AnimatedRect _animatedRect;
+        private Client _revealedClient;
+        private bool _clickPressed;
 
-        public bool WasBoss { get; private set; }
         public IEnumerator Show(Client client, bool success)
         {
+            _revealedClient = null;
+            _clickPressed = false;
             _knownClientPanel.Hide();
             _bossFailedPanel.Hide();
             _bossSuccessPanel.Hide();
             _anonymousClientPanel.Hide();
-            WasBoss = false;
+
             gameObject.SetActive(true);
             _animatedRect.SlideIn(Direction.Right);
             yield return _animatedRect.WaitForAnimation();
-            if (ClientServices.IsCurrentClientAnonymous())
+            if (client.IsAnonymous)
             {
                 _anonymousClientPanel.Show(client, success);
+                _revealedClient = ClientServices.GetRevealedClient();
+                if (_revealedClient == null) yield break;
+
+                yield return new WaitUntil(() => _clickPressed);
+                _knownClientPanel.Show(client, _revealedClient);
+                _revealedClient = null;
                 yield break;
             }
-            var revealedClient = ClientServices.GetRevealedClient();
-            if (revealedClient != null)
-            {
-
-                _knownClientPanel.Show(client, revealedClient);
-
-                yield break;
-            }
-            WasBoss = true;
 
             if (success)
                 _bossSuccessPanel.Show(client);
@@ -61,7 +61,10 @@ namespace Quackery
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            Hide(instant: false);
+            if (_revealedClient != null)
+                _clickPressed = true;
+            else
+                Hide(instant: false);
         }
     }
 }

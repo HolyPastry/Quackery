@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Holypastry.Bakery.Flow;
-using Holypastry.Bakery.Quests;
-using Quackery.Shops;
-using UnityEditor;
+using Quackery.Followers;
 using UnityEngine;
 
 namespace Quackery.Clients
@@ -16,9 +13,8 @@ namespace Quackery.Clients
 
         private ClientList _clientList;
         private Client _selectedClient;
-        private bool _infiniteQueue;
         private Client _clientToSwap;
-        private int _dailyQueueSize;
+        private bool _infiniteQueue;
 
         void OnEnable()
         {
@@ -28,11 +24,11 @@ namespace Quackery.Clients
 
             ClientServices.HasNextClient = HasNextClient;
             ClientServices.GetNextClient = GetNextClient;
-            ClientServices.GetClients = () => _clientList?.Clients;
+            ClientServices.GetVIPClients = () => _clientList?.Clients.FindAll(c => !c.IsAnonymous);
             ClientServices.GenerateDailyQueue = GenerateDailyQueue;
             ClientServices.ClientServed = ClientServed;
 
-            ClientServices.SelectClient = SelectClient;
+            ClientServices.SelectVIPClient = SelectVIPClient;
             ClientServices.SelectedClient = () => _selectedClient;
             ClientServices.ClientLeaves = ClientLeaves;
 
@@ -43,16 +39,20 @@ namespace Quackery.Clients
             ClientServices.GetRevealedClient = () => _clientToSwap;
             ClientServices.AddUnknownClient = AddUnknownClient;
 
-            ClientServices.NumClientsToday = () => _dailyQueueSize;
+            ClientServices.NumClientsToday = () => _queueSize;
 
             ClientServices.SwapClients = SwapClients;
             ClientServices.GetBudget = () => _selectedClient?.Budget ?? -1;
             ClientServices.SetClientState = SetClientState;
             ClientServices.CheckStatus = CheckClientStatus;
 
+            ClientServices.GetAllClients = () => _clientList?.Clients ?? new();
+
+
+            ClientServices.GetQueueSize = () => _queueSize;
+            ClientServices.StartNormalWeek = StartNormalWeek;
+
         }
-
-
 
         void OnDisable()
         {
@@ -63,11 +63,11 @@ namespace Quackery.Clients
 
             ClientServices.HasNextClient = () => true;
             ClientServices.GetNextClient = () => null;
-            ClientServices.GetClients = () => new();
+            ClientServices.GetVIPClients = () => new();
             ClientServices.GenerateDailyQueue = delegate { };
             ClientServices.ClientServed = delegate { };
 
-            ClientServices.SelectClient = (client) => { };
+            ClientServices.SelectVIPClient = (client) => { };
             ClientServices.SelectedClient = () => null;
             ClientServices.ClientLeaves = () => { };
 
@@ -84,8 +84,12 @@ namespace Quackery.Clients
             ClientServices.SetClientState = (clientData, state) => { };
             ClientServices.CheckStatus = (clientData, state) => false;
 
+            ClientServices.GetAllClients = () => new();
+
 
             ClientServices.GetBudget = () => -1;
+            ClientServices.GetQueueSize = () => 0;
+            ClientServices.StartNormalWeek = () => { };
 
         }
 
@@ -143,15 +147,24 @@ namespace Quackery.Clients
                         client.State = Client.EnumState.WonOver;
 
                     break;
-
             }
-
-
         }
 
-        private void SelectClient(Client client)
+        private void StartNormalWeek()
         {
-            _selectedClient = client;
+            _selectedClient = GetNextClient();
+        }
+
+        private void SelectVIPClient(Client client)
+        {
+            if (client == null)
+            {
+                _selectedClient = null;
+                return;
+            }
+            _clientList.Clients.ForEach(c => c.IsInQueue = false);
+            client.IsInQueue = true;
+            _selectedClient = GetNextClient();
         }
 
         private void ClientLeaves()
@@ -162,27 +175,21 @@ namespace Quackery.Clients
         private void GenerateDailyQueue()
         {
             ResetClientQueue();
-
-            int missingClients = _queueSize;
-            missingClients -= AddKnownClientsToQueue(_queueSize);
-
-            if (missingClients > _clientList.UnknownClients.Count)
+            var level = FollowerServices.GetCurrentLevel();
+            if (level != null)
             {
-                AddUnknownClients(missingClients - _clientList.UnknownClients.Count);
+                _queueSize = level.QueueSize;
             }
 
+
+            AddUnknownClients(_queueSize - _clientList.UnknownClients.Count);
             _clientList.Clients.Shuffle();
             for (int i = 0; i < _clientList.Clients.Count; i++)
             {
                 if (!_clientList.Clients[i].IsAnonymous) continue;
-
                 _clientList.Clients[i].IsInQueue = true;
-                missingClients--;
-                if (missingClients <= 0) break;
-
             }
 
-            _dailyQueueSize = _clientList.Clients.FindAll(c => c.IsInQueue).Count;
             ClientEvents.ClientListUpdated?.Invoke();
         }
 

@@ -431,7 +431,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 355fe53d729884ba39024d379c8c7a89, type: 2}
   - {fileID: 11400000, guid: dd35aa6b8e65d448893fe7a8a6bf3331, type: 2}
   - {fileID: 11400000, guid: fe3cc36174e0a4fb68ab7297f06aabfd, type: 2}
-  - {fileID: 11400000, guid: 547468dd71e6942988ffcc2ced0e9b67, type: 2}
+  UnknownEffectsToAdd: []
   GenerateDailyQueue: 1
   InfiniteQueue: 0
 --- !u!114 &2122329966
@@ -471,7 +471,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1827694708520570305, guid: 06bb2202b91c04ed7bd661b8786d414f, type: 3}
       propertyPath: m_Name
-      value: ClientListCanvas
+      value: WaitingHallCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 7252982617208494955, guid: 06bb2202b91c04ed7bd661b8786d414f, type: 3}
       propertyPath: m_Pivot.x

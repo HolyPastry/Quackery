@@ -1,6 +1,7 @@
 using System;
 using Quackery.Clients;
 using Quackery.Decks;
+using Quackery.Followers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ namespace Quackery
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _cartAmount;
         [SerializeField] private TextMeshProUGUI _resultString;
+        [SerializeField] private FollowerBadge _followerBadge;
 
         public void Show(Client client, bool isSuccess)
         {
@@ -25,6 +27,9 @@ namespace Quackery
             var cartValue = CartServices.GetCartValue();
             var cartBonus = CartServices.GetCartBonus();
 
+            int newFollowers = FollowerServices.RewardFollowers(evaluation.Index);
+
+            StartCoroutine(_followerBadge.CountFollowersUpRoutine(newFollowers));
 
             if (isSuccess)
             {

@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace Quackery
 {
-    public class ClientPanelUI : MonoBehaviour, IPointerClickHandler
+    public class VIPPanelUI : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private Image _portrait;
         [SerializeField] private Image _background;
@@ -52,8 +52,8 @@ namespace Quackery
         private void UpdateUI()
         {
             _newBadge.SetActive(_client.IsNew);
-            _onlineBadge.SetActive(_client.IsInQueue);
-            _offlineBadge.SetActive(!_client.IsInQueue);
+            _onlineBadge.SetActive(_client.IsOnline);
+            _offlineBadge.SetActive(!_client.IsOnline);
             _portrait.sprite = _client.Portrait;
             _nameText.text = _client.LoginName;
             SetQuestInfo();
@@ -61,7 +61,7 @@ namespace Quackery
             if (!_client.IsNew)
                 SetEffectBar();
 
-            if (_client.IsInQueue)
+            if (_client.IsOnline)
             {
                 _background.color = Colors.Get("ClientPanelBackgroundQueue");
                 _nameText.color = Colors.Get("ClientPanelNameQueue");
@@ -100,7 +100,8 @@ namespace Quackery
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            OnSelected?.Invoke(_client);
+            if (_client.IsOnline)
+                OnSelected?.Invoke(_client);
         }
     }
 }
