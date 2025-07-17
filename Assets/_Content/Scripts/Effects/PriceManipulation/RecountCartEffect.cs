@@ -15,7 +15,7 @@ namespace Quackery.Effects
         [SerializeField] private Scope _scope;
         public override IEnumerator Execute(Effect effect)
         {
-            yield return effect.LinkedCard.StartCoroutine(CartServices.CalculateCart());
+            yield return CartServices.CalculateCart();
         }
     }
 }

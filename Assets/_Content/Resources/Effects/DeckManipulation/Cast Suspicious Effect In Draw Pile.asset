@@ -23,4 +23,4 @@ MonoBehaviour:
   _curseCard: {fileID: 11400000, guid: 622e59d8ce0864e5dbd0a5a57249a751, type: 2}
   TargetDeck: 0
   Lifetime: 1
-  Placement: 0
+  Placement: 2

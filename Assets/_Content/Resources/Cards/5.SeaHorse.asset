@@ -15,8 +15,8 @@ MonoBehaviour:
   MasterText: Sea Horse
   Icon: {fileID: 21300000, guid: 15dc33facf1fb4d61965e3db742dcd84, type: 3}
   BasePrice: 8
-  ShortDescription: 'Tuck. +1 Suspicion '
-  LongDescription: 'Tuck under a stack. Recieve 1 Suspicion in the draw pile. '
+  ShortDescription: Tuck\n +1 Suspicion
+  LongDescription: 'Tuck under a stack. Receive 1 Suspicion in the draw pile. '
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 983c0d4bfc73a498d89b8f49b39d70c3, type: 2}

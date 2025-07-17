@@ -16,7 +16,7 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: ebc18aa93726541bab4c09558a4afd9c, type: 3}
   BasePrice: 11
   ShortDescription: Chamed affects this card 3X.
-  LongDescription: Chamed affects this card 3X.
+  LongDescription: Charmed affects this card 3X.
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 48f617e1041c14b9d855f83da3a9fb1e, type: 2}

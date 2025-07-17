@@ -88,6 +88,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: b38be5b1b948ca44983e94c62ad74fab, type: 3}
+    - target: {fileID: 6742563355264083853, guid: d7425bfdc4e1e410d9f485f0b6245e7c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -160
+      objectReference: {fileID: 0}
+    - target: {fileID: 6742563355264083853, guid: d7425bfdc4e1e410d9f485f0b6245e7c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6958716916391210810, guid: d7425bfdc4e1e410d9f485f0b6245e7c, type: 3}
       propertyPath: m_fontSize
       value: 40

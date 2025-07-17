@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Quackery.Inventories;
+using UnityEngine;
 
 namespace Quackery.Decks
 {
@@ -14,7 +15,7 @@ namespace Quackery.Decks
 
         public static Action<int> SetRatingCartSizeModifier = (value) => { };
         // public static Action<int> ModifyCardCartSizeModifier = (value) => { };
-        public static Func<IEnumerator> CalculateCart = () => null;
+        public static Func<Coroutine> CalculateCart = () => null;
 
         public static Func<Card, bool> AddCardToCart = (pile) => false;
 

@@ -80,7 +80,7 @@ namespace Quackery.Decks
             CartServices.ChangeCardCategory = ChangeCardCategory;
             CartServices.RemoveCard = RemoveCard;
 
-            CartServices.CalculateCart = CalculateCart;
+            CartServices.CalculateCart = () => StartCoroutine(CalculateCart());
             CartServices.GetCartBonus = GetCartBonus;
 
 
