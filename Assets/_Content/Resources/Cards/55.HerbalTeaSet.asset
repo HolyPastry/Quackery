@@ -15,7 +15,7 @@ MonoBehaviour:
   MasterText: Herbal Tea Set
   Icon: {fileID: 0}
   BasePrice: 1
-  ShortDescription: '[Bundle] Apply Calm'
+  ShortDescription: Bundle\n Apply Calm
   LongDescription: Tucks all herbalism cards in hand when played and apply Calm
   ShopDescription: 
   Explanations:

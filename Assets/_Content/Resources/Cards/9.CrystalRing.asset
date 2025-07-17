@@ -15,7 +15,7 @@ MonoBehaviour:
   MasterText: Crystal Ring
   Icon: {fileID: 21300000, guid: ebc18aa93726541bab4c09558a4afd9c, type: 3}
   BasePrice: 11
-  ShortDescription: Chamed affects this card 3X.
+  ShortDescription: Charmed affects this card 3X.
   LongDescription: Charmed affects this card 3X.
   ShopDescription: 
   Explanations:

@@ -15,7 +15,7 @@ MonoBehaviour:
   MasterText: Nettle Balm
   Icon: {fileID: 21300000, guid: f7bc33e903af643e183bcdf0ce96481c, type: 3}
   BasePrice: 6
-  ShortDescription: '[BUNDLE] Remove Tired'
+  ShortDescription: Bundle\nRemove Tired
   LongDescription: Tucks all herbalism cards in hand when played and tired.
   ShopDescription: 
   Explanations:
