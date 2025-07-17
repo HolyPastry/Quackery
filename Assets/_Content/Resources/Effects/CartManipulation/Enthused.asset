@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enthused
   m_EditorClassIdentifier: 
   MasterText: Enthused
-  Icon: {fileID: 21300000, guid: d8924788b4ef14c868b781a1a3c0ee14, type: 3}
+  Icon: {fileID: 21300000, guid: 0633feba3b86e4ad58988bcf8292d836, type: 3}
   Description: Increase Cart Size
   CanBeNegative: 0
   Trigger: 6
