@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Synergy Amplifier
   m_EditorClassIdentifier: 
   Name: Synergy amplifier
-  Definition: If all cards in stack are from the same category add a bonus to the
-    stack at the end of transaction that is equal to the total value of the stack
-    at the end of the transcation
+  Definition: Multiply top card value by stack count if all cards below are of the
+    same category.

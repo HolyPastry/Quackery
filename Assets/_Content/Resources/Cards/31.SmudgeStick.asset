@@ -15,8 +15,8 @@ MonoBehaviour:
   MasterText: Smudge Stick
   Icon: {fileID: 21300000, guid: 88e6d1260908e4d749b51e6a255ba295, type: 3}
   BasePrice: 9
-  ShortDescription: Discard & redraw hand. +1 suspicion.
-  LongDescription: 'Discard & redraw your hand. Receive 1 suspicion in the draw pile. '
+  ShortDescription: Discard & redraw hand.
+  LongDescription: 'Discard & redraw your hand. '
   ShopDescription: 
   Explanations: []
   SubscriptionCost: 3

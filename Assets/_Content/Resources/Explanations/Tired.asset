@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Tired
   m_EditorClassIdentifier: 
   Name: Tired
-  Definition: Receive 1 Irritation with every new stack
+  Definition: +1 Irritation every time a new cart position is used

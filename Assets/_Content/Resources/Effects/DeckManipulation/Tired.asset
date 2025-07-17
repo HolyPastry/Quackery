@@ -22,5 +22,5 @@ MonoBehaviour:
   _counterEffect: {fileID: 0}
   _curseCard: {fileID: 11400000, guid: 9c725c5a2fc77467f93e841e811751a9, type: 2}
   TargetDeck: 1
-  Lifetime: 1
+  Lifetime: 0
   Placement: 0

@@ -127,7 +127,7 @@ namespace Quackery.Effects
 
         private void ExecuteNewCartPileEffects(Card card)
         {
-            Execute(EnumEffectTrigger.OnNewCartPileUsed, card);
+            StartCoroutine(Execute(EnumEffectTrigger.OnNewCartPileUsed, card));
         }
 
         private void UpdateCardEffects(List<Card> topCardList)
