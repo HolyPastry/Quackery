@@ -36,15 +36,20 @@ namespace Quackery
                 (!SelectedClient.IsInQueue || SelectedClient.Served);
 
 
+        //public static Action StartGame = delegate { };
+
 
         IEnumerator Start()
         {
             yield return FlowServices.WaitUntilEndOfSetup();
             yield return ClientServices.WaitUntilReady();
-            InitLoop();
+            //   StartGame += () => InitLoop();
         }
-
-        private void InitLoop()
+        void OnDestroy()
+        {
+            //  StartGame -= InitLoop;
+        }
+        public void InitLoop()
         {
             var clientListState = new ClientListState(this);
             var activeClientChatState = new ActiveClientChatState(this);

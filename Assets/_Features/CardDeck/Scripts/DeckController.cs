@@ -107,7 +107,7 @@ namespace Quackery.Decks
 
             DeckServices.ReplaceCard = (card, replacementCard) => { };
             DeckServices.GetMatchingCards = (condition, pile) => new List<Card>();
-            DeckServices.ShuffleInExhaustedCards = () => { };
+            DeckServices.ResetDecks = () => { };
 
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
@@ -134,7 +134,6 @@ namespace Quackery.Decks
             DeckServices.InterruptDraw = () => _drawInterrupted = true;
             DeckServices.ResumeDraw = () => { _drawInterrupted = false; _cardPlayed = true; };
 
-
             DeckServices.SelectCard = SelectCard;
             DeckServices.GetTablePile = () => _handPiles;
             DeckServices.MovePileType = MovePileTo;
@@ -146,7 +145,7 @@ namespace Quackery.Decks
 
             DeckServices.ChangeCardCategory = ChangeCardCategory;
             DeckServices.RestoreCardCategories = RestoreCardCategories;
-            DeckServices.ShuffleInExhaustedCards = ShuffleExhaustIntoDrawPile;
+            DeckServices.ResetDecks = ResetDecks;
 
 
             DeckServices.CardPlayed = () => _cardPlayed;
@@ -583,7 +582,7 @@ namespace Quackery.Decks
             {
                 if (pile.IsEmpty || !pile.Enabled) continue;
                 cardsToDiscard.AddRange(pile.Cards);
-                EffectServices.Execute(EnumEffectTrigger.OnDiscard, pile.TopCard);
+                yield return EffectServices.Execute(EnumEffectTrigger.OnDiscard, pile.TopCard);
                 Discard(pile.TopCard);
                 yield return new WaitForSeconds(0.2f);
             }
@@ -618,9 +617,20 @@ namespace Quackery.Decks
             DeckEvents.OnShuffle(EnumCardPile.Draw, _drawPile.Index, _drawPile.Cards);
         }
 
-        private void ShuffleExhaustIntoDrawPile()
+        private void ResetDecks()
         {
+
             _drawPile.MergeBelow(_exhaustPile);
+            _drawPile.MergeBelow(_discardPile);
+
+            var effemeralCards = _drawPile.Cards.FindAll(c => c.Item.Lifetime == EnumLifetime.Effemeral);
+            while (effemeralCards.Count > 0)
+            {
+                var card = effemeralCards[0];
+                effemeralCards.RemoveAt(0);
+                DestroyCard(card);
+            }
+
             _drawPile.Shuffle();
             DeckEvents.OnShuffle(EnumCardPile.Draw, _drawPile.Index, _drawPile.Cards);
         }

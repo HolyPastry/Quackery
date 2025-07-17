@@ -68,8 +68,10 @@ namespace Quackery.Effects
         {
             EffectServices.AddEffect = Add;
             EffectServices.Cancel = Cancel;
-            EffectServices.Execute = Execute;
-            EffectServices.ExecutePile = ExecutePile;
+            EffectServices.Execute = (trigger, card)
+                        => StartCoroutine(Execute(trigger, card));
+            EffectServices.ExecutePile = (trigger, cardPile)
+                        => StartCoroutine(ExecutePile(trigger, cardPile));
             EffectServices.GetCurrent = () => new List<Effect>(_effects);
 
             EffectServices.ModifyValue = ModifyValue;

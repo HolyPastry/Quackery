@@ -74,7 +74,7 @@ namespace Quackery
 
         internal static Func<Predicate<Card>, EnumCardPile, List<Card>> GetMatchingCards = (condition, pile) => new List<Card>();
 
-        internal static Action ShuffleInExhaustedCards = () => { };
+        internal static Action ResetDecks = () => { };
 
     }
 }
