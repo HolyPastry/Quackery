@@ -1331,7 +1331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4740866637741441819, guid: 68a39fa18e03f43a38853bcc06763bba, type: 3}
       propertyPath: CollectionKey
-      value: CardItems
+      value: Cards
       objectReference: {fileID: 0}
     - target: {fileID: 5520966705160200313, guid: 68a39fa18e03f43a38853bcc06763bba, type: 3}
       propertyPath: m_LocalPosition.x
