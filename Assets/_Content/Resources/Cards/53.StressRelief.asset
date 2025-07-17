@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 53.StressRelief
   m_EditorClassIdentifier: 
   MasterText: Stress Relief
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: bdcf06588347c4e4086132d2f9e53458, type: 3}
   BasePrice: 0
   ShortDescription: Exhaust all curse cards in hand. Apply 1 Stress. Exhaust
   LongDescription: Exhaust all curse cards in hand. Cart size reduced by 1.
