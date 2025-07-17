@@ -15,19 +15,23 @@ MonoBehaviour:
   MasterText: Herbalist Certificate
   Icon: {fileID: 0}
   BasePrice: 0
-  ShortDescription: Apply 1 Confidence. If there are only herbal cards in the cart,
-    remove all suspicion in hand.
-  LongDescription: 
+  ShortDescription: '#Herbs Synergy x2. only if Cart is #Herbs'
+  LongDescription: Herbs Synergy x2. Limited to all cards in the cart are #Herbs.
+    Exhaust.
   ShopDescription: 
   Explanations:
-  - {fileID: 11400000, guid: d0ff6f583391a43baa8a79818f910d2f, type: 2}
-  SubscriptionCost: 15
+  - {fileID: 11400000, guid: f5a1e322e38544357a9bf8cad73ac1da, type: 2}
+  - {fileID: 11400000, guid: 8940ffcbd8b7a416eb34dcafcd8c4948, type: 2}
+  SubscriptionCost: 9
   Category: 7
   Effects:
-  - Data: {fileID: 11400000, guid: 0efb1bb5a0fe24d2e9a540c5bbc4b250, type: 2}
-    Value: 1
+  - Data: {fileID: 11400000, guid: 801a0a2ba11034396948a755cdf973ab, type: 2}
+    Value: 0
     Tags: 
-  - Data: {fileID: 0}
+  - Data: {fileID: 11400000, guid: 6957b79d5955747d6a673410b6b1cbaa, type: 2}
+    Value: 2
+    Tags: 
+  - Data: {fileID: 11400000, guid: 7b2843d0bca3d45c38f8891e553a29bf, type: 2}
     Value: 0
     Tags: 
   ValueEvaluator: {fileID: 0}

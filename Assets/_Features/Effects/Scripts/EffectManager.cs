@@ -132,11 +132,11 @@ namespace Quackery.Effects
 
         private void UpdateCardEffects(List<Card> topCardList)
         {
-            var effectToRemove = _effects.Where(e => e.Tags.Contains(EnumEffectTag.Card) &&
+            var effectToRemove = _effects.Where(e => e.Tags.Contains(EnumEffectTag.ItemCard) &&
                         !topCardList.Contains(e.LinkedCard)).ToList();
             foreach (var effect in effectToRemove)
             {
-                if (!effect.Tags.Contains(EnumEffectTag.Card)) continue;
+                if (!effect.Tags.Contains(EnumEffectTag.ItemCard)) continue;
                 if (!topCardList.Contains(effect.LinkedCard))
                     _effects.Remove(effect);
                 EffectEvents.OnRemoved?.Invoke(effect);
@@ -475,7 +475,7 @@ namespace Quackery.Effects
                 if (pile == null) continue;
                 List<int> idsToRemove = new();
                 var effectToRemove = _effects.FindAll(effect =>
-                    effect.Tags.Contains(EnumEffectTag.Card));
+                    effect.Tags.Contains(EnumEffectTag.ItemCard));
 
                 foreach (var effect in effectToRemove)
                 {

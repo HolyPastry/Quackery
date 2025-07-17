@@ -565,6 +565,8 @@ namespace Quackery.Decks
 
         private void Discard(Card card)
         {
+            if (_exhaustPile.Contains(card)) return;
+
             RemoveFromAllPiles(card);
             _discardPile.AddOnTop(card);
             card.InHandPriceBonus = 0;

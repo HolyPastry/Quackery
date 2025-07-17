@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Holypastry.Bakery.Flow;
 using Quackery.Inventories;
-using Quackery.Effects;
 namespace Quackery.Decks
 {
     public class SceneSetupDeck : SceneSetupScript

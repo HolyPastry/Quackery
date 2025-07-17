@@ -176,6 +176,12 @@ namespace Quackery.Decks
 
         }
 
+
+        public bool Contains(Card card)
+        {
+            return Cards.Contains(card);
+        }
+
         internal void UpdateUI()
         {
             if (IsEmpty || !Enabled) return;

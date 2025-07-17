@@ -36,6 +36,7 @@ namespace Quackery
         {
             if (string.IsNullOrEmpty(text))
                 return string.Empty;
+            text = text.Replace("\\n", " \n");
 
             text = Regex.Replace(text, @"#(\w+)", "<sprite name=$1>");
 

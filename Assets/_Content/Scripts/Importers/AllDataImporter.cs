@@ -15,7 +15,7 @@ namespace Quackery
         [SerializeField] private CardImporter cardImporters;
         [SerializeField] private ArtifactImporter artifactImporters;
 
-        internal async Task Import()
+        public async Task Import()
         {
             await explanationImporters.Import();
             await cardImporters.Import();

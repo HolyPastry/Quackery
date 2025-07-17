@@ -205,7 +205,7 @@ namespace Quackery.Decks
 
                 if (_endButtonPressed == true)
                     break;
-                yield return CartServices.CalculateCart();
+                // yield return CartServices.CalculateCart();
 
             }
             yield return DeckServices.DiscardHand();
