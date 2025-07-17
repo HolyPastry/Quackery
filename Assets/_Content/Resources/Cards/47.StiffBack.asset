@@ -15,7 +15,8 @@ MonoBehaviour:
   MasterText: Stiff Back
   Icon: {fileID: 0}
   BasePrice: 0
-  ShortDescription: Becomes backpain the next #NumberDrawRemaining draw.
+  ShortDescription: '[Stiff Back] Becomes backpain the next #NumberDrawRemaining
+    draw.'
   LongDescription: Upgrades to backpain when drawn #EffectValue1 times. Drawn #DrawnTime
     Time.
   ShopDescription: 

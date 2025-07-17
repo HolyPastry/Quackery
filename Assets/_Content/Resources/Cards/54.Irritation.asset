@@ -15,7 +15,7 @@ MonoBehaviour:
   MasterText: Irritation
   Icon: {fileID: 0}
   BasePrice: 0
-  ShortDescription: 'On draw: Add a copy of this card to the discard pile.'
+  ShortDescription: '[Irritation]'
   LongDescription: On draw, add a copy of this card to the discard pile.
   ShopDescription: 
   Explanations: []

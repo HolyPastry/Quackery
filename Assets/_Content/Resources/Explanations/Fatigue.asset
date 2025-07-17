@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Fatigue
   m_EditorClassIdentifier: 
   Name: Fatigue
-  Definition: '[CURSE] Unplayable'
+  Definition: '[CURSE]  Added to discard pile. Destroyed at the end of the week'

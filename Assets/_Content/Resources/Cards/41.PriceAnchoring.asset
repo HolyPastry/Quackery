@@ -15,13 +15,13 @@ MonoBehaviour:
   MasterText: PriceAnchoring
   Icon: {fileID: 21300000, guid: 6e3fee687cf1e48ee944b7430ec810f2, type: 3}
   BasePrice: 0
-  ShortDescription: +#EffectValue1#Coin to all 1 #coin cards in hand. +1 suspicion
+  ShortDescription: +#EffectValue1#Coin to all 1 #Coin cards in hand. +1 suspicion
   LongDescription: All 1 #Coin cards receives an instant #EffectValue1#Coin bonus
-    for this transaction. Receive 1 suspicion in your hand
+    for this transaction. Receive 1 suspicion in your draw pile.
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 8940ffcbd8b7a416eb34dcafcd8c4948, type: 2}
-  SubscriptionCost: 0
+  SubscriptionCost: 3
   Category: 7
   Effects:
   - Data: {fileID: 11400000, guid: 2af380b045bc34ed2a6a5b7acf7de466, type: 2}

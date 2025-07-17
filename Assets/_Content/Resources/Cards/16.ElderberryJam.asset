@@ -21,7 +21,7 @@ MonoBehaviour:
   Explanations:
   - {fileID: 11400000, guid: 760c3bfef0017439c9584611bb013c30, type: 2}
   - {fileID: 11400000, guid: 48f617e1041c14b9d855f83da3a9fb1e, type: 2}
-  SubscriptionCost: 12
+  SubscriptionCost: 6
   Category: 1
   Effects:
   - Data: {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}

@@ -15,7 +15,7 @@ MonoBehaviour:
   MasterText: Stress Relief
   Icon: {fileID: 0}
   BasePrice: 0
-  ShortDescription: Exhaust all curse cards in hand. +1 cart size. Exhaust
+  ShortDescription: Exhaust all curse cards in hand. Apply 1 Stress. Exhaust
   LongDescription: Exhaust all curse cards in hand. Cart size reduced by 1.
   ShopDescription: 
   Explanations:

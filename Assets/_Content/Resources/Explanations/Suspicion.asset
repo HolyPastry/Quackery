@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: Suspicion
   m_EditorClassIdentifier: 
   Name: Suspicion
-  Definition: '[CURSE] If 3 suspicion cards are in hand. END TRANSACTION & do not
-    gain cart value.'
+  Definition: '[CURSE] Added to draw pile. Destroyed at the end of the week'

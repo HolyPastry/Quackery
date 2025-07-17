@@ -15,8 +15,8 @@ MonoBehaviour:
   MasterText: Duck Collectors
   Icon: {fileID: 0}
   BasePrice: 0
-  ShortDescription: 
-  LongDescription: 
+  ShortDescription: '[Duck Collectors]'
+  LongDescription: Unplayable
   ShopDescription: 
   Explanations: []
   SubscriptionCost: 0

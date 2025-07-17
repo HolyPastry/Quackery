@@ -15,7 +15,7 @@ MonoBehaviour:
   MasterText: Fatigue
   Icon: {fileID: 0}
   BasePrice: 0
-  ShortDescription: Unplayable
+  ShortDescription: '[Fatigue]'
   LongDescription: Unplayable
   ShopDescription: 
   Explanations: []

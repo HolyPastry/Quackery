@@ -15,7 +15,7 @@ MonoBehaviour:
   MasterText: Distraction
   Icon: {fileID: 0}
   BasePrice: 0
-  ShortDescription: 
+  ShortDescription: '[Distraction]'
   LongDescription: 
   ShopDescription: 
   Explanations: []
