@@ -39,7 +39,7 @@ namespace Quackery.Inventories
                                             Data.Category : OverrideCategory;
 
         public EnumItemCategory OverrideCategory = EnumItemCategory.Any;
-        public EnumLifetime Lifetime;
+        public EnumLifetime Lifetime = EnumLifetime.Permanent;
 
         public int BasePrice => Data.BasePrice;
 

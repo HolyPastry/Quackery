@@ -87,9 +87,9 @@ namespace Quackery.Decks
 
 
             CartServices.AddToCartValue = value => CartValue += value;
-            CartServices.SetCartValue = value => CartValue = value;
+            CartServices.ResetCartValue = () => { _cartBonus = 0; CartValue = 0; };
             CartServices.GetCartValue = () => CartValue;
-            CartServices.CanCartAfford = value => CartValue >= value;
+            CartServices.CanCartAfford = value => CartValue + _cartBonus >= value;
 
 
             CartServices.ReplaceTopCard = ReplaceTopCard;
@@ -138,7 +138,7 @@ namespace Quackery.Decks
 
 
             CartServices.AddToCartValue = value => { };
-            CartServices.SetCartValue = value => { };
+            CartServices.ResetCartValue = () => { };
             CartServices.GetCartValue = () => 0;
             CartServices.CanCartAfford = value => true;
 
@@ -183,10 +183,21 @@ namespace Quackery.Decks
 
             var totalValue = _cartValue + _cartBonus;
             float percValue = totalValue / bestValue;
-            return _cartEvaluations
-                 .Where(e => e.Value > percValue)
-                 .OrderBy(e => e.Value)
-                 .FirstOrDefault();
+
+            if (percValue <= 0) return _cartEvaluations[^1];
+
+            if (percValue >= 1) return _cartEvaluations[0];
+
+            for (int i = 0; i < _cartEvaluations.Count - 1; i++)
+            {
+                float threshold = _cartEvaluations[i].Value;
+                if (percValue >= threshold)
+                {
+                    return _cartEvaluations[i];
+                }
+            }
+            Debug.LogWarning($"No cart evaluation found for value {percValue}. Returning default.");
+            return _cartEvaluations[^1];
 
         }
 

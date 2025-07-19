@@ -8,6 +8,7 @@ using Quackery.Effects;
 
 using UnityEngine.Assertions;
 using System;
+using DG.Tweening;
 
 
 namespace Quackery.Decks
@@ -368,6 +369,7 @@ namespace Quackery.Decks
         private void DestroyCard(Card card)
         {
             RemoveFromAllPiles(card);
+            card.transform.DOKill();
             card.Destroy();
 
         }
@@ -619,19 +621,26 @@ namespace Quackery.Decks
             DeckEvents.OnShuffle(EnumCardPile.Draw, _drawPile.Index, _drawPile.Cards);
         }
 
-        private void ResetDecks()
+        private void DestroyEffemeralCards(CardPile pile)
         {
-
-            _drawPile.MergeBelow(_exhaustPile);
-            _drawPile.MergeBelow(_discardPile);
-
-            var effemeralCards = _drawPile.Cards.FindAll(c => c.Item.Lifetime == EnumLifetime.Effemeral);
+            var effemeralCards = pile.Cards.FindAll(c => c.Item.Lifetime == EnumLifetime.Effemeral);
             while (effemeralCards.Count > 0)
             {
                 var card = effemeralCards[0];
                 effemeralCards.RemoveAt(0);
                 DestroyCard(card);
             }
+        }
+
+        private void ResetDecks()
+        {
+            DestroyEffemeralCards(_drawPile);
+            DestroyEffemeralCards(_discardPile);
+            DestroyEffemeralCards(_exhaustPile);
+
+
+            _drawPile.MergeBelow(_exhaustPile);
+            _drawPile.MergeBelow(_discardPile);
 
             _drawPile.Shuffle();
             DeckEvents.OnShuffle(EnumCardPile.Draw, _drawPile.Index, _drawPile.Cards);

@@ -59,10 +59,11 @@ namespace Quackery.Decks
         {
             _rewardText.text = i switch
             {
+                4 => "You can do better!",
                 3 => "Work Harder!",
                 2 => "You're doing this",
                 1 => "You're doing great!",
-                0 => "Outstanding!",
+                0 => "You're beautiful!",
                 _ => "Outstanding!",
             };
             _rewardRect.FloatUp(100, 1f);

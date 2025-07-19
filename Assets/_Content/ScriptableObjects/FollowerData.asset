@@ -18,7 +18,7 @@ MonoBehaviour:
     Level: 1
     RequiredFollowers: 0
     RewardScaling: 1
-    QueueSizeRange: {x: 1, y: 2}
+    QueueSizeRange: {x: 2, y: 2}
   - Icon: {fileID: 0}
     Name: Aspiring Giant
     Level: 2

@@ -1,5 +1,4 @@
 using System;
-using Holypastry.Bakery;
 using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,6 +9,8 @@ namespace Quackery.Shops
     public abstract class ShopPost : ValidatedMonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     {
         [SerializeField, Self] private AnimatedRect _animatedRect;
+        private Vector2 _position;
+
         public ShopReward ShopReward { get; private set; }
 
         public event Action<ShopReward> OnPostClicked;
@@ -28,11 +29,13 @@ namespace Quackery.Shops
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            //noop
+            _position = eventData.position;
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (Vector2.Distance(_position, eventData.position) > 10f)
+                return; // Ignore click if the pointer moved too muc
             OnPostClicked?.Invoke(ShopReward);
         }
 

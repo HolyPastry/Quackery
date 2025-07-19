@@ -31,7 +31,7 @@ namespace Quackery.Decks
         public static Action<int> AddToCartValue = (value) => { };
 
         public static Func<int> GetCartValue = () => 0;
-        public static Action<int> SetCartValue = (value) => { };
+        public static Action ResetCartValue = () => { };
         public static Func<int, bool> CanCartAfford = (value) => { return true; };
 
         // internal static Action ResetCartSizeCardModifier = () => { };

@@ -25,6 +25,7 @@ namespace Quackery
             //bool firstTime = true;
             while (true)
             {
+
                 var client = ClientServices.SelectedClient();
                 if (client.IsAnonymous)
                 {
@@ -48,7 +49,7 @@ namespace Quackery
                 DeckServices.DiscardHand();
                 if (controller.RoundInterrupted)
                 {
-                    CartServices.SetCartValue(0);
+                    CartServices.ResetCartValue();
                     client.BadReview();
                     ClientServices.ClientServed(client, false);
 
@@ -67,20 +68,18 @@ namespace Quackery
                 yield return controller.WaitUntilEndOfRoundScreenClosed();
                 controller.HideEndRoundScreen();
                 controller.TransfertCartToPurse();
-                // yield return new WaitForSeconds(1f);
-                // controller.ResetDeck();
-                CartServices.DiscardCart();
 
+                CartServices.DiscardCart();
                 EffectServices.CleanEffects();
                 yield return new WaitForSeconds(1f);
 
                 if (!ClientServices.HasNextClient() || wasBoss)
                 {
                     controller.ShowEndDayScreen();
+                    yield return new WaitForSeconds(1f);
+                    DeckServices.ResetDecks();
                     yield return controller.WaitUntilEndOfDayValidated();
                     ClientServices.ClientLeaves();
-                    DeckServices.ResetDecks();
-
                     break;
                 }
                 else

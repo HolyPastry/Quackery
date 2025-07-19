@@ -54,7 +54,7 @@ namespace Quackery
                 DeckServices.DiscardHand();
                 if (_controller.RoundInterrupted)
                 {
-                    CartServices.SetCartValue(0);
+                    CartServices.ResetCartValue();
                     client.BadReview();
                     ClientServices.ClientServed(client, false);
                 }

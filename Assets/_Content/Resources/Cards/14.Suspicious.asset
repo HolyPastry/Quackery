@@ -16,7 +16,7 @@ MonoBehaviour:
   Icon: {fileID: 0}
   BasePrice: 0
   ShortDescription: '[Suspicion]'
-  LongDescription: If three suspicion are in hand, end the transaction without gaining
+  LongDescription: If 3 suspicions are in hand, end the transaction without gaining
     the cart value.
   ShopDescription: 
   Explanations:

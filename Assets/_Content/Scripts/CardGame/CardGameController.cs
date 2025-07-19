@@ -100,7 +100,7 @@ namespace Quackery.Decks
 
         public void Show()
         {
-            CartServices.SetCartValue(0);
+            CartServices.ResetCartValue();
             _endOfDay = false;
             _gameStats.Reset();
             _endDayScreen.Hide();
@@ -138,13 +138,14 @@ namespace Quackery.Decks
         public void TransfertCartToPurse()
         {
             CartServices.ValidateCart();
-            var cashInCart = CartServices.GetCartValue();
+            var cashInCart = CartServices.GetCartValue() + CartServices.GetCartBonus();
+
             if (cashInCart <= 0) return;
             CartValueUI cartValueUI = _client.Budget > 0 ? _budgetCartValue : _cartValue;
 
             PurseServices.Modify(cashInCart);
             _gameStats.DayYield += cashInCart;
-            CartServices.SetCartValue(0);
+            CartServices.ResetCartValue();
             _gameStats.TotalRating += 5;
             // cartValueUI.MoveTo(_purseTransform, () =>
             // {
