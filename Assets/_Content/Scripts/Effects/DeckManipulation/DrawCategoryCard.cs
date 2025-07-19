@@ -12,7 +12,7 @@ namespace Quackery.Effects
         public EnumItemCategory Category => _category;
         public override IEnumerator Execute(Effect effect)
         {
-            DeckServices.InterruptDraw();
+            //  DeckServices.InterruptDraw();
             Card drawnCard = DeckServices.DrawCategory(Category);
             if (drawnCard == null) yield break;
 

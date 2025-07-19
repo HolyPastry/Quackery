@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using KBCore.Refs;
 using UnityEngine;
@@ -9,51 +10,56 @@ using UnityEngine.InputSystem;
 
 namespace Quackery.Decks
 {
-    public class SlideToValidate : ValidatedMonoBehaviour, IPointerDownHandler, IPointerUpHandler
+    public class SlideToValidate : ValidatedMonoBehaviour
     {
         [SerializeField] private InputActionReference _mousePositionAction;
         [SerializeField] private float _maxSlideDistance = 420f;
         [SerializeField] private float _maxSlideDistanceY = 300f;
         [SerializeField] private bool _useDottedLine = true;
+        [SerializeField] private float _slideStartThreshold = 10f;
 
         [SerializeField, Self] private CardPileUI _cardPileUI;
 
         private bool _isSliding;
-
+        private bool _isSelected;
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (!_cardPileUI.Activated ||
-                 _cardPileUI.IsEmpty ||
-                 _isSliding) return;
+            if (_cardPileUI.IsEmpty) return;
 
-            _isSliding = true;
-
-            DeckServices.StartPlayCardLoop(_cardPileUI.TopCard);
             StartCoroutine(SlideWithFinger());
         }
 
         private IEnumerator SlideWithFinger()
         {
 
+            DeckServices.StartPlayCardLoop(_cardPileUI.TopCard);
+
             Vector2 originalPosition = transform.position;
 
             while (true)
             {
-                //read the mouse position from the InputActionReference
-
+                yield return null;
                 var mousePosition = _mousePositionAction.action.ReadValue<Vector2>();
-                //   var targetPosition = Input.mousePosition;
-                var distanceFromOrigin = mousePosition - originalPosition;
 
+                var distanceFromOrigin = mousePosition - originalPosition;
                 distanceFromOrigin = Vector2.ClampMagnitude(distanceFromOrigin, _maxSlideDistance);
+
+                _isSliding = distanceFromOrigin.sqrMagnitude > _slideStartThreshold * _slideStartThreshold;
+
+                if (!_isSliding)
+                {
+                    // HandController.CardPileControlRequest?.Invoke(null);
+                    continue;
+                }
+
+                //HandController.CardPileControlRequest?.Invoke(_cardPileUI);
+
                 var targetPosition = originalPosition + distanceFromOrigin;
                 if (_useDottedLine && _cardPileUI.HasCartTarget)
                 {
                     if (distanceFromOrigin.y > _maxSlideDistanceY)
-                    {
                         OverlayCanvas.GenerateDottedLine(targetPosition, mousePosition);
-                    }
                     else
                         OverlayCanvas.HideDottedLine();
                 }
@@ -66,24 +72,39 @@ namespace Quackery.Decks
                     }
                 }
                 transform.position = targetPosition;
-                yield return null;
+
 
             }
         }
 
+
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (!_isSliding) return;
-
-            OverlayCanvas.HideDottedLine();
-            ResetMovements();
-            DeckServices.StopPlayCardLoop();
+            if (_isSliding)
+            {
+                ResetMovements();
+                OverlayCanvas.HideDottedLine();
+                DeckServices.StopPlayCardLoop();
+                return;
+            }
+            if (!_isSelected)
+            {
+                _isSelected = true;
+                DeckServices.StartPlayCardLoop(_cardPileUI.TopCard);
+                return;
+            }
+            if (_isSelected)
+            {
+                _isSelected = false;
+                DeckServices.StopPlayCardLoop();
+            }
         }
         private void ResetMovements()
         {
             _isSliding = false;
             StopAllCoroutines();
-            // transform.localPosition = Vector3.zero;
+            //  HandController.CardPileControlRequest?.Invoke(null);
+
         }
     }
 }

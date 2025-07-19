@@ -43,7 +43,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "4a8c891265a76c4cea0a87ea07c56a5d7ba2d46a"
+      "hash": "71d66f0bbd2050ad61f9e130e068c87c74b88f48"
     },
     "com.inkle.ink-unity-integration": {
       "version": "https://github.com/inkle/ink-unity-integration.git#upm",

@@ -16,16 +16,17 @@ namespace Quackery.Effects
         {
             _cardSelected = null;
             _otherCards = null;
-            DeckServices.InterruptDraw();
-            List<Card> drawnCards = DeckServices.Draw(effect.Value);
-            DeckServices.MoveToCardSelect(drawnCards);
-            DeckEvents.OnCardSelected += OnCardSelected;
+            yield return true;
+            // DeckServices.InterruptDraw();
+            // List<Card> drawnCards = DeckServices.Draw(effect.Value);
+            // DeckServices.MoveToCardSelect(drawnCards);
+            // DeckEvents.OnCardSelected += OnCardSelected;
 
-            yield return new WaitUntil(() => _cardSelected != null);
+            // yield return new WaitUntil(() => _cardSelected != null);
 
-            DeckEvents.OnCardSelected -= OnCardSelected;
-            DeckServices.DestroyCard(_cardSelected);
-            DeckServices.Discard(_otherCards);
+            // DeckEvents.OnCardSelected -= OnCardSelected;
+            // DeckServices.DestroyCard(_cardSelected);
+            // DeckServices.Discard(_otherCards);
         }
 
         private void OnCardSelected(Card selectedCard, List<Card> otherCards)

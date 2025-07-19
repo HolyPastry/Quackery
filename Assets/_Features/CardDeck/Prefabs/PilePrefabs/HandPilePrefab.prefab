@@ -111,6 +111,7 @@ MonoBehaviour:
   _maxSlideDistance: 250
   _maxSlideDistanceY: 125
   _useDottedLine: 1
+  _slideStartThreshold: 60
   _cardPileUI: {fileID: 7113968437140955085}
 --- !u!114 &7121373417181115228
 MonoBehaviour:
@@ -131,7 +132,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9131822354248330560}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21f75b345cbd245928c951ff6084a41d, type: 3}
   m_Name: 

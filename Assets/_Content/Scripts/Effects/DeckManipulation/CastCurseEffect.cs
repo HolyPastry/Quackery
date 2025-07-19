@@ -32,7 +32,7 @@ namespace Quackery.Effects
                                         Lifetime);
 
                 DeckServices.MoveCard(card, TargetDeck, Placement, 2f);
-                yield return DefaultWaitTime;
+                yield return new WaitForSeconds(3f);
             }
         }
     }

@@ -8,18 +8,19 @@ namespace Quackery
 {
     public class CardPool : MonoBehaviour
     {
+        [Header("Card Pool Settings")]
         [SerializeField] private GameObject _hiddable;
         [SerializeField] private Transform _container;
         [SerializeField] private EnumCardPile _cardPileType;
         [SerializeField] private CardPileUI _cardPilePrefab;
         protected readonly List<CardPileUI> _cardPileUIs = new();
 
-        void OnEnable()
+        protected virtual void OnEnable()
         {
             DeckEvents.OnCardPoolSizeUpdate += UpdatePoolSize;
         }
 
-        void OnDisable()
+        protected virtual void OnDisable()
         {
             DeckEvents.OnCardPoolSizeUpdate -= UpdatePoolSize;
         }
@@ -53,7 +54,9 @@ namespace Quackery
                 {
                     CardPileUI newCardPileUI = Instantiate(_cardPilePrefab, _container.transform);
                     _cardPileUIs.Add(newCardPileUI);
-                    newCardPileUI.OnCardPressed += BringToFront;
+                    newCardPileUI.OnTouchPress += OnCardPileTouchPress;
+                    newCardPileUI.OnTouchRelease += OnCardPileTouchRelease;
+
                     newCardPileUI.PileIndex = _cardPileUIs.Count - 1;
                     newCardPileUI.Type = _cardPileType;
                 }
@@ -68,14 +71,15 @@ namespace Quackery
         {
             CardPileUI lastCardPileUI = _cardPileUIs[index];
 
-            lastCardPileUI.OnCardPressed -= BringToFront;
+            lastCardPileUI.OnTouchPress -= OnCardPileTouchPress;
+            lastCardPileUI.OnTouchRelease -= OnCardPileTouchRelease;
+
             _cardPileUIs.RemoveAt(index);
             Destroy(lastCardPileUI.gameObject);
         }
 
-        protected virtual void BringToFront(CardPileUI pileUI)
-        {
+        protected virtual void OnCardPileTouchRelease(CardPileUI uI) { }
 
-        }
+        protected virtual void OnCardPileTouchPress(CardPileUI uI) { }
     }
 }

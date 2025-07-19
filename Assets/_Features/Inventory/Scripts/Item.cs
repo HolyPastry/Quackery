@@ -32,7 +32,7 @@ namespace Quackery.Inventories
             }
         }
 
-        public List<Effect> Effects;
+        public List<Effect> Effects = new();
 
         public string Name => Data.MasterText;
         public EnumItemCategory Category => OverrideCategory == EnumItemCategory.Any ?

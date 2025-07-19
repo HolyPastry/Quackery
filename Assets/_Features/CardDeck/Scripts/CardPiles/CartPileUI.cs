@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Quackery.Decks
 {
-    public class CartPileUI : CardPileUI, IPointerEnterHandler, IPointerExitHandler
+    public class CartPileUI : CardPileUI, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler
     {
         [SerializeField] private Image _highlightObject;
         [SerializeField] protected RewardPanel _rewardPanel;
@@ -67,6 +67,14 @@ namespace Quackery.Decks
             if (!_highlighted) return;
             CartServices.UnhoverPile(PileIndex);
             _highlightObject.color = _defaultColor;
+        }
+
+        public override void OnPointerUp(PointerEventData eventData)
+        {
+            base.OnPointerUp(eventData);
+            if (!_highlighted) return;
+            CartServices.HoverPile(PileIndex);
+            DeckServices.StopPlayCardLoop();
         }
     }
 }

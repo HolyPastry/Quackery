@@ -10,14 +10,12 @@ using UnityEngine.EventSystems;
 namespace Quackery.Decks
 {
 
-    public class CardPileUI : MonoBehaviour, IPointerDownHandler
+    public class CardPileUI : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         [SerializeField] EnumCardPile _pileType;
         [SerializeField] protected float _moveSpeed = 0.5f;
         [SerializeField] protected Ease _easeType = Ease.OutBack;
         [SerializeField] protected float _staggerDelay = 0.1f;
-
-        public bool Activated { get; private set; }
 
         public int PileIndex { get; set; } = 0;
 
@@ -42,7 +40,8 @@ namespace Quackery.Decks
         public event Action OnCardMovedOut = delegate { };
         public event Action OnPileUpdated = delegate { };
 
-        public event Action<CardPileUI> OnCardPressed = delegate { };
+        public event Action<CardPileUI> OnTouchPress = delegate { };
+        public event Action<CardPileUI> OnTouchRelease = delegate { };
 
         protected virtual void OnEnable()
         {
@@ -85,7 +84,6 @@ namespace Quackery.Decks
         {
             if (!IsItMe(type, pileIndex) || IsEmpty) return;
 
-            Activated = activated;
             TopCard.SetOutline(activated);
         }
 
@@ -215,7 +213,12 @@ namespace Quackery.Decks
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            OnCardPressed?.Invoke(this);
+            OnTouchPress?.Invoke(this);
+        }
+
+        public virtual void OnPointerUp(PointerEventData eventData)
+        {
+            OnTouchRelease?.Invoke(this);
         }
     }
 }

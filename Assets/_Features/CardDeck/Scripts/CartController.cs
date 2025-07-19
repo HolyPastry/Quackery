@@ -276,7 +276,7 @@ namespace Quackery.Decks
                 CartEvents.OnStackHovered(null, null);
                 return;
             }
-            if (!card.HasCartTarget) return;
+
             List<CardPile> compatiblePiles = CompatibleCardPile(card);
             CartEvents.OnStacksHighlighted(compatiblePiles.ConvertAll(p => p.Index).ToList());
 
@@ -674,7 +674,7 @@ namespace Quackery.Decks
 
         private List<CardPile> CompatibleCardPile(Card card)
         {
-
+            if (!card.HasCartTarget) return new();
             var emptyPiles = _cartPiles.FindAll(p => p.Enabled && p.IsEmpty);
             var mergeEffects = card.Effects.FindAll(effect => effect.Data is MergeWithPileEffect);
             if (mergeEffects.Count == 0)

@@ -17,19 +17,10 @@ namespace Quackery.Effects
         {
             _cardSelected = null;
             _otherCards = null;
-            DeckServices.InterruptDraw();
-            List<Card> drawnCards = DeckServices.Draw(effect.Value);
-            DeckServices.MoveToCardSelect(drawnCards);
-            DeckEvents.OnCardSelected += OnCardSelected;
 
-            yield return new WaitUntil(() => _cardSelected != null);
+            DeckServices.SetCustomDraw(effect.Value);
 
-            DeckEvents.OnCardSelected -= OnCardSelected;
-            DeckServices.MoveToTable(_cardSelected);
-            DeckServices.Discard(_otherCards);
-            DeckServices.ResumeDraw();
-
-            yield return DefaultWaitTime;
+            yield return null;
 
 
         }
