@@ -1710,6 +1710,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 798482327675635642, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: _maxSlideDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 798482327675635642, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: _maxSlideDistanceY
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 1570452005568624578, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
