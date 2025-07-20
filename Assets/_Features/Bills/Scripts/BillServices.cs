@@ -25,7 +25,7 @@ namespace Quackery
 
         internal static Func<int> GetNumOverdueBills = () => 0;
 
-        internal static Func<int> GetAmountDueToday = () => 100;
+        internal static Func<int> GetAmountDueToday = () => 50;
 
         internal static Func<int> GetNumBillDueToday = () => 0;
 

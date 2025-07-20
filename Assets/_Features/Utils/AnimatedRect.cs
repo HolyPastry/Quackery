@@ -120,8 +120,15 @@ namespace Quackery
             return this;
         }
 
-        public AnimatedRect SlideOut(Direction to)
+        public AnimatedRect SlideOut(Direction to, bool instant = false)
         {
+            if (instant)
+            {
+                Teleport(to);
+                _rectTransform.gameObject.SetActive(false);
+                EndAnimation();
+                return this;
+            }
             _isAnimating = true;
             var targetPosition = _overridePositionEnabled ? _overridePosition : DirectionVector(to);
             _inprogressZoomTween.Kill();

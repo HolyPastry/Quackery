@@ -13,7 +13,7 @@ namespace Quackery
         public override IEnumerator StateRoutine()
         {
             var controller = _gameLoop.CardGameController;
-            var textChat = _gameLoop.ClientTextChat;
+            //    var textChat = _gameLoop.ClientTextChat;
 
             controller.Show();
 
@@ -27,20 +27,20 @@ namespace Quackery
             {
 
                 var client = ClientServices.SelectedClient();
-                if (client.IsAnonymous)
-                {
-                    textChat.Show(CustomerPanelSize.Short);
-                    DialogQueueServices.QueueDialog("MeIntro");
-                    yield return DialogQueueServices.WaitUntilAllDialogEnds();
+                // if (client.IsAnonymous)
+                // {
+                //     textChat.Show(CustomerPanelSize.Short);
+                //     DialogQueueServices.QueueDialog("MeIntro");
+                //     yield return DialogQueueServices.WaitUntilAllDialogEnds();
 
-                }
-                else
-                {
-                    textChat.Show(CustomerPanelSize.Special);
-                    yield return new WaitForSeconds(0.5f);
-                    DialogQueueServices.QueueDialog($"{client.DialogName}Quest");
-                    yield return DialogQueueServices.WaitUntilAllDialogEnds();
-                }
+                // }
+                // else
+                // {
+                //     textChat.Show(CustomerPanelSize.Special);
+                //     yield return new WaitForSeconds(0.5f);
+                //     DialogQueueServices.QueueDialog($"{client.DialogName}Quest");
+                //     yield return DialogQueueServices.WaitUntilAllDialogEnds();
+                // }
                 yield return new WaitForSeconds(0.5f);
                 controller.StartNewRound(client);
 
@@ -85,7 +85,7 @@ namespace Quackery
                 else
                 {
                     ClientServices.GetNextClient();
-                    yield return textChat.WaitUntilClientCameIn();
+                    // yield return textChat.WaitUntilClientCameIn();
                 }
             }
         }

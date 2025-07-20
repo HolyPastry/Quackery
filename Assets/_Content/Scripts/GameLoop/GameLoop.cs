@@ -15,7 +15,7 @@ namespace Quackery
     {
         public CardGameController CardGameController;
         //   public ClientListUI ClientListUI;
-        public ClientChatRotatingPanels ClientTextChat;
+        //  public ClientChatRotatingPanels ClientTextChat;
 
         public ShopApp ShopApp;
         public App ChatApp;

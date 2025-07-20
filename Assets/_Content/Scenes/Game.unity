@@ -2047,7 +2047,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _debugState: 1
   CardGameController: {fileID: 1203412792}
-  ClientTextChat: {fileID: 1259681806}
   ShopApp: {fileID: 479571801}
   ChatApp: {fileID: 1231791681}
   BillApp: {fileID: 280383562}
@@ -2615,17 +2614,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animatedRect: {fileID: 1231791680}
   _canvas: {fileID: 1097751629}
---- !u!114 &1259681806 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3840961036680910021, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
-  m_PrefabInstance: {fileID: 201095758327560923}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f442bc5d349744d2ac80a47c0de69a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1296770856 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3318993699285628706, guid: 374a733e7eb6d46339df158a97c8a8e2, type: 3}

@@ -43,7 +43,7 @@ namespace Quackery.Clients
 
         internal static Func<ClientData, Client.EnumState, bool> CheckStatus = (clientData, state) => false;
 
-        internal static Func<int> NumClientsToday = () => 0;
+        internal static Func<int> NumClientsToday = () => 1;
 
         internal static Func<int> GetQueueSize = () => 0;
         internal static Action StartNormalWeek = () => { };

@@ -15,9 +15,11 @@ namespace Quackery.Decks
     public class CardGameController : MonoBehaviour
     {
         [Header("References")]
+
+        [SerializeField] private ClientGameUI _clientGameUI;
         [SerializeField] private Canvas _canvas;
         [SerializeField] private AnimatedRect _animatable;
-        [SerializeField] private CartValueUI _cartValue;
+        [SerializeField] private CartGauge _cartValue;
         [SerializeField] private BudgetCartValueUI _budgetCartValue;
 
         // [SerializeField] private Transform _purseTransform;
@@ -101,6 +103,7 @@ namespace Quackery.Decks
         public void Show()
         {
             CartServices.ResetCartValue();
+            _clientGameUI.Hide();
             _endOfDay = false;
             _gameStats.Reset();
             _endDayScreen.Hide();
@@ -141,7 +144,7 @@ namespace Quackery.Decks
             var cashInCart = CartServices.GetCartValue() + CartServices.GetCartBonus();
 
             if (cashInCart <= 0) return;
-            CartValueUI cartValueUI = _client.Budget > 0 ? _budgetCartValue : _cartValue;
+            // CartValueUI cartValueUI = _client.Budget > 0 ? _budgetCartValue : _cartValue;
 
             PurseServices.Modify(cashInCart);
             _gameStats.DayYield += cashInCart;
@@ -167,10 +170,7 @@ namespace Quackery.Decks
             _endOfRound = false;
 
             _client = client;
-            if (_client.Budget > 0)
-                _budgetCartValue.Show();
-            else
-                _cartValue.Show();
+
             _gameStats.NumClientsServed++;
             StartCoroutine(RoundRoutine());
 
@@ -178,7 +178,12 @@ namespace Quackery.Decks
 
         private IEnumerator RoundRoutine()
         {
-            // yield return StartCoroutine(ApplyRatingBonus());
+            yield return StartCoroutine(_clientGameUI.Show(_client));
+
+            if (_client.Budget > 0)
+                _budgetCartValue.Show();
+            else
+                _cartValue.Show();
 
             yield return StartCoroutine(AddClientEffects());
             yield return new WaitForSeconds(0.5f);
@@ -220,9 +225,15 @@ namespace Quackery.Decks
         {
             _EndRoundButton.interactable = isOn;
             if (isOn && DeckServices.NoPlayableCards())
+            {
+                _EndRoundButton.transform.localScale = Vector3.one * 2f;
                 _EndRoundButton.GetComponent<Image>().color = Color.green;
+            }
             else
+            {
+                _EndRoundButton.transform.localScale = Vector3.one;
                 _EndRoundButton.GetComponent<Image>().color = Color.white;
+            }
         }
 
         private IEnumerator AddClientEffects()

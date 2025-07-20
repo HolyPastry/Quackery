@@ -8,13 +8,13 @@ namespace Quackery
         { }
         public override void Enter()
         {
-            _gameLoop.ClientTextChat.Show(CustomerPanelSize.Long);
-            _gameLoop.ClientTextChat.OnExitingChat += OnBackButtonPressed;
+            //  _gameLoop.ClientTextChat.Show(CustomerPanelSize.Long);
+            //  _gameLoop.ClientTextChat.OnExitingChat += OnBackButtonPressed;
         }
 
         public override void Exit()
         {
-            _gameLoop.ClientTextChat.OnExitingChat -= OnBackButtonPressed;
+            //   _gameLoop.ClientTextChat.OnExitingChat -= OnBackButtonPressed;
             // _gameLoop.ClientTextChat.Hide();
         }
 
