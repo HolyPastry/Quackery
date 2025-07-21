@@ -5,35 +5,34 @@ using UnityEngine;
 
 namespace Quackery
 {
-    public class ActiveClientChatState : GameState
+    public class CardGameState : GameState
     {
-        public ActiveClientChatState(GameLoop gameLoop) : base(gameLoop)
-        { }
+        private CardGameController _controller;
+        public CardGameState(GameLoop gameLoop) : base(gameLoop)
+        {
+            _controller = gameLoop.CardGameController;
+        }
+
+        public CardGameState(CardGameController controller) : base(null)
+        {
+            _controller = controller;
+        }
 
         public override IEnumerator StateRoutine()
         {
-            var controller = _gameLoop.CardGameController;
+
             //    var textChat = _gameLoop.ClientTextChat;
 
-            controller.Show();
+            _controller.Show();
 
             DeckServices.Shuffle();
-
-            // DialogQueueServices.QueueDialog("MeIntro");
-            // yield return DialogQueueServices.WaitUntilAllDialogEnds();
 
             //bool firstTime = true;
             while (true)
             {
 
-                var client = ClientServices.SelectedClient();
-                // if (client.IsAnonymous)
-                // {
-                //     textChat.Show(CustomerPanelSize.Short);
-                //     DialogQueueServices.QueueDialog("MeIntro");
-                //     yield return DialogQueueServices.WaitUntilAllDialogEnds();
+                var client = ClientServices.GetNextClient();
 
-                // }
                 // else
                 // {
                 //     textChat.Show(CustomerPanelSize.Special);
@@ -41,13 +40,16 @@ namespace Quackery
                 //     DialogQueueServices.QueueDialog($"{client.DialogName}Quest");
                 //     yield return DialogQueueServices.WaitUntilAllDialogEnds();
                 // }
-                yield return new WaitForSeconds(0.5f);
-                controller.StartNewRound(client);
+                //yield return new WaitForSeconds(0.5f);
+                _controller.StartNewRound(client);
 
-                yield return controller.WaitUntilEndOfRound();
+
+
+
+                yield return _controller.WaitUntilEndOfRound();
 
                 DeckServices.DiscardHand();
-                if (controller.RoundInterrupted)
+                if (_controller.RoundInterrupted)
                 {
                     CartServices.ResetCartValue();
                     client.BadReview();
@@ -64,10 +66,10 @@ namespace Quackery
                     yield return DialogQueueServices.WaitUntilAllDialogEnds();
                 }
 
-                controller.ShowEndRoundScreen(!controller.RoundInterrupted, out bool wasBoss);
-                yield return controller.WaitUntilEndOfRoundScreenClosed();
-                controller.HideEndRoundScreen();
-                controller.TransfertCartToPurse();
+                _controller.ShowEndRoundScreen(!_controller.RoundInterrupted, out bool wasBoss);
+                yield return _controller.WaitUntilEndOfRoundScreenClosed();
+                _controller.HideEndRoundScreen();
+                _controller.TransfertCartToPurse();
 
                 CartServices.DiscardCart();
                 EffectServices.CleanEffects();
@@ -75,10 +77,10 @@ namespace Quackery
 
                 if (!ClientServices.HasNextClient() || wasBoss)
                 {
-                    controller.ShowEndDayScreen();
+                    _controller.ShowEndDayScreen();
                     yield return new WaitForSeconds(1f);
                     DeckServices.ResetDecks();
-                    yield return controller.WaitUntilEndOfDayValidated();
+                    yield return _controller.WaitUntilEndOfDayValidated();
                     ClientServices.ClientLeaves();
                     break;
                 }
@@ -94,9 +96,9 @@ namespace Quackery
         {
             base.Exit();
 
-            _gameLoop.CardGameController.Hide();
-            //  _gameLoop.ClientTextChat.Hide();
-            _gameLoop.ChatApp.Hide();
+            _controller.Hide();
+            if (_gameLoop != null)
+                _gameLoop.ChatApp.Hide();
         }
     }
 }

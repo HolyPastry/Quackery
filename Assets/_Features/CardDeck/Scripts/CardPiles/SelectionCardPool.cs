@@ -31,12 +31,12 @@ namespace Quackery
         {
             if (ui.IsEmpty) return;
 
-            if (_selectedCardPileUI == ui)
-            {
-                _selectedCardPileUI = null;
-                _confirmButton.interactable = false;
-                return;
-            }
+            // if (_selectedCardPileUI == ui)
+            // {
+            //     _selectedCardPileUI = null;
+            //     _confirmButton.interactable = false;
+            //     return;
+            // }
             _confirmButton.interactable = true;
 
             if (_selectedCardPileUI != null)

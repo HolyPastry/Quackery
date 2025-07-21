@@ -11,7 +11,7 @@ namespace Quackery.Effects
     {
         public override IEnumerator Execute(Effect effect)
         {
-            if (CartServices.GetCartValue() >= effect.Value) yield break;
+            if (CartServices.GetValue() >= effect.Value) yield break;
 
             CardGameController.InterruptRoundRequest();
         }

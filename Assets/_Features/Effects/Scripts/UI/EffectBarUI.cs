@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace Quackery
     public class EffectBarUI : MonoBehaviour
     {
         [SerializeField] private bool _listenToChange;
+        [SerializeField] private SpeechBubble _clientSpeechBubble;
         private readonly List<EffectUI> _statusUIPool = new();
 
         void Awake()
@@ -67,13 +69,24 @@ namespace Quackery
             foreach (var statusUI in _statusUIPool)
             {
                 if (statusUI.gameObject.activeSelf) continue;
-
-                statusUI.UpdateStatus(effect, animate: true);
+                // if (effect.Tags.Contains(Effects.EnumEffectTag.Client))
+                // {
+                StartCoroutine(AddClientStatusRoutine(statusUI, effect));
+                // }
+                // else
+                //     statusUI.UpdateStatus(effect, animate: true);
                 return;
             }
         }
 
+        private IEnumerator AddClientStatusRoutine(EffectUI statusUI, Effect effect)
+        {
+            _clientSpeechBubble.SetText($"<sprite name={effect.Data.name}>");
+            yield return new WaitForSeconds(1f);
 
+            statusUI.UpdateStatus(effect, origin: _clientSpeechBubble.transform.position);
+            _clientSpeechBubble.Hide();
+        }
 
         public void UpdateStatusUI(Effect effect)
         {

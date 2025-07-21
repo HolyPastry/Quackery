@@ -52,7 +52,7 @@ namespace Quackery
         public void InitLoop()
         {
             var clientListState = new ClientListState(this);
-            var activeClientChatState = new ActiveClientChatState(this);
+            var activeClientChatState = new CardGameState(this);
             var passiveClientChatState = new PassiveClientChatState(this);
             var mainMenuState = new MainScreenState(this);
             var shopState = new ShopState(this);

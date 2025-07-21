@@ -9,6 +9,7 @@ using Quackery.Effects;
 using UnityEngine.Assertions;
 using System;
 using DG.Tweening;
+using Quackery.Clients;
 
 
 namespace Quackery.Decks
@@ -499,7 +500,6 @@ namespace Quackery.Decks
                     yield return EffectServices.ExecutePile(EnumEffectTrigger.BeforeCartCalculation, selectedPile);
 
                 yield return CartServices.CalculateCart();
-
             }
             else
             {
@@ -514,6 +514,8 @@ namespace Quackery.Decks
             card.UpdateUI();
             UpdateCardUI();
         }
+
+
 
         private void MoveToEffectPile(Card card, bool isInstant = false)
         {

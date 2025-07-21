@@ -50,5 +50,6 @@ namespace Quackery.Clients
 
         internal static Func<List<Client>> GetAllClients = () => new();
 
+        internal static Func<CartMode, int> GetThreshold = (mode) => (mode == CartMode.Survival) ? 20 : 40;
     }
 }

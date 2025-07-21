@@ -24,8 +24,8 @@ namespace Quackery.Decks
         {
             float bestValue = (float)BillServices.GetAmountDueToday() / ClientServices.NumClientsToday();
 
-            var baseValue = CartServices.GetCartValue();
-            var bonusValue = CartServices.GetCartBonus();
+            var baseValue = CartServices.GetValue();
+            var bonusValue = CartServices.GetBonus();
 
             var totalValue = baseValue + bonusValue;
 

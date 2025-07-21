@@ -32,10 +32,10 @@ namespace Quackery.Decks
             CartEvents.OnStacksHighlighted -= HighlightStack;
         }
 
-        private void ShowReward(int index, CardReward reward, float duration)
+        private void ShowReward(int index, CardReward reward, int deltaScore, float duration)
         {
             if (!IsItMe(EnumCardPile.Cart, index)) return;
-            _rewardPanel.ShowReward(reward);
+            _rewardPanel.ShowReward(reward, deltaScore);
         }
 
         private void HighlightStack(List<int> list)

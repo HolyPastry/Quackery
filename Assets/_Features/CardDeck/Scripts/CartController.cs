@@ -1,26 +1,15 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Holypastry.Bakery;
+using Ink.Runtime;
 using Quackery.Clients;
 using Quackery.Effects;
 using Quackery.Inventories;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace Quackery.Decks
 {
-    [Serializable]
-    public struct CartEvaluation
-    {
-        public int Index;
-        public float Value;
-        public Color Color;
-        public string Description;
-
-        public AudioClip SoundBite;
-    }
     public class CartController : MonoBehaviour
     {
 
@@ -41,11 +30,16 @@ namespace Quackery.Decks
         private int _cartBonus;
         private int _cartValue;
 
+        private readonly Dictionary<int, int> RewardHistory = new();
+
         private readonly List<CardPile> _cartPiles = new();
 
         public bool CartIsFull => _cartPiles.TrueForAll(p => !p.IsEmpty || !p.Enabled);
 
         public int CartSize => _cartPiles.Count(p => p.Enabled);
+
+
+
 
         public int CartValue
         {
@@ -53,14 +47,17 @@ namespace Quackery.Decks
             private set
             {
                 _cartValue = value;
-                CartEvents.OnCartValueChanged?.Invoke();
+                CartEvents.OnValueChanged?.Invoke();
             }
         }
+
+
 
         private CardPile _lastCartPile;
 
         private Card _cardBeingPlayed;
         private CardPile _hoveredPile;
+        private CartMode _cartMode;
 
         void OnEnable()
         {
@@ -83,12 +80,12 @@ namespace Quackery.Decks
             CartServices.RemoveCard = RemoveCard;
 
             CartServices.CalculateCart = () => StartCoroutine(CalculateCart());
-            CartServices.GetCartBonus = GetCartBonus;
+            CartServices.GetBonus = () => _cartBonus;
 
 
             CartServices.AddToCartValue = value => CartValue += value;
-            CartServices.ResetCartValue = () => { _cartBonus = 0; CartValue = 0; };
-            CartServices.GetCartValue = () => CartValue;
+            CartServices.ResetCartValue = ResetCart;
+            CartServices.GetValue = () => CartValue;
             CartServices.CanCartAfford = value => CartValue + _cartBonus >= value;
 
 
@@ -105,6 +102,8 @@ namespace Quackery.Decks
 
             CartServices.RandomizeCart = RandomizeCart;
             CartServices.GetCartEvaluation = GetCartEvaluation;
+
+            CartServices.GetMaxValue = GetMaxValue;
 
 
             EffectEvents.OnAdded += UpdateCardUI;
@@ -139,7 +138,7 @@ namespace Quackery.Decks
 
             CartServices.AddToCartValue = value => { };
             CartServices.ResetCartValue = () => { };
-            CartServices.GetCartValue = () => 0;
+            CartServices.GetValue = () => 0;
             CartServices.CanCartAfford = value => true;
 
             CartServices.ReplaceTopCard = delegate { };
@@ -157,6 +156,8 @@ namespace Quackery.Decks
             CartServices.RandomizeCart = delegate { };
             CartServices.GetCartEvaluation = () => default;
 
+            CartServices.GetMaxValue = () => 30;
+
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
             EffectEvents.OnUpdated -= UpdateCardUI;
@@ -172,10 +173,20 @@ namespace Quackery.Decks
             }
         }
 
-        private int GetCartBonus()
+        private void ResetCart()
         {
-            return _cartBonus;
+            _cartBonus = 0;
+            _cartValue = 0;
+            UpdateCartMode();
         }
+
+        private int GetMaxValue()
+        {
+            if (_cartMode == CartMode.SuperSaiyan) return -1;
+            return ClientServices.GetThreshold(_cartMode);
+        }
+
+
 
         private CartEvaluation GetCartEvaluation()
         {
@@ -360,22 +371,58 @@ namespace Quackery.Decks
 
         private IEnumerator CalculateCart()
         {
-            _cartBonus = 0;
-            CartEvents.OnCartValueChanged?.Invoke();
-            yield return new WaitForSeconds(0.4f);
+
+            // CartEvents.OnValueChanged?.Invoke();
+            yield return new WaitForSeconds(0.2f);
             foreach (var cartPile in _cartPiles)
             {
                 if (cartPile.IsEmpty || !cartPile.Enabled) continue;
                 var rewards = GetPileRewards(cartPile.Index);
-                foreach (var reward in rewards)
+                CardReward reward;
+                if (rewards.Count > 0)
+                    reward = rewards[0];
+                else
+                    reward = new CardReward()
+                    {
+                        Type = EnumCardReward.Synergy,
+                        Value = 0
+                    };
+
+
+                int deltaScore = 0;
+                if (RewardHistory.ContainsKey(cartPile.Index))
                 {
-                    _cartBonus += reward.Value;
-                    if (reward.Value <= 0) continue;
-                    CartEvents.OnCartRewardCalculated(cartPile.Index, reward, 0.8f);
-                    yield return new WaitForSeconds(0.8f);
-                    CartEvents.OnCartValueChanged?.Invoke();
+                    deltaScore = reward.Value - RewardHistory[cartPile.Index];
+                    RewardHistory[cartPile.Index] = reward.Value;
                 }
+                else
+                {
+                    RewardHistory.Add(cartPile.Index, reward.Value);
+                    deltaScore = reward.Value;
+                }
+
+                _cartBonus += deltaScore;
+                CartEvents.OnCartRewardCalculated(cartPile.Index, reward, deltaScore, 0.8f);
+                yield return new WaitForSeconds(0.8f);
+
+                CartEvents.OnBonusChanged(deltaScore);
             }
+
+            UpdateCartMode();
+        }
+
+        private void UpdateCartMode()
+        {
+            if (_cartValue + _cartBonus < ClientServices.GetThreshold(CartMode.Survival))
+
+                _cartMode = CartMode.Survival;
+
+            else if (_cartValue + _cartBonus < ClientServices.GetThreshold(CartMode.Normal))
+
+                _cartMode = CartMode.Normal;
+            else
+                _cartMode = CartMode.SuperSaiyan;
+            CartEvents.OnModeChanged(_cartMode);
         }
 
         private bool ActivatePreviousCard(Card pile)

@@ -1,5 +1,3 @@
-
-using System;
 using System.Collections;
 using KBCore.Refs;
 using Quackery.Clients;
@@ -18,7 +16,7 @@ namespace Quackery
 
         internal void Hide()
         {
-            _animatable.SlideOut(Direction.Top, instant: true);
+            // _animatable.SlideOut(Direction.Top, instant: true);
         }
 
         internal IEnumerator Show(Client client)
@@ -31,8 +29,7 @@ namespace Quackery
                 _clientImageTransform.localScale = Vector3.one * 0.5f;
             else
                 _clientImageTransform.localScale = Vector3.one;
-
-
+            _animatable.SlideToZero();
             _animatable.SlideIn(Direction.Top);
             yield return _animatable.WaitForAnimation();
         }

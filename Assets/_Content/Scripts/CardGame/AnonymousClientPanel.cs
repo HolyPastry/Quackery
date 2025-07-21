@@ -27,8 +27,8 @@ namespace Quackery
             _portrait.color = Color.white;
             _nameText.text = client.LoginName;
             var evaluation = CartServices.GetCartEvaluation();
-            var cartValue = CartServices.GetCartValue();
-            var cartBonus = CartServices.GetCartBonus();
+            var cartValue = CartServices.GetValue();
+            var cartBonus = CartServices.GetBonus();
 
             int newFollowers = FollowerServices.RewardFollowers(evaluation.Index);
 

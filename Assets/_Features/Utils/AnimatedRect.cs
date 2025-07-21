@@ -25,6 +25,7 @@ namespace Quackery
             get => _rectTransform;
             set => _rectTransform = value;
         }
+        public float Height => _rectTransform.rect.height;
 
         [Header("Animation Settings")]
         [SerializeField] private float _animationDuration = 0.5f;
@@ -54,8 +55,8 @@ namespace Quackery
             return direction switch
             {
                 Direction.Left => new Vector2(-Screen.width * 2, 0),
-                Direction.Right => new Vector2(Screen.width * 2, 0),
-                Direction.Top => new Vector2(0, Screen.height * 2),
+                Direction.Right => new Vector2(Screen.width * 2, Screen.height / 2),
+                Direction.Top => new Vector2(Screen.width / 2, -Screen.height - Height),
                 Direction.Bottom => new Vector2(0, -Screen.height * 2),
                 _ => Vector2.zero
             };
@@ -65,20 +66,14 @@ namespace Quackery
         {
             _isAnimating = true;
 
-            if (_overridePositionEnabled)
-                Teleport(_overridePosition);
-            else
-                Teleport(from);
+            // if (_overridePositionEnabled)
+            //     Teleport(_overridePosition);
+            // else
+            //     TeleportTo(DirectionVector(from));
             _rectTransform.localScale = Vector3.one;
             _rectTransform.gameObject.SetActive(true);
-            _rectTransform
-                .DOAnchorPos(Vector2.zero, _animationDuration)
-                .SetEase(_animationEaseIn)
-                .OnComplete(() =>
-                {
-                    EndAnimation();
-                });
             return this;
+            //return SlideToZero();
         }
 
         public AnimatedRect FloatUp(float distance, float duration, Action callback = null)
@@ -110,13 +105,9 @@ namespace Quackery
             return this;
         }
 
-        private void Teleport(Vector2 position)
-        {
-            _rectTransform.position = position;
-        }
         private AnimatedRect Teleport(Direction to)
         {
-            Teleport(DirectionVector(to));
+            TeleportTo(DirectionVector(to));
             return this;
         }
 
@@ -196,6 +187,25 @@ namespace Quackery
                 EndAnimation();
             });
 
+        }
+
+        internal void TeleportTo(Vector3 origin)
+        {
+
+            _rectTransform.localPosition = _rectTransform.InverseTransformPoint(origin);
+            _isAnimating = false;
+        }
+
+        internal AnimatedRect SlideToZero()
+        {
+            _isAnimating = true;
+            _rectTransform.DOLocalMove(Vector3.zero, _animationDuration)
+                .SetEase(_animationEaseIn)
+                .OnComplete(() =>
+                {
+                    EndAnimation();
+                });
+            return this;
         }
     }
 }

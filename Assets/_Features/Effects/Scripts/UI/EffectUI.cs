@@ -64,6 +64,15 @@ namespace Quackery
             gameObject.SetActive(true);
         }
 
+        internal void UpdateStatus(Effect effect, Vector3 origin)
+        {
+            gameObject.SetActive(true);
+            _animatedRect.TeleportTo(origin);
+            UpdateStatus(effect);
+            _animatedRect.SlideToZero();
+
+        }
+
         // private IEnumerator MakeIconFlyToPosition(Vector2 originPosition)
         // {
         //     yield return null;

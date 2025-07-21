@@ -13,7 +13,7 @@ namespace Quackery.Effects
         {
             if (effect.LinkedCard == null) yield break;
 
-            int value = CartServices.GetCartValue();
+            int value = CartServices.GetValue();
             CartServices.AddToCartValue(Mathf.FloorToInt(value * ((float)effect.Value / 100)));
         }
     }

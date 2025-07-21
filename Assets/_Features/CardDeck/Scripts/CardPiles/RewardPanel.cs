@@ -18,23 +18,22 @@ namespace Quackery.Decks
         {
             _rectTransform.localScale = Vector3.zero;
         }
-        public void ShowReward(CardReward cardReward)
+        public void ShowReward(CardReward cardReward, int deltaScore)
         {
-            // OverlayCanvas.MoveOnTop(_rectTransform, _duration, (rect) =>
-            // {
+            if (deltaScore == 0) return;
             _rectTransform.localScale = Vector3.zero;
             _rectTransform.SetAsLastSibling();
+            if (deltaScore == 0)
+                _rewardPanelUI.text = $"{cardReward.Type}\n{cardReward.Value}";
+            if (deltaScore > 0)
+                _rewardPanelUI.text = $"{cardReward.Type}\n<color=green>+{deltaScore}</color>";
+            if (deltaScore < 0)
+                _rewardPanelUI.text = $"{cardReward.Type}\n<color=red>{deltaScore}</color>";
 
-            _rewardPanelUI.text = $"{cardReward.Type}\n{cardReward.Value}<sprite name=Coin>";
             _rectTransform.DOScale(Vector3.one, _easeDuration).SetEase(_easeType).OnComplete(() =>
             {
-                // Optionally, you can add a delay before hiding the panel
                 StartCoroutine(HideAfterDelay(_duration));
             });
-
-            //                if (CartValueUI.Transform() != null)
-            //                  transform.DOMove(CartValueUI.Transform().position, _easeDuration).SetEase(_easeType);
-            // });
         }
 
         private IEnumerator HideAfterDelay(float v)

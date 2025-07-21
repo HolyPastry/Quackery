@@ -43,6 +43,7 @@ namespace Quackery.Chats
                 yield return new WaitForSeconds(_duration / charArray.Length);
             }
             StopPlayingTypingSound();
+
         }
 
         private void StopPlayingTypingSound()

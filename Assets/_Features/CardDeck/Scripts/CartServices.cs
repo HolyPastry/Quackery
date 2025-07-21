@@ -30,7 +30,7 @@ namespace Quackery.Decks
 
         public static Action<int> AddToCartValue = (value) => { };
 
-        public static Func<int> GetCartValue = () => 0;
+        public static Func<int> GetValue = () => 0;
         public static Action ResetCartValue = () => { };
         public static Func<int, bool> CanCartAfford = (value) => { return true; };
 
@@ -53,11 +53,12 @@ namespace Quackery.Decks
 
         public static Action<int> UnhoverPile = (index) => { };
 
-        public static Func<int> GetCartBonus = () => 0;
+        public static Func<int> GetBonus = () => 0;
 
         public static Action RandomizeCart = () => { };
 
         internal static Func<CartEvaluation> GetCartEvaluation = () => default;
 
+        internal static Func<int> GetMaxValue = () => 30;
     }
 }

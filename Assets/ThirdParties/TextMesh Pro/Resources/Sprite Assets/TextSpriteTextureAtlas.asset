@@ -172,6 +172,18 @@ MonoBehaviour:
     m_Scale: 1
     m_Name: Calm
     m_HashCode: 2445123
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 23
+    m_Scale: 1.3
+    m_Name: Charmed
+    m_HashCode: -2059933900
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 24
+    m_Scale: 1.2
+    m_Name: Stress
+    m_HashCode: -1021465424
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -261,7 +273,7 @@ MonoBehaviour:
       m_HorizontalBearingY: 50
       m_HorizontalAdvance: 40
     m_GlyphRect:
-      m_X: 322
+      m_X: 320
       m_Y: 448
       m_Width: 64
       m_Height: 64
@@ -422,7 +434,7 @@ MonoBehaviour:
       m_HorizontalAdvance: 34
     m_GlyphRect:
       m_X: 448
-      m_Y: 385
+      m_Y: 384
       m_Width: 64
       m_Height: 64
     m_Scale: 1
@@ -541,6 +553,38 @@ MonoBehaviour:
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: 65103523, guid: cce829a7674b34fb8a65df088679a633, type: 3}
+  - m_Index: 23
+    m_Metrics:
+      m_Width: 64
+      m_Height: 64
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 40
+      m_HorizontalAdvance: 64
+    m_GlyphRect:
+      m_X: 448
+      m_Y: 320
+      m_Width: 64
+      m_Height: 64
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: -1595031548, guid: cce829a7674b34fb8a65df088679a633, type: 3}
+  - m_Index: 24
+    m_Metrics:
+      m_Width: 64
+      m_Height: 64
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 50
+      m_HorizontalAdvance: 64
+    m_GlyphRect:
+      m_X: 384
+      m_Y: 320
+      m_Width: 64
+      m_Height: 64
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: 867504517, guid: cce829a7674b34fb8a65df088679a633, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []
 --- !u!21 &1750353925529120539

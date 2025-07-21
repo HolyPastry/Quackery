@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Holypastry.Bakery;
+
 using Quackery.Clients;
 
 using UnityEngine;
@@ -34,6 +34,7 @@ namespace Quackery.Decks
 
         private Client _client;
         public bool RoundInterrupted { get; private set; }
+
         private bool _endButtonPressed;
 
         public class GameStats
@@ -84,8 +85,6 @@ namespace Quackery.Decks
             _EndRoundButton.onClick.AddListener(() => _endButtonPressed = true);
         }
 
-
-
         void OnDisable()
         {
 
@@ -109,7 +108,7 @@ namespace Quackery.Decks
             _endDayScreen.Hide();
             _endRoundScreen.Hide(instant: true);
             _canvas.gameObject.SetActive(true);
-            _animatable.SlideIn(Direction.Right);
+            // _animatable.SlideIn(Direction.Right);
         }
 
         private void EndTheDay() => _endOfDay = true;
@@ -141,7 +140,7 @@ namespace Quackery.Decks
         public void TransfertCartToPurse()
         {
             CartServices.ValidateCart();
-            var cashInCart = CartServices.GetCartValue() + CartServices.GetCartBonus();
+            var cashInCart = CartServices.GetValue() + CartServices.GetBonus();
 
             if (cashInCart <= 0) return;
             // CartValueUI cartValueUI = _client.Budget > 0 ? _budgetCartValue : _cartValue;
@@ -178,14 +177,26 @@ namespace Quackery.Decks
 
         private IEnumerator RoundRoutine()
         {
+            yield return new WaitForSeconds(1f);
             yield return StartCoroutine(_clientGameUI.Show(_client));
+            if (_client.IsAnonymous)
+            {
+                DialogQueueServices.QueueDialog("MeIntro");
+                yield return DialogQueueServices.WaitUntilAllDialogEnds();
+            }
+            yield return new WaitForSeconds(1f);
+            yield return StartCoroutine(AddClientEffects());
+
+
+            yield return new WaitForSeconds(1f);
 
             if (_client.Budget > 0)
                 _budgetCartValue.Show();
             else
                 _cartValue.Show();
 
-            yield return StartCoroutine(AddClientEffects());
+
+
             yield return new WaitForSeconds(0.5f);
             yield return EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundStart, null);
 

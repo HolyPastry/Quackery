@@ -547,6 +547,11 @@ MonoBehaviour:
     Eyes (<sprite
     name=Eyes>) checked
 
+    Charm (<sprite name=Charm>) checked
+
+    Stress(<sprite
+    name=Stress>) checked
+
 
 
 '

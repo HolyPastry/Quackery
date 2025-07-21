@@ -14,19 +14,19 @@ namespace Quackery.Decks
 
         void OnEnable()
         {
-            CartEvents.OnCartValueChanged += UpdateCartValue;
+            CartEvents.OnValueChanged += UpdateCartValue;
             Transform = () => transform;
         }
 
         void OnDisable()
         {
-            CartEvents.OnCartValueChanged -= UpdateCartValue;
+            CartEvents.OnValueChanged -= UpdateCartValue;
             Transform = () => null;
         }
 
         protected virtual void UpdateCartValue()
         {
-            _cartValueText.text = $"<sprite name=Coin> {CartServices.GetCartValue()}";
+            _cartValueText.text = $"<sprite name=Coin> {CartServices.GetValue()}";
         }
         public void Show()
         {

@@ -1080,6 +1080,7 @@ MonoBehaviour:
   _cardName: {fileID: 6958716916391210810}
   _cardPrice: {fileID: 4563727690066475508}
   _outline: {fileID: 4059229284867451895}
+  InHandPriceBonus: 0
 --- !u!1 &5923680450584494808
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,6 +1368,7 @@ GameObject:
   - component: {fileID: 3417914036582465453}
   - component: {fileID: 1000694104190330470}
   - component: {fileID: 4059229284867451895}
+  - component: {fileID: 3123227570245853829}
   m_Layer: 5
   m_Name: Outline
   m_TagString: Untagged
@@ -1431,6 +1433,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &3123227570245853829
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8911533510226457140}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4fceab4caf290466f85dc5a6d0c15a78, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &9046232543231126242
 GameObject:
   m_ObjectHideFlags: 0
