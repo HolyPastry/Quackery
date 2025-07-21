@@ -26,18 +26,21 @@ namespace Quackery
             CartEvents.OnBonusChanged += UpdateBonus;
             CartEvents.OnModeChanged += OnGameModeChange;
             UpdateGauges();
+            OnGameModeChange(CartServices.GetMode());
 
         }
 
-        private void UpdateBonus(int deltaScore) => UpdateGauges();
+
 
 
         void OnDisable()
         {
             CartEvents.OnValueChanged -= UpdateGauges;
-            CartEvents.OnModeChanged += OnGameModeChange;
-        }
+            CartEvents.OnModeChanged -= OnGameModeChange;
+            CartEvents.OnBonusChanged -= UpdateBonus;
 
+        }
+        private void UpdateBonus(int deltaScore) => UpdateGauges();
         private void OnGameModeChange(CartMode mode)
         {
             var height = rectTransform.sizeDelta.y;

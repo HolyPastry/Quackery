@@ -64,7 +64,7 @@ namespace Quackery
 
         public AnimatedRect SlideIn(Direction from)
         {
-            _isAnimating = true;
+            _isAnimating = false;
 
             // if (_overridePositionEnabled)
             //     Teleport(_overridePosition);

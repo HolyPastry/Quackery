@@ -110,6 +110,7 @@ namespace Quackery.Effects
 
         private IEnumerator AddEffectsFromCard(Card card)
         {
+
             foreach (var effect in card.Effects)
             {
                 if (effect.Trigger != EnumEffectTrigger.Passive) continue;

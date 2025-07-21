@@ -60,5 +60,8 @@ namespace Quackery.Decks
         internal static Func<CartEvaluation> GetCartEvaluation = () => default;
 
         internal static Func<int> GetMaxValue = () => 30;
+
+        internal static Func<CartMode> GetMode = () => CartMode.Survival;
+
     }
 }

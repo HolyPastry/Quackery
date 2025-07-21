@@ -18,6 +18,7 @@ public class PurseManager : Service
     void OnEnable()
     {
         PurseServices.Modify = Modify;
+        PurseServices.GetAmount = () => (int)_purse.Amount;
         PurseServices.GetString = () => Mathf.Floor(_purse.Amount).ToString(); //MoneyFormat(_purse?.Amount ?? 0f);
         PurseServices.WaitUntilReady = () => WaitUntilReady;
         PurseServices.CanAfford = (amount) => _purse.Amount >= amount;
@@ -29,6 +30,7 @@ public class PurseManager : Service
     void OnDisable()
     {
         PurseServices.Modify = delegate { };
+        PurseServices.GetAmount = () => 0;
         PurseServices.GetString = () => "0$";
         PurseServices.WaitUntilReady = () => new WaitUntil(() => true);
         PurseServices.CanAfford = (amount) => false;

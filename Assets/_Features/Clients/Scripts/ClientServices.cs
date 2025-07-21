@@ -48,7 +48,7 @@ namespace Quackery.Clients
         internal static Func<int> GetQueueSize = () => 0;
         internal static Action StartNormalWeek = () => { };
 
-        internal static Func<List<Client>> GetAllClients = () => new();
+        internal static Func<List<Client>> GetClientList = () => new();
 
         internal static Func<CartMode, int> GetThreshold = (mode) => (mode == CartMode.Survival) ? 20 : 40;
     }

@@ -467,8 +467,10 @@ namespace Quackery.Decks
         private void SelectCardFromHand(EnumCardPile type, int index)
         {
             var pile = _cardPiles.Find(p => p.Type == type && p.Index == index);
-            Assert.IsTrue(pile != null && !pile.IsEmpty,
+
+            Assert.IsNotNull(pile,
                 $"called pile is null or Empty: {type} - {index}");
+            if (pile.IsEmpty) return;
 
             StartCoroutine(PlayCardRoutine(pile.TopCard, null));
         }
@@ -479,16 +481,12 @@ namespace Quackery.Decks
             DeckEvents.OnCardPlayed?.Invoke(card);
 
             MoveToEffectPile(card);
-            Debug.Log("Moved to EffectPile" + (Time.time - time));
 
             yield return new WaitForSeconds(0.5f);
 
             yield return EffectServices.Execute(EnumEffectTrigger.OnCardPlayed, card);
 
-            Debug.Log("On Card Play Effect:" + (Time.time - time));
             yield return EffectServices.AddEffectsFromCard(card);
-
-            Debug.Log("Added Effects from Card:" + (Time.time - time));
 
             CartServices.AddToCartValue(card.Price);
 
@@ -506,8 +504,7 @@ namespace Quackery.Decks
                 Debug.LogWarning("Could not do anything with: " + card.Name);
                 Discard(card);
             }
-            Debug.Log("Cart Calculated:" + (Time.time - time));
-            // if (!_drawInterrupted)
+
             _cardPlayed = true;
             _cardBeingPlayed = null;
             card.InHandPriceBonus = 0;

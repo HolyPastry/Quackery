@@ -104,6 +104,7 @@ namespace Quackery.Decks
             CartServices.GetCartEvaluation = GetCartEvaluation;
 
             CartServices.GetMaxValue = GetMaxValue;
+            CartServices.GetMode = () => _cartMode;
 
 
             EffectEvents.OnAdded += UpdateCardUI;
@@ -157,6 +158,7 @@ namespace Quackery.Decks
             CartServices.GetCartEvaluation = () => default;
 
             CartServices.GetMaxValue = () => 30;
+            CartServices.GetMode = () => CartMode.Survival;
 
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
@@ -177,6 +179,7 @@ namespace Quackery.Decks
         {
             _cartBonus = 0;
             _cartValue = 0;
+            RewardHistory.Clear();
             UpdateCartMode();
         }
 
@@ -402,12 +405,13 @@ namespace Quackery.Decks
                 }
 
                 _cartBonus += deltaScore;
-                CartEvents.OnCartRewardCalculated(cartPile.Index, reward, deltaScore, 0.8f);
-                yield return new WaitForSeconds(0.8f);
-
-                CartEvents.OnBonusChanged(deltaScore);
+                CartEvents.OnCartRewardCalculated(cartPile.Index, reward, deltaScore, 0.5f);
+                if (deltaScore != 0)
+                {
+                    yield return new WaitForSeconds(0.5f);
+                    CartEvents.OnBonusChanged(deltaScore);
+                }
             }
-
             UpdateCartMode();
         }
 

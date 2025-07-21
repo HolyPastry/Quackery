@@ -18,7 +18,7 @@ namespace Quackery.Notifications
         protected override void SetInfo(NotificationInfo _)
         {
 
-            var clientList = ClientServices.GetAllClients();
+            var clientList = ClientServices.GetClientList();
             List<Client> onlineVIP = new();
             List<Client> clientInQueue = new();
             foreach (var client in clientList)

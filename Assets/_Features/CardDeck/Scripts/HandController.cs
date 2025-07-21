@@ -63,7 +63,7 @@ namespace Quackery
 
         protected void SelectPile(CardPileUI pileUI)
         {
-
+            if (pileUI.IsEmpty) return;
             foreach (var cardPile in _cardPileUIs)
                 cardPile.transform.SetAsLastSibling();
             pileUI.transform.SetAsLastSibling();

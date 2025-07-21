@@ -46,7 +46,7 @@ namespace Quackery.Clients
             ClientServices.SetClientState = SetClientState;
             ClientServices.CheckStatus = CheckClientStatus;
 
-            ClientServices.GetAllClients = () => _clientList?.Clients ?? new();
+            ClientServices.GetClientList = () => _clientList?.Clients ?? new();
 
 
             ClientServices.GetQueueSize = () => _queueSize;
@@ -84,7 +84,7 @@ namespace Quackery.Clients
             ClientServices.SetClientState = (clientData, state) => { };
             ClientServices.CheckStatus = (clientData, state) => false;
 
-            ClientServices.GetAllClients = () => new();
+            ClientServices.GetClientList = () => new();
 
 
             ClientServices.GetBudget = () => -1;

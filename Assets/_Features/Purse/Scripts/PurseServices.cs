@@ -9,6 +9,8 @@ public static class PurseServices
     public static Func<string> GetString = () => string.Empty;
 
     internal static Func<int, bool> CanAfford = (amount) => true;
+
+    internal static Func<int> GetAmount = () => 0;
 }
 
 
