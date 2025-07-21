@@ -81,6 +81,12 @@ namespace Quackery
 
         private IEnumerator AddClientStatusRoutine(EffectUI statusUI, Effect effect)
         {
+            if (_clientSpeechBubble == null)
+            {
+                statusUI.UpdateStatus(effect, animate: true);
+                yield break;
+            }
+
             _clientSpeechBubble.SetText($"<sprite name={effect.Data.name}>");
             yield return new WaitForSeconds(1f);
 

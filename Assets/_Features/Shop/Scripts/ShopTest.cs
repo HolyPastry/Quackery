@@ -7,8 +7,10 @@ namespace Quackery.Shops
     public class ShopTest : MonoBehaviour
     {
         [SerializeField] private ShopApp _instagramUI;
-        void Start()
+        IEnumerator Start()
         {
+            yield return FlowServices.WaitUntilEndOfSetup();
+
             _instagramUI.Show();
         }
     }

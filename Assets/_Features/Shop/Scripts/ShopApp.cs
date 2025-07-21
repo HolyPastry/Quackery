@@ -69,9 +69,10 @@ namespace Quackery.Shops
             _canvas.gameObject.SetActive(true);
             CleanPosts();
 
-            _animatedRect.SlideIn(Direction.Right)
-                .DoComplete(() =>
-                    StartCoroutine(ShowPostsRoutine()));
+            // _animatedRect.SlideIn(Direction.Right)
+            //     .DoComplete(() =>
+            // StartCoroutine(ShowPostsRoutine()));
+            StartCoroutine(ShowPostsRoutine());
 
         }
 

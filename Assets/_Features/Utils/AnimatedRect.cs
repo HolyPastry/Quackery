@@ -70,8 +70,10 @@ namespace Quackery
             //     Teleport(_overridePosition);
             // else
             //     TeleportTo(DirectionVector(from));
+
             _rectTransform.localScale = Vector3.one;
             _rectTransform.gameObject.SetActive(true);
+            EndAnimation();
             return this;
             //return SlideToZero();
         }

@@ -224,14 +224,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventoryManager
       objectReference: {fileID: 0}
-    - target: {fileID: 92784791471584063, guid: 68a39fa18e03f43a38853bcc06763bba, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740866637741441819, guid: 68a39fa18e03f43a38853bcc06763bba, type: 3}
-      propertyPath: CollectionKey
-      value: CardItems
-      objectReference: {fileID: 0}
     - target: {fileID: 5520966705160200313, guid: 68a39fa18e03f43a38853bcc06763bba, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1378.9874
@@ -336,20 +328,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _disable: 1
-  _itemDataList:
-  - {fileID: 11400000, guid: 31dc65dae3588498f87139d6b6d081e7, type: 2}
-  - {fileID: 11400000, guid: b5c53c65ed6ee4b18b3c579c3ff9a010, type: 2}
-  - {fileID: 11400000, guid: 6ebb89319bc334b98ac84ba5f279ddd2, type: 2}
-  - {fileID: 11400000, guid: ac39dbe92c56b403ca6a044831a2f640, type: 2}
-  - {fileID: 11400000, guid: 7fb65e1037f38430ea3ac02225acb6f6, type: 2}
-  - {fileID: 11400000, guid: 70715cce15a6c412d89ab43fe1eda09b, type: 2}
-  - {fileID: 11400000, guid: 7895811d335034b13b7103196ac43369, type: 2}
-  - {fileID: 11400000, guid: 4ab4754fe5ac14d5ba5712617b6ba554, type: 2}
-  - {fileID: 11400000, guid: 72373679592aa4efcbeed0e4fa934612, type: 2}
-  - {fileID: 11400000, guid: bcdb3b4d78367404b882419063cf82f6, type: 2}
-  - {fileID: 11400000, guid: 5077920aa9140445f9c1bccfecaaa1c3, type: 2}
-  - {fileID: 11400000, guid: 869bf536400604bb0ba291afc44926bc, type: 2}
-  - {fileID: 11400000, guid: 924763be3d5d84a5ebef0cd1b40ba185, type: 2}
+  _itemDataList: []
+  _addAllItems: 1
 --- !u!114 &680548776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -950,9 +930,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5497147284024201246, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7502394093125466052, guid: ee79d44860f35434982a489985513e2c, type: 3}
       propertyPath: m_Name
       value: ShopApp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8737709262977463920, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: _startHidden
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9012704261980253538, guid: ee79d44860f35434982a489985513e2c, type: 3}
       propertyPath: m_LocalPosition.x

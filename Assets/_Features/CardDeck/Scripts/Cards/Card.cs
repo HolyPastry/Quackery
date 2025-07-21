@@ -74,7 +74,7 @@ namespace Quackery.Decks
 
         private void UpdatePrice()
         {
-
+            if (_toBeDestroyed) return;
             _PriceBackground.gameObject.SetActive(_item.Category != EnumItemCategory.Curses);
             _cardPrice.gameObject.SetActive(_item.Category != EnumItemCategory.Curses);
             _cardPrice.text = Price.ToString();
@@ -133,6 +133,7 @@ namespace Quackery.Decks
         public bool HasCartTarget => Category != EnumItemCategory.Skills;
 
         private List<EffectIcon> _effectIconPool = new();
+        private bool _toBeDestroyed;
         private readonly List<Effect> _activatedEffects = new();
 
         void Awake()
@@ -144,6 +145,7 @@ namespace Quackery.Decks
 
         public void SetOutline(bool isOn)
         {
+            if (_toBeDestroyed) return;
             _outline.gameObject.SetActive(isOn);
         }
 
@@ -192,25 +194,14 @@ namespace Quackery.Decks
 
         public void UpdateUI()
         {
+            if (_toBeDestroyed) return;
             UpdatePrice();
             _cardName.text = Sprites.Replace(_item.ShortDescription);
         }
 
-        // internal void ExecutePowerInCart(CardPile pile)
-        // {
-        //     foreach (var effect in Effects)
-        //     {
-        //         if (effect.Tags.Contains(EnumEffectTag.Activated)) continue;
-        //         if (effect.Trigger == EnumEffectTrigger.OnCardPlayed)
-        //             effect.Execute(pile);
-        //         if (effect.Trigger == EnumEffectTrigger.OnDraw ||
-        //              effect.Trigger == EnumEffectTrigger.Continous)
-        //             EffectServices.Add(effect);
-        //     }
-        // }
-
         internal void Destroy()
         {
+            _toBeDestroyed = true;
             transform.SetParent(null);
             transform.DOScale(Vector3.zero, 0.5f).OnComplete(() =>
             {
@@ -218,25 +209,11 @@ namespace Quackery.Decks
             });
         }
 
-        // internal void ActivatePower(CardPile lastCartPile)
-        // {
-        //     foreach (var effect in Effects)
-        //     {
-        //         if (!effect.Tags.Contains(EnumEffectTag.Activated)) continue;
-        //         if (_activatedEffects.Contains(effect)) continue;
 
-        //         effect.LinkedCard = lastCartPile.TopCard;
-        //         EffectServices.Add(effect);
-        //         _activatedEffects.Add(effect);
-        //         var effectIcon = _effectIconPool.Find(icon => icon.Effect == effect);
-        //         effectIcon.Activated = true;
-        //         if (effect.Trigger == EnumEffectTrigger.OnActivated)
-        //             effect.Execute(lastCartPile);
-        //     }
-        // }
 
         internal void OverrideCategory(EnumItemCategory category)
         {
+            if (_toBeDestroyed) return;
             _item.OverrideCategory = category;
             _cardBackground.color = Colors.Get(category.ToString());
             SetCategoryIcon();
@@ -245,6 +222,7 @@ namespace Quackery.Decks
 
         internal void RemoveCategoryOverride()
         {
+            if (_toBeDestroyed) return;
             _item.OverrideCategory = EnumItemCategory.Any;
         }
 
