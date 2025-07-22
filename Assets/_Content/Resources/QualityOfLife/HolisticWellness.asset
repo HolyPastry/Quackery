@@ -18,7 +18,8 @@ MonoBehaviour:
   ShopBanner: {fileID: 0}
   Price: 0
   FollowersRequirement: 0
-  FollowerBonus: 100
+  FollowerBonus: 50
   RatingBonus: 0
   CardBonus: {fileID: 11400000, guid: 2c2598c959e2b492eac6b86e0f0626a1, type: 2}
+  ArtifactBonus: {fileID: 0}
   Bill: {fileID: 0}

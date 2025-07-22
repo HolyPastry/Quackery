@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using KBCore.Refs;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Quackery
         [SerializeField, Self] private TextMeshProUGUI _textGUI;
         [SerializeField] private bool _liveUpdate = false;
         [SerializeField] private float _updateRate = 2;
+        [SerializeField] private AudioSource _audioSource;
 
         protected string Text
         {
@@ -44,6 +46,24 @@ namespace Quackery
         protected abstract void UpdateUI();
 
         protected virtual WaitUntil WaitUntilReady => null;
+
+        protected void Punch()
+        {
+            _textGUI.transform.DOPunchScale(Vector3.one * 0.1f, 0.2f);
+        }
+
+        protected void PlayAudio()
+        {
+            if (_audioSource != null)
+                _audioSource.Play();
+
+        }
+        protected void StopAudio()
+        {
+            if (_audioSource != null)
+                _audioSource.Stop();
+        }
+
 
         private IEnumerator LiveUpdateRoutine()
         {

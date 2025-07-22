@@ -1,7 +1,11 @@
-using System;
+
+
+using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using DG.Tweening;
 using Quackery.Decks;
+using Quackery.Followers;
+using Quackery.Inventories;
 using Quackery.QualityOfLife;
 using TMPro;
 using UnityEngine;
@@ -23,9 +27,14 @@ namespace Quackery.Shops
         [SerializeField] Transform _cardParent;
         [SerializeField] GameObject _followerPanel;
         [SerializeField] TextMeshProUGUI _followerTextGUI;
-        [SerializeField] TextMeshProUGUI _ratingTextGUI;
+        [SerializeField] BillShopWidget _billShopWidget;
+        [SerializeField] Button _buyButton;
+        [SerializeField] Button _selectButton;
 
         [SerializeField] private LayoutGroup _leftColumnGroup;
+        private ShopReward _shopReward;
+
+        private RectTransform rectTransform => transform as RectTransform;
 
         private static readonly List<string> _freeTexts = new()
         {
@@ -51,13 +60,133 @@ namespace Quackery.Shops
             "You've been selected!",
             "A special gift for you!",
         };
-        public override void SetupPost(ShopReward shopReward)
+
+        void OnEnable()
+        {
+            if (_buyButton != null)
+                _buyButton.onClick.AddListener(OnBuyButtonClicked);
+
+            if (_selectButton != null)
+                _selectButton.onClick.AddListener(OnSelectButtonClicked);
+        }
+
+
+
+        void OnDisable()
+        {
+            if (_buyButton != null)
+                _buyButton.onClick.RemoveAllListeners();
+            if (_selectButton != null)
+                _selectButton.onClick.RemoveAllListeners();
+        }
+        private void OnSelectButtonClicked()
+        {
+            ShopApp.ShowConfirmation(this);
+        }
+        private void OnBuyButtonClicked()
+        {
+            StartCoroutine(GiveRewardRoutine());
+        }
+
+        private IEnumerator GiveRewardRoutine()
         {
 
+            _paid.transform.DOPunchScale(Vector3.one * 1.1f, 0.5f, 0).OnComplete(() =>
+            {
+                _paid.SetActive(false);
+            });
+            yield return new WaitForSeconds(0.3f);
+            PurseServices.Modify(-_shopReward.Price);
+
+            yield return new WaitForSeconds(0.6f);
+
+            if (_shopReward is QualityOfLifeReward qualityOfLifeReward)
+            {
+                yield return StartCoroutine(QualityOfLifeRewardRoutine(qualityOfLifeReward.QualityOfLifeData));
+            }
+            else if (_shopReward is NewCardReward newCardReward)
+            {
+                yield return StartCoroutine(CardRewardRoutine(newCardReward.ItemData));
+            }
+            yield return new WaitForSeconds(1f);
+            OnBuyClicked?.Invoke(this);
+        }
+
+        private IEnumerator CardRewardRoutine(ItemData itemData)
+        {
+            DeckServices.AddNew(
+                    itemData,
+                    EnumCardPile.Draw,
+                    EnumPlacement.ShuffledIn,
+                    EnumLifetime.Permanent);
+
+            Card card = _cardParent.GetComponentInChildren<Card>();
+            AudioSource cardAudio = _cardParent.GetComponentInChildren<AudioSource>();
+            if (cardAudio != null)
+                cardAudio.Play();
+            if (card != null)
+                (card.transform as RectTransform).DOAnchorPosX(-Screen.width, 0.5f)
+                    .OnComplete(() =>
+                    {
+                        Destroy(card.gameObject);
+                    });
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        private IEnumerator QualityOfLifeRewardRoutine(QualityOfLifeData qualityOfLifeData)
+        {
+            QualityOfLifeServices.Acquire(qualityOfLifeData);
+
+
+            if (qualityOfLifeData.FollowerBonus > 0)
+            {
+                _followerPanel.transform.DOScale(Vector3.zero, 0.5f);
+                FollowerServices.ModifyFollowers(qualityOfLifeData.FollowerBonus);
+                yield return new WaitForSeconds(2f);
+            }
+            if (qualityOfLifeData.Bill != null)
+            {
+
+                _billShopWidget.transform.DOScale(Vector3.zero, 0.5f);
+                BillServices.AddNewBill(qualityOfLifeData.Bill, false);
+                yield return new WaitForSeconds(1f);
+            }
+            if (qualityOfLifeData.CardBonus != null)
+            {
+                DeckServices.AddNew(
+                    qualityOfLifeData.CardBonus,
+                    EnumCardPile.Draw,
+                    EnumPlacement.ShuffledIn,
+                    EnumLifetime.Permanent);
+
+                Card card = _cardParent.GetComponentInChildren<Card>();
+                AudioSource cardAudio = _cardParent.GetComponentInChildren<AudioSource>();
+                if (cardAudio != null)
+                    cardAudio.Play();
+                if (card != null)
+                    (card.transform as RectTransform).DOAnchorPosX(-Screen.width, 0.5f)
+                        .OnComplete(() =>
+                        {
+                            Destroy(card.gameObject);
+                        });
+
+                yield return new WaitForSeconds(0.5f);
+            }
+            else
+            {
+                _cardParent.gameObject.SetActive(false);
+            }
+        }
+        public override void SetupPost(ShopReward shopReward)
+        {
+            _shopReward = shopReward;
+            rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
             base.SetupPost(shopReward);
 
             _titleGUI.text = shopReward.Title;
             _descriptionGUI.text = shopReward.Description;
+
+            _billShopWidget.Hide();
 
             if (shopReward.Price > 0)
             {
@@ -93,7 +222,7 @@ namespace Quackery.Shops
             if (shopReward is not RemoveCardReward cardRemovalReward) return false;
 
             _followerPanel.SetActive(false);
-            _ratingTextGUI.text = "";
+            // _ratingTextGUI.text = "";
             _logo.gameObject.SetActive(true);
             _logo.sprite = cardRemovalReward.Logo;
             return true;
@@ -115,22 +244,33 @@ namespace Quackery.Shops
                 _followerPanel.SetActive(false);
             }
 
-            if (qualityOfLifeData.RatingBonus > 0)
-                _ratingTextGUI.text = $"+{qualityOfLifeData.RatingBonus}";
-
+            if (qualityOfLifeData.Bill != null)
+            {
+                _billShopWidget.Show(qualityOfLifeData.Bill);
+            }
             else
-                _ratingTextGUI.text = "";
+            {
+                _billShopWidget.Hide();
+            }
+
+            // if (qualityOfLifeData.RatingBonus > 0)
+            //     _ratingTextGUI.text = $"+{qualityOfLifeData.RatingBonus}";
+
+            // else
+            //     _ratingTextGUI.text = "";
 
             if (qualityOfLifeData.CardBonus != null)
             {
                 _logo.gameObject.SetActive(false);
                 Card card = DeckServices.CreateCard(qualityOfLifeData.CardBonus);
                 card.transform.SetParent(_cardParent, false);
+                _cardParent.gameObject.SetActive(true);
                 card.transform.localPosition = Vector3.zero;
             }
             else
             {
                 _logo.gameObject.SetActive(true);
+                _cardParent.gameObject.SetActive(false);
                 _logo.sprite = qualityOfLifeData.ShopBanner;
             }
 
@@ -143,9 +283,10 @@ namespace Quackery.Shops
 
             Card card = DeckServices.CreateCard(newCardReward.ItemData);
             card.transform.SetParent(_cardParent, false);
+            _cardParent.gameObject.SetActive(true);
             card.transform.localPosition = Vector3.zero;
             _followerPanel.SetActive(false);
-            _ratingTextGUI.text = "";
+            //  _ratingTextGUI.text = "";
             _logo.gameObject.SetActive(false);
 
 

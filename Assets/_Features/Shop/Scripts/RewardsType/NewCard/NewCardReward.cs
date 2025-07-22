@@ -7,7 +7,7 @@ namespace Quackery.Shops
     public class NewCardReward : ShopReward
     {
 
-        public override int Price => 0;
+        public override int Price => ItemData.SubscriptionCost;
 
         public override string Description => ItemData.ShopDescription;
 
