@@ -979,6 +979,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShopApp
       objectReference: {fileID: 0}
+    - target: {fileID: 8330685595586238951, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 724131bc8a7f34041bb9f1701f0cb58d, type: 3}
     - target: {fileID: 9012704261980253538, guid: ee79d44860f35434982a489985513e2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1829.3534
