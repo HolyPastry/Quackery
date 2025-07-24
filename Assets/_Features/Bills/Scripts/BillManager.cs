@@ -26,6 +26,7 @@ namespace Quackery.Bills
             BillServices.GetAmountDueToday = GetAmountDueToday;
             BillServices.GetNumBillDueToday = GetNumBillDueToday;
             BillServices.ResetBills = ResetBills;
+            BillServices.SetNumOverdueBills = (num) => _billList.OverrideNumOverdueBill(num);
 
         }
 
@@ -42,6 +43,7 @@ namespace Quackery.Bills
             BillServices.GetAmountDueToday = () => 0;
             BillServices.GetNumBillDueToday = () => 0;
             BillServices.ResetBills = delegate { };
+            BillServices.SetNumOverdueBills = (num) => { };
         }
 
         protected override IEnumerator Start()

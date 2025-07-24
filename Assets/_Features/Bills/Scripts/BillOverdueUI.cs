@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
-using JetBrains.Annotations;
+
 using Quackery.Decks;
 using Quackery.Inventories;
 using UnityEngine;
@@ -52,7 +52,7 @@ namespace Quackery.Bills
 
         private IEnumerator UpdateUICoroutine()
         {
-            _overduePanel.gameObject.SetActive(false);
+            _overduePanel.SetActive(false);
             while (true)
             {
 
@@ -103,7 +103,7 @@ namespace Quackery.Bills
                 StopAllCoroutines();
                 yield break;
             }
-            _overduePanel.gameObject.SetActive(true);
+            _overduePanel.SetActive(true);
             yield return new WaitForSeconds(0.5f);
             for (int i = 0; i < _overdueCrosses.Count; i++)
             {

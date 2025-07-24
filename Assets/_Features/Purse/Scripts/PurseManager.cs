@@ -57,6 +57,8 @@ public class PurseManager : Service
     private void Modify(float amount)
     {
         _purse.Amount += amount;
+        if (_purse.Amount < 0)
+            _purse.Amount = 0;
         SaveServices.Save(SaveKey, _purse);
         PurseEvents.OnPurseUpdated?.Invoke(_purse.Amount);
     }

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
+
 using UnityEngine;
 
 namespace Quackery.TetrisBill
@@ -15,13 +15,14 @@ namespace Quackery.TetrisBill
         [SerializeField] private float _speed = 1.0f;
         [SerializeField] private BlockPool _shapePool;
 
+        [SerializeField] private TetrisCube _startingCubePrefab;
+
         private int _spawnOffset => _cellSize * _gridHeight;
 
-
+        public Action<List<TetrisCube>> OnGameOver = delegate { };
 
         private List<TetrisCube> _cubes = new();
-
-        [SerializeField] private List<TetrisBlock> _tetrisBlockPrefab;
+        private List<int> _startingCubeIndexes = new();
 
         private TetrisBlock _currentBlock;
 
@@ -29,48 +30,49 @@ namespace Quackery.TetrisBill
         internal static Action MoveRight = delegate { };
         internal static Action MoveLeft = delegate { };
         internal static Action Rotate = delegate { };
+        internal static Action<int> SetBudgetIndex = delegate { };
         public static Func<int> CellSize = () => 1;
 
         private Vector2 _moveDirection;
         private bool _needRotation;
         private bool _removingLines;
+        private int _budgetIndex;
 
-        void Awake()
-        {
-            GetComponentsInChildren(true, _cubes);
-        }
 
         void OnEnable()
         {
             MoveRight = () => _moveDirection = Vector2.right;
             MoveLeft = () => _moveDirection = Vector2.left;
             Rotate = () => _needRotation = true;
+            SetBudgetIndex = (index) => _budgetIndex = index;
             CellSize = () => _cellSize;
         }
-
-
 
         void OnDisable()
         {
             MoveRight = delegate { };
             MoveLeft = delegate { };
             Rotate = delegate { };
-            CellSize = null;
+            SetBudgetIndex = delegate { };
+            CellSize = () => 1;
         }
 
 
-
+        public void PrepareGame()
+        {
+            _cubes.Clear();
+            GetComponentsInChildren(true, _cubes);
+            _startingCubeIndexes.Clear();
+            StartCoroutine(SpawnAllBlocks());
+        }
         public void StartGame()
         {
-
-
 
             StartCoroutine(GameLoopRoutine());
         }
 
         private IEnumerator GameLoopRoutine()
         {
-            yield return StartCoroutine(SpawnAllBlocks());
             yield return new WaitForSeconds(0.5f);
             while (true)
             {
@@ -80,18 +82,25 @@ namespace Quackery.TetrisBill
                 {
                     var block = FetchNewBlock();
                     if (block == null)
-                        yield break; // No more blocks to spawn
+                        break; // No more blocks to spawn
                     yield return null;
                     _currentBlock = block;
                 }
                 else
                     MoveCurrentBlock();
             }
+            OnGameOver(GetCubesAboveLineIndex());
+        }
 
+        private List<TetrisCube> GetCubesAboveLineIndex()
+        {
+            return _cubes.FindAll(c => c.LineIndex > _budgetIndex);
         }
 
         private IEnumerator SpawnAllBlocks()
         {
+            yield return FlowServices.WaitUntilEndOfSetup();
+            yield return BillServices.WaitUntilReady();
             var bills = BillServices.GetAllBills();
 
             foreach (var bill in bills)
@@ -162,6 +171,7 @@ namespace Quackery.TetrisBill
             _currentBlock.SnapToGrid(transform);
             StartCoroutine(RemoveCompletedLines());
             Destroy(_currentBlock.gameObject);
+
             _currentBlock = null;
         }
 
@@ -206,14 +216,14 @@ namespace Quackery.TetrisBill
                 }
                 yield return new WaitForSeconds(0.2f);
             }
+            int highestLineIndex = _cubes.Max(c => c.LineIndex);
+            MoneyScale.SetMoneyAmount(highestLineIndex);
             _removingLines = false;
 
         }
 
         private TetrisBlock FetchNewBlock()
         {
-
-
             if (!_shapePool.FetchBlock(transform, out TetrisBlock block))
                 return null;
 
@@ -230,7 +240,21 @@ namespace Quackery.TetrisBill
             //return UnityEngine.Random.Range(-_gridWidth / 2, _gridWidth / 2);
         }
 
+        internal void AddOneStartingBlock()
+        {
+            int randomIndex = UnityEngine.Random.Range(0, _gridWidth);
+            while (_startingCubeIndexes.Contains(randomIndex))
+            {
+                randomIndex = UnityEngine.Random.Range(0, _gridWidth);
+            }
+            _startingCubeIndexes.Add(randomIndex);
+            var cube = Instantiate(_startingCubePrefab, transform);
+            cube.PositionX = (randomIndex - _gridWidth / 2 + 0.5f) * _cellSize;
+            cube.PositionY = 0;
+            _cubes.Add(cube);
 
+
+        }
     }
 }
 

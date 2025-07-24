@@ -6,7 +6,7 @@ namespace Quackery.TetrisBill
 {
     public class BlockPool : MonoBehaviour
     {
-        [SerializeField] private int _spacing = 100;
+        private const int Spacing = 100;
         public TetrisBlock AddBlock(TetrisBlock prefab)
         {
             var block = Instantiate(prefab, transform);
@@ -39,8 +39,8 @@ namespace Quackery.TetrisBill
                 totalWidth += (int)child.GetComponent<RectTransform>().rect.width;
 
             }
-            Debug.Log(_spacing);
-            totalWidth += (transform.childCount - 1) * _spacing;
+            Debug.Log(Spacing);
+            totalWidth += (transform.childCount - 1) * Spacing;
             int offset = -totalWidth / 2;
             for (int i = 0; i < transform.childCount; i++)
             {
@@ -55,7 +55,7 @@ namespace Quackery.TetrisBill
                     rectTransform.anchoredPosition = new Vector2(offset + (rectTransform.rect.width / 2), 0);
                 }
 
-                offset += (int)rectTransform.rect.width + _spacing;
+                offset += (int)rectTransform.rect.width + Spacing;
             }
         }
     }

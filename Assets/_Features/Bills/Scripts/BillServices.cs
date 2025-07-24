@@ -31,5 +31,6 @@ namespace Quackery
 
         internal static Action ResetBills = delegate { };
 
+        internal static Action<int> SetNumOverdueBills = (num) => { };
     }
 }

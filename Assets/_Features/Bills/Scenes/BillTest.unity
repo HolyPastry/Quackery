@@ -543,6 +543,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _disable: 0
   _cardInHands: []
+  _deck: {fileID: 0}
+  _placeOnTopOfDeck: []
 --- !u!1 &1046075482
 GameObject:
   m_ObjectHideFlags: 0
@@ -944,6 +946,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5264677951410168420, guid: ec49dc7de99d94800baf0ee89b2f9e6d, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5725516597717443161, guid: ec49dc7de99d94800baf0ee89b2f9e6d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133410017290144031, guid: ec49dc7de99d94800baf0ee89b2f9e6d, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8403444078962030402, guid: ec49dc7de99d94800baf0ee89b2f9e6d, type: 3}

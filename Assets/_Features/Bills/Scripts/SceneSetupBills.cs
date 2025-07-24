@@ -9,6 +9,7 @@ namespace Quackery
     public class SceneSetupBills : SceneSetupScript
     {
         public List<BillData> BillDataList;
+        public int NumOverdueBills = 0;
         public override IEnumerator Routine()
         {
             yield return FlowServices.WaitUntilReady();
@@ -17,6 +18,7 @@ namespace Quackery
             {
                 BillServices.AddNewBill(billData, false);
             }
+            BillServices.SetNumOverdueBills(NumOverdueBills);
         }
     }
 }

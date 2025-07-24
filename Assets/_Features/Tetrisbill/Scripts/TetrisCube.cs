@@ -81,5 +81,10 @@ namespace Quackery.TetrisBill
             if (newIndex < 0) return; // Prevent moving below the grid
             rectTransform.DOAnchorPosY(newIndex * TetrisGame.CellSize(), duration);
         }
+
+        internal void Clear()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

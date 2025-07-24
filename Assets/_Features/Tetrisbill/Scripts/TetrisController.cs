@@ -1,85 +1,108 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Quackery.TetrisBill;
+using Quackery.Bills;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-namespace Quackery
+namespace Quackery.TetrisBill
 {
-    public class TetrisController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
+    public class TetrisController : MonoBehaviour
     {
-        [SerializeField] private float _dragResetTime = 0.5f;
-        public int DragDirection = 0; // -1 for left, 1 for right, 0 for no drag
-        private bool _dragged;
-        private float _timer;
+        [SerializeField] private TetrisGame _tetrisGame;
+        [SerializeField] private TetrisStartScreen _startScreen;
+        [SerializeField] private TetrisOverdueUI _overdueUI;
+        private bool _startedOnce;
 
-
-        public void OnBeginDrag(PointerEventData eventData)
+        void OnEnable()
         {
-            // Reset drag direction at the start of a drag
-            DragDirection = 0;
+            _startScreen.OnStart += StartGame;
+            _tetrisGame.OnGameOver += GameOver;
+            if (_startedOnce) Setup();
+
+
         }
 
-        public void OnDrag(PointerEventData eventData)
+        void OnDisable()
         {
-            // Determine drag direction based on mouse position
-            if (eventData.delta.x > 10)
+            _startScreen.OnStart -= StartGame;
+            _tetrisGame.OnGameOver -= GameOver;
+        }
+
+        IEnumerator Start()
+        {
+            yield return FlowServices.WaitUntilEndOfSetup();
+            yield return BillServices.WaitUntilReady();
+            yield return PurseServices.WaitUntilReady();
+
+            Setup();
+            _startedOnce = true;
+        }
+        public void Setup()
+        {
+            _startScreen.Show();
+            _tetrisGame.PrepareGame();
+            _overdueUI.Setup();
+
+
+        }
+        public void StartGame()
+        {
+            StartCoroutine(StartGameRoutine());
+
+        }
+
+        private IEnumerator StartGameRoutine()
+        {
+            int numOverdueBill = BillServices.GetNumOverdueBills();
+            for (int i = 0; i < numOverdueBill; i++)
             {
-                DragDirection = 1; // Right drag
+                _overdueUI.TakeOneCross();
+                yield return new WaitForSeconds(0.3f);
+                _tetrisGame.AddOneStartingBlock();
+                yield return new WaitForSeconds(0.3f);
             }
-            else if (eventData.delta.x < 10)
-            {
-                DragDirection = -1; // Left drag
-            }
-            else
-            {
-                DragDirection = 0; // No horizontal drag
-            }
+            yield return new WaitForSeconds(0.5f);
+            _tetrisGame.StartGame();
         }
 
-        public void OnEndDrag(PointerEventData eventData)
+        private void GameOver(List<TetrisCube> cubesOverTheLine)
         {
-            // Reset drag direction when the drag ends
-            DragDirection = 0;
-
+            Debug.Log("Game Over! Cubes over the line: " + cubesOverTheLine.Count);
+            StartCoroutine(GameOverRoutine(cubesOverTheLine));
         }
 
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (DragDirection == 0)
-                TetrisGame.Rotate();
-        }
-
-
-        void LateUpdate()
+        private IEnumerator GameOverRoutine(List<TetrisCube> cubesOverTheLine)
         {
 
-            if (DragDirection != 0)
+            yield return new WaitForSeconds(1f);
+            int budget = MoneyScale.GetBudgetAmount();
+            PurseServices.Modify(-budget);
+
+            yield return new WaitForSeconds(1f);
+            int numCrossAdded = 0;
+            foreach (var cube in cubesOverTheLine)
             {
-                _timer = 0f; // Reset timer when a drag is detected
-                if (_dragged) return; // Prevent multiple actions on the same drag
-                _dragged = true;
-                // Handle the drag direction logic here
-                if (DragDirection == 1)
+                numCrossAdded++;
+                cube.FlashColor();
+                yield return new WaitForSeconds(0.5f);
+                cube.Destroy();
+                if (numCrossAdded > 3)
                 {
-                    TetrisGame.MoveRight();
-
-                    // Implement right movement logic
+                    Debug.LogWarning("Too many overdue bills, stopping the game.");
+                    BillApp.GameOverAction();
+                    yield break;
                 }
-                else if (DragDirection == -1)
-                {
-                    TetrisGame.MoveLeft();
-                    // Implement left movement logic
-                }
+                _overdueUI.AddOneCross();
             }
-            else
+            yield return new WaitForSeconds(0.5f);
+            if (numCrossAdded > 0)
             {
-                _timer += Time.deltaTime;
-                if (_timer >= _dragResetTime)
-                    _dragged = false;
+                BillServices.SetNumOverdueBills(numCrossAdded);
+                yield return StartCoroutine(_overdueUI.ActOverdueBillRoutine());
             }
-
-            DragDirection = 0;
+            yield return new WaitForSeconds(1f);
+            BillApp.ContinueAction();
         }
     }
 }
+

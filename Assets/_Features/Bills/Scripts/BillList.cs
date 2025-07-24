@@ -14,6 +14,7 @@ namespace Quackery.Bills
         private DataCollection<BillData> _billDataCollection;
 
         public List<Bill> Bills = new();
+        private int _overrideNumOverdueBill;
 
         public BillList()
         {
@@ -66,6 +67,10 @@ namespace Quackery.Bills
 
         internal int GetNumOverdueBills()
         {
+            if (_overrideNumOverdueBill > 0)
+            {
+                return _overrideNumOverdueBill;
+            }
             int overdueCount = Bills.Sum(bill => bill.IsOverdue ? 1 : 0);
 
             return overdueCount;
@@ -87,6 +92,11 @@ namespace Quackery.Bills
                 bill.LastPaymentDay = CalendarServices.Today();
             }
             Save();
+        }
+
+        internal void OverrideNumOverdueBill(int num)
+        {
+            _overrideNumOverdueBill = num;
         }
     }
 }
