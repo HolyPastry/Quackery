@@ -18,7 +18,7 @@ namespace Quackery.Bills
         void OnEnable()
         {
             BillServices.WaitUntilReady = () => WaitUntilReady;
-            BillServices.GetAllBills = () => _billList.Bills.FindAll(b => b.Price > 0 && !b.New);
+            BillServices.GetAllBills = () => _billList.Bills.FindAll(b => b.Price > 0);
             BillServices.AddNewBill = AddNewBill;
             BillServices.PayBill = PayBill;
             BillServices.DueIn = CalculateDueInDate;

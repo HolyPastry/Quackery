@@ -1,4 +1,5 @@
 using Holypastry.Bakery;
+using Quackery.TetrisBill;
 using UnityEngine;
 
 
@@ -10,8 +11,11 @@ namespace Quackery.Bills
         public Sprite Background;
         public Sprite Icon;
         [SerializeField] private int _startPrice;
+        [SerializeField] private TetrisBlock _shape;
 
         public virtual int Price => _startPrice;
+
+        public TetrisBlock BlockPrefab => _shape;
 
         public int PaymentInterval;
     }
