@@ -26,7 +26,7 @@ namespace Quackery.Decks
 
         public static Action<EnumItemCategory> ChangeCardCategory = (category) => { };
 
-        public static Action<Card> RemoveCard = (card) => { };
+        public static Action<Card, bool> RemoveCard = (card, removeCardValue) => { };
 
         public static Action<int> AddToCartValue = (value) => { };
 
@@ -57,11 +57,15 @@ namespace Quackery.Decks
 
         public static Action RandomizeCart = () => { };
 
-        internal static Func<CartEvaluation> GetCartEvaluation = () => default;
+        //internal static Func<CartEvaluation> GetCartEvaluation = () => default;
 
         internal static Func<int> GetMaxValue = () => 30;
 
         internal static Func<CartMode> GetMode = () => CartMode.Survival;
+
+        internal static Func<Predicate<Card>, List<Card>> GetMatchingCards = (predicate) => new();
+
+        // internal static Action<int> ModifyValue = (value) => { };
 
     }
 }

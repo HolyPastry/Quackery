@@ -16,13 +16,14 @@ MonoBehaviour:
   Icon: {fileID: 0}
   BasePrice: 0
   ShortDescription: Irritation
-  LongDescription: On draw, add a copy of this card to the discard pile.
+  LongDescription: 
   ShopDescription: 
   Explanations: []
   SubscriptionCost: 0
   Category: 8
   Effects:
-  - Data: {fileID: 11400000, guid: 949c03879b6724692a721aad20124c88, type: 2}
+  - _data: {fileID: 11400000, guid: 949c03879b6724692a721aad20124c88, type: 2}
     Value: 1
     Tags: 
   ValueEvaluator: {fileID: 0}
+  Rarity: 0

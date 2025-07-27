@@ -20,6 +20,8 @@ namespace Quackery.Effects
         public bool CanBeNegative = false;
 
         public EnumEffectTrigger Trigger = EnumEffectTrigger.OnCardPlayed;
+
+        public List<EnumEffectTag> _tags;
         public List<Explanation> Explanations;
         public WaitForSeconds DefaultWaitTime = new(0.5f);
 
@@ -28,5 +30,10 @@ namespace Quackery.Effects
 
         public virtual void Cancel(Effect effect) { }
         internal virtual void CheckValidity() { }
+
+        public virtual void Setup(Effect effect)
+        {
+            effect.Tags.AddUniqueRange(_tags);
+        }
     }
 }

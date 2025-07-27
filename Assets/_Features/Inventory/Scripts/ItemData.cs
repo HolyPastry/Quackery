@@ -36,9 +36,12 @@ namespace Quackery.Inventories
 
         public EnumItemCategory Category;
 
+
         public List<Effect> Effects = new();
 
         public ValueEvaluator ValueEvaluator;
+
+        public EnumRarity Rarity;
 
         internal List<CardReward> CalculateCardRewards(Card topCard, List<Item> subItems, List<CardPile> otherPiles)
         {

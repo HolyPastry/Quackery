@@ -16,14 +16,15 @@ namespace Quackery
         {
             _canvas.gameObject.SetActive(true);
             IsOn = true;
-            _animatedRect.SlideIn(Direction.Right);
+            //_animatedRect.SlideIn(Direction.Right);
         }
 
         public virtual void Hide()
         {
             IsOn = false;
-            _animatedRect.SlideOut(Direction.Left)
-                         .DoComplete(() => _canvas.gameObject.SetActive(false));
+            _canvas.gameObject.SetActive(false);
+            // _animatedRect.SlideOut(Direction.Left)
+            //              .DoComplete(() => _canvas.gameObject.SetActive(false));
         }
     }
 }

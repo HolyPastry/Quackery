@@ -30,30 +30,30 @@ namespace Quackery.Decks
             var totalValue = baseValue + bonusValue;
 
             float newValue = totalValue / bestValue;
-            CartEvaluation evaluation = CartServices.GetCartEvaluation();
+            //     CartEvaluation evaluation = CartServices.GetCartEvaluation();
 
             if (_oldValue == -1) _oldValue = newValue;
 
             _cartValueText.text = $"<sprite name=Coin> {baseValue} <size=80%><color=#000000>+{bonusValue}</color></size>";
             _valueGauge.fillAmount = (1 / 0.8f) * newValue;
 
-            if (newValue > _oldValue)
-                PlayRealization(evaluation);
+            // if (newValue > _oldValue)
+            //     PlayRealization(evaluation);
 
             _oldValue = newValue;
 
 
         }
 
-        private void PlayRealization(CartEvaluation evaluation)
-        {
-            _valueGauge.color = evaluation.Color;
+        // private void PlayRealization(CartEvaluation evaluation)
+        // {
+        //     _valueGauge.color = evaluation.Color;
 
-            TriggerThresholdReward(evaluation.Index);
+        //     TriggerThresholdReward(evaluation.Index);
 
-            // _cartValueText.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f, 1, 1f)
-            //     .SetEase(Ease.OutElastic);
-        }
+        //     // _cartValueText.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f, 1, 1f)
+        //     //     .SetEase(Ease.OutElastic);
+        // }
 
         private void TriggerThresholdReward(int i)
         {

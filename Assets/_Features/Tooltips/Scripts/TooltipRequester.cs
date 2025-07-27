@@ -12,7 +12,7 @@ namespace Quackery
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            TooltipUI.HideTooltipRequest();
+            //    TooltipUI.HideTooltipRequest();
         }
     }
 }

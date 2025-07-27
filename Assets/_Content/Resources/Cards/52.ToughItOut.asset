@@ -15,22 +15,24 @@ MonoBehaviour:
   MasterText: Tough It Out
   Icon: {fileID: 21300000, guid: b92b39264596843248db4e097a448776, type: 3}
   BasePrice: 0
-  ShortDescription: ' + #EffectValue1 Enthused, +#EffectValue2 Fatigue'
-  LongDescription: Apply #EffectValue1 Enthused, Add #EffectValue2 Fatigue to Discard
+  ShortDescription: ' Apply #EffectValue1 Excited, Add #EffectValue2 Fatigue into
+    your discard pile.'
+  LongDescription: 
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 7be96e413af4a4c689fbe9bd876c7924, type: 2}
-  - {fileID: 11400000, guid: 0488a6f69d8f044c8af1923620b72b86, type: 2}
+  - {fileID: 11400000, guid: 5f01a83e104ee421ba05f62866982f67, type: 2}
   SubscriptionCost: 0
   Category: 7
   Effects:
-  - Data: {fileID: 11400000, guid: ab38ab34b9e4f40a292f4e187fc18f90, type: 2}
+  - _data: {fileID: 11400000, guid: ab38ab34b9e4f40a292f4e187fc18f90, type: 2}
     Value: 1
     Tags: 
-  - Data: {fileID: 11400000, guid: 0ca3b421aead9463a9c45a7f35408073, type: 2}
-    Value: 2
+  - _data: {fileID: 11400000, guid: 0ca3b421aead9463a9c45a7f35408073, type: 2}
+    Value: 1
     Tags: 
-  - Data: {fileID: 11400000, guid: 801a0a2ba11034396948a755cdf973ab, type: 2}
+  - _data: {fileID: 11400000, guid: 801a0a2ba11034396948a755cdf973ab, type: 2}
     Value: 0
     Tags: 
   ValueEvaluator: {fileID: 0}
+  Rarity: 0

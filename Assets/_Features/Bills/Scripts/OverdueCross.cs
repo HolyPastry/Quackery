@@ -35,14 +35,12 @@ namespace Quackery.Bills
             switch (newState)
             {
                 case State.Overdue:
-                    Debug.Log("Overdue");
                     gameObject.SetActive(true);
                     _cross.color = Color.black;
                     transform.localScale = Vector3.one;
                     break;
 
                 case State.DueToday:
-                    Debug.Log("Due today");
                     gameObject.SetActive(true);
                     _cross.color = Color.red;
                     _loopTween = transform.DOScale(0.3f, 1f)

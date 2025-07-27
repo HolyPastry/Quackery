@@ -199,9 +199,13 @@ namespace Quackery.Decks
 
             yield return new WaitForSeconds(0.5f);
             yield return EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundStart, null);
-
+            bool firstHand = true;
             while (true)
             {
+                if (!firstHand)
+                    yield return EffectServices.UpdateDurationEffects();
+                firstHand = false;
+
                 yield return DeckServices.DrawBackToFull();
 
                 DeckServices.ActivateTableCards();
@@ -228,7 +232,7 @@ namespace Quackery.Decks
             yield return DeckServices.DiscardHand();
             // EffectServices.CleanEffects();
 
-            //EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundEnd, null);
+            EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundEnd, null);
             _endOfRound = true;
         }
 

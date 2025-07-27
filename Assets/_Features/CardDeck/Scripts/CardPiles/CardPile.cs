@@ -99,9 +99,9 @@ namespace Quackery.Decks
             Cards.Clear();
         }
 
-        public void RemoveCard(Card card)
+        public bool RemoveCard(Card card)
         {
-            Cards.Remove(card);
+            return Cards.Remove(card);
         }
 
         public void AddOnTop(Card card, bool isInstant = false)

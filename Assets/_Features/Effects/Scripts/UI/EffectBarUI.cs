@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery
@@ -11,7 +11,9 @@ namespace Quackery
     {
         [SerializeField] private bool _listenToChange;
         [SerializeField] private SpeechBubble _clientSpeechBubble;
+        [SerializeField] private List<EnumEffectTag> _tagFilters;
         private readonly List<EffectUI> _statusUIPool = new();
+
 
         void Awake()
         {
@@ -54,6 +56,8 @@ namespace Quackery
         {
             for (int i = 0; i < _statusUIPool.Count; i++)
             {
+                if (!_statusUIPool[i].gameObject.activeSelf) continue;
+                if (_statusUIPool[i].Effect == null) continue;
                 if (_statusUIPool[i].Effect.Data == effect.Data)
                 {
                     _statusUIPool[i].Hide();
@@ -65,16 +69,12 @@ namespace Quackery
 
         public void AddStatusUI(Effect effect)
         {
-            if (!effect.Tags.Contains(Effects.EnumEffectTag.Status)) return;
+            bool containsTag = _tagFilters.TrueForAll(tag => effect.Tags.Contains(tag));
+            if (!containsTag) return;
             foreach (var statusUI in _statusUIPool)
             {
                 if (statusUI.gameObject.activeSelf) continue;
-                // if (effect.Tags.Contains(Effects.EnumEffectTag.Client))
-                // {
                 StartCoroutine(AddClientStatusRoutine(statusUI, effect));
-                // }
-                // else
-                //     statusUI.UpdateStatus(effect, animate: true);
                 return;
             }
         }
@@ -101,12 +101,13 @@ namespace Quackery
             for (int i = 0; i < effects.Count; i++)
             {
                 var statusUI = _statusUIPool.Find(ui
-                        => ui.Effect.Data == effects[i].Data &&
+                        => ui.Effect != null &&
+                             ui.Effect.Data == effects[i].Data &&
                             ui.gameObject.activeSelf == true
                             );
                 if (statusUI != null)
                 {
-                    statusUI.UpdateStatus(effects[i]);
+                    statusUI.UpdateStatus(effects[i], animate: true);
                     continue;
                 }
 

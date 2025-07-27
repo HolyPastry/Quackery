@@ -15,8 +15,8 @@ MonoBehaviour:
   MasterText: A Big Crystal
   Icon: {fileID: 21300000, guid: 924378c9a205d4ae4a6da4df1f61810c, type: 3}
   BasePrice: 12
-  ShortDescription: + 2 Charmed\n +1 Stress
-  LongDescription: +2 Charmed. +1 Stress
+  ShortDescription: Apply 2 Vibes\n Apply 1 Stress
+  LongDescription: 
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 48f617e1041c14b9d855f83da3a9fb1e, type: 2}
@@ -24,10 +24,11 @@ MonoBehaviour:
   SubscriptionCost: 9
   Category: 3
   Effects:
-  - Data: {fileID: 11400000, guid: 941b13ba70d4b4b9d923d3a35d86ba36, type: 2}
+  - _data: {fileID: 11400000, guid: 941b13ba70d4b4b9d923d3a35d86ba36, type: 2}
     Value: 1
     Tags: 
-  - Data: {fileID: 11400000, guid: 3595818e79b0a41709da42f7deae28b8, type: 2}
+  - _data: {fileID: 11400000, guid: 3595818e79b0a41709da42f7deae28b8, type: 2}
     Value: 2
-    Tags: 
+    Tags: 0200000005000000
   ValueEvaluator: {fileID: 0}
+  Rarity: 0

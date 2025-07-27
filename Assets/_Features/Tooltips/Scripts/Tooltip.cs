@@ -8,6 +8,13 @@ namespace Quackery
     {
         [SerializeField, Child] private TextMeshProUGUI _textGUI;
 
+        public Vector2 AnchoredPosition
+        {
+            get => (transform as RectTransform).anchoredPosition;
+            set => (transform as RectTransform).anchoredPosition = value;
+
+        }
+
         void Awake()
         {
             gameObject.SetActive(false);

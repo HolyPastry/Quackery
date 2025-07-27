@@ -39,7 +39,7 @@ namespace Quackery.TetrisBill
                 totalWidth += (int)child.GetComponent<RectTransform>().rect.width;
 
             }
-            Debug.Log(Spacing);
+
             totalWidth += (transform.childCount - 1) * Spacing;
             int offset = -totalWidth / 2;
             for (int i = 0; i < transform.childCount; i++)

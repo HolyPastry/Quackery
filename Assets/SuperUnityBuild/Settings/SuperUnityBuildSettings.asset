@@ -66,9 +66,9 @@ MonoBehaviour:
     openFolderPostBuild: 1
     constantsFileLocation: Assets/SuperUnityBuild
   _productParameters:
-    buildCounter: 8
-    buildVersion: 0.0.7
-    versionTemplate: 0.0.7
+    buildCounter: 9
+    buildVersion: 0.0.8
+    versionTemplate: 0.0.8
     autoGenerate: 0
     syncWithPlayerSettings: 0
   _releaseTypeList:

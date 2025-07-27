@@ -11,14 +11,14 @@ namespace Quackery.Decks
         private bool _isOn;
 
 
-        void Start()
-        {
-            TooltipUI.OnShowTooltip += UpdateTooltipState;
-        }
-        void OnDestroy()
-        {
-            TooltipUI.OnShowTooltip -= UpdateTooltipState;
-        }
+        // void Start()
+        // {
+        //     TooltipUI.OnShowTooltip += UpdateTooltipState;
+        // }
+        // void OnDestroy()
+        // {
+        //     TooltipUI.OnShowTooltip -= UpdateTooltipState;
+        // }
 
         private void UpdateTooltipState(GameObject @object)
         {

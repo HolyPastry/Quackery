@@ -14,21 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Cooling Water
   Icon: {fileID: 21300000, guid: b3b83ec6df8964adc9c34cafa948ba36, type: 3}
-  BasePrice: 10
-  ShortDescription: Place on smallest stack. + 1 Suspicion
-  LongDescription: 'Must be placed on top of the smallest stack. +1 Suspicion in
-    the draw pile. '
+  BasePrice: 8
+  ShortDescription: Tuck\n Add Suspicion to your draw Pile
+  LongDescription: 
   ShopDescription: Shop Description
-  Explanations:
-  - {fileID: 11400000, guid: 2c6a8ca528d854daa997ce3aae573eec, type: 2}
-  - {fileID: 11400000, guid: 6a88eaf0137fd44388d07980a3253e71, type: 2}
-  SubscriptionCost: 1
+  Explanations: []
+  SubscriptionCost: 3
   Category: 6
   Effects:
-  - Data: {fileID: 11400000, guid: 30a53fd27e0e941b283a4be786b04da3, type: 2}
+  - _data: {fileID: 11400000, guid: b93a9d0ee4da14f49aaae9e0dbb5cc69, type: 2}
     Value: 0
     Tags: 
-  - Data: {fileID: 11400000, guid: 9fd96427358ac4196af546c123289864, type: 2}
+  - _data: {fileID: 11400000, guid: 9fd96427358ac4196af546c123289864, type: 2}
     Value: 1
     Tags: 
   ValueEvaluator: {fileID: 0}
+  Rarity: 0

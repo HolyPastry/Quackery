@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Ink.Parsed;
 using Quackery.Artifacts;
 using Quackery.Decks;
 using Quackery.Effects;
@@ -60,6 +61,14 @@ namespace Quackery
         internal static Action<List<Card>> UpdateCardEffects = (topCards) => { };
 
         internal static Func<Card, IEnumerator> AddEffectsFromCard = (Card) => null;
+
+        public static Func<Type, int> GetModifier = (effectData) => 0;
+
+        internal static Func<Coroutine> UpdateDurationEffects = () => null;
+
+        internal static Func<int> GetNumStatuses = () => 0;
+
+        // internal static Action UpdateHandSize = () => { };
 
     }
 }

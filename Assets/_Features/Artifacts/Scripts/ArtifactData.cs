@@ -24,6 +24,8 @@ namespace Quackery.Artifacts
         public List<Explanation> Explanations = new();
         public bool IsUpgrade => UpgradeFor != null;
 
+        public EnumRarity Rarity;
+
         public List<Effect> Effects = new();
     }
 }

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faef7460c8089417eb1a2ecb68b74f5c, type: 3}
+  m_Name: Magic Event
+  m_EditorClassIdentifier: 
+  MasterText: Herb Synergy Amplifier
+  Icon: {fileID: 21300000, guid: d5b76a7b39fdde5488fd558eb4c62765, type: 3}
+  Description: Synergy Bonus x#Value
+  CanBeNegative: 0
+  Trigger: 6
+  _tags: 
+  Explanations: []
+  _category: 2
+  _operation: 1

@@ -1,13 +1,13 @@
 
 
 
-using System;
+
 using System.Collections;
 using Quackery.Clients;
 using Quackery.Decks;
 using Quackery.Shops;
 using Quackery.StateMachines;
-using UnityEngine;
+
 
 namespace Quackery
 {
@@ -64,10 +64,10 @@ namespace Quackery
             At(notificationState, clientListState, () => !NotificationApp.IsOn);
 
             At(clientListState, activeClientChatState, () => ActiveClientSelected);
-            At(activeClientChatState, shopState, () => SelectedClient == null);
-            At(shopState, billState, () => !ShopApp.IsOn);
+            At(activeClientChatState, billState, () => SelectedClient == null);
+            At(shopState, sleepState, () => !ShopApp.IsOn);
 
-            At(billState, sleepState, () => !BillApp.IsOn && !BillApp.IsGameOver);
+            At(billState, shopState, () => !BillApp.IsOn && !BillApp.IsGameOver);
             At(billState, gameOverState, () => !BillApp.IsOn && BillApp.IsGameOver);
             At(sleepState, notificationState, () => !SleepApp.IsOn);
 

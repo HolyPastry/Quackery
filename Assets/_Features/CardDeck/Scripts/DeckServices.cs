@@ -33,12 +33,12 @@ namespace Quackery
 
         //  public static Action ResumeDraw = delegate { };
         public static Action<Card> MoveToTable = delegate { };
-        public static Func<IEnumerator> DrawBackToFull = () => null;
+        public static Func<Coroutine> DrawBackToFull = () => null;
         public static Func<int, List<Card>> Draw = (numberCards) => new();
 
         public static Action<Card> DestroyCard = (cards) => { };
 
-        public static Action<List<ItemData>> DrawSpecificCards = (cards) => { };
+        public static Action<List<ItemData>> ForceOnNextDraw = (cards) => { };
 
         public static Action<EnumItemCategory, EnumCardSelection> ChangeCardCategory = delegate { };
 
@@ -78,5 +78,8 @@ namespace Quackery
 
         internal static Action<int> SetCustomDraw = (numCard) => { };
 
+        internal static Action<int> ModifyHandSize = (handSizeModifier) => { };
+
+        internal static Func<EnumCardPile, int, bool> IsPilePlayable = (pile, index) => true;
     }
 }

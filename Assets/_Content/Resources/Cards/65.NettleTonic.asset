@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0ffd188598740d4883cb7fe3078f56, type: 3}
+  m_Name: 65.NettleTonic
+  m_EditorClassIdentifier: 
+  MasterText: Nettle Tonic
+  Icon: {fileID: 0}
+  BasePrice: 0
+  ShortDescription: 
+  LongDescription: 
+  ShopDescription: 
+  Explanations: []
+  SubscriptionCost: 16
+  Category: 1
+  Effects:
+  - _data: {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}
+    Value: 0
+    Tags: 
+  - _data: {fileID: 11400000, guid: 3d39d4e193b264704a510c23ee57f1e4, type: 2}
+    Value: 1
+    Tags: 020000000100000006000000
+  ValueEvaluator: {fileID: 0}
+  Rarity: 0

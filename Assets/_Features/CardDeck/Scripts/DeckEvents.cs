@@ -13,7 +13,9 @@ namespace Quackery.Decks
 
         public static Action<Card, List<Card>> OnCardSelected = (selectedCard, otherCards) => { };
 
-        internal static Action<EnumCardPile> OnCardPoolSizeUpdate = (cardPile) => { };
+        // internal static Action<EnumCardPile> OnCardPoolSizeUpdate = (cardPile) => { };
+        public static Action<EnumCardPile> OnCardPoolSizeIncrease = (cardPile) => { };
+        public static Action<EnumCardPile, int> OnCardPoolSizeDecrease = (cardPile, index) => { };
 
         public static Action<EnumCardPile, int, bool> OnActivatePile = (pileType, index, activate) => { };
 

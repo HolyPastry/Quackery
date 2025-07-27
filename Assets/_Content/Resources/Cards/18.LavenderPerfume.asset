@@ -16,7 +16,7 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 0478222ce942c4157aab867f40a3d7a2, type: 3}
   BasePrice: 8
   ShortDescription: Bundle\nRemove Stress
-  LongDescription: Tucks all herbalism cards in hand when played and removes stress.
+  LongDescription: 
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 760c3bfef0017439c9584611bb013c30, type: 2}
@@ -24,10 +24,11 @@ MonoBehaviour:
   SubscriptionCost: 4
   Category: 1
   Effects:
-  - Data: {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}
+  - _data: {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}
     Value: 0
     Tags: 
-  - Data: {fileID: 11400000, guid: 66454461a53d34ffa8120ed38a5e0f73, type: 2}
+  - _data: {fileID: 11400000, guid: 66454461a53d34ffa8120ed38a5e0f73, type: 2}
     Value: 0
     Tags: 
   ValueEvaluator: {fileID: 0}
+  Rarity: 0

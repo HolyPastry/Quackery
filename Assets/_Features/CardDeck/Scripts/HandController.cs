@@ -1,7 +1,7 @@
 using System;
 using Quackery.Decks;
 using TMPro;
-using UnityEditor.PackageManager;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -69,7 +69,9 @@ namespace Quackery
             pileUI.transform.SetAsLastSibling();
             _selectedPileUI = pileUI;
 
-            if (pileUI.TopCard.HasCartTarget)
+            if (!DeckServices.IsPilePlayable(pileUI.Type, pileUI.PileIndex))
+                _helperText.text = "No Playable Options";
+            else if (pileUI.TopCard.HasCartTarget)
                 _helperText.text = "Drag onto cart stack to play";
             else
             {
@@ -86,11 +88,12 @@ namespace Quackery
 
         protected override void DestroyCardPile(int index)
         {
-            base.DestroyCardPile(index);
-            if (_selectedPileUI.PileIndex == index)
+            if (_selectedPileUI != null && _selectedPileUI.PileIndex == index)
                 _selectedPileUI = null;
-            if (_followTouchPointPileUI.PileIndex == index)
+            if (_followTouchPointPileUI != null && _followTouchPointPileUI.PileIndex == index)
                 _followTouchPointPileUI = null;
+            base.DestroyCardPile(index);
+
         }
 
         protected override void OnCardPileTouchPress(CardPileUI pileUI)
@@ -166,9 +169,16 @@ namespace Quackery
             {
 
                 var cardPile = _cardPileUIs[i];
-
-                float t = (float)i / (_cardPileUIs.Count - 1);
-                float angleOffset = Mathf.Lerp(-angle, angle, t);
+                float t, angleOffset = 0f;
+                if (_cardPileUIs.Count == 1)
+                {
+                    angleOffset = Mathf.Lerp(-angle, angle, 0.5f);
+                }
+                else
+                {
+                    t = (float)i / (_cardPileUIs.Count - 1);
+                    angleOffset = Mathf.Lerp(-angle, angle, t);
+                }
                 float selectedOffset = 0f;
                 float scale = 1f;
                 if (cardPile == _selectedPileUI)

@@ -19,7 +19,8 @@ MonoBehaviour:
   Level: 1
   Requirements: []
   Explanations: []
+  Rarity: 1
   Effects:
-  - Data: {fileID: 11400000, guid: 50827194806454ba8a638dbac3936c41, type: 2}
+  - _data: {fileID: 11400000, guid: 50827194806454ba8a638dbac3936c41, type: 2}
     Value: 2
-    Tags: 
+    Tags: 0100000002000000

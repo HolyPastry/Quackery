@@ -15,8 +15,8 @@ MonoBehaviour:
   MasterText: Stress Relief
   Icon: {fileID: 21300000, guid: bdcf06588347c4e4086132d2f9e53458, type: 3}
   BasePrice: 0
-  ShortDescription: Exhaust all curse cards in hand. Apply 1 Stress. Exhaust
-  LongDescription: Exhaust all curse cards in hand. Cart size reduced by 1.
+  ShortDescription: Exhaust all Adversity cards in hand\n Apply 1 Stress \n Exhaust
+  LongDescription: 
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 8940ffcbd8b7a416eb34dcafcd8c4948, type: 2}
@@ -24,13 +24,14 @@ MonoBehaviour:
   SubscriptionCost: 0
   Category: 7
   Effects:
-  - Data: {fileID: 11400000, guid: ae795ef46d110457dbb25d3c4c07f67f, type: 2}
+  - _data: {fileID: 11400000, guid: ae795ef46d110457dbb25d3c4c07f67f, type: 2}
     Value: 0
     Tags: 
-  - Data: {fileID: 11400000, guid: 941b13ba70d4b4b9d923d3a35d86ba36, type: 2}
+  - _data: {fileID: 11400000, guid: 941b13ba70d4b4b9d923d3a35d86ba36, type: 2}
     Value: 1
     Tags: 
-  - Data: {fileID: 11400000, guid: 801a0a2ba11034396948a755cdf973ab, type: 2}
+  - _data: {fileID: 11400000, guid: 801a0a2ba11034396948a755cdf973ab, type: 2}
     Value: 0
     Tags: 
   ValueEvaluator: {fileID: 0}
+  Rarity: 0

@@ -29,7 +29,7 @@ namespace Quackery.Shops
         private Button _continueButton;
 
         private readonly List<ShopPost> _posts = new();
-        private ShopReward _currentReward;
+
 
         public event Action PhaseEnded = delegate { };
         public event Action<int, int> OnPostListUpdated = (numPost, highlightedIndex) => { };
@@ -115,13 +115,12 @@ namespace Quackery.Shops
 
                 _shopScrollRect.UnlockMovement();
             }
-
-            _currentReward = null;
         }
 
         public override void Show()
         {
-            _canvas.gameObject.SetActive(true);
+            base.Show();
+            //_canvas.gameObject.SetActive(true);
             CleanPosts();
 
             // _animatedRect.SlideIn(Direction.Right)

@@ -15,14 +15,18 @@ MonoBehaviour:
   MasterText: Distraction
   Icon: {fileID: 0}
   BasePrice: 0
-  ShortDescription: Distraction
-  LongDescription: 
+  ShortDescription: 'Distraction  '
+  LongDescription: Shuffle a suspicion into your draw pile.
   ShopDescription: 
   Explanations: []
   SubscriptionCost: 0
   Category: 8
   Effects:
-  - Data: {fileID: 11400000, guid: 52b121de6356a4387b25b353d7107949, type: 2}
+  - _data: {fileID: 11400000, guid: ffb0d9c01c7af453ab5241ff01e1e910, type: 2}
+    Value: -1
+    Tags: 
+  - _data: {fileID: 11400000, guid: a4fe2af1d3e35450bbc0a6b9a19fa4af, type: 2}
     Value: 0
     Tags: 
   ValueEvaluator: {fileID: 0}
+  Rarity: 0

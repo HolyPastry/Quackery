@@ -10,6 +10,7 @@ using Quackery.Inventories;
 
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.PlayerLoop;
 
 namespace Quackery.Effects
 {
@@ -56,6 +57,11 @@ namespace Quackery.Effects
 
             EffectServices.AddEffectsFromCard = (card) => null;
 
+            EffectServices.GetModifier = (effectDataType) => 0;
+            EffectServices.UpdateDurationEffects = () => null;
+            EffectServices.GetNumStatuses = () => 0;
+            //   EffectServices.UpdateHandSize = () => { };
+
             EffectEvents.OnAdded -= ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved -= ExecuteOnAppliedEffect;
             EffectEvents.OnUpdated -= ExecuteOnAppliedEffect;
@@ -100,6 +106,12 @@ namespace Quackery.Effects
             EffectServices.UpdateCardEffects = UpdateCardEffects;
             EffectServices.AddEffectsFromCard = AddEffectsFromCard;
 
+            //EffectServices.UpdateHandSize = UpdateHandSize;
+
+            EffectServices.GetModifier = GetModifier;
+            EffectServices.UpdateDurationEffects = () => StartCoroutine(UpdateDurationEffects());
+            EffectServices.GetNumStatuses = _effects.Where(e => e.Tags.Contains(EnumEffectTag.Status)).Count;
+
             EffectEvents.OnAdded += ExecuteOnAppliedEffect;
             EffectEvents.OnRemoved += ExecuteOnAppliedEffect;
             EffectEvents.OnUpdated += ExecuteOnAppliedEffect;
@@ -108,12 +120,40 @@ namespace Quackery.Effects
             CartEvents.OnStackHovered += OnStackHovered;
         }
 
+        private void UpdateHandSize()
+        {
+            var handSizeEffects = _effects.FindAll(effect =>
+               effect.Data is HandSizeEffect);
+            DeckServices.ModifyHandSize(handSizeEffects.Sum(effect => effect.Value));
+            foreach (var e in handSizeEffects)
+            {
+
+                if (e.ContainsTag(EnumEffectTag.OneTime))
+                    Cancel(e.Data);
+            }
+        }
+
+        private int GetModifier(Type type)
+        {
+
+            var effects = _effects.Where(e => e.Data.GetType().Equals(type)).ToList();
+            int modifier = 0;
+            foreach (var e in effects)
+            {
+                modifier += e.Value;
+                if (e.ContainsTag(EnumEffectTag.OneTime))
+                    Cancel(e.Data);
+            }
+            return modifier;
+        }
+
         private IEnumerator AddEffectsFromCard(Card card)
         {
 
             foreach (var effect in card.Effects)
             {
-                if (effect.Trigger != EnumEffectTrigger.Passive) continue;
+                if (effect.Trigger != EnumEffectTrigger.Passive &&
+                    !effect.Tags.Contains(EnumEffectTag.Status)) continue;
 
                 Add(effect);
                 yield return new WaitForSeconds(0.5f);
@@ -167,7 +207,7 @@ namespace Quackery.Effects
                         synergyEffect.Operation == EnumOperation.Add)
                 .Sum(effect => effect.Value);
 
-            return (multiplier * list.Count + 1, bonus);
+            return (multiplier * (list.Count + 1), bonus);
 
         }
 
@@ -379,6 +419,7 @@ namespace Quackery.Effects
 
         private void ExecuteOnAppliedEffect(Effect _)
         {
+
             //TODO:: Check who is using this and if it is still needed
             // foreach (var effect in _effects)
             //     if (effect.Trigger == EnumEffectTrigger.OnEffectApplied)
@@ -538,6 +579,7 @@ namespace Quackery.Effects
 
         private IEnumerator Execute(EnumEffectTrigger trigger, Card card)
         {
+
             var effectToExecute = _effects.FindAll(effect => effect.Trigger == trigger);
             if (card != null)
                 effectToExecute.AddRange(card.Effects.FindAll(effect => effect.Trigger == trigger));
@@ -555,6 +597,21 @@ namespace Quackery.Effects
                     yield return StartCoroutine(effect.Data.Execute(effect));
             }
 
+        }
+
+        private IEnumerator UpdateDurationEffects()
+        {
+            var durationEffects = _effects.FindAll(effect => effect.ContainsTag(EnumEffectTag.Duration));
+
+            foreach (var effect in durationEffects)
+            {
+                effect.Value--;
+                if (effect.Value <= 0)
+                    Cancel(effect.Data);
+                else
+                    EffectEvents.OnUpdated?.Invoke(effect);
+                yield return new WaitForSeconds(0.2f);
+            }
         }
     }
 }

@@ -11,65 +11,70 @@ namespace Quackery
 
     public class TooltipUI : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI _descriptionGUI;
-        [SerializeField] private TextMeshProUGUI _titleGUI;
-        [SerializeField] private TextMeshProUGUI _explanationGUI;
-        [SerializeField] private GameObject _hiddable;
         public static Action<GameObject> ShowTooltipRequest = delegate { };
         public static Action HideTooltipRequest = delegate { };
 
-        public static event Action<GameObject> OnShowTooltip = delegate { };
-        private List<TooltipExtension> _extensions = new();
+        // public static Action<GameObject, List<Explanation>> ShowTooltip = delegate { };
+        // private List<TooltipExtension> _extensions = new();
+        // private List<Tooltip> _tooltips = new();
 
-        void Awake()
-        {
-            GetComponents(_extensions);
-            _hiddable.SetActive(false);
-        }
+        // private Canvas _root;
 
-        void OnEnable()
-        {
-            ShowTooltipRequest = ShowTooltip;
-            HideTooltipRequest = HideTooltip;
-        }
-        void OnDisable()
-        {
-            ShowTooltipRequest = delegate { };
-            HideTooltipRequest = delegate { };
-        }
+        // void Awake()
+        // {
+        //     GetComponentsInChildren(true, _tooltips);
+        //     GetComponents(_extensions);
 
-        private void ShowTooltip(GameObject hoveredObject)
-        {
-            foreach (var extension in _extensions)
-                extension.SetTooltip(hoveredObject);
+        //     _tooltips.ForEach(t => t.Hide());
 
-        }
+        //     _root = GetComponentInParent<Canvas>();
 
-        private void HideTooltip()
-        {
-            _hiddable.SetActive(false);
-            StopAllCoroutines();
-        }
+        // }
 
-        internal void AddTooltip(string title, string description, List<Explanation> explanation)
-        {
-            _descriptionGUI.text = Sprites.Replace(description);
-            _titleGUI.text = title;
+        // void OnEnable()
+        // {
+        //     ShowTooltipRequest = ShowTooltip;
+        //     HideTooltipRequest = HideTooltip;
+        // }
+        // void OnDisable()
+        // {
+        //     ShowTooltipRequest = delegate { };
+        //     HideTooltipRequest = delegate { };
+        // }
 
-            _explanationGUI.gameObject.SetActive(explanation.Count > 0);
-            if (explanation.Count > 0)
-            {
-                _explanationGUI.text = "";
-                foreach (var exp in explanation)
-                {
-                    _explanationGUI.text += Sprites.Replace(exp.ShortDescription) + "\n";
-                }
-            }
-            _hiddable.SetActive(true);
-            OnShowTooltip.Invoke(_hiddable);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(_hiddable.transform as RectTransform);
+        // private void ShowTooltip(GameObject hoveredObject)
+        // {
+        //     foreach (var extension in _extensions)
+        //         extension.SetTooltip(hoveredObject);
 
-        }
+        // }
+
+        // private void HideTooltip()
+        // {
+        //     _tooltips.ForEach(t => t.Hide());
+        //     StopAllCoroutines();
+        // }
+
+        // internal void AddTooltip(RectTransform rectTransform, List<Explanation> explanations)
+        // {
+        //     // _descriptionGUI.text = Sprites.Replace(description);
+        //     // _titleGUI.text = title;
+        //     Bounds bounds = RectTransformUtility.CalculateRelativeRectTransformBounds(_root.transform, rectTransform);
+        //     for (int i = 0; i < _tooltips.Count; i++)
+        //     {
+
+        //         if (i >= explanations.Count)
+        //         {
+        //             _tooltips[i].Hide();
+        //             continue;
+        //         }
+        //         _tooltips[i].Show(Sprites.Replace(explanations[i].ShortDescription));
+        //         _tooltips[i].AnchoredPosition = bounds.max;
+        //     }
+
+        //     OnShowTooltip.Invoke(null);
+        //     //  LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
+        // }
 
 
 

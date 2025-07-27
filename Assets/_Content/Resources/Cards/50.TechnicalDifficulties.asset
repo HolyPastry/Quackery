@@ -23,13 +23,14 @@ MonoBehaviour:
   SubscriptionCost: 0
   Category: 8
   Effects:
-  - Data: {fileID: 11400000, guid: 52b121de6356a4387b25b353d7107949, type: 2}
-    Value: 0
+  - _data: {fileID: 11400000, guid: c1938ceb0d9694f8b8c53cb20f8a77f7, type: 2}
+    Value: 1
     Tags: 
-  - Data: {fileID: 11400000, guid: 55d9b9303bf8742adb56b4931f73e366, type: 2}
-    Value: 0
+  - _data: {fileID: 11400000, guid: 7650592262cd541678e497dc9e1895be, type: 2}
+    Value: 1
     Tags: 
-  - Data: {fileID: 11400000, guid: d46b494cf8cdb47b98380c6c854dcb5e, type: 2}
+  - _data: {fileID: 11400000, guid: d46b494cf8cdb47b98380c6c854dcb5e, type: 2}
     Value: 0
     Tags: 
   ValueEvaluator: {fileID: 0}
+  Rarity: 0

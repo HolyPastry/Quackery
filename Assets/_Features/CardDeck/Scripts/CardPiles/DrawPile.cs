@@ -11,7 +11,7 @@ namespace Quackery.Decks
     public class DrawPile : CardPile
     {
         private readonly CardFactory _cardFactory;
-
+        private List<ItemData> _forcedOnNextDraw;
 
         public DrawPile(CardFactory cardFactory) : base(EnumCardPile.Draw, 0)
         {
@@ -28,10 +28,8 @@ namespace Quackery.Decks
 
         private void RegisterServices()
         {
-            // DeckServices.AddNewToDraw = AddNewCard;
-            // DeckServices.AddMultipleInstancesToDrawDeck = AddMultipleNew;
-            // DeckServices.AddToDrawPile = AddNewCardsToDeck;
-            DeckServices.DrawSpecificCards = DrawSpecificCards;
+
+            DeckServices.ForceOnNextDraw = ForceOnNextDraw;
             DeckServices.DrawCategory = DrawCategoryCard;
             DeckServices.Draw = DrawMany;
         }
@@ -40,11 +38,7 @@ namespace Quackery.Decks
 
         private void UnregisterServices()
         {
-
-            // DeckServices.AddMultipleInstancesToDrawDeck = delegate { };
-            // DeckServices.AddToDrawPile = delegate { };
-            // DeckServices.AddNewToDraw = (itemData, isPermanent, origin) => { };
-            DeckServices.DrawSpecificCards = delegate { };
+            DeckServices.ForceOnNextDraw = delegate { };
             DeckServices.DrawCategory = category => null;
             DeckServices.Draw = number => new List<Card>();
         }
@@ -72,30 +66,9 @@ namespace Quackery.Decks
 
         }
 
-        public void DrawSpecificCards(List<ItemData> list)
+        public void ForceOnNextDraw(List<ItemData> list)
         {
-            if (list == null || list.Count == 0) return;
-
-            List<Card> drawnCards = new();
-            foreach (var itemData in list)
-            {
-                Card card = Cards.Find(c => c.Item.Data == itemData);
-                if (card != null)
-                {
-                    drawnCards.Add(card);
-                    RemoveCard(card);
-                }
-                else
-                {
-                    Item item = InventoryServices.AddNewItem(itemData);
-                    card = _cardFactory.Create(item);
-
-                    drawnCards.Add(card);
-                }
-            }
-
-            foreach (var card in drawnCards)
-                DeckServices.MoveToTable(card);
+            _forcedOnNextDraw = new(list);
 
         }
         internal List<Card> DrawMany(int number)
@@ -116,7 +89,8 @@ namespace Quackery.Decks
 
         internal Card DrawOne()
         {
-            if (!DrawTopCard(out Card card))
+            if (!GetFromForceQueue(out Card card) &&
+                !DrawTopCard(out card))
             {
                 DeckServices.MovePileType(EnumCardPile.Discard, EnumCardPile.Draw);
                 DeckServices.Shuffle();
@@ -132,6 +106,21 @@ namespace Quackery.Decks
             EffectServices.Execute(EnumEffectTrigger.OnDraw, card);
             return card;
         }
+
+        private bool GetFromForceQueue(out Card card)
+        {
+            if (_forcedOnNextDraw == null || _forcedOnNextDraw.Count == 0)
+            {
+                card = null;
+                return false;
+            }
+            ItemData itemData = _forcedOnNextDraw[0];
+            _forcedOnNextDraw.RemoveAt(0);
+            card = DeckServices.CreateCard(itemData);
+            return true;
+        }
+
+
 
         internal Card DrawCategoryCard(EnumItemCategory category)
         {

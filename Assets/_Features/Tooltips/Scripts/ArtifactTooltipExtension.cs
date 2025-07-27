@@ -9,18 +9,14 @@ namespace Quackery
     {
         public override void SetTooltip(GameObject hoveredObject)
         {
-            if (hoveredObject.TryGetComponent(out ArtifactUI artifactUI))
-                AddTooltip(artifactUI.Artifact);
+            if (!hoveredObject.TryGetComponent(out ArtifactUI artifactUI)) return;
+
+            //AddTooltip(artifactUI.Artifact);
+            //_tooltipManager.AddTooltip(title, description, new());
 
         }
 
-        private void AddTooltip(ArtifactData artifact)
-        {
-            string description = artifact.Description;
-            string title = artifact.MasterText;
 
-            _tooltipManager.AddTooltip(title, description, new());
-        }
 
 
     }

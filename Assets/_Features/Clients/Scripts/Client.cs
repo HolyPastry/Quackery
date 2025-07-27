@@ -92,6 +92,7 @@ namespace Quackery.Clients
         {
             foreach (var effect in Effects)
             {
+                effect.Initialize();
                 effect.Tags.AddUnique(Quackery.Effects.EnumEffectTag.Client);
                 effect.Tags.AddUnique(Quackery.Effects.EnumEffectTag.Status);
             }

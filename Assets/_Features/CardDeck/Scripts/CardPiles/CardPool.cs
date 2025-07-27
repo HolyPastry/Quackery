@@ -17,24 +17,54 @@ namespace Quackery
 
         protected virtual void OnEnable()
         {
-            DeckEvents.OnCardPoolSizeUpdate += UpdatePoolSize;
+            //DeckEvents.OnCardPoolSizeUpdate += UpdatePoolSize;
+            DeckEvents.OnCardPoolSizeIncrease += IncreasePoolSize;
+            DeckEvents.OnCardPoolSizeDecrease += DecreasePoolSize;
+
         }
 
         protected virtual void OnDisable()
         {
-            DeckEvents.OnCardPoolSizeUpdate -= UpdatePoolSize;
+            //DeckEvents.OnCardPoolSizeUpdate -= UpdatePoolSize;
+            DeckEvents.OnCardPoolSizeIncrease -= IncreasePoolSize;
+            DeckEvents.OnCardPoolSizeDecrease -= DecreasePoolSize;
+        }
+
+        protected void DecreasePoolSize(EnumCardPile pile, int index)
+        {
+            if (pile != _cardPileType) return;
+            DestroyCardPile(index);
+
+        }
+
+        protected void IncreasePoolSize(EnumCardPile pile)
+        {
+            if (pile != _cardPileType) return;
+            int newSize = DeckServices.GetCardPoolSize(_cardPileType);
+
+            int diff = newSize - _cardPileUIs.Count;
+            for (int i = 0; i < diff; i++)
+            {
+                CardPileUI newCardPileUI = Instantiate(_cardPilePrefab, _container.transform);
+                _cardPileUIs.Add(newCardPileUI);
+                newCardPileUI.OnTouchPress += OnCardPileTouchPress;
+                newCardPileUI.OnTouchRelease += OnCardPileTouchRelease;
+
+                newCardPileUI.PileIndex = _cardPileUIs.Count - 1;
+                newCardPileUI.Type = _cardPileType;
+            }
         }
 
         IEnumerator Start()
         {
             yield return FlowServices.WaitUntilReady();
             yield return DeckServices.WaitUntilReady();
-            UpdatePoolSize(_cardPileType);
+            IncreasePoolSize(_cardPileType);
         }
 
         public void Show()
         {
-            UpdatePoolSize(_cardPileType);
+            //UpdatePoolSize(_cardPileType);
             _hiddable.SetActive(true);
         }
 
@@ -43,39 +73,22 @@ namespace Quackery
             _hiddable.SetActive(false);
         }
 
-        private void UpdatePoolSize(EnumCardPile cardPile)
-        {
-            if (cardPile != _cardPileType) return;
-            int newSize = DeckServices.GetCardPoolSize(_cardPileType);
-            if (newSize > _cardPileUIs.Count)
-            {
-                int diff = newSize - _cardPileUIs.Count;
-                for (int i = 0; i < diff; i++)
-                {
-                    CardPileUI newCardPileUI = Instantiate(_cardPilePrefab, _container.transform);
-                    _cardPileUIs.Add(newCardPileUI);
-                    newCardPileUI.OnTouchPress += OnCardPileTouchPress;
-                    newCardPileUI.OnTouchRelease += OnCardPileTouchRelease;
-
-                    newCardPileUI.PileIndex = _cardPileUIs.Count - 1;
-                    newCardPileUI.Type = _cardPileType;
-                }
-            }
-            while (newSize < _cardPileUIs.Count)
-            {
-                DestroyCardPile(_cardPileUIs.Count - 1);
-            }
-        }
 
         protected virtual void DestroyCardPile(int index)
         {
-            CardPileUI lastCardPileUI = _cardPileUIs[index];
+            CardPileUI cardPileUI = _cardPileUIs.Find(pile => pile.PileIndex == index);
 
-            lastCardPileUI.OnTouchPress -= OnCardPileTouchPress;
-            lastCardPileUI.OnTouchRelease -= OnCardPileTouchRelease;
+            if (cardPileUI == null)
+            {
+                Debug.LogWarning($"CardPileUI with index {index} not found in {_cardPileType} pool.");
+                return;
+            }
 
-            _cardPileUIs.RemoveAt(index);
-            Destroy(lastCardPileUI.gameObject);
+            cardPileUI.OnTouchPress -= OnCardPileTouchPress;
+            cardPileUI.OnTouchRelease -= OnCardPileTouchRelease;
+
+            _cardPileUIs.Remove(cardPileUI);
+            Destroy(cardPileUI.gameObject);
         }
 
         protected virtual void OnCardPileTouchRelease(CardPileUI uI) { }

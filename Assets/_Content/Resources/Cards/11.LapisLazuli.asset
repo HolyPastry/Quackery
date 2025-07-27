@@ -14,16 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Lapis Lazuli
   Icon: {fileID: 21300000, guid: cdb4789c832f04b42afe129506c747b8, type: 3}
-  BasePrice: 1
-  ShortDescription: Can cover crystal cards.
-  LongDescription: Can cover crystal cards.
+  BasePrice: 3
+  ShortDescription: Stacks
+  LongDescription: 
   ShopDescription: 
   Explanations:
-  - {fileID: 11400000, guid: c1335b97d67394f8da53d1020c816505, type: 2}
+  - {fileID: 11400000, guid: fc90056fb1ad44e9b83d0e7f04267673, type: 2}
   SubscriptionCost: 1
   Category: 3
   Effects:
-  - Data: {fileID: 11400000, guid: 9c182af5edf0a448993e9c023e193e06, type: 2}
+  - _data: {fileID: 11400000, guid: 901e4069cc85042abbf89bc5a2794e12, type: 2}
     Value: 0
     Tags: 
   ValueEvaluator: {fileID: 0}
+  Rarity: 0

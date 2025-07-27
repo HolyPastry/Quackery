@@ -11,8 +11,8 @@ namespace Quackery
             if (!hoveredObject.TryGetComponent<BudgetCartValueUI>(out BudgetCartValueUI budgetCartValueUI))
                 return;
 
-            _tooltipManager.AddTooltip("Budget Cart",
-                "The Client will leave if the value of the cart exceed the budget.", new());
+            // _tooltipManager.AddTooltip("Budget Cart",
+            //     "The Client will leave if the value of the cart exceed the budget.", new());
 
         }
     }

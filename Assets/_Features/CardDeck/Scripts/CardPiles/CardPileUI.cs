@@ -33,6 +33,12 @@ namespace Quackery.Decks
 
         public bool HasCartTarget => !IsEmpty && TopCard.HasCartTarget;
 
+        public Vector2 AnchoredPosition
+        {
+            get => (transform as RectTransform).anchoredPosition;
+            set => (transform as RectTransform).anchoredPosition = value;
+        }
+
         public const float CardOriginalHeight = 512;
         protected readonly Queue<RectTransform> _moveQueue = new();
 

@@ -6,11 +6,10 @@ namespace Quackery.Decks
     [Serializable]
     public struct CartEvaluation
     {
-        public int Index;
-        public float Value;
-        public Color Color;
-        public string Description;
+        public CartMode Mode;
+        public GameObject RealizationObjectReference;
 
-        public AudioClip SoundBite;
+        public float Duration;
+
     }
 }

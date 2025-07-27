@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e52bba3ecf2b43beaed4325c4d0f009, type: 3}
-  m_Name: Cast Suspicious Effect in Discard Pile
+  m_Name: Cast Suspicious Effect In Discard Pile
   m_EditorClassIdentifier: 
   MasterText: 
   Icon: {fileID: 0}

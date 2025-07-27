@@ -2,8 +2,8 @@ namespace Quackery
 {
     public enum EnumPlacement
     {
-        OnTop,
-        AtTheBottom,
-        ShuffledIn
+        OnTop = 0,
+        AtTheBottom = 1,
+        ShuffledIn = 2
     }
 }

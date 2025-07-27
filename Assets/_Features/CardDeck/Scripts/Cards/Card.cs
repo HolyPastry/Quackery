@@ -63,6 +63,7 @@ namespace Quackery.Decks
         {
             foreach (var effect in _item.Effects)
             {
+                effect.Initialize();
                 effect.LinkedCard = this;
                 if (Item.Category != EnumItemCategory.Skills)
                     effect.Tags.Add(EnumEffectTag.ItemCard);

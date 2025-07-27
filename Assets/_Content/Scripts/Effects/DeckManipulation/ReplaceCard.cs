@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Quackery.Effects
 {
+
     [CreateAssetMenu(fileName = "ReplaceCard", menuName = "Quackery/Effects/Deck/Replace Card")]
     public class ReplaceCard : EffectData
     {

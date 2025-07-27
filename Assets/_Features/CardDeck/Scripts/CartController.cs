@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Holypastry.Bakery;
-using Ink.Runtime;
+
 using Quackery.Clients;
 using Quackery.Effects;
 using Quackery.Inventories;
@@ -15,14 +16,16 @@ namespace Quackery.Decks
 
         [SerializeField] private int _initialCartSize = 3;
         [SerializeField]
-        private List<CartEvaluation> _cartEvaluations = new()
-        {
-            new () { Index = 0, Value = 0.8f, Color = Color.yellow, Description = "Amazing" },
-            new () {  Index = 1,Value = 0.6f, Color = Color.cyan, Description = "Good" },
-            new () {  Index = 2,Value = 0.4f, Color = Color.green, Description = "Poor" },
-            new () {  Index = 3,Value = 0.2f, Color = Color.blue, Description = "Terrible"  },
-            new () {  Index = 4, Value = 0.0f, Color = Color.red, Description = "Catastrophic" }
-        };
+        private List<CartEvaluation> _cartEvaluations = new();
+        // {
+        // //     new () { Index = 0, Value = 0.8f, Color = Color.yellow, Description = "Amazing" },
+        // //     new () {  Index = 1,Value = 0.6f, Color = Color.cyan, Description = "Good" },
+        // //     new () {  Index = 2,Value = 0.4f, Color = Color.green, Description = "Poor" },
+        // //     new () {  Index = 3,Value = 0.2f, Color = Color.blue, Description = "Terrible"  },
+        // //     new () {  Index = 4, Value = 0.0f, Color = Color.red, Description = "Catastrophic" }
+        // };
+
+
 
 
         private int _ratingCartSizeModifier;
@@ -57,7 +60,7 @@ namespace Quackery.Decks
 
         private Card _cardBeingPlayed;
         private CardPile _hoveredPile;
-        private CartMode _cartMode;
+        private CartMode _cartMode = CartMode.Survival;
 
         void OnEnable()
         {
@@ -101,10 +104,11 @@ namespace Quackery.Decks
 
 
             CartServices.RandomizeCart = RandomizeCart;
-            CartServices.GetCartEvaluation = GetCartEvaluation;
+            //            CartServices.GetCartEvaluation = GetCartEvaluation;
 
             CartServices.GetMaxValue = GetMaxValue;
             CartServices.GetMode = () => _cartMode;
+            CartServices.GetMatchingCards = GetMatchingCards;
 
 
             EffectEvents.OnAdded += UpdateCardUI;
@@ -112,8 +116,6 @@ namespace Quackery.Decks
             EffectEvents.OnUpdated += UpdateCardUI;
 
         }
-
-
 
         void OnDisable()
         {
@@ -155,10 +157,11 @@ namespace Quackery.Decks
             CartServices.AddCardToCartPile = (card, pile) => false;
 
             CartServices.RandomizeCart = delegate { };
-            CartServices.GetCartEvaluation = () => default;
+            // CartServices.GetCartEvaluation = () => default;
 
             CartServices.GetMaxValue = () => 30;
             CartServices.GetMode = () => CartMode.Survival;
+            CartServices.GetMatchingCards = (predicate) => new List<Card>();
 
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
@@ -173,6 +176,14 @@ namespace Quackery.Decks
             {
                 _cartPiles.Add(new CardPile(EnumCardPile.Cart, i));
             }
+        }
+        private List<Card> GetMatchingCards(Predicate<Card> predicate)
+        {
+            return _cartPiles
+                .Where(p => p.Enabled && !p.IsEmpty)
+                .SelectMany(p => p.Cards)
+                .Where(c => predicate(c))
+                .ToList();
         }
 
         private void ResetCart()
@@ -191,29 +202,29 @@ namespace Quackery.Decks
 
 
 
-        private CartEvaluation GetCartEvaluation()
-        {
-            float bestValue = (float)BillServices.GetAmountDueToday() / ClientServices.NumClientsToday();
+        // private CartEvaluation GetCartEvaluation()
+        // {
+        //     float bestValue = (float)BillServices.GetAmountDueToday() / ClientServices.NumClientsToday();
 
-            var totalValue = _cartValue + _cartBonus;
-            float percValue = totalValue / bestValue;
+        //     var totalValue = _cartValue + _cartBonus;
+        //     float percValue = totalValue / bestValue;
 
-            if (percValue <= 0) return _cartEvaluations[^1];
+        //     if (percValue <= 0) return _cartEvaluations[^1];
 
-            if (percValue >= 1) return _cartEvaluations[0];
+        //     if (percValue >= 1) return _cartEvaluations[0];
 
-            for (int i = 0; i < _cartEvaluations.Count - 1; i++)
-            {
-                float threshold = _cartEvaluations[i].Value;
-                if (percValue >= threshold)
-                {
-                    return _cartEvaluations[i];
-                }
-            }
-            Debug.LogWarning($"No cart evaluation found for value {percValue}. Returning default.");
-            return _cartEvaluations[^1];
+        //     for (int i = 0; i < _cartEvaluations.Count - 1; i++)
+        //     {
+        //         float threshold = _cartEvaluations[i].Value;
+        //         if (percValue >= threshold)
+        //         {
+        //             return _cartEvaluations[i];
+        //         }
+        //     }
+        //     Debug.LogWarning($"No cart evaluation found for value {percValue}. Returning default.");
+        //     return _cartEvaluations[^1];
 
-        }
+        // }
 
         private void RandomizeCart()
         {
@@ -312,11 +323,15 @@ namespace Quackery.Decks
             UpdateUI();
         }
 
-        private void RemoveCard(Card card)
+        private void RemoveCard(Card card, bool removeValue)
         {
-
+            if (removeValue)
+                CartValue -= card.Price;
             foreach (var pile in _cartPiles)
-                pile.RemoveCard(card);
+            {
+                if (pile.RemoveCard(card))
+                    DeckEvents.OnPileUpdated(pile.Type, pile.Index);
+            }
             UpdateEffects();
             UpdateUI();
         }
@@ -418,15 +433,46 @@ namespace Quackery.Decks
         private void UpdateCartMode()
         {
             if (_cartValue + _cartBonus < ClientServices.GetThreshold(CartMode.Survival))
+            {
+                if (_cartMode != CartMode.Survival)
+                {
 
-                _cartMode = CartMode.Survival;
+                    _cartMode = CartMode.Survival;
+                    StartCoroutine(ShowCelebrationUI(CartMode.Survival));
+                }
 
+            }
             else if (_cartValue + _cartBonus < ClientServices.GetThreshold(CartMode.Normal))
+            {
+                if (_cartMode != CartMode.Normal)
+                {
+                    _cartMode = CartMode.Normal;
+                    StartCoroutine(ShowCelebrationUI(CartMode.Normal));
+                }
 
-                _cartMode = CartMode.Normal;
+            }
             else
-                _cartMode = CartMode.SuperSaiyan;
+            {
+                if (_cartMode != CartMode.SuperSaiyan)
+                {
+                    _cartMode = CartMode.SuperSaiyan;
+                    StartCoroutine(ShowCelebrationUI(CartMode.SuperSaiyan));
+                }
+
+            }
             CartEvents.OnModeChanged(_cartMode);
+        }
+
+        private IEnumerator ShowCelebrationUI(CartMode survival)
+        {
+            if (!_cartEvaluations.Exists(e => e.Mode == survival)) yield break;
+
+
+            var evaluation = _cartEvaluations.Find(e => e.Mode == survival);
+            evaluation.RealizationObjectReference.SetActive(true);
+            yield return new WaitForSeconds(evaluation.Duration);
+            evaluation.RealizationObjectReference.SetActive(false);
+
         }
 
         private bool ActivatePreviousCard(Card pile)
@@ -480,6 +526,7 @@ namespace Quackery.Decks
             while (_cartPiles.Count < newCartSize)
             {
                 _cartPiles.Add(new CardPile(EnumCardPile.Cart, _cartPiles.Count));
+                DeckEvents.OnCardPoolSizeIncrease(EnumCardPile.Cart);
             }
 
 
@@ -510,14 +557,14 @@ namespace Quackery.Decks
                     if (_cartPiles[i].Enabled && !_cartPiles[i].IsEmpty)
                     {
                         DeckServices.Discard(new(_cartPiles[i].Cards));
-                        DeckEvents.OnPileUpdated(_cartPiles[i].Type, _cartPiles[i].Index);
                         _cartPiles[i].Enabled = false;
+                        DeckEvents.OnPileUpdated(_cartPiles[i].Type, _cartPiles[i].Index);
+                        DeckEvents.OnCardPoolSizeDecrease(EnumCardPile.Cart, _cartPiles[i].Index);
                     }
                     if (CartSize <= newCartSize) break;
                 }
             }
 
-            DeckEvents.OnCardPoolSizeUpdate(EnumCardPile.Cart);
 
         }
 

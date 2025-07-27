@@ -14,17 +14,22 @@ namespace Quackery.Effects
 
         public override void Cancel(Effect effect)
         {
+            if (effect.ContainsTag(EnumEffectTag.Duration))
+                return;
             EffectServices.ModifyValue(_effectToModify, -effect.Value);
         }
 
         public override IEnumerator Execute(Effect effect)
         {
+            int value = effect.Value;
+            if (effect.ContainsTag(EnumEffectTag.Duration))
+                value = 1;
             int countered = 0;
-            if (effect.Value > 0)
+            if (value > 0)
                 foreach (var counterEffect in _counterEffects)
-                    countered += EffectServices.CounterEffect(counterEffect, effect.Value - countered);
+                    countered += EffectServices.CounterEffect(counterEffect, value - countered);
 
-            EffectServices.ModifyValue(_effectToModify, effect.Value - countered);
+            EffectServices.ModifyValue(_effectToModify, value - countered);
             yield return new WaitForSeconds(0.5f);
         }
     }

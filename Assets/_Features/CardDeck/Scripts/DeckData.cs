@@ -9,7 +9,7 @@ namespace Quackery.Decks
     [CreateAssetMenu(fileName = "DeckData", menuName = "Quackery/DeckData", order = 0)]
     public class DeckData : ScriptableObject
     {
-        public List<ItemData> Cards;
+        public List<ItemData> Cards = new();
 
         internal void AddToInventory()
         {

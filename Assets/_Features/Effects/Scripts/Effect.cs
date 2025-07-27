@@ -12,7 +12,35 @@ namespace Quackery
     [Serializable]
     public class Effect
     {
-        public EffectData Data;
+        private bool _isInitialized;
+        public Effect(string[] defaults) { Debug.Log(defaults); }
+        [SerializeField] private EffectData _data;
+        public EffectData Data
+        {
+            get
+            {
+                if (_data != null && !_isInitialized)
+                    Initialize();
+
+                return _data;
+            }
+            set
+            {
+                _data = value;
+                if (_data != null && !_isInitialized)
+                    Initialize();
+            }
+        }
+
+        public void Initialize()
+        {
+            if (_data != null)
+            {
+                _data.Setup(this);
+                _isInitialized = true;
+            }
+        }
+
         public int Value;
         public EnumEffectTrigger Trigger => Data.Trigger;
 
@@ -28,10 +56,9 @@ namespace Quackery
                          "No Effect Data Assigned" :
                  Data.Description.Replace("#Value", Value.ToString());
 
-
-
         public Effect()
-        { }
+        {
+        }
 
         public Effect(EffectData data)
         {
@@ -45,6 +72,7 @@ namespace Quackery
             Tags = new List<EnumEffectTag>(effect.Tags);
             LinkedCard = effect.LinkedCard;
             LinkedArtifact = effect.LinkedArtifact;
+
         }
 
         public Effect(EffectData data, int value)
@@ -52,9 +80,6 @@ namespace Quackery
             Data = data;
             Value = value;
         }
-
-        // public int PriceModifier(Card card) => Data.PriceModifier(this, card);
-        // public float PriceRatioModifier(Card card) => Data.RatioPriceModifier(this, card);
 
         internal bool ContainsTag(EnumEffectTag effectTag)
         {
@@ -71,5 +96,7 @@ namespace Quackery
             Data.CheckValidity();
 
         }
+
+
     }
 }

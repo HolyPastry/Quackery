@@ -15,18 +15,15 @@ MonoBehaviour:
   MasterText: Tarot Deck
   Icon: {fileID: 21300000, guid: 67af1f2cf55ad4208837e7aa3cf47711, type: 3}
   BasePrice: 9
-  ShortDescription: Draw 4 cards and choose 1. +1 suspicion.
-  LongDescription: 'Draw 4 cards and choose 1. Receive 1 suspicion in the draw pile. '
+  ShortDescription: 'Draw 4 cards and choose 1. '
+  LongDescription: 
   ShopDescription: 
-  Explanations:
-  - {fileID: 11400000, guid: 6a88eaf0137fd44388d07980a3253e71, type: 2}
+  Explanations: []
   SubscriptionCost: 5
   Category: 2
   Effects:
-  - Data: {fileID: 11400000, guid: f37afcb2051834735b52b1b8f77631b2, type: 2}
-    Value: 4
-    Tags: 
-  - Data: {fileID: 11400000, guid: 9fd96427358ac4196af546c123289864, type: 2}
-    Value: 1
+  - _data: {fileID: 11400000, guid: f37afcb2051834735b52b1b8f77631b2, type: 2}
+    Value: 2
     Tags: 
   ValueEvaluator: {fileID: 0}
+  Rarity: 0

@@ -26,18 +26,18 @@ namespace Quackery
             _portrait.sprite = client.Portrait;
             _portrait.color = Color.white;
             _nameText.text = client.LoginName;
-            var evaluation = CartServices.GetCartEvaluation();
+            //    var evaluation = CartServices.GetCartEvaluation();
             var cartValue = CartServices.GetValue();
             var cartBonus = CartServices.GetBonus();
 
-            int newFollowers = FollowerServices.RewardFollowers(evaluation.Index);
+            //  int newFollowers = FollowerServices.RewardFollowers(evaluation.Index);
 
-            StartCoroutine(_followerBadge.CountFollowersUpRoutine(newFollowers));
-            _audioSource.PlayOneShot(evaluation.SoundBite);
+            // StartCoroutine(_followerBadge.CountFollowersUpRoutine(newFollowers));
+            // _audioSource.PlayOneShot(evaluation.SoundBite);
 
             if (isSuccess)
             {
-                _resultString.text = Sprites.Replace($"{evaluation.Description} Transaction");
+                // _resultString.text = Sprites.Replace($"{evaluation.Description} Transaction");
                 _cartAmount.text = Sprites.Replace($"{cartValue + cartBonus}#Coin");
             }
             else

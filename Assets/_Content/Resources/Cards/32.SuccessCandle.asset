@@ -14,12 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Success Candle
   Icon: {fileID: 0}
-  BasePrice: 0
+  BasePrice: 11
   ShortDescription: 
   LongDescription: 
   ShopDescription: 
   Explanations: []
-  SubscriptionCost: 0
+  SubscriptionCost: 4
   Category: 2
-  Effects: []
+  Effects:
+  - _data: {fileID: 11400000, guid: e38b880c6cb144e17890d0850c9e0b01, type: 2}
+    Value: 2
+    Tags: 
   ValueEvaluator: {fileID: 0}
+  Rarity: 0

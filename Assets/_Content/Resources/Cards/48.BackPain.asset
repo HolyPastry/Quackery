@@ -22,7 +22,8 @@ MonoBehaviour:
   SubscriptionCost: 0
   Category: 8
   Effects:
-  - Data: {fileID: 11400000, guid: 55d9b9303bf8742adb56b4931f73e366, type: 2}
+  - _data: {fileID: 11400000, guid: 55d9b9303bf8742adb56b4931f73e366, type: 2}
     Value: 0
     Tags: 
   ValueEvaluator: {fileID: 0}
+  Rarity: 0

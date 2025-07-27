@@ -16,7 +16,7 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 840b364ad9dea43bc9dcceceedc19579, type: 3}
   BasePrice: 4
   ShortDescription: Bundle\nTransmute Cart to #Herbs
-  LongDescription: Bundle. Transmute all the cards in the cart to #Herbs.
+  LongDescription: 
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 760c3bfef0017439c9584611bb013c30, type: 2}
@@ -24,10 +24,11 @@ MonoBehaviour:
   SubscriptionCost: 4
   Category: 1
   Effects:
-  - Data: {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}
+  - _data: {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}
     Value: 0
     Tags: 
-  - Data: {fileID: 11400000, guid: bb43e6857569044bfb63251de3ef8f1e, type: 2}
+  - _data: {fileID: 11400000, guid: bb43e6857569044bfb63251de3ef8f1e, type: 2}
     Value: 0
     Tags: 
   ValueEvaluator: {fileID: 0}
+  Rarity: 0
