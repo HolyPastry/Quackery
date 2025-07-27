@@ -209,5 +209,15 @@ namespace Quackery
                 });
             return this;
         }
+
+        internal void Show()
+        {
+            _rectTransform.gameObject.SetActive(true);
+        }
+
+        internal void Hide()
+        {
+            _rectTransform.gameObject.SetActive(false);
+        }
     }
 }

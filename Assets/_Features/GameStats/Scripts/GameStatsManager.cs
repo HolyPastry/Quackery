@@ -34,6 +34,16 @@ namespace Quackery.GameStats
 
         public CardStats(Card card)
         {
+            if (card == null || card.Item == null)
+            {
+                Debug.LogError("Card or Card.Item is null in CardStats constructor.");
+                Key = string.Empty;
+                Category = EnumItemCategory.Any;
+                SoldPrice = 0;
+                BasePrice = 0;
+                PriceCondition = EnumPriceCondition.Any;
+                return;
+            }
             Key = card.Item.Key;
             Category = card.Category;
             SoldPrice = card.Price;

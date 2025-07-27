@@ -108,6 +108,7 @@ namespace Quackery.Decks
             _endDayScreen.Hide();
             _endRoundScreen.Hide(instant: true);
             _canvas.gameObject.SetActive(true);
+            _animatable.Show();
             // _animatable.SlideIn(Direction.Right);
         }
 
@@ -115,10 +116,11 @@ namespace Quackery.Decks
 
         public void Hide()
         {
-            _animatable.SlideOut(Direction.Right).DoComplete(() =>
-            {
-                _canvas.gameObject.SetActive(false);
-            });
+            _animatable.Hide();
+            // _animatable.SlideOut(Direction.Right).DoComplete(() =>
+            // {
+
+            // });
         }
         private void OnCardSelected(Card card, List<Card> list)
         {
