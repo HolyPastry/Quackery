@@ -31,11 +31,10 @@ namespace Quackery.Decks
         private void Toggle()
         {
             if (_isOn)
-                TooltipUI.HideTooltipRequest();
+                Tooltips.HideTooltipRequest();
             else
 
-                TooltipUI.ShowTooltipRequest(gameObject);
-
+                Tooltips.ShowTooltipRequest(gameObject.GetComponent<ITooltipTarget>());
             _isOn = !_isOn;
         }
 

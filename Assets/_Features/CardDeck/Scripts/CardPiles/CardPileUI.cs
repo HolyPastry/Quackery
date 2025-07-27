@@ -17,6 +17,8 @@ namespace Quackery.Decks
         [SerializeField] protected Ease _easeType = Ease.OutBack;
         [SerializeField] protected float _staggerDelay = 0.1f;
 
+
+
         public int PileIndex { get; set; } = 0;
 
 

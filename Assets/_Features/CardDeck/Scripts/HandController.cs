@@ -101,7 +101,8 @@ namespace Quackery
             _helperText.text = "";
             _followTouchPointPileUI = pileUI;
             DeckServices.StartPlayCardLoop(pileUI.TopCard);
-            TooltipUI.ShowTooltipRequest?.Invoke(pileUI.gameObject);
+            if (!pileUI.IsEmpty)
+                Tooltips.ShowTooltipRequest?.Invoke(pileUI.TopCard);
         }
 
 
@@ -129,7 +130,7 @@ namespace Quackery
                 else
                 {
 
-                    TooltipUI.HideTooltipRequest();
+                    Tooltips.HideTooltipRequest();
                     DeckServices.StopPlayCardLoop();
                 }
             }
@@ -139,7 +140,7 @@ namespace Quackery
                 {
                     _selectedPileUI = null;
                     OnCardSelected?.Invoke(null);
-                    TooltipUI.HideTooltipRequest();
+                    Tooltips.HideTooltipRequest();
                     DeckServices.StopPlayCardLoop();
                 }
                 else
@@ -185,6 +186,11 @@ namespace Quackery
                 {
                     selectedOffset = _selectedCardOffset;
                     scale = 1.2f;
+                    SetTopCardStraight(angleOffset, cardPile);
+                }
+                else
+                {
+                    ResetTopCardRotation(cardPile);
                 }
 
                 Vector2 position = D +
@@ -206,6 +212,20 @@ namespace Quackery
                 cardPile.transform.localScale = Vector3.one * scale;
             }
 
+        }
+
+        private void ResetTopCardRotation(CardPileUI cardPile)
+        {
+            if (cardPile.IsEmpty) return;
+            var topCard = cardPile.TopCard;
+            topCard.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        private void SetTopCardStraight(float angleOffset, CardPileUI cardPile)
+        {
+            if (cardPile.IsEmpty) return;
+            var topCard = cardPile.TopCard;
+            topCard.transform.localRotation = Quaternion.Euler(0, 0, -angleOffset);
         }
 
         private void FollowTouch(CardPileUI cardPile)

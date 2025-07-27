@@ -14,7 +14,7 @@ using Holypastry.Bakery;
 
 namespace Quackery.Decks
 {
-    public class Card : MonoBehaviour
+    public class Card : MonoBehaviour, ITooltipTarget
     {
         [Serializable]
         public struct CategoryIcons
@@ -35,7 +35,8 @@ namespace Quackery.Decks
         //[SerializeField] private TextMeshProUGUI _cardRating;
         [SerializeField] private Image _outline;
 
-
+        public List<Explanation> Explanations => Item.Data.Explanations;
+        public RectTransform RectTransform => transform as RectTransform;
 
         public Item Item
         {

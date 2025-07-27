@@ -1,16 +1,18 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using KBCore.Refs;
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Quackery
 {
-    public class EffectUI : ValidatedMonoBehaviour
+    public class EffectUI : ValidatedMonoBehaviour, ITooltipTarget, IPointerDownHandler
     {
         [SerializeField, Self] private AnimatedRect _animatedRect;
         [SerializeField] private Image _icon;
@@ -18,7 +20,9 @@ namespace Quackery
 
         public Effect Effect { get; private set; }
 
+        public List<Explanation> Explanations => Effect.Data.Explanations ?? new List<Explanation>();
 
+        public RectTransform RectTransform => transform as RectTransform;
 
         internal void UpdateStatus(Effect status, bool animate)
         {
@@ -73,15 +77,11 @@ namespace Quackery
 
         }
 
-        // private IEnumerator MakeIconFlyToPosition(Vector2 originPosition)
-        // {
-        //     yield return null;
-        //     _animatedRect.SlideIn(originPosition);
-        //     if (!_useValue) yield break;
-
-        //     yield return new WaitForSeconds(0.5f);
-        //     _longBg.DOAnchorPosY(_extend, 0.2f).SetEase(Ease.OutBack);
-        // }
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            Tooltips.ShowTooltipRequest?.Invoke(this);
+            transform.SetAsLastSibling();
+        }
     }
 }
 

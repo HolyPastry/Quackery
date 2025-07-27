@@ -32,7 +32,7 @@ namespace Quackery.Decks
         }
         private void SendTooltipRequest()
         {
-            TooltipUI.ShowTooltipRequest(gameObject);
+            Tooltips.ShowTooltipRequest(GetComponent<ITooltipTarget>());
         }
         public void OnPointerDown(PointerEventData eventData)
         {
@@ -43,7 +43,7 @@ namespace Quackery.Decks
         public void OnPointerUp(PointerEventData eventData)
         {
             _holdingTimer.Stop();
-            TooltipUI.HideTooltipRequest();
+            Tooltips.HideTooltipRequest();
         }
     }
 }
