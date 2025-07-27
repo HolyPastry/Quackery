@@ -12,15 +12,16 @@ namespace Quackery
 {
     public class Tooltips : ValidatedMonoBehaviour
     {
+        [SerializeField, Self] private LayoutGroup _layoutGroup;
         [SerializeField] private int _offset = 100;
 
         public static Action<ITooltipTarget> ShowTooltipRequest = delegate { };
         public static Action HideTooltipRequest = delegate { };
-        [SerializeField, Self] private LayoutGroup _layoutGroup;
-        private RectTransform rectTransform => transform as RectTransform;
+
+        private RectTransform _rectTransform => transform as RectTransform;
         private ITooltipTarget _tooltipTarget;
 
-        private List<Tooltip> _tooltips = new();
+        private readonly List<Tooltip> _tooltips = new();
         protected bool _isOn;
 
         void Awake()
@@ -66,29 +67,27 @@ namespace Quackery
         }
         protected void Position(RectTransform targetRectTransform)
         {
-            StartCoroutine(PositionRoutine(targetRectTransform));
-        }
-
-        private IEnumerator PositionRoutine(RectTransform targetRectTransform)
-        {
             bool isOnTheRight = targetRectTransform.position.x > Screen.width / 2;
+
             if (!isOnTheRight)
             {
-                rectTransform.anchorMin = new Vector2(1, 1f);
-                rectTransform.anchorMax = new Vector2(1, 1f);
-                rectTransform.pivot = new Vector2(0, 1f);
-                rectTransform.anchoredPosition = new Vector2(-_offset, 0);
+                _rectTransform.anchorMin = new Vector2(1, 1f);
+                _rectTransform.anchorMax = new Vector2(1, 1f);
+                _rectTransform.pivot = new Vector2(0, 1f);
+                _rectTransform.anchoredPosition = new Vector2(-_offset, 0);
             }
             else
             {
-                rectTransform.anchorMin = new Vector2(0, 1f);
-                rectTransform.anchorMax = new Vector2(0, 1f);
-                rectTransform.pivot = new Vector2(1, 1f);
-                rectTransform.anchoredPosition = new Vector2(_offset, 0);
+                _rectTransform.anchorMin = new Vector2(0, 1f);
+                _rectTransform.anchorMax = new Vector2(0, 1f);
+                _rectTransform.pivot = new Vector2(1, 1f);
+                _rectTransform.anchoredPosition = new Vector2(_offset, 0);
             }
+            StartCoroutine(ForceRebuildLayout(targetRectTransform));
+        }
 
-            //  rectTransform.localEulerAngles = new Vector3(0, 0, -targetRectTransform.rotation.eulerAngles.z);
-
+        private IEnumerator ForceRebuildLayout(RectTransform targetRectTransform)
+        {
             yield return null;
             _layoutGroup.enabled = false;
             _layoutGroup.enabled = true;
@@ -96,10 +95,6 @@ namespace Quackery
             LayoutRebuilder.ForceRebuildLayoutImmediate(_layoutGroup.transform as RectTransform);
             yield return null;
         }
-
-
-
-
 
         protected void FillExplanations(List<Explanation> explanations)
         {
