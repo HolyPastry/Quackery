@@ -16,3 +16,4 @@ MonoBehaviour:
   cardImporters: {fileID: 11400000, guid: 3591e96c0133742baa9bfab771c189d6, type: 2}
   artifactImporters: {fileID: 11400000, guid: 1a69644c7ef22401a8731c0fac2f957d, type: 2}
   deckImporters: {fileID: 11400000, guid: 70254b38ab3394254a1a4c919f9a8a86, type: 2}
+  _statusesDataPath: Assets/_Content/Resources/Effects/Statuses

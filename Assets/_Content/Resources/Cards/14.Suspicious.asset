@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 14.Suspicious
   m_EditorClassIdentifier: 
   MasterText: Suspicious
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 6244aa4ba6e8a264ea3dcb381a4db215, type: 3}
   BasePrice: 0
   ShortDescription: '[Suspicion]'
   LongDescription: If 3 suspicions are in hand, end the transaction without gaining
@@ -22,7 +22,7 @@ MonoBehaviour:
   Explanations:
   - {fileID: 11400000, guid: 6a88eaf0137fd44388d07980a3253e71, type: 2}
   SubscriptionCost: 0
-  Category: 8
+  Category: 9
   Effects:
   - _data: {fileID: 11400000, guid: 0c446ae78b1564e0c97530dcf594590c, type: 2}
     Value: 3

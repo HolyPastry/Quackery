@@ -24,6 +24,6 @@ MonoBehaviour:
   Effects:
   - _data: {fileID: 11400000, guid: e38b880c6cb144e17890d0850c9e0b01, type: 2}
     Value: 2
-    Tags: 
+    Tags: 050000000200000004000000
   ValueEvaluator: {fileID: 0}
   Rarity: 0

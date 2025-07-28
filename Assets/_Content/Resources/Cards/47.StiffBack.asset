@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 47.StiffBack
   m_EditorClassIdentifier: 
   MasterText: Stiff Back
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 2d07d4f89b97ac746b156f9c526eb7ef, type: 3}
   BasePrice: 0
   ShortDescription: Stiff Back\nBecomes backpain the next #NumberDrawRemaining draw.
   LongDescription: Upgrades to backpain when drawn #EffectValue1 times. Drawn #DrawnTime

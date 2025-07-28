@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 50.TechnicalDifficulties
   m_EditorClassIdentifier: 
   MasterText: Technical Difficulties
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: c720f23d50927cb4f9c52706677d6762, type: 3}
   BasePrice: 0
   ShortDescription: Technical Difficulties
   LongDescription: 'Shuffle the cards in the cart and immediately end the transaction.

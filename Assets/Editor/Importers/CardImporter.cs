@@ -1,5 +1,6 @@
 
 #if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Bakery.GoogleSheet;
@@ -14,30 +15,35 @@ namespace Quackery
     [CreateAssetMenu(fileName = "CardImporter", menuName = "Quackery/GoogleSheet/CardImporter")]
     public class CardImporter : DataImporter<ItemData>
     {
+        [Header("Paths")]
         [SerializeField] private string _itemPath = "Assets/_Content/2DArt/Sprites/CardItems";
         [SerializeField] private string _skillPath = "Assets/_Content/2DArt/Sprites/Skills";
+        [SerializeField] private string _cursePath = "Assets/_Content/2DArt/Sprites/Curses";
+        [SerializeField] private string _tempCursePath = "Assets/_Content/2DArt/Sprites/TempCurses";
+
+        [Header("Collections Keys")]
         [SerializeField] private string EffectCollectionKey = "Effects";
         [SerializeField] private string ExplanationCollectionKey = "Explanations";
+
+        [Header("Card Prefixes")]
         [SerializeField] private string _cardPrefix = "CardType=";
-        [SerializeField] private string _skillPrefix = "Skill=";
 
         private DataCollection<EffectData> _effectCollection;
         private DataCollection<Explanation> _explanationCollection;
+
+        public event Action<string> OnPopulated = delegate { };
+
         protected override void Populate(List<string> fields, ScriptableObject @object, int IndexOf)
         {
+            string log = string.Empty;
             ItemData itemData = @object as ItemData;
             itemData.MasterText = fields[3];
-            itemData.Category = (EnumItemCategory)System.Enum.Parse(typeof(EnumItemCategory), fields[6]);
+            itemData.Category = (EnumItemCategory)Enum.Parse(typeof(EnumItemCategory), fields[6]);
             itemData.BasePrice = IntParse(fields[7]);
-            itemData.Rarity = (EnumRarity)System.Enum.Parse(typeof(EnumRarity), fields[4]);
-            if (itemData.Category == EnumItemCategory.Skills)
-            {
-                itemData.Icon = AssetDatabase.LoadAssetAtPath<Sprite>(Path.Join(_skillPath, _skillPrefix + fields[2] + ".png"));
-            }
-            else
-            {
-                itemData.Icon = AssetDatabase.LoadAssetAtPath<Sprite>(Path.Join(_itemPath, _cardPrefix + fields[2] + ".png"));
-            }
+            itemData.Rarity = (EnumRarity)Enum.Parse(typeof(EnumRarity), fields[4]);
+            itemData.Icon = GetIcon(fields[2], itemData.Category, out string iconLog);
+            log += iconLog;
+
 
             itemData.SubscriptionCost = IntParse(fields[8]);
 
@@ -54,8 +60,8 @@ namespace Quackery
                 var effectData = _effectCollection.GetFromName(effectName);
                 if (effectData == null)
                 {
-                    Debug.LogWarning($"Effect '{effectName}' not found in collection '{EffectCollectionKey}' for item '{itemData.name}' at index {IndexOf}.");
-                    //continue;
+                    log += $" - Effect: '{effectName}'\n";
+                    continue;
                 }
                 var newEffect = new Effect(effectData, effectValue);
 
@@ -66,6 +72,35 @@ namespace Quackery
             itemData.ShortDescription = fields[index++];
             itemData.LongDescription = fields[index++];
             itemData.ShopDescription = fields[index++];
+
+            OnPopulated?.Invoke(log);
+
+        }
+
+        private Sprite GetIcon(string name, EnumItemCategory category, out string log)
+        {
+            log = string.Empty;
+            string path = category switch
+            {
+                EnumItemCategory.Skill => _skillPath,
+                EnumItemCategory.Curse => _cursePath,
+                EnumItemCategory.TempCurse => _tempCursePath,
+                _ => _itemPath
+            };
+            string prefix = _cardPrefix;
+            if (category == EnumItemCategory.Curse ||
+                 category == EnumItemCategory.TempCurse ||
+                 category == EnumItemCategory.Skill)
+            {
+                prefix = category.ToString() + '=';
+            }
+
+
+            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Path.Join(path, prefix + name + ".png"));
+            if (sprite == null)
+                log += $" - Asset: {path}/{prefix}{name}.png\n";
+
+            return sprite;
 
         }
 

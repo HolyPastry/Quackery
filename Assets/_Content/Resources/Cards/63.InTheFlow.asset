@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 63.InTheFlow
   m_EditorClassIdentifier: 
   MasterText: In The Flow
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 08ac45c11db3d344e8b0d2b9c07f5896, type: 3}
   BasePrice: 0
   ShortDescription: 
   LongDescription: 

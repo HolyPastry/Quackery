@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 49.Distraction
   m_EditorClassIdentifier: 
   MasterText: Distraction
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 6f23867686904ff4f99569bd41bc64e0, type: 3}
   BasePrice: 0
   ShortDescription: 'Distraction  '
   LongDescription: Shuffle a suspicion into your draw pile.

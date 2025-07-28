@@ -26,4 +26,6 @@ MonoBehaviour:
   - Category: 5
     Icon: {fileID: 797473383, guid: cce829a7674b34fb8a65df088679a633, type: 3}
   - Category: 8
-    Icon: {fileID: 21300000, guid: 04f1d24123ba9404782f25c0079f6acf, type: 3}
+    Icon: {fileID: 21300000, guid: d17e765b024fb234b99c5ac9f13e63ba, type: 3}
+  - Category: 9
+    Icon: {fileID: 21300000, guid: 96d6f9453f424f445ac3f5aad68073bc, type: 3}
