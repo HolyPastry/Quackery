@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Holypastry.Bakery.Flow;
 using Quackery.Followers;
+using Quackery.Progression;
 using UnityEngine;
 
 namespace Quackery.Clients
@@ -175,11 +176,11 @@ namespace Quackery.Clients
         private void GenerateDailyQueue()
         {
             ResetClientQueue();
-            var level = FollowerServices.GetCurrentLevel();
-            if (level != null)
-            {
-                _queueSize = level.QueueSize;
-            }
+            var level = ProgressionServices.GetLevel();
+
+            //TODO:: define how the queue scales with level
+            _queueSize = 2;
+
 
 
             AddUnknownClients(_queueSize - _clientList.UnknownClients.Count);

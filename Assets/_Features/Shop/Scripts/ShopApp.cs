@@ -15,10 +15,10 @@ namespace Quackery.Shops
 
 
         [SerializeField] private ShopPost _continuePostPrefab;
-        [SerializeField] private Transform _postsContainer;
+        [SerializeField] private RectTransform _postsContainer;
         [SerializeField] private ConfirmationPanel _confirmationPanel;
         [SerializeField] private ShopSelectCard _selectCardPanel;
-        [SerializeField] private ShopScrollRect _shopScrollRect;
+        [SerializeField] private ScrollRect _shopScrollRect;
 
         [SerializeField] private ShopPost _defaultPostPrefab;
         [SerializeField] private ShopPost _qualityOfLifePostPrefab;
@@ -43,7 +43,7 @@ namespace Quackery.Shops
         {
             _confirmationPanel.OnExited += OnConfirmationExited;
             _selectCardPanel.OnExited += OnConfirmationExited;
-            _shopScrollRect.OnMoveScreen += OnMoveScreen;
+            //  _shopScrollRect.OnMoveScreen += OnMoveScreen;
 
             ShowConfirmation = ShowConfirmationPanel;
             RemovePostRequest = RemovePost;
@@ -53,7 +53,7 @@ namespace Quackery.Shops
         {
             _confirmationPanel.OnExited -= OnConfirmationExited;
             _selectCardPanel.OnExited -= OnConfirmationExited;
-            _shopScrollRect.OnMoveScreen -= OnMoveScreen;
+            //  _shopScrollRect.OnMoveScreen -= OnMoveScreen;
 
             ShowConfirmation = delegate { };
             RemovePostRequest = delegate { };
@@ -94,7 +94,7 @@ namespace Quackery.Shops
                 _posts.Remove(postToRemove);
                 Destroy(postToRemove.gameObject);
                 OnPostListUpdated(_posts.Count, postIndex);
-                _shopScrollRect.LockMovement();
+                //  _shopScrollRect.LockMovement();
                 for (int i = postIndex; i < _posts.Count; i++)
                 {
                     _posts[i].MoveUp();
@@ -102,18 +102,18 @@ namespace Quackery.Shops
                 }
                 if (_posts.Count <= 2)
                 {
-                    if (_posts.TrueForAll(x => x is EndPost))
-                        _shopScrollRect.LockScrolling();
-                    else
-                    {
-                        // if (_posts[0] is EndPost)
-                        //     AddLastPost(insertAtStart: true);
-                        // else
-                        //     AddLastPost();
-                    }
+                    // if (_posts.TrueForAll(x => x is EndPost))
+                    //     //shopScrollRect.LockScrolling();
+                    // else
+                    //         {
+                    //             // if (_posts[0] is EndPost)
+                    //             //     AddLastPost(insertAtStart: true);
+                    //             // else
+                    //             //     AddLastPost();
+                    //         }
                 }
 
-                _shopScrollRect.UnlockMovement();
+                // _shopScrollRect.UnlockMovement();
             }
         }
 
@@ -163,12 +163,13 @@ namespace Quackery.Shops
             AddLastPost();
 
 
-            if (_posts.Count < 2)
-                _shopScrollRect.LockScrolling();
-
+            // if (_posts.Count < 2)
+            //     _shopScrollRect.LockScrolling();
+            int height = _posts.Count * Screen.height;
+            _postsContainer.sizeDelta = new Vector2(_postsContainer.sizeDelta.x, height);
 
             OnPostListUpdated?.Invoke(_posts.Count, 0);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(_postsContainer as RectTransform);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_postsContainer);
             yield return null;
 
         }

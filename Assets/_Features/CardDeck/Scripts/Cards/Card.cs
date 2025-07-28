@@ -66,7 +66,7 @@ namespace Quackery.Decks
             {
                 effect.Initialize();
                 effect.LinkedCard = this;
-                if (Item.Category != EnumItemCategory.Skills)
+                if (Item.Category != EnumItemCategory.Skill)
                     effect.Tags.Add(EnumEffectTag.ItemCard);
                 if (effect.Trigger == EnumEffectTrigger.Passive)
                     effect.Tags.AddUnique(EnumEffectTag.Status);
@@ -77,8 +77,8 @@ namespace Quackery.Decks
         private void UpdatePrice()
         {
             if (_toBeDestroyed) return;
-            _PriceBackground.gameObject.SetActive(_item.Category != EnumItemCategory.Curses);
-            _cardPrice.gameObject.SetActive(_item.Category != EnumItemCategory.Curses);
+            _PriceBackground.gameObject.SetActive(_item.Category != EnumItemCategory.Curse);
+            _cardPrice.gameObject.SetActive(_item.Category != EnumItemCategory.Curse);
             _cardPrice.text = Price.ToString();
 
             if (Price > _item.BasePrice)
@@ -96,7 +96,7 @@ namespace Quackery.Decks
 
             if (
                 _item.Category == EnumItemCategory.Any ||
-                 _item.Category == EnumItemCategory.Skills)
+                 _item.Category == EnumItemCategory.Skill)
             {
                 _categoryIcon.gameObject.SetActive(false);
             }
@@ -117,7 +117,7 @@ namespace Quackery.Decks
             }
         }
 
-        private bool IsSkill => _item.Category == EnumItemCategory.Skills;
+        private bool IsSkill => _item.Category == EnumItemCategory.Skill;
         public string Name => _item.Name;
 
         public EnumItemCategory Category => _item.Category;
@@ -132,7 +132,7 @@ namespace Quackery.Decks
 
         public bool CannotBeCovered => Effects.Exists(e => e.Data is CoverProtection);
 
-        public bool HasCartTarget => Category != EnumItemCategory.Skills;
+        public bool HasCartTarget => Category != EnumItemCategory.Skill;
 
         private List<EffectIcon> _effectIconPool = new();
         private bool _toBeDestroyed;

@@ -580,7 +580,7 @@ namespace Quackery.Decks
 
         private bool ExecuteSkills(Card card)
         {
-            if (card.Category != EnumItemCategory.Skills) return false;
+            if (card.Category != EnumItemCategory.Skill) return false;
 
             Discard(card);
             return true;
@@ -747,13 +747,14 @@ namespace Quackery.Decks
                 if (pile.IsEmpty) continue;
                 var topCard = pile.TopCard;
                 pile.Playable = false;
-                if (topCard.Category == EnumItemCategory.Skills)
+                if (topCard.Category == EnumItemCategory.Skill)
                 {
                     if (topCard.Price > 0) pile.Playable = true;
                     else
                         pile.Playable = CartServices.CanCartAfford(-topCard.Price);
                 }
-                else if (topCard.Category == EnumItemCategory.Curses)
+                else if (topCard.Category == EnumItemCategory.Curse ||
+                         topCard.Category == EnumItemCategory.TempCurse)
                 {
                     pile.Playable = false;
                 }

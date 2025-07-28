@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-
+using Quackery.Progression;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Quackery.Clients
@@ -8,14 +9,18 @@ namespace Quackery.Clients
         fileName = "UnknownClientsData",
         menuName = "Quackery/UnknownClientsData",
         order = 0)]
-    public class UnknownClientsData : ScriptableObject
+    public class UnknownClientsData : SerializedScriptableObject
     {
         public List<Sprite> Icons;
         public List<string> NamePrefixes;
         public List<string> NameSuffixes;
-        public List<Effect> Effects;
+
+        [SerializeField]
+        private Dictionary<int, List<Effect>> EffectsByLevel;
 
         public Sprite RandomIcon => Icons[Random.Range(0, Icons.Count)];
+
+        internal List<Effect> RandomEffects => GenerateRandomEffects();
 
         public string RandomName
         {
@@ -28,9 +33,14 @@ namespace Quackery.Clients
             }
         }
 
-        internal List<Effect> RandomEffects
-        => new() { Effects[Random.Range(0, Effects.Count)] };
+        private List<Effect> GenerateRandomEffects()
+        {
+            var level = ProgressionServices.GetLevel();
 
+            if (EffectsByLevel.TryGetValue(level, out var effects))
+                return new() { effects[Random.Range(0, effects.Count)] };
 
+            return new();
+        }
     }
 }

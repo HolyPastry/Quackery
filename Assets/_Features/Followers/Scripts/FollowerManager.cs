@@ -18,14 +18,6 @@ namespace Quackery.Followers
 
         }
         private FollowerSerial _serial;
-        private bool _leveledUp = true;
-
-        private LevelDefinition CurrentLevel
-                => _followerData.Levels
-                    .Where(level => level.RequiredFollowers <= _serial.NumFollowers)
-                    .OrderBy(level => level.RequiredFollowers)
-                    .FirstOrDefault();
-
 
         void OnEnable()
         {
@@ -34,9 +26,6 @@ namespace Quackery.Followers
             FollowerServices.ModifyFollowers = ModifyFollowers;
             FollowerServices.SetNumberOfFollowers = SetNumFollowers;
             FollowerServices.RewardFollowers = RewardFollowers;
-            FollowerServices.GetCurrentLevel = () => CurrentLevel;
-            FollowerServices.HasLeveledUp = () => _leveledUp;
-            FollowerServices.ConsumeLeveledUp = () => _leveledUp = false;
         }
 
 
@@ -48,26 +37,19 @@ namespace Quackery.Followers
             FollowerServices.ModifyFollowers = delegate { };
             FollowerServices.SetNumberOfFollowers = delegate { };
             FollowerServices.RewardFollowers = (SuccessRating) => 0;
-            FollowerServices.GetCurrentLevel = () => default;
-            FollowerServices.HasLeveledUp = () => false;
-            FollowerServices.ConsumeLeveledUp = () => { };
+
         }
         private int RewardFollowers(int successRating)
         {
-            int newFollowers = (UnityEngine.Random.Range(1, 5) + successRating) * CurrentLevel.RewardScaling;
+            int newFollowers = (UnityEngine.Random.Range(1, 5) + successRating);
             ModifyFollowers(newFollowers);
             return newFollowers;
         }
 
         private void ModifyFollowers(int number)
         {
-            int previousLevel = CurrentLevel?.Level ?? 0;
             _serial.NumFollowers += number;
             FollowerEvents.OnFollowersChanged?.Invoke();
-            if (CurrentLevel?.Level > previousLevel)
-                _leveledUp = true;
-
-
             Save();
         }
 

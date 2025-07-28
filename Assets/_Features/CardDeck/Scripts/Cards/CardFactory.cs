@@ -23,9 +23,9 @@ namespace Quackery.Decks
         {
             Card card;
 
-            if (item.Category == EnumItemCategory.Skills)
+            if (item.Category == EnumItemCategory.Skill)
                 card = GameObject.Instantiate(_skillCardPrefab, _parent);
-            else if (item.Category == EnumItemCategory.Curses)
+            else if (item.Category == EnumItemCategory.Curse || EnumItemCategory.TempCurse == item.Category)
                 card = GameObject.Instantiate(_curseCardPrefab, _parent);
             else
                 card = GameObject.Instantiate(_itemCardPrefab, _parent);
