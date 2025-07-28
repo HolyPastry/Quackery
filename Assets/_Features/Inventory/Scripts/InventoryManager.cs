@@ -20,7 +20,6 @@ namespace Quackery.Inventories
             public List<Item> Items = new();
         }
 
-
         private DataCollection<ItemData> _itemDataCollection;
         // Start is called before the first frame update
         private SerialInventory _inventory;
@@ -43,6 +42,7 @@ namespace Quackery.Inventories
             InventoryServices.GetAllItems = () => new();
             InventoryServices.GetRandomItemData = () => null;
             InventoryServices.GetRandomItems = amount => new();
+            InventoryServices.GetRandomMatchingItem = rarity => null;
         }
 
         void OnEnable()
@@ -57,6 +57,15 @@ namespace Quackery.Inventories
             InventoryServices.GetAllItems = () => _inventory.Items;
             InventoryServices.GetRandomItemData = GetRandomItemData;
             InventoryServices.GetRandomItems = GetRandomItems;
+            InventoryServices.GetRandomMatchingItem = GetMatchingItem;
+        }
+
+        private ItemData GetMatchingItem(Predicate<ItemData> predicate)
+        {
+            return _itemDataCollection.Data
+                    .FindAll(predicate)
+                    .Shuffle()
+                    .FirstOrDefault();
         }
 
         private void AddNewItems(List<ItemData> list)

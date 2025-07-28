@@ -14,7 +14,6 @@ namespace Quackery.Decks
     public class CartController : MonoBehaviour
     {
 
-        [SerializeField] private int _initialCartSize = 3;
         [SerializeField]
         private List<CartEvaluation> _cartEvaluations = new();
         // {
@@ -54,8 +53,6 @@ namespace Quackery.Decks
             }
         }
 
-
-
         private CardPile _lastCartPile;
 
         private Card _cardBeingPlayed;
@@ -87,7 +84,7 @@ namespace Quackery.Decks
 
 
             CartServices.AddToCartValue = value => CartValue += value;
-            CartServices.ResetCartValue = ResetCart;
+            CartServices.ResetCart = ResetCart;
             CartServices.GetValue = () => CartValue;
             CartServices.CanCartAfford = value => CartValue + _cartBonus >= value;
 
@@ -140,7 +137,7 @@ namespace Quackery.Decks
 
 
             CartServices.AddToCartValue = value => { };
-            CartServices.ResetCartValue = () => { };
+            CartServices.ResetCart = () => { };
             CartServices.GetValue = () => 0;
             CartServices.CanCartAfford = value => true;
 
@@ -172,10 +169,6 @@ namespace Quackery.Decks
         {
             yield return FlowServices.WaitUntilReady();
             _cartPiles.Clear();
-            for (int i = 0; i < _initialCartSize; i++)
-            {
-                _cartPiles.Add(new CardPile(EnumCardPile.Cart, i));
-            }
         }
         private List<Card> GetMatchingCards(Predicate<Card> predicate)
         {
@@ -520,7 +513,7 @@ namespace Quackery.Decks
 
         private void UpdateCartSize()
         {
-            int newCartSize = _initialCartSize + _ratingCartSizeModifier + EffectServices.GetCartSizeModifier();
+            int newCartSize = ClientServices.GetCartSize() + _ratingCartSizeModifier + EffectServices.GetCartSizeModifier();
             newCartSize = Mathf.Max(newCartSize, 2);
 
             while (_cartPiles.Count < newCartSize)

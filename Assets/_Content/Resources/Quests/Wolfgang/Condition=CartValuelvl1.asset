@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: 
   CanReverse: 1
-  _cartValueThreshold: 3
+  _cartValueThreshold: 100

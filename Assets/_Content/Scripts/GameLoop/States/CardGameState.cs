@@ -41,17 +41,15 @@ namespace Quackery
                 //     yield return DialogQueueServices.WaitUntilAllDialogEnds();
                 // }
                 //yield return new WaitForSeconds(0.5f);
+                CartServices.ResetCart();
                 _controller.StartNewRound(client);
-
-
-
 
                 yield return _controller.WaitUntilEndOfRound();
 
                 DeckServices.DiscardHand();
                 if (_controller.RoundInterrupted)
                 {
-                    CartServices.ResetCartValue();
+                    CartServices.ResetCart();
                     client.BadReview();
                     ClientServices.ClientServed(client, false);
 

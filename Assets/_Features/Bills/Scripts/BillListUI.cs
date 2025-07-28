@@ -29,12 +29,12 @@ namespace Quackery
         private void UpdateBillList()
         {
             ClearList();
-            var bills = BillServices.GetAllBills();
-            foreach (var bill in bills)
-            {
-                var billUI = Instantiate(_billUIPrefab, _billListContainer);
-                billUI.Initialize(bill);
-            }
+            // var bills = BillServices.GetAllBills();
+            // foreach (var bill in bills)
+            // {
+            //     var billUI = Instantiate(_billUIPrefab, _billListContainer);
+            //     billUI.Initialize(bill);
+            // }
         }
 
         private void ClearList()

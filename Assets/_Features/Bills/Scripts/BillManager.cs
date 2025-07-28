@@ -18,12 +18,12 @@ namespace Quackery.Bills
         void OnEnable()
         {
             BillServices.WaitUntilReady = () => WaitUntilReady;
-            BillServices.GetAllBills = () => _billList.Bills.FindAll(b => b.Price > 0);
+            BillServices.GetAllBills = () => _billList.Bills;
             BillServices.AddNewBill = AddNewBill;
-            BillServices.PayBill = PayBill;
-            BillServices.DueIn = CalculateDueInDate;
+            // BillServices.PayBill = PayBill;
+            // BillServices.DueIn = CalculateDueInDate;
             BillServices.GetNumOverdueBills = () => _billList.GetNumOverdueBills();
-            BillServices.GetAmountDueToday = GetAmountDueToday;
+            // BillServices.GetAmountDueToday = GetAmountDueToday;
             BillServices.GetNumBillDueToday = GetNumBillDueToday;
             BillServices.ResetBills = ResetBills;
             BillServices.SetNumOverdueBills = (num) => _billList.OverrideNumOverdueBill(num);
@@ -35,12 +35,12 @@ namespace Quackery.Bills
         void OnDisable()
         {
             BillServices.WaitUntilReady = () => new WaitUntil(() => true);
-            BillServices.GetAllBills = () => new List<Bill>();
+            BillServices.GetAllBills = () => new();
             BillServices.AddNewBill = delegate { };
-            BillServices.PayBill = delegate { };
-            BillServices.DueIn = (bill) => 0;
+            // BillServices.PayBill = delegate { };
+            // BillServices.DueIn = (bill) => 0;
             BillServices.GetNumOverdueBills = () => 0;
-            BillServices.GetAmountDueToday = () => 0;
+            // BillServices.GetAmountDueToday = () => 0;
             BillServices.GetNumBillDueToday = () => 0;
             BillServices.ResetBills = delegate { };
             BillServices.SetNumOverdueBills = (num) => { };
@@ -93,7 +93,7 @@ namespace Quackery.Bills
         private void PayBill(Bill bill)
         {
             _billList.PayBill(bill);
-            PurseServices.Modify(-bill.TotalPrice);
+            // PurseServices.Modify(-bill.TotalPrice);
             BillEvents.OnBillUpdated(bill);
 
         }
@@ -105,7 +105,7 @@ namespace Quackery.Bills
             {
                 if (bill.IsDueToday())
                 {
-                    total += bill.TotalPrice;
+                    // total += bill.TotalPrice;
                 }
             }
             return total;

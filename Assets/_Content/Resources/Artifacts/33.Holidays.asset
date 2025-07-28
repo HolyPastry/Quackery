@@ -14,10 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Holidays
   Icon: {fileID: 21300000, guid: ec098d192b1ca2f4aa96f1e8bcfec1b9, type: 3}
+  ShopBanner: {fileID: 0}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 3
   Requirements: []
   Explanations: []
-  Rarity: 3
+  Rarity: 2
   Effects: []
+  Price: 0
+  FollowersRequirement: 0
+  FollowerBonus: 0
+  Bill: {fileID: 0}
+  BonusItems: []
+  RemovedCards: []

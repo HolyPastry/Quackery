@@ -81,5 +81,7 @@ namespace Quackery
         internal static Action<int> ModifyHandSize = (handSizeModifier) => { };
 
         internal static Func<EnumCardPile, int, bool> IsPilePlayable = (pile, index) => true;
+
+        internal static Action<ItemData> DestroyCardType = (itemData) => { };
     }
 }

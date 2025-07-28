@@ -20,4 +20,6 @@ public static class InventoryServices
 
     internal static Action<List<ItemData>> AddNewItems = delegate { };
 
+    internal static Func<Predicate<ItemData>, ItemData> GetRandomMatchingItem = (predicate) => null;
+
 }

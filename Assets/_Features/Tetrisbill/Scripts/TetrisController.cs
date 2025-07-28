@@ -75,7 +75,7 @@ namespace Quackery.TetrisBill
         {
 
             yield return new WaitForSeconds(1f);
-            int budget = MoneyScale.GetBudgetAmount();
+            int budget = MoneyScale.GetMoneyAmount();
             PurseServices.Modify(-budget);
 
             yield return new WaitForSeconds(1f);

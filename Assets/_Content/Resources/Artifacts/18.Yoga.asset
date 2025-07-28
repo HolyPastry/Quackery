@@ -14,10 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Yoga
   Icon: {fileID: 21300000, guid: afdab751a1aeb4940bc1577716b8b0ec, type: 3}
+  ShopBanner: {fileID: 0}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 2
   Requirements: []
   Explanations: []
-  Rarity: 2
+  Rarity: 1
   Effects: []
+  Price: 0
+  FollowersRequirement: 0
+  FollowerBonus: 0
+  Bill: {fileID: 11400000, guid: bd99b5986c80e44b295fc87a06528bb3, type: 2}
+  BonusItems: []
+  RemovedCards: []

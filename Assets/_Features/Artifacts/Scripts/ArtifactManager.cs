@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Bakery.Saves;
 using Holypastry.Bakery;
 using Holypastry.Bakery.Flow;
@@ -24,8 +26,9 @@ namespace Quackery.Artifacts
             ArtifactServices.WaitUntilReady = () => WaitUntilReady;
             ArtifactServices.Add = AddArtifact;
             ArtifactServices.GetAllArtifacts = () => _ownedArtifacts.All;
+            ArtifactServices.GetRandomSuitable = GetRandomMatching;
+            ArtifactServices.Owns = (artifactData) => _ownedArtifacts.Contains(artifactData);
         }
-
 
 
         void OnDisable()
@@ -33,6 +36,8 @@ namespace Quackery.Artifacts
             ArtifactServices.WaitUntilReady = () => new WaitUntil(() => true);
             ArtifactServices.Add = delegate { };
             ArtifactServices.GetAllArtifacts = () => new();
+            ArtifactServices.GetRandomSuitable = (level, amount) => new();
+            ArtifactServices.Owns = (artifactData) => false;
         }
 
         protected override IEnumerator Start()
@@ -79,5 +84,18 @@ namespace Quackery.Artifacts
                 Debug.LogWarning($"Artifact {data.name} not found in collection.");
             }
         }
+
+        private List<ArtifactData> GetRandomMatching(int level, int amount)
+        {
+
+            return _collection.Data
+                .Where(artifact => artifact.Level == level &&
+                    (!artifact.IsUpgrade || _ownedArtifacts.Contains(artifact.UpgradeFor)) &&
+                     (artifact.Requirements.Count == 0 || artifact.Requirements.TrueForAll(req => _ownedArtifacts.Contains(req))))
+                .Shuffle()
+                .Take(amount)
+                .ToList();
+        }
+
     }
 }

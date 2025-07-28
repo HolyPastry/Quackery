@@ -18,7 +18,8 @@ MonoBehaviour:
   ShortDescription: Bundle
   LongDescription: 
   ShopDescription: 
-  Explanations: []
+  Explanations:
+  - {fileID: 11400000, guid: 760c3bfef0017439c9584611bb013c30, type: 2}
   SubscriptionCost: 2
   Category: 1
   Effects:

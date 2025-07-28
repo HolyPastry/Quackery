@@ -10,12 +10,12 @@ namespace Quackery.TetrisBill
     public class MoneyScale : MonoBehaviour
     {
 
-        [SerializeField] private RectTransform _rowHighlight;
+        [SerializeField] private RectTransform _budgetHighlight;
         [SerializeField] private RectTransform _moneyHighlight;
 
         private int _budgetIndex = 0;
 
-        public int BudgetAmount { get; private set; } = 0;
+        public int MoneyAmount { get; private set; } = 0;
 
         public int BudgetIndex
         {
@@ -23,27 +23,27 @@ namespace Quackery.TetrisBill
             set
             {
                 _budgetIndex = value;
-                _rowHighlight.anchoredPosition = new Vector2(_rowHighlight.anchoredPosition.x, _budgetIndex * TetrisGame.CellSize());
+                _budgetHighlight.anchoredPosition = new Vector2(_budgetHighlight.anchoredPosition.x, _budgetIndex * TetrisGame.CellSize());
                 TetrisGame.SetBudgetIndex(_budgetIndex);
             }
         }
 
         private List<TextMeshProUGUI> _textComponents = new();
 
-        public static Func<int> GetBudgetAmount = () => 0;
-        public static Action<int> SetMoneyAmount = (amount) => { };
+        public static Func<int> GetMoneyAmount = () => 0;
+        public static Action<int> SetMoneyAmount = (index) => { };
 
         void OnEnable()
         {
-            GetBudgetAmount = () => BudgetAmount;
-            SetMoneyAmount = (amount) =>
+            GetMoneyAmount = () => MoneyAmount;
+            SetMoneyAmount = (index) =>
             {
                 for (int i = 0; i < _textComponents.Count - 1; i++)
                 {
 
-                    if (i + 1 > amount)
+                    if (i + 1 > index || i + 1 > BudgetIndex)
                     {
-                        BudgetAmount = int.Parse(_textComponents[i].text);
+                        MoneyAmount = int.Parse(_textComponents[i].text);
                         _moneyHighlight.anchoredPosition = new Vector2(_moneyHighlight.anchoredPosition.x, i * TetrisGame.CellSize());
                         return;
                     }
@@ -52,7 +52,7 @@ namespace Quackery.TetrisBill
         }
         void OnDisable()
         {
-            GetBudgetAmount = () => 0;
+            GetMoneyAmount = () => 0;
             SetMoneyAmount = (amount) => { };
         }
         IEnumerator Start()

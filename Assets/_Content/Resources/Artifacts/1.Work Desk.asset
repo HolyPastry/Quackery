@@ -14,10 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Work Desk
   Icon: {fileID: 21300000, guid: a2b50a8e57f946d44994660f2919d7f9, type: 3}
+  ShopBanner: {fileID: 0}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 1
   Requirements: []
   Explanations: []
-  Rarity: 1
+  Rarity: 0
   Effects: []
+  Price: 0
+  FollowersRequirement: 0
+  FollowerBonus: 0
+  Bill: {fileID: 0}
+  BonusItems: []
+  RemovedCards:
+  - {fileID: 11400000, guid: a7e30a78cf41e4f3099f9b09915b79d9, type: 2}

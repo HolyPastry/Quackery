@@ -13,5 +13,9 @@ namespace Quackery.Artifacts
 
         internal static Func<List<ArtifactData>> GetAllArtifacts = () => new();
 
+        internal static Func<int, int, List<ArtifactData>> GetRandomSuitable = (level, amount) => new();
+
+        internal static Func<ArtifactData, bool> Owns = (artifactData) => false;
+
     }
 }

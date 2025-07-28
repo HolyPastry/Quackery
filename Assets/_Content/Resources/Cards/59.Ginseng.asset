@@ -18,7 +18,8 @@ MonoBehaviour:
   ShortDescription: Cannot be stacked on
   LongDescription: 
   ShopDescription: 
-  Explanations: []
+  Explanations:
+  - {fileID: 11400000, guid: fc90056fb1ad44e9b83d0e7f04267673, type: 2}
   SubscriptionCost: 4
   Category: 6
   Effects:

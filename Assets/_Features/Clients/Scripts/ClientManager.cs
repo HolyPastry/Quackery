@@ -10,7 +10,7 @@ namespace Quackery.Clients
     public class ClientManager : Service
     {
         [SerializeField] private int _queueSize = 5;
-        [SerializeField] private UnknownClientsData unknownClientsData;
+        [SerializeField] private ClientsData _clientsData;
 
         private ClientList _clientList;
         private Client _selectedClient;
@@ -52,8 +52,12 @@ namespace Quackery.Clients
 
             ClientServices.GetQueueSize = () => _queueSize;
             ClientServices.StartNormalWeek = StartNormalWeek;
+            ClientServices.GetThreshold = (mode) => _clientsData.GetThreshold(mode);
+            ClientServices.GetCartSize = _clientsData.GetCartSize;
 
         }
+
+
 
         void OnDisable()
         {
@@ -91,6 +95,8 @@ namespace Quackery.Clients
             ClientServices.GetBudget = () => -1;
             ClientServices.GetQueueSize = () => 0;
             ClientServices.StartNormalWeek = () => { };
+            ClientServices.GetThreshold = (mode) => (mode == CartMode.Survival) ? 20 : 40;
+            ClientServices.GetCartSize = () => 3;
 
         }
 
@@ -100,6 +106,13 @@ namespace Quackery.Clients
             _clientList = new ClientList();
             _clientList.Init();
             _isReady = true;
+        }
+
+
+
+        private int GetCartThreshold(CartMode mode)
+        {
+            return _clientsData.GetThreshold(mode);
         }
 
         private void SwapClients()
@@ -176,12 +189,8 @@ namespace Quackery.Clients
         private void GenerateDailyQueue()
         {
             ResetClientQueue();
-            var level = ProgressionServices.GetLevel();
 
-            //TODO:: define how the queue scales with level
-            _queueSize = 2;
-
-
+            _queueSize = _clientsData.GetQueueSize();
 
             AddUnknownClients(_queueSize - _clientList.UnknownClients.Count);
             _clientList.Clients.Shuffle();
@@ -278,7 +287,7 @@ namespace Quackery.Clients
         private void AddUnknownClient(Effect effect)
         {
             var client = new Client();
-            client.InitUnknown(unknownClientsData, effect);
+            client.InitUnknown(_clientsData, effect);
             _clientList.Add(client);
             ClientEvents.ClientListUpdated?.Invoke();
         }
@@ -288,7 +297,7 @@ namespace Quackery.Clients
             for (int i = 0; i < numClients; i++)
             {
                 var client = new Client();
-                client.InitUnknown(unknownClientsData);
+                client.InitUnknown(_clientsData);
                 _clientList.Add(client);
                 ClientEvents.ClientListUpdated?.Invoke();
             }

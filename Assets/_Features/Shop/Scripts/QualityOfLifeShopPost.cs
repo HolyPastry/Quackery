@@ -7,7 +7,7 @@ namespace Quackery.Shops
         public override void SetupPost(ShopReward reward)
         {
             base.SetupPost(reward);
-            QualityOfLifeReward qolReward = reward as QualityOfLifeReward;
+            ArtifactReward qolReward = reward as ArtifactReward;
 
             if (qolReward == null)
             {

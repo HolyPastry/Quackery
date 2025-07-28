@@ -19,13 +19,13 @@ namespace Quackery
 
         internal static Action<BillData, bool> AddNewBill = delegate { };
 
-        internal static Action<Bill> PayBill = delegate { };
+        //  internal static Action<Bill> PayBill = delegate { };
 
-        internal static Func<Bill, int> DueIn = (bill) => 0;
+        // internal static Func<Bill, int> DueIn = (bill) => 0;
 
         internal static Func<int> GetNumOverdueBills = () => 0;
 
-        internal static Func<int> GetAmountDueToday = () => 50;
+        // internal static Func<int> GetAmountDueToday = () => 50;
 
         internal static Func<int> GetNumBillDueToday = () => 0;
 

@@ -26,10 +26,10 @@ namespace Quackery
         //Added later on when the player selects a card to remove
         public Item ItemToRemove;
 
-        public override void ApplyReward()
-        {
-            // if (ItemToRemove != null)
-            //     DeckServices.DestroyCard(ItemToRemove);
-        }
+        // public override void ApplyReward()
+        // {
+        //     // if (ItemToRemove != null)
+        //     //     DeckServices.DestroyCard(ItemToRemove);
+        // }
     }
 }

@@ -47,5 +47,10 @@ namespace Quackery.Artifacts
         {
             return _artifacts.Remove(data);
         }
+
+        public bool Contains(ArtifactData data)
+        {
+            return _artifacts.Contains(data);
+        }
     }
 }

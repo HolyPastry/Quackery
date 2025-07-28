@@ -4,7 +4,7 @@ namespace Quackery.Shops
     {
         NewCard,
         RemoveCard,
-        QualityOfLife,
+        Artifact,
         UpgradeCard
         // Add more reward types as needed
     }

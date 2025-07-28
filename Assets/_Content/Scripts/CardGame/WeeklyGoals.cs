@@ -29,15 +29,15 @@ namespace Quackery
         private void UpdateUI(float obj)
         {
             var purseAmount = PurseServices.GetAmount();
-            var billDue = BillServices.GetAmountDueToday();
+            //  var billDue = BillServices.GetAmountDueToday();
 
             var clientList = ClientServices.GetClientList();
             var numClientServed = clientList.Where(c => c.Served).Count();
 
             var numSegments = clientList.Count - 1;
 
-            _gauge.fillAmount = (float)purseAmount / billDue;
-            _valueText.text = Sprites.Replace($"#Coin {purseAmount}/{billDue}");
+            // _gauge.fillAmount = (float)purseAmount / billDue;
+            // _valueText.text = Sprites.Replace($"#Coin {purseAmount}/{billDue}");
             var width = _gauge.rectTransform.rect.width;
             var segmentWidth = width / numSegments;
 

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a330f0d157844b29a1764a1fbdb005, type: 3}
+  m_Name: Condition=OwnAHouse
+  m_EditorClassIdentifier: 
+  MasterText: Buy A Place
+  CanReverse: 0
+  _artifact: {fileID: 11400000, guid: 5776d177385e24ab6b6db916f05ff178, type: 2}

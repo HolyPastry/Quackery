@@ -13,7 +13,7 @@ namespace Quackery
 
         public void Show(BillData billData)
         {
-            _billAmountText.text = $"{billData.MasterText} (<sprite name=Coin>{billData.Price})";
+            //  _billAmountText.text = $"{billData.MasterText} (<sprite name=Coin>{billData.Price})";
             gameObject.SetActive(true);
         }
 

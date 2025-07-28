@@ -11,12 +11,12 @@ namespace Quackery
         protected override WaitUntil WaitUntilReady => BillServices.WaitUntilReady();
         protected override void UpdateUI()
         {
-            int amountDue = BillServices.GetAmountDueToday();
-            if (amountDue == _lastValue) return;
+            // int amountDue = BillServices.GetAmountDueToday();
+            ///  if (amountDue == _lastValue) return;
 
-            Text = $"{BillServices.GetAmountDueToday()}";
+            //  Text = $"{BillServices.GetAmountDueToday()}";
             if (_lastValue >= 0) PlayAudio();
-            _lastValue = amountDue;
+            //   _lastValue = amountDue;
 
         }
     }

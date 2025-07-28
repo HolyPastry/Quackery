@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Holypastry.Bakery;
+using Quackery.Bills;
+using Quackery.Inventories;
 using UnityEngine;
 
 
@@ -13,6 +15,9 @@ namespace Quackery.Artifacts
     public class ArtifactData : ContentTag
     {
         public Sprite Icon;
+
+        public Sprite ShopBanner;
+
         [TextArea(3, 10)]
         public string Description;
 
@@ -24,8 +29,14 @@ namespace Quackery.Artifacts
         public List<Explanation> Explanations = new();
         public bool IsUpgrade => UpgradeFor != null;
 
-        public EnumRarity Rarity;
-
         public List<Effect> Effects = new();
+
+        public int Price = 0;
+
+        public int FollowersRequirement = 0;
+        public int FollowerBonus = 0;
+        public BillData Bill = null;
+        public List<ItemData> BonusItems = new();
+        public List<ItemData> RemovedCards = new();
     }
 }

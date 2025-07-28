@@ -1,10 +1,31 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Quackery.Shops
 {
+    [Serializable]
+    public struct CardRarityChances
+    {
+        public int Common;
+        public int Uncommon;
+        public int Rare;
+
+        public readonly EnumRarity Roll()
+        {
+            int total = Common + Uncommon + Rare;
+            int randomValue = UnityEngine.Random.Range(0, total + 1);
+
+            if (randomValue < Common)
+                return EnumRarity.Common;
+            else if (randomValue < Common + Uncommon)
+                return EnumRarity.Uncommon;
+            else
+                return EnumRarity.Rare;
+        }
+    }
 
     [Serializable]
     public class RemovalCompany
@@ -18,11 +39,12 @@ namespace Quackery.Shops
     }
 
     [CreateAssetMenu(fileName = "ShopManagerData", menuName = "Quackery/Shop/ShopManagerData", order = 1)]
-    public class ShopManagerData : ScriptableObject
+    public class ShopManagerData : SerializedScriptableObject
     {
         public int RemoveCardPrice = 10;
         public int UpgradeCardPrice = 20;
 
+        public List<CardRarityChances> CardRarityChances = new();
 
 
         [SerializeField] private List<RemovalCompany> _removalCompanies;
@@ -97,6 +119,18 @@ namespace Quackery.Shops
             for (int i = 0; i < Mathf.Min(amount, _removalCompanies.Count); i++)
                 randomCompanies.Add(_removalCompanies[i]);
             return randomCompanies;
+        }
+
+        internal void RollRarity(int currentLevel, out EnumRarity rarity)
+        {
+            if (currentLevel >= CardRarityChances.Count)
+            {
+                rarity = EnumRarity.Common;
+                Debug.LogWarning("Current level exceeds the number of defined rarity chances. Defaulting to Common.");
+                return;
+            }
+
+            rarity = CardRarityChances[currentLevel].Roll();
         }
     }
 }

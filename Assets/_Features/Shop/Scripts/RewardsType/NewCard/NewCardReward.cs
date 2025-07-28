@@ -23,12 +23,12 @@ namespace Quackery.Shops
         }
 
 
-        public override void ApplyReward()
-        {
-            DeckServices.AddNew(ItemData,
-                            Decks.EnumCardPile.Discard,
-                            EnumPlacement.OnTop,
-                            EnumLifetime.Permanent);
-        }
+        // public override void ApplyReward()
+        // {
+        //     DeckServices.AddNew(ItemData,
+        //                     Decks.EnumCardPile.Discard,
+        //                     EnumPlacement.OnTop,
+        //                     EnumLifetime.Permanent);
+        // }
     }
 }

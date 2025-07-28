@@ -20,6 +20,7 @@ namespace Quackery
         [SerializeField] private CardImporter cardImporters;
         [SerializeField] private ArtifactImporter artifactImporters;
         [SerializeField] private DeckImporter deckImporters;
+        [SerializeField] private BillImporter billImporters;
         [Header("Paths")]
         [SerializeField] private string _statusesDataPath;
         [SerializeField] private string _iconPath = "Assets/_Content/2DArt/Sprites/Icons";
@@ -27,14 +28,28 @@ namespace Quackery
 
         public async Task Import()
         {
-            string log = "Card Art:\n";
+            string log = "";
             cardImporters.OnPopulated += (message) =>
             {
                 if (!string.IsNullOrEmpty(message)) log += message;
             };
 
+            artifactImporters.OnPopulated += (message) =>
+            {
+                if (!string.IsNullOrEmpty(message)) log += message;
+            };
+
+            billImporters.OnPopulated += (message) =>
+            {
+                if (!string.IsNullOrEmpty(message)) log += message;
+            };
+
             await explanationImporters.Import();
+            log += "Card Art:\n";
             await cardImporters.Import();
+            log += "\n\nBill Art:\n";
+            await billImporters.Import();
+            log += "\n\nArtifact Art:\n";
             await artifactImporters.Import();
             await deckImporters.ImportDecks();
 

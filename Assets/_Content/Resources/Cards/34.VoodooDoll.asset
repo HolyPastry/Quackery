@@ -15,7 +15,7 @@ MonoBehaviour:
   MasterText: Voodoo Doll
   Icon: {fileID: 21300000, guid: 58bf81e7156904712bf08c51bc1c07e6, type: 3}
   BasePrice: 0
-  ShortDescription: 
+  ShortDescription: Apply 3 Motivation
   LongDescription: 
   ShopDescription: 
   Explanations: []

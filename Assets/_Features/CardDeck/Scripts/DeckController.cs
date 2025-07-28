@@ -50,6 +50,8 @@ namespace Quackery.Decks
 
         private CardPile _exhaustPile => _cardPiles.Find(p => p.Type == EnumCardPile.Exhaust);
 
+
+
         #endregion
 
 
@@ -112,6 +114,7 @@ namespace Quackery.Decks
             DeckServices.SetCustomDraw = (numCard) => { };
 
             DeckServices.IsPilePlayable = (type, index) => true;
+            DeckServices.DestroyCardType = (itemData) => { };
 
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
@@ -172,6 +175,7 @@ namespace Quackery.Decks
             DeckServices.IsPilePlayable = (type, index) => _handPiles.Any(p => p.Type == type &&
                                                                              p.Index == index &&
                                                                                 p.Playable);
+            DeckServices.DestroyCardType = DestroyCardType;
 
             EffectEvents.OnAdded += UpdateCardUI;
             EffectEvents.OnRemoved += UpdateCardUI;
@@ -202,6 +206,17 @@ namespace Quackery.Decks
                 _cardPiles.Add(new CardPile(EnumCardPile.Selection, i));
             }
             _isReady = true;
+        }
+        private void DestroyCardType(ItemData data)
+        {
+            if (data == null) return;
+
+            var cards = _cardPiles.SelectMany(p => p.Cards).Where(c => c.Item.Data == data).ToList();
+            foreach (var card in cards)
+            {
+                InventoryServices.RemoveItem(card.Item);
+                DestroyCard(card);
+            }
         }
 
         private List<Card> GetMatchingCards(System.Predicate<Card> predicate, EnumCardPile pile)
@@ -326,8 +341,8 @@ namespace Quackery.Decks
 
 
             DeactivateAllPiles();
-
-            StartCoroutine(PlayCardRoutine(_cardBeingPlayed, selectedPile));
+            if (_cardBeingPlayed != null)
+                StartCoroutine(PlayCardRoutine(_cardBeingPlayed, selectedPile));
 
         }
 

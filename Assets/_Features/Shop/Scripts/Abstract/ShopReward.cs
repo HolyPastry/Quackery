@@ -9,6 +9,6 @@ namespace Quackery.Shops
         public abstract string Description { get; }
         public abstract bool IsSubscription { get; }
 
-        public abstract void ApplyReward();
+        //public abstract void ApplyReward();
     }
 }

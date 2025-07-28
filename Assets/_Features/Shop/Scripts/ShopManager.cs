@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Quackery.Artifacts;
 using Quackery.Inventories;
-using Quackery.QualityOfLife;
+using Quackery.Progression;
 using UnityEngine;
 
 namespace Quackery.Shops
@@ -13,33 +14,47 @@ namespace Quackery.Shops
         void OnEnable()
         {
             ShopServices.GetRewards = GetRewards;
-            ShopServices.ApplyReward = ApplyReward;
+            // ShopServices.ApplyReward = ApplyReward;
         }
 
         void OnDisable()
         {
             ShopServices.GetRewards = (amount) => new();
-            ShopServices.ApplyReward = (data) => { };
+            //  ShopServices.ApplyReward = (data) => { };
         }
 
-        private void ApplyReward(ShopReward reward)
-        {
-            reward.ApplyReward();
-        }
+        // private void ApplyReward(ShopReward reward)
+        // {
+        //     reward.ApplyReward();
+        // }
 
         private List<ShopReward> GetRewards(int NumRewards)
         {
             var shopRewardTypes = _shopManagerData.GenerateRewards(NumRewards);
             var rewards = new List<ShopReward>();
 
+            int currentLevel = ProgressionServices.GetLevel();
+
             foreach (var (rewardType, amount) in shopRewardTypes)
             {
                 switch (rewardType)
                 {
                     case ShopRewardType.NewCard:
-                        List<ItemData> itemDatas = InventoryServices.GetRandomItems(amount);
-                        for (int i = 0; i < Mathf.Min(amount, itemDatas.Count); i++)
-                            rewards.Add(new NewCardReward(itemDatas[i]));
+
+                        for (int i = 0; i < amount; i++)
+                        {
+                            _shopManagerData.RollRarity(currentLevel, out EnumRarity rarity);
+                            ItemData itemData = InventoryServices.GetRandomMatchingItem(
+                                        itemData => itemData.Category != EnumItemCategory.Curse &&
+                                        itemData.Category != EnumItemCategory.TempCurse &&
+                                        itemData.Rarity == rarity);
+                            if (itemData == null)
+                            {
+                                Debug.LogWarning("No matching item data found for NewCard reward.");
+                                continue;
+                            }
+                            rewards.Add(new NewCardReward(itemData));
+                        }
 
                         break;
 
@@ -51,10 +66,10 @@ namespace Quackery.Shops
 
                         break;
 
-                    case ShopRewardType.QualityOfLife:
-                        List<QualityOfLifeData> qualityOfLifeDatas = QualityOfLifeServices.GetRandomSuitable(amount);
-                        for (int i = 0; i < Mathf.Min(amount, qualityOfLifeDatas.Count); i++)
-                            rewards.Add(new QualityOfLifeReward(qualityOfLifeDatas[i]));
+                    case ShopRewardType.Artifact:
+                        List<ArtifactData> artifactData = ArtifactServices.GetRandomSuitable(currentLevel, amount);
+                        for (int i = 0; i < Mathf.Min(amount, artifactData.Count); i++)
+                            rewards.Add(new ArtifactReward(artifactData[i]));
 
                         break;
 

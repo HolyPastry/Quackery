@@ -18,7 +18,8 @@ MonoBehaviour:
   ShortDescription: Draw one more Card\n -1 Vibes
   LongDescription: 
   ShopDescription: 
-  Explanations: []
+  Explanations:
+  - {fileID: 11400000, guid: 48f617e1041c14b9d855f83da3a9fb1e, type: 2}
   SubscriptionCost: 13
   Category: 7
   Effects:

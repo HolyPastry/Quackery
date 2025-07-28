@@ -55,7 +55,7 @@ namespace Quackery.Shops
             {
                 StartCoroutine(AddCardRoutine(newCardReward));
             }
-            else if (reward is QualityOfLifeReward qualityOfLifeReward)
+            else if (reward is ArtifactReward qualityOfLifeReward)
             {
 
                 StartCoroutine(ApplyQualityOfLifeRoutine(qualityOfLifeReward));
@@ -64,12 +64,12 @@ namespace Quackery.Shops
 
         }
 
-        private IEnumerator ApplyQualityOfLifeRoutine(QualityOfLifeReward qualityOfLifeReward)
+        private IEnumerator ApplyQualityOfLifeRoutine(ArtifactReward qualityOfLifeReward)
         {
             _description.text = "\n";
             _subscriptionPrice.text = "";
 
-            var data = qualityOfLifeReward.QualityOfLifeData;
+            var data = qualityOfLifeReward.ArtifactData;
 
             if (data.Price > 0)
             {
@@ -85,24 +85,24 @@ namespace Quackery.Shops
                 yield return new WaitForSeconds(1f);
 
             }
-            if (data.RatingBonus > 0)
-            {
-                _description.text += Sprites.Replace($"+{data.RatingBonus} #Rating. \n");
-                RatingServices.Modify(data.RatingBonus);
-                yield return new WaitForSeconds(01f);
-            }
-            if (data.CardBonus != null)
-            {
-                _description.text += $"New Card added to Deck.\n";
-                _cardAnimated.SlideOut(Direction.Left);
+            // if (data.RatingBonus > 0)
+            // {
+            //     _description.text += Sprites.Replace($"+{data.RatingBonus} #Rating. \n");
+            //     RatingServices.Modify(data.RatingBonus);
+            //     yield return new WaitForSeconds(01f);
+            // }
+            // if (data.CardBonus != null)
+            // {
+            //     _description.text += $"New Card added to Deck.\n";
+            //     _cardAnimated.SlideOut(Direction.Left);
 
-                DeckServices.AddNew(data.CardBonus,
-                                EnumCardPile.Discard,
-                                EnumPlacement.OnTop,
-                                EnumLifetime.Permanent);
-                yield return _cardAnimated.WaitForAnimation();
+            //     DeckServices.AddNew(data.CardBonus,
+            //                     EnumCardPile.Discard,
+            //                     EnumPlacement.OnTop,
+            //                     EnumLifetime.Permanent);
+            //     yield return _cardAnimated.WaitForAnimation();
 
-            }
+            // }
 
             if (data.Bill != null)
             {
@@ -110,7 +110,7 @@ namespace Quackery.Shops
                 BillServices.AddNewBill(data.Bill, true);
                 yield return new WaitForSeconds(1f);
             }
-            QualityOfLifeServices.Acquire(data);
+            //QualityOfLifeServices.Acquire(data);
             yield return new WaitForSeconds(1f);
             Hide();
             OnExited(true);
@@ -151,7 +151,7 @@ namespace Quackery.Shops
                 case NewCardReward newCardReward:
                     ShowNewCardConfirmation(newCardReward);
                     break;
-                case QualityOfLifeReward qualityOfLifeReward:
+                case ArtifactReward qualityOfLifeReward:
                     ShowQualityOfLifeConfirmation(qualityOfLifeReward);
                     break;
                 default:
@@ -160,14 +160,14 @@ namespace Quackery.Shops
             }
         }
 
-        private void ShowQualityOfLifeConfirmation(QualityOfLifeReward qualityOfLifeReward)
+        private void ShowQualityOfLifeConfirmation(ArtifactReward qualityOfLifeReward)
         {
             base.Show(qualityOfLifeReward);
 
-            var data = qualityOfLifeReward.QualityOfLifeData;
-            if (data.CardBonus != null)
+            var data = qualityOfLifeReward.ArtifactData;
+            if (data.BonusItems != null)
             {
-                _card = DeckServices.CreateCard(data.CardBonus);
+                // _card = DeckServices.CreateCard(data.CardBonus);
                 _card.transform.SetParent(_cardRoot, false);
                 _card.transform.localPosition = Vector3.zero;
                 _cardAnimated.RectTransform = _card.transform as RectTransform;
@@ -175,15 +175,15 @@ namespace Quackery.Shops
             else
             {
                 _logo.gameObject.SetActive(true);
-                _logo.sprite = qualityOfLifeReward.QualityOfLifeData.ShopBanner;
+                _logo.sprite = qualityOfLifeReward.ArtifactData.ShopBanner;
             }
 
-            _title.text = Sprites.Replace(qualityOfLifeReward.QualityOfLifeData.Title);
-            _description.text = Sprites.Replace(qualityOfLifeReward.QualityOfLifeData.Description);
-            if (data.FollowerBonus > 0)
-                _description.text += $" +{data.FollowerBonus} Followers. ";
-            if (data.RatingBonus > 0)
-                _description.text += $" +{data.RatingBonus} Rating. ";
+            // _title.text = Sprites.Replace(qualityOfLifeReward.ArtifactData.Title);
+            // _description.text = Sprites.Replace(qualityOfLifeReward.ArtifactData.Description);
+            // if (data.FollowerBonus > 0)
+            //     _description.text += $" +{data.FollowerBonus} Followers. ";
+            // if (data.RatingBonus > 0)
+            //     _description.text += $" +{data.RatingBonus} Rating. ";
 
             string subscriptionText = "";
             if (data.Price > 0)
@@ -196,7 +196,7 @@ namespace Quackery.Shops
             }
             if (data.Bill != null)
             {
-                subscriptionText += $"\n#Bill {Sprites.Replace(data.Bill.MasterText)} ({data.Bill.Price} #Coin)";
+                // subscriptionText += $"\n#Bill {Sprites.Replace(data.Bill.MasterText)} ({data.Bill.Price} #Coin)";
             }
             _subscriptionPrice.text = Sprites.Replace(subscriptionText);
         }

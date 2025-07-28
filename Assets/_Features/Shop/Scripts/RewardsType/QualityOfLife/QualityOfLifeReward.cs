@@ -1,27 +1,28 @@
+using Quackery.Artifacts;
 using Quackery.QualityOfLife;
 using UnityEngine;
 
 namespace Quackery.Shops
 {
 
-    public class QualityOfLifeReward : ShopReward
+    public class ArtifactReward : ShopReward
     {
 
-        public QualityOfLifeData QualityOfLifeData { get; private set; }
+        public ArtifactData ArtifactData { get; private set; }
 
-        public override int Price => QualityOfLifeData.Price;
+        public override int Price => ArtifactData.Price;
         public override bool IsSubscription => true;
-        public override string Title => QualityOfLifeData.Title;
-        public override string Description => QualityOfLifeData.Description;
+        public override string Title => ArtifactData.MasterText;
+        public override string Description => ArtifactData.Description;
 
-        public QualityOfLifeReward(QualityOfLifeData qualityOfLifeData)
+        public ArtifactReward(ArtifactData artifactData)
         {
-            QualityOfLifeData = qualityOfLifeData;
+            ArtifactData = artifactData;
         }
 
-        public override void ApplyReward()
-        {
-            QualityOfLifeServices.Acquire(QualityOfLifeData);
-        }
+        // public override void ApplyReward()
+        // {
+        //     ArtifactServices.Add(ArtifactData);
+        // }
     }
 }

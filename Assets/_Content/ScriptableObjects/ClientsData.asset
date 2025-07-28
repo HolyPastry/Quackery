@@ -10,237 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9de326de182dd4f63a416dac37a54e7a, type: 3}
-  m_Name: UnknownClientsData
+  m_Name: ClientsData
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 800b97147ddac41c6ae43562328104db, type: 2}
-    - {fileID: 11400000, guid: 0efb1bb5a0fe24d2e9a540c5bbc4b250, type: 2}
-    - {fileID: 11400000, guid: 0c626a7a36b8a460b8d88aab4412ca1c, type: 2}
-    - {fileID: 11400000, guid: 20ce1060ae6814fe092e901535c4d6be, type: 2}
-    - {fileID: 11400000, guid: 861ac0bc84a78446c827fec2cb151274, type: 2}
-    - {fileID: 11400000, guid: f46eaadc5c50444de8d8e4db6280921c, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: EffectsByLevel
-      Entry: 7
-      Data: 0|UnityEngine.Rendering.SerializedDictionary`2[[System.Int32, mscorlib],[System.Collections.Generic.List`1[[Quackery.Effect,
-        Assembly-CSharp]], mscorlib]], Unity.RenderPipelines.Core.Runtime
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 0
-    - Name: $v
-      Entry: 7
-      Data: 2|System.Collections.Generic.List`1[[Quackery.Effect, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: 3|Quackery.Effect, Assembly-CSharp
-    - Name: _data
-      Entry: 10
-      Data: 0
-    - Name: Value
-      Entry: 3
-      Data: 1
-    - Name: Tags
-      Entry: 7
-      Data: 4|System.Collections.Generic.List`1[[Quackery.Effects.EnumEffectTag,
-        Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 5|Quackery.Effect, Assembly-CSharp
-    - Name: _data
-      Entry: 10
-      Data: 1
-    - Name: Value
-      Entry: 3
-      Data: 1
-    - Name: Tags
-      Entry: 7
-      Data: 6|System.Collections.Generic.List`1[[Quackery.Effects.EnumEffectTag,
-        Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 7|Quackery.Effect, Assembly-CSharp
-    - Name: _data
-      Entry: 10
-      Data: 2
-    - Name: Value
-      Entry: 3
-      Data: 1
-    - Name: Tags
-      Entry: 7
-      Data: 8|System.Collections.Generic.List`1[[Quackery.Effects.EnumEffectTag,
-        Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 9|Quackery.Effect, Assembly-CSharp
-    - Name: _data
-      Entry: 10
-      Data: 3
-    - Name: Value
-      Entry: 3
-      Data: 1
-    - Name: Tags
-      Entry: 7
-      Data: 10|System.Collections.Generic.List`1[[Quackery.Effects.EnumEffectTag,
-        Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
-      Entry: 7
-      Data: 11|System.Collections.Generic.List`1[[Quackery.Effect, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 12|Quackery.Effect, Assembly-CSharp
-    - Name: _data
-      Entry: 10
-      Data: 4
-    - Name: Value
-      Entry: 3
-      Data: 1
-    - Name: Tags
-      Entry: 7
-      Data: 13|System.Collections.Generic.List`1[[Quackery.Effects.EnumEffectTag,
-        Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 14|Quackery.Effect, Assembly-CSharp
-    - Name: _data
-      Entry: 10
-      Data: 5
-    - Name: Value
-      Entry: 3
-      Data: 2
-    - Name: Tags
-      Entry: 7
-      Data: 15|System.Collections.Generic.List`1[[Quackery.Effects.EnumEffectTag,
-        Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
   Icons:
   - {fileID: -264572069, guid: e583cc40efb534b86bc31228d4f43c0e, type: 3}
   - {fileID: -1145577131, guid: e583cc40efb534b86bc31228d4f43c0e, type: 3}
@@ -429,3 +209,37 @@ MonoBehaviour:
   - Yak
   - Coyote
   - Hyena
+  LevelsData:
+  - Effects:
+    - _data: {fileID: 11400000, guid: 800b97147ddac41c6ae43562328104db, type: 2}
+      Value: 1
+      Tags: 0200000001000000
+    - _data: {fileID: 11400000, guid: 0efb1bb5a0fe24d2e9a540c5bbc4b250, type: 2}
+      Value: 1
+      Tags: 0200000001000000
+    - _data: {fileID: 11400000, guid: f46eaadc5c50444de8d8e4db6280921c, type: 2}
+      Value: 1
+      Tags: 0200000001000000
+    - _data: {fileID: 11400000, guid: 20ce1060ae6814fe092e901535c4d6be, type: 2}
+      Value: 1
+      Tags: 0200000001000000
+    - _data: {fileID: 11400000, guid: 0c626a7a36b8a460b8d88aab4412ca1c, type: 2}
+      Value: 1
+      Tags: 0200000001000000
+    SurvivalThreshold: 30
+    NormalThreshold: 100
+    QueueSizeRange: {x: 1, y: 1}
+  - Effects:
+    - _data: {fileID: 11400000, guid: 861ac0bc84a78446c827fec2cb151274, type: 2}
+      Value: 1
+      Tags: 
+    - _data: {fileID: 11400000, guid: f321226eb75b8475190c295c7e7b2f6f, type: 2}
+      Value: 1
+      Tags: 
+    SurvivalThreshold: 100
+    NormalThreshold: 500
+    QueueSizeRange: {x: 3, y: 4}
+  - Effects: []
+    SurvivalThreshold: 500
+    NormalThreshold: 1000
+    QueueSizeRange: {x: 4, y: 5}

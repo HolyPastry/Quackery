@@ -22,25 +22,25 @@ namespace Quackery.Decks
 
         protected override void UpdateCartValue()
         {
-            float bestValue = (float)BillServices.GetAmountDueToday() / ClientServices.NumClientsToday();
+            // float bestValue = (float)BillServices.GetAmountDueToday() / ClientServices.NumClientsToday();
 
             var baseValue = CartServices.GetValue();
             var bonusValue = CartServices.GetBonus();
 
             var totalValue = baseValue + bonusValue;
 
-            float newValue = totalValue / bestValue;
+            // float newValue = totalValue / bestValue;
             //     CartEvaluation evaluation = CartServices.GetCartEvaluation();
 
-            if (_oldValue == -1) _oldValue = newValue;
+            // if (_oldValue == -1) _oldValue = newValue;
 
-            _cartValueText.text = $"<sprite name=Coin> {baseValue} <size=80%><color=#000000>+{bonusValue}</color></size>";
-            _valueGauge.fillAmount = (1 / 0.8f) * newValue;
+            // _cartValueText.text = $"<sprite name=Coin> {baseValue} <size=80%><color=#000000>+{bonusValue}</color></size>";
+            // _valueGauge.fillAmount = (1 / 0.8f) * newValue;
 
             // if (newValue > _oldValue)
             //     PlayRealization(evaluation);
 
-            _oldValue = newValue;
+            // _oldValue = newValue;
 
 
         }

@@ -101,7 +101,7 @@ namespace Quackery.Decks
 
         public void Show()
         {
-            CartServices.ResetCartValue();
+            CartServices.ResetCart();
             _clientGameUI.Hide();
             _endOfDay = false;
             _gameStats.Reset();
@@ -149,7 +149,7 @@ namespace Quackery.Decks
 
             PurseServices.Modify(cashInCart);
             _gameStats.DayYield += cashInCart;
-            CartServices.ResetCartValue();
+            CartServices.ResetCart();
             _gameStats.TotalRating += 5;
             // cartValueUI.MoveTo(_purseTransform, () =>
             // {
@@ -196,8 +196,6 @@ namespace Quackery.Decks
                 _budgetCartValue.Show();
             else
                 _cartValue.Show();
-
-
 
             yield return new WaitForSeconds(0.5f);
             yield return EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundStart, null);

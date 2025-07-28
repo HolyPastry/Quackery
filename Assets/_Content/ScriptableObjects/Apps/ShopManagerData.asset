@@ -12,8 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181cecefe02504ac09d096a8564ebfd3, type: 3}
   m_Name: ShopManagerData
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   RemoveCardPrice: 10
   UpgradeCardPrice: 20
+  CardRarityChances:
+  - Common: 80
+    Uncommon: 20
+    Rare: 0
+  - Common: 70
+    Uncommon: 25
+    Rare: 5
+  - Common: 60
+    Uncommon: 30
+    Rare: 10
+  - Common: 40
+    Uncommon: 50
+    Rare: 10
   _removalCompanies:
   - Name: A Blanche Profile
     Logo: {fileID: 21300000, guid: 5b8fa63fd98284bcabf8149dd2e94e00, type: 3}

@@ -8,6 +8,6 @@ namespace Quackery
     public static class ShopServices
     {
         public static Func<int, List<ShopReward>> GetRewards = (amount) => new();
-        public static Action<ShopReward> ApplyReward = (data) => { };
+        //public static Action<ShopReward> ApplyReward = (data) => { };
     }
 }

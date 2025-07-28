@@ -37,12 +37,12 @@ namespace Quackery.Bills
 
         private void UpdatePayButtonState(float obj)
         {
-            _payButton.interactable = PurseServices.CanAfford(_bill.TotalPrice);
+            //_payButton.interactable = PurseServices.CanAfford(_bill.TotalPrice);
         }
 
         private void OnPayButtonClickedHandler()
         {
-            BillServices.PayBill(_bill);
+            // BillServices.PayBill(_bill);
             //   _billDueDate.gameObject.SetActive(false);
             //   _billWarningText.gameObject.SetActive(false);
             _payButton.gameObject.SetActive(false);
@@ -56,8 +56,8 @@ namespace Quackery.Bills
             _bill = bill;
             _billIcon.sprite = bill.Data.Icon;
             _billTitle.text = bill.Title;
-            _billAmount.text = bill.TotalPrice.ToString("C");
-            int dueIn = BillServices.DueIn(bill);
+            //  _billAmount.text = bill.TotalPrice.ToString("C");
+            // int dueIn = BillServices.DueIn(bill);
 
             // if (dueIn == 0)
             // {
@@ -78,7 +78,7 @@ namespace Quackery.Bills
             //     _billWarningText.gameObject.SetActive(false);
             // }
             _payButton.gameObject.SetActive(true);
-            _payButton.interactable = PurseServices.CanAfford(bill.TotalPrice);
+            // _payButton.interactable = PurseServices.CanAfford(bill.TotalPrice);
         }
     }
 }

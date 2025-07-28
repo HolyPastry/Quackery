@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Playables;
 public static class ListExtensions
 {
@@ -13,7 +15,18 @@ public static class ListExtensions
             }
         }
     }
-    public static void Shuffle<T>(this List<T> list)
+
+    public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> list)
+    {
+        T[] elements = list.ToArray();
+        for (int i = elements.Length - 1; i >= 0; i--)
+        {
+            int swapIndex = UnityEngine.Random.Range(0, i + 1);
+            yield return elements[swapIndex];
+            elements[swapIndex] = elements[i];
+        }
+    }
+    public static List<T> Shuffle<T>(this List<T> list)
     {
         for (int i = list.Count - 1; i > 0; i--)
         {
@@ -22,6 +35,8 @@ public static class ListExtensions
             list[i] = list[j];
             list[j] = temp;
         }
+        return list;
+
     }
 
     public static bool DrawOne<T>(this List<T> drawPile, out T card)

@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b7d225c73d74283b23cb07ca6c2955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _queueSize: 5
-  unknownClientsData: {fileID: 11400000, guid: 48ff009e43e0640edb6b629c8d31daf4, type: 2}
+  _queueSize: 2
+  _clientsData: {fileID: 11400000, guid: 48ff009e43e0640edb6b629c8d31daf4, type: 2}

@@ -8,7 +8,7 @@ namespace Quackery.Bills
     [CreateAssetMenu(fileName = "SubscriptionBillData", menuName = "Quackery/Bills/SubscriptionBillData", order = 1)]
     public class SubscriptionBillData : BillData
     {
-        public override int Price => CalculateSubscriptionPrice();
+        //   public override int Price => CalculateSubscriptionPrice();
 
         private int CalculateSubscriptionPrice()
         {

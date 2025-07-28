@@ -3651,7 +3651,7 @@ GameObject:
   - component: {fileID: 8418501002172393024}
   - component: {fileID: 6902574308034344666}
   m_Layer: 5
-  m_Name: RowHighlight
+  m_Name: BudgetHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4785,8 +4785,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8144819736909378379}
   - {fileID: 1829246033983270348}
+  - {fileID: 8144819736909378379}
   - {fileID: 7946703669189990846}
   m_Father: {fileID: 1523584363815890866}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4807,7 +4807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3aa3b0f94b744318d97796ac40aa46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rowHighlight: {fileID: 8144819736909378379}
+  _budgetHighlight: {fileID: 8144819736909378379}
   _moneyHighlight: {fileID: 1829246033983270348}
 --- !u!1001 &30302268944320280
 PrefabInstance:

@@ -146,15 +146,15 @@ namespace Quackery.Shops
 
             //yield return new WaitForSeconds(0.5f);
             List<ShopReward> rewards = ShopServices.GetRewards(_numberOfRewards);
-            var post = Instantiate(_freeRewardPostPrefab, _postsContainer);
-            post.SetupPost(null);
-            post.AnchoredPosition = new Vector2(0, 0);
-            _posts.Add(post);
+            // var post = Instantiate(_freeRewardPostPrefab, _postsContainer);
+            // post.SetupPost(null);
+            // post.AnchoredPosition = new Vector2(0, 0);
+            // _posts.Add(post);
 
             for (int i = 0; i < rewards.Count; i++)
             {
                 var reward = rewards[i];
-                post = InstantiatePost(reward, verticalPosition: _posts.Count * -Screen.height);
+                var post = InstantiatePost(reward, verticalPosition: _posts.Count * -Screen.height);
                 post.name = $"Post {i}";
                 _posts.Add(post);
 
@@ -203,7 +203,7 @@ namespace Quackery.Shops
         {
             ShopPost post;
 
-            if (reward is QualityOfLifeReward)
+            if (reward is ArtifactReward)
                 post = Instantiate(_qualityOfLifePostPrefab, _postsContainer);
             else if (reward is NewCardReward)
                 post = Instantiate(_cardPostPrefab, _postsContainer);
@@ -239,7 +239,7 @@ namespace Quackery.Shops
                     _selectCardPanel.Show(removeCardReward);
                     break;
 
-                case QualityOfLifeReward qualityOfLifeReward:
+                case ArtifactReward qualityOfLifeReward:
                     _confirmationPanel.Show(qualityOfLifeReward);
                     break;
 

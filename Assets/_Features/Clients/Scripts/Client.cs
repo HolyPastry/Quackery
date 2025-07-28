@@ -68,7 +68,7 @@ namespace Quackery.Clients
 
         public Condition RevealCondition { get; internal set; }
 
-        public void InitUnknown(UnknownClientsData unknownClientsData, Effect effect = null)
+        public void InitUnknown(ClientsData unknownClientsData, Effect effect = null)
         {
 
             Key = unknownClientsData.RandomName;

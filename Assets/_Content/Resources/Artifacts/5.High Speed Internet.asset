@@ -14,13 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: High Speed Internet
   Icon: {fileID: 21300000, guid: 3bbccd3d2a90bc74ca74104b9ac96c7c, type: 3}
+  ShopBanner: {fileID: 0}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 1
   Requirements: []
   Explanations: []
-  Rarity: 1
+  Rarity: 0
   Effects:
   - _data: {fileID: 11400000, guid: 50827194806454ba8a638dbac3936c41, type: 2}
     Value: 2
     Tags: 0100000002000000
+  Price: 0
+  FollowersRequirement: 0
+  FollowerBonus: 0
+  Bill: {fileID: 11400000, guid: 590c2ef6df1b0420783207bc9ffe8ab9, type: 2}
+  BonusItems: []
+  RemovedCards: []

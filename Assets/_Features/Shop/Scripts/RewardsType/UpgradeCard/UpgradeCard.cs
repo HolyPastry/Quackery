@@ -25,12 +25,12 @@ namespace Quackery
             // This constructor can be used to initialize any properties if needed.
             // Currently, it does not require any specific initialization.
         }
-        public override void ApplyReward()
-        {
-            // This is a placeholder for the upgrade logic.
-            // The actual implementation would depend on how cards are upgraded in the game.
-            // For example, it could involve increasing the card's stats or abilities.
-            Debug.Log("Card upgrade logic not implemented yet.");
-        }
+        // public override void ApplyReward()
+        // {
+        //     // This is a placeholder for the upgrade logic.
+        //     // The actual implementation would depend on how cards are upgraded in the game.
+        //     // For example, it could involve increasing the card's stats or abilities.
+        //     Debug.Log("Card upgrade logic not implemented yet.");
+        // }
     }
 }

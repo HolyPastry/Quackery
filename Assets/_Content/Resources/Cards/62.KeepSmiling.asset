@@ -18,7 +18,9 @@ MonoBehaviour:
   ShortDescription: Apply 1 Vibe\n Add 1 Fatigue to the discard
   LongDescription: 
   ShopDescription: 
-  Explanations: []
+  Explanations:
+  - {fileID: 11400000, guid: 7be96e413af4a4c689fbe9bd876c7924, type: 2}
+  - {fileID: 11400000, guid: 48f617e1041c14b9d855f83da3a9fb1e, type: 2}
   SubscriptionCost: 20
   Category: 7
   Effects:

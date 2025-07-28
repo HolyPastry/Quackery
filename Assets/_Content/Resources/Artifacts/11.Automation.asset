@@ -14,10 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Automation
   Icon: {fileID: 21300000, guid: d0b0934b6201bb047be4b154997b704b, type: 3}
+  ShopBanner: {fileID: 0}
   Description: 
   UpgradeFor: {fileID: 0}
   Level: 2
   Requirements: []
   Explanations: []
-  Rarity: 2
+  Rarity: 1
   Effects: []
+  Price: 0
+  FollowersRequirement: 0
+  FollowerBonus: 0
+  Bill: {fileID: 11400000, guid: d699be4d5b3314f42bce7bc1e22898c1, type: 2}
+  BonusItems: []
+  RemovedCards: []
