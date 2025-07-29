@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 27.ManifestationJournal
   m_EditorClassIdentifier: 
   MasterText: Manifestation Journal
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 645a73a96439c1c479efc738db320632, type: 3}
   BasePrice: 0
   ShortDescription: 
   LongDescription: 

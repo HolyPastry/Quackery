@@ -108,8 +108,8 @@ namespace Quackery.Decks
             _endDayScreen.Hide();
             _endRoundScreen.Hide(instant: true);
             _canvas.gameObject.SetActive(true);
-            _animatable.Show();
-            // _animatable.SlideIn(Direction.Right);
+            //_animatable.Show();
+            _animatable.SlideIn(Direction.Right);
         }
 
         private void EndTheDay() => _endOfDay = true;
@@ -190,14 +190,14 @@ namespace Quackery.Decks
             yield return StartCoroutine(AddClientEffects());
 
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.5f);
 
             if (_client.Budget > 0)
                 _budgetCartValue.Show();
             else
                 _cartValue.Show();
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
             yield return EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundStart, null);
             bool firstHand = true;
             while (true)

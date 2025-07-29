@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717888303b8c849fca7cb62350fef4ab, type: 3}
   m_Name: FollowersNotificationData
   m_EditorClassIdentifier: 
-  IsPersistent: 1
+  IsPersistent: 0
   Prefab: {fileID: 274565052419825572, guid: e767796f61e5e4e49bec25201d5d34bc, type: 3}
-  ExpandedPanelPrefab: {fileID: -8668529674809029725, guid: c5719e0550a974623ae4b3c4b01a5ba4, type: 3}
+  ExpandedPanelPrefab: {fileID: -6122585873749522550, guid: dbd925dcecfb94f698940f70fd969862, type: 3}

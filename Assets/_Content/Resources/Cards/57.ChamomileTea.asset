@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 57.ChamomileTea
   m_EditorClassIdentifier: 
   MasterText: Chamomile Tea
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ab608cb3480376c40a6e2799603da090, type: 3}
   BasePrice: 5
   ShortDescription: Bundle
   LongDescription: 

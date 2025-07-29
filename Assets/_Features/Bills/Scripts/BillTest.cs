@@ -11,7 +11,7 @@ namespace Quackery
         {
             yield return FlowServices.WaitUntilEndOfSetup();
 
-            _billApp.Show();
+            _billApp.Open();
         }
 
 

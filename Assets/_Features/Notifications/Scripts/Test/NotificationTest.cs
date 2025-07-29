@@ -12,7 +12,7 @@ namespace Quackery.Notifications
         {
             yield return FlowServices.WaitUntilEndOfSetup();
 
-            _notificationApp.Show();
+            _notificationApp.Open();
         }
 
         private void NotificationOnTapped(NotificationData info)

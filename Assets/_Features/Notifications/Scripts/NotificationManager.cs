@@ -10,17 +10,20 @@ namespace Quackery.Notifications
     public class NotificationManager : Service
     {
         [SerializeField] private TextMeshProUGUI _dayCountText; // Text to display the current day count
-        [SerializeField] private float _notificationLifetime = 5f; // Lifetime of notifications in seconds
+                                                                // [SerializeField] private float _notificationLifetime = 5f; // Lifetime of notifications in seconds
         [SerializeField] private GameObject _parentPanel;
         [SerializeField] private float _minimumDisplayInterval = 0.2f; // Minimum interval between notifications
-        [SerializeField] private float _tapTimeOut = 0.5f; // Threshold for tap detection
+
         [SerializeField] private Transform _expandedPanelParent;
+        [SerializeField] private SlidingButton _slideToUnlock;
         private List<NotificationExtension> _extensions = new();
         private bool _initialized;
         private readonly List<Timer> _displayedNotifications = new();
         private readonly Queue<NotificationInfo> _notificationQueue = new();
 
         private bool IsExpandedPanelOn => _expandedPanelParent.gameObject.activeSelf;
+
+        public Action OnClosed = delegate { };
 
         private struct Timer
         {
@@ -37,14 +40,16 @@ namespace Quackery.Notifications
         {
             NotificationServices.ShowNotification = delegate { };
 
-            NotificationServices.RemoveAllNotifications = delegate { };
+            NotificationServices.RemoveWeeklyNotifications = delegate { };
 
             NotificationServices.ArchiveNotification = delegate { };
 
             NotificationServices.ShowExpandedPanel = delegate { };
-            NotificationServices.GenerateDailyNotification = delegate { };
+            NotificationServices.GenerateWeeklyNotification = delegate { };
 
             NotificationServices.WaitUntilReady = () => new WaitUntil(() => true);
+
+            _slideToUnlock.OnFinishSliding -= NotificationApp.CloseRequest;
 
             StopAllCoroutines();
         }
@@ -52,20 +57,24 @@ namespace Quackery.Notifications
         void OnEnable()
         {
             NotificationServices.ShowNotification = QueueNotification;
-            NotificationServices.RemoveAllNotifications = RemoveAllNotifications;
+            NotificationServices.RemoveWeeklyNotifications = RemoveWeeklyNotifications;
 
             NotificationServices.ArchiveNotification = ArchiveNotification;
 
             NotificationServices.ShowExpandedPanel = ShowExpandedPanel;
-            NotificationServices.GenerateDailyNotification = GenerateDailyNotification;
+            NotificationServices.GenerateWeeklyNotification = GenerateWeeklyNotification;
             NotificationServices.WaitUntilReady = () => WaitUntilReady;
+
+            _slideToUnlock.OnFinishSliding += NotificationApp.CloseRequest;
 
             if (_initialized)
                 StartCoroutine(StaggeredDisplayRoutine());
 
         }
 
-        private void GenerateDailyNotification()
+
+
+        private void GenerateWeeklyNotification()
         {
             _dayCountText.text = $"Week {CalendarServices.Today()}";
 
@@ -108,17 +117,24 @@ namespace Quackery.Notifications
 
         private IEnumerator StaggeredDisplayRoutine()
         {
+            _slideToUnlock.gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
             var waitForSeconds = new WaitForSeconds(_minimumDisplayInterval);
             while (true)
             {
-                yield return waitForSeconds;
-
-                if (_notificationQueue.Count == 0) continue;
+                if (_notificationQueue.Count == 0)
+                {
+                    yield return waitForSeconds;
+                    continue;
+                }
 
                 var info = _notificationQueue.Dequeue();
                 ShowNotification(info);
-
+                yield return waitForSeconds;
+                if (_notificationQueue.Count == 0)
+                    break;
             }
+            _slideToUnlock.gameObject.SetActive(true);
         }
 
         private void ArchiveNotification(NotificationInfo info)
@@ -127,7 +143,6 @@ namespace Quackery.Notifications
             if (notification.instance != null)
             {
                 _displayedNotifications.Remove(notification);
-                notification.instance.Archive();
             }
             else
             {
@@ -160,7 +175,7 @@ namespace Quackery.Notifications
             Notification notification = Instantiate(info.Data.Prefab, _parentPanel.transform);
 
             notification.transform.SetAsLastSibling();
-            notification.Show(info, _tapTimeOut);
+            notification.Show(info);
             if (info.Data.IsPersistent)
             {
                 _displayedNotifications.Add(new Timer
@@ -179,11 +194,17 @@ namespace Quackery.Notifications
             }
         }
 
-        private void RemoveAllNotifications()
+        private void RemoveWeeklyNotifications()
         {
-
-            while (_parentPanel.transform.childCount > 0)
+            int permanentCount = 0;
+            while (_parentPanel.transform.childCount > permanentCount)
             {
+                // Notification notification = _parentPanel.transform.GetChild(0).GetComponent<Notification>();
+                // if (notification.IsPersistent)
+                // {
+                //     permanentCount++;
+                //     continue;
+                // }
                 var child = _parentPanel.transform.GetChild(0);
                 child.gameObject.SetActive(false);
                 child.SetParent(null);
@@ -192,35 +213,35 @@ namespace Quackery.Notifications
             _displayedNotifications.Clear();
         }
 
-        private void ShowAllNotifications()
-        {
-            _parentPanel.SetActive(true);
-        }
+        // private void ShowAllNotifications()
+        // {
+        //     _parentPanel.SetActive(true);
+        // }
 
-        void Update()
-        {
-            int i = 0;
-            while (i < _displayedNotifications.Count)
-            {
-                var timer = _displayedNotifications[i];
-                if (timer.CreationTime < 0)
-                {
-                    // Persistent notification, do not remove
-                    i++;
-                    continue;
-                }
+        // void Update()
+        // {
+        //     int i = 0;
+        //     while (i < _displayedNotifications.Count)
+        //     {
+        //         var timer = _displayedNotifications[i];
+        //         if (timer.CreationTime < 0)
+        //         {
+        //             // Persistent notification, do not remove
+        //             i++;
+        //             continue;
+        //         }
 
-                if (Time.time - timer.CreationTime > _notificationLifetime)
-                {
-                    _displayedNotifications.RemoveAt(i);
-                    if (timer.instance != null)
-                        timer.instance.Bin();
-                }
-                else
-                {
-                    i++;
-                }
-            }
-        }
+        //         if (Time.time - timer.CreationTime > _notificationLifetime)
+        //         {
+        //             _displayedNotifications.RemoveAt(i);
+        //             if (timer.instance != null)
+        //                 timer.instance.Bin();
+        //         }
+        //         else
+        //         {
+        //             i++;
+        //         }
+        //     }
+        // }
     }
 }

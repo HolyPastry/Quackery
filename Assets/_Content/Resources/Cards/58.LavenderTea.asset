@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 58.LavenderTea
   m_EditorClassIdentifier: 
   MasterText: Lavender Tea
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 3bdc9a31a5154ea4c87a9aa6f381b231, type: 3}
   BasePrice: 5
   ShortDescription: Bundle\n Cure 1 Stress
   LongDescription: 

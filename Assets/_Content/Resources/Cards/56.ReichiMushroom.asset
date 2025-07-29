@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 56.ReichiMushroom
   m_EditorClassIdentifier: 
   MasterText: Reichi Mushroom
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 823b9cdae4c80104dabb532a2e6a01b5, type: 3}
   BasePrice: 11
   ShortDescription: 
   LongDescription: 

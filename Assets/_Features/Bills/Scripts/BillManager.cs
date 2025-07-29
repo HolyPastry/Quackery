@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Bakery.Saves;
 using Holypastry.Bakery.Flow;
-
+using Quackery.TetrisBill;
 using UnityEngine;
 
 
@@ -27,6 +27,7 @@ namespace Quackery.Bills
             BillServices.GetNumBillDueToday = GetNumBillDueToday;
             BillServices.ResetBills = ResetBills;
             BillServices.SetNumOverdueBills = (num) => _billList.OverrideNumOverdueBill(num);
+            BillServices.GetBillShapes = GetBillShapes;
 
         }
 
@@ -44,6 +45,7 @@ namespace Quackery.Bills
             BillServices.GetNumBillDueToday = () => 0;
             BillServices.ResetBills = delegate { };
             BillServices.SetNumOverdueBills = (num) => { };
+            BillServices.GetBillShapes = (parent) => new();
         }
 
         protected override IEnumerator Start()
@@ -109,6 +111,18 @@ namespace Quackery.Bills
                 }
             }
             return total;
+        }
+
+        private List<TetrisBlock> GetBillShapes(Transform parent)
+        {
+            var billShapes = new List<TetrisBlock>();
+            foreach (var bill in _billList.Bills)
+            {
+                var shape = Instantiate(bill.Data.BlockPrefab, parent);
+                shape.SetLogo(bill.Data.Icon);
+                billShapes.Add(shape);
+            }
+            return billShapes;
         }
 
     }

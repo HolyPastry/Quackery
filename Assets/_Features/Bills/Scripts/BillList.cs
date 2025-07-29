@@ -77,7 +77,7 @@ namespace Quackery.Bills
         }
         public int GetNumBillDueToday()
         {
-            return 0;
+            return Bills.Count();
             // return Bills.Sum(bill => (!bill.Paid &&
             //                     !bill.New &&
             //                     bill.Price > 0) ? 1 : 0);

@@ -26,6 +26,9 @@ namespace Quackery.Followers
             FollowerServices.ModifyFollowers = ModifyFollowers;
             FollowerServices.SetNumberOfFollowers = SetNumFollowers;
             FollowerServices.RewardFollowers = RewardFollowers;
+            FollowerServices.GetCurrentLevel = GetCurrentLevel;
+            FollowerServices.GetNumFollowersToNextLevel = GetNumFollowersToNextLevel;
+            FollowerServices.GetNextLevel = GetNextLevel;
         }
 
 
@@ -37,7 +40,38 @@ namespace Quackery.Followers
             FollowerServices.ModifyFollowers = delegate { };
             FollowerServices.SetNumberOfFollowers = delegate { };
             FollowerServices.RewardFollowers = (SuccessRating) => 0;
+            FollowerServices.GetCurrentLevel = () => default;
+            FollowerServices.GetNumFollowersToNextLevel = () => 0;
+            FollowerServices.GetNextLevel = () => default;
 
+
+        }
+
+        private FollowerLevel GetCurrentLevel()
+        {
+            if (_serial.NumFollowers < 0)
+                return default;
+
+            return _followerData.Levels
+                .Where(level => level.FollowerRequirement <= _serial.NumFollowers)
+                .OrderBy(level => level.Level)
+                .FirstOrDefault();
+        }
+
+        private FollowerLevel GetNextLevel()
+        {
+            var currentLevel = GetCurrentLevel();
+            if (_followerData.Levels.Exists(level => level.Level == currentLevel.Level + 1) == false)
+                return default;
+            return _followerData.Levels.Find(level => level.Level == currentLevel.Level + 1);
+        }
+        private int GetNumFollowersToNextLevel()
+        {
+            var currentLevel = GetCurrentLevel();
+            if (_followerData.Levels.Exists(level => level.Level == currentLevel.Level + 1) == false)
+                return -1;
+            var nextLevel = _followerData.Levels.Find(level => level.Level == currentLevel.Level + 1);
+            return nextLevel.FollowerRequirement - _serial.NumFollowers;
         }
         private int RewardFollowers(int successRating)
         {

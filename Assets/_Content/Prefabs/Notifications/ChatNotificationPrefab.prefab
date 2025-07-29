@@ -244,6 +244,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _panel: {fileID: 5705549857628891825}
+  _enableTap: 1
+  _destroyOnFinish: 1
+  _screenRatioBeforeSliding: 0.4
+  _tapTimeOut: 0.2
   _portraitImages:
   - {fileID: 2505331243738015887}
   - {fileID: 8368840662345091968}

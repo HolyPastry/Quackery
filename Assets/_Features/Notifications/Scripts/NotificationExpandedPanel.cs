@@ -27,7 +27,7 @@ namespace Quackery.Notifications
                 });
         }
 
-        internal virtual IEnumerator Init(NotificationInfo info)
+        public virtual IEnumerator Init(NotificationInfo info)
         {
             _inProgress = true;
             _animatedRect.ZoomIn();

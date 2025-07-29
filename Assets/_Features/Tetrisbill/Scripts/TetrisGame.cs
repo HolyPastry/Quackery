@@ -105,7 +105,7 @@ namespace Quackery.TetrisBill
 
             foreach (var bill in bills)
             {
-                var block = _shapePool.AddBlock(bill.Data.BlockPrefab);
+                var block = _shapePool.SpawnBlock(bill.Data.BlockPrefab);
                 block.SetLogo(bill.Data.Icon);
                 yield return new WaitForSeconds(0.2f); // Small delay to visualize the spawning
             }

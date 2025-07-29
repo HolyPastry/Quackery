@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 59.Ginseng
   m_EditorClassIdentifier: 
   MasterText: Ginseng
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: c3c94569fa2db5b4fa0e68f38d23e5fe, type: 3}
   BasePrice: 11
   ShortDescription: Cannot be stacked on
   LongDescription: 

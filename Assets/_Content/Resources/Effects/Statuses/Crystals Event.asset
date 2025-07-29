@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Crystals Event
   m_EditorClassIdentifier: 
   MasterText: Herb Synergy Amplifier
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: fd6be5ef94ad8214fb1aaa2e86720220, type: 3}
   Description: Synergy Bonus x#Value
   CanBeNegative: 0
   Trigger: 6

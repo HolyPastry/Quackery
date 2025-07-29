@@ -2766,6 +2766,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -149.54001
       objectReference: {fileID: 0}
+    - target: {fileID: 798482327675635642, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: _cardHandRadius
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 798482327675635642, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: _maxSlideDistance
+      value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 798482327675635642, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: _maxSlideDistanceY
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 798482327675635642, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: _selectedCardOffset
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 1002499653510270819, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

@@ -10,7 +10,7 @@ namespace Quackery
 
         public override void Enter()
         {
-            _gameLoop.GameOverApp.Show();
+            _gameLoop.GameOverApp.Open();
         }
     }
 }

@@ -11,8 +11,7 @@ namespace Quackery
         public override void Enter()
         {
             ClientServices.GenerateDailyQueue();
-            _gameLoop.NotificationApp.Show();
+            _gameLoop.NotificationApp.Open();
         }
-
     }
 }

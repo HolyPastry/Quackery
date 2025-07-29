@@ -7,7 +7,7 @@ namespace Quackery.TetrisBill
     public class BlockPool : MonoBehaviour
     {
         private const int Spacing = 100;
-        public TetrisBlock AddBlock(TetrisBlock prefab)
+        public TetrisBlock SpawnBlock(TetrisBlock prefab)
         {
             var block = Instantiate(prefab, transform);
             block.transform.SetParent(transform);

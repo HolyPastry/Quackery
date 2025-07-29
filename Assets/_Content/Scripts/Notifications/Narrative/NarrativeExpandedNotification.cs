@@ -11,7 +11,7 @@ namespace Quackery.Notifications
         [SerializeField] private Image _portrait;
         [SerializeField] private Image _banner;
 
-        internal override IEnumerator Init(NotificationInfo info)
+        public override IEnumerator Init(NotificationInfo info)
         {
             _inProgress = true;
             _animatedRect.ZoomIn();

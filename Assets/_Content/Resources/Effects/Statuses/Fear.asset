@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fear
   m_EditorClassIdentifier: 
   MasterText: 
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: f2bea8ce288d56345be049d159864d07, type: 3}
   Description: Will only accept  items that's value is equal to or below the your
     rating
   CanBeNegative: 0

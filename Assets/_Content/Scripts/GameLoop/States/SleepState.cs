@@ -8,7 +8,7 @@ namespace Quackery
 
         public override void Enter()
         {
-            _gameLoop.SleepApp.Show();
+            _gameLoop.SleepApp.Open();
         }
 
         public override void Exit()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Quackery.Bills;
+using Quackery.TetrisBill;
 using UnityEngine;
 
 
@@ -32,5 +33,8 @@ namespace Quackery
         internal static Action ResetBills = delegate { };
 
         internal static Action<int> SetNumOverdueBills = (num) => { };
+
+        internal static Func<Transform, List<TetrisBlock>> GetBillShapes = (parent) => new();
+
     }
 }

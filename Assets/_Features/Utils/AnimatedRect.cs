@@ -69,13 +69,13 @@ namespace Quackery
             // if (_overridePositionEnabled)
             //     Teleport(_overridePosition);
             // else
-            //     TeleportTo(DirectionVector(from));
+            TeleportTo(DirectionVector(from));
 
             _rectTransform.localScale = Vector3.one;
             _rectTransform.gameObject.SetActive(true);
-            EndAnimation();
-            return this;
-            //return SlideToZero();
+
+            // return this;
+            return SlideToZero();
         }
 
         public AnimatedRect FloatUp(float distance, float duration, Action callback = null)

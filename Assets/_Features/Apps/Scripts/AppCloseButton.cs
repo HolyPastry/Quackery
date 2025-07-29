@@ -19,6 +19,6 @@ public class AppCloseButton : ValidatedMonoBehaviour
     }
     private void OnClick()
     {
-        _app.Hide();
+        _app.Close();
     }
 }

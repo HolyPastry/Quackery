@@ -30,7 +30,7 @@ namespace Quackery
             else
                 _clientImageTransform.localScale = Vector3.one;
             _animatable.SlideToZero();
-            _animatable.SlideIn(Direction.Top);
+            //_animatable.SlideIn(Direction.Bottom);
             yield return _animatable.WaitForAnimation();
         }
 

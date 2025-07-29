@@ -43,7 +43,8 @@ namespace Quackery.Shops
         {
             _confirmationPanel.OnExited += OnConfirmationExited;
             _selectCardPanel.OnExited += OnConfirmationExited;
-            //  _shopScrollRect.OnMoveScreen += OnMoveScreen;
+            OnStartOpening += PopulatingPosts;
+
 
             ShowConfirmation = ShowConfirmationPanel;
             RemovePostRequest = RemovePost;
@@ -53,7 +54,9 @@ namespace Quackery.Shops
         {
             _confirmationPanel.OnExited -= OnConfirmationExited;
             _selectCardPanel.OnExited -= OnConfirmationExited;
-            //  _shopScrollRect.OnMoveScreen -= OnMoveScreen;
+
+            OnStartOpening -= PopulatingPosts;
+
 
             ShowConfirmation = delegate { };
             RemovePostRequest = delegate { };
@@ -80,7 +83,7 @@ namespace Quackery.Shops
         private void EndShopPhase()
         {
             PhaseEnded?.Invoke();
-            Hide();
+            Close();
         }
 
         private void RemovePost(ShopPost postToRemove)
@@ -117,9 +120,8 @@ namespace Quackery.Shops
             }
         }
 
-        public override void Show()
+        public void PopulatingPosts()
         {
-            base.Show();
             //_canvas.gameObject.SetActive(true);
             CleanPosts();
 

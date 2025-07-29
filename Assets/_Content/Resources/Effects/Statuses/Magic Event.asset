@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Magic Event
   m_EditorClassIdentifier: 
   MasterText: Herb Synergy Amplifier
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 9f659db0523daad4f89c5b68812c776c, type: 3}
   Description: Synergy Bonus x#Value
   CanBeNegative: 0
   Trigger: 6

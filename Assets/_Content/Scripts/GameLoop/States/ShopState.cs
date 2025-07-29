@@ -7,7 +7,7 @@ namespace Quackery
         { }
         public override void Enter()
         {
-            _gameLoop.ShopApp.Show();
+            _gameLoop.ShopApp.Open();
         }
 
     }

@@ -854,6 +854,7 @@ namespace Quackery.Decks
             int cardsNeeded = _handPiles.FindAll(p => p.IsEmpty && p.Enabled).Count;
             if (cardsNeeded <= 0)
             {
+                yield return new WaitForSeconds(0.5f);
                 // DeckServices.ActivateTableCards();
                 yield break;
             }
@@ -867,6 +868,7 @@ namespace Quackery.Decks
                 card.UpdateUI();
             }
             yield return new WaitForSeconds(drawnCards.Count * 0.2f);
+            yield return new WaitForSeconds(0.5f);
         }
 
         private void OnCardSelected(Card card, List<Card> list)

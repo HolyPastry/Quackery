@@ -13,5 +13,10 @@ namespace Quackery.Followers
 
         public static Func<int, int> RewardFollowers = (SuccessRating) => 0;
 
+        public static Func<FollowerLevel> GetCurrentLevel = () => default;
+        public static Func<int> GetNumFollowersToNextLevel = () => 0;
+
+        internal static Func<FollowerLevel> GetNextLevel = () => default;
+
     }
 }

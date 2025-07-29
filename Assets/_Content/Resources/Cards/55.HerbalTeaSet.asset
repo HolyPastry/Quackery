@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 55.HerbalTeaSet
   m_EditorClassIdentifier: 
   MasterText: Herbal Tea Set
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 37b0ae2a393f2984182d7f0bcdad2593, type: 3}
   BasePrice: 10
   ShortDescription: Bundle
   LongDescription: 

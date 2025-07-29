@@ -11,7 +11,7 @@ namespace Quackery.Shops
         {
             yield return FlowServices.WaitUntilEndOfSetup();
 
-            _instagramUI.Show();
+            _instagramUI.Open();
         }
     }
 }

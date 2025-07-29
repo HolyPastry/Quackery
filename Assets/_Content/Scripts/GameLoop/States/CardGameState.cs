@@ -93,10 +93,7 @@ namespace Quackery
         public override void Exit()
         {
             base.Exit();
-
             _controller.Hide();
-            if (_gameLoop != null)
-                _gameLoop.ChatApp.Hide();
         }
     }
 }

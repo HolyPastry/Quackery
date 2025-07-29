@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using KBCore.Refs;
 using UnityEngine;
 
@@ -10,21 +10,37 @@ namespace Quackery
         [SerializeField, Self] protected AnimatedRect _animatedRect;
         [SerializeField] protected Canvas _canvas;
 
-        public bool IsOn { get; private set; }
 
-        public virtual void Show()
+        public bool IsOpened { get; private set; }
+
+        public event Action OnStartOpening = delegate { };
+        public event Action OnOpened = delegate { };
+        public event Action OnStartClosing = delegate { };
+        public event Action OnClosed = delegate { };
+
+
+
+        public void Open()
         {
             _canvas.gameObject.SetActive(true);
-            IsOn = true;
-            //_animatedRect.SlideIn(Direction.Right);
+            IsOpened = true;
+            OnStartOpening?.Invoke();
+            _animatedRect.SlideIn(Direction.Right)
+                        .DoComplete(() => OnOpened?.Invoke());
         }
 
-        public virtual void Hide()
+        public void Close()
         {
-            IsOn = false;
+            IsOpened = false;
+            OnStartClosing.Invoke();
+            StartCoroutine(HideRoutine());
+        }
+
+        private IEnumerator HideRoutine()
+        {
+            yield return new WaitForSeconds(1f);
+            OnClosed?.Invoke();
             _canvas.gameObject.SetActive(false);
-            // _animatedRect.SlideOut(Direction.Left)
-            //              .DoComplete(() => _canvas.gameObject.SetActive(false));
         }
     }
 }

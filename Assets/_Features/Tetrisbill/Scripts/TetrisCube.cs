@@ -34,7 +34,7 @@ namespace Quackery.TetrisBill
             Collided = false;
         }
 
-        void Awake()
+        void Start()
         {
             _root = GetComponentInParent<Canvas>().transform as RectTransform;
             _image = GetComponent<Image>();
