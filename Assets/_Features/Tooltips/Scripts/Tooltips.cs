@@ -98,6 +98,9 @@ namespace Quackery
 
         protected void FillExplanations(List<Explanation> explanations)
         {
+            if (_tooltips.Count == 0)
+                GetComponentsInChildren(true, _tooltips);
+
             for (int i = 0; i < _tooltips.Count; i++)
             {
                 if (i >= explanations.Count)
@@ -107,6 +110,7 @@ namespace Quackery
                 }
                 _tooltips[i].Show(Sprites.Replace(explanations[i].ShortDescription));
             }
+            Debug.Log(_tooltips[0].gameObject.activeSelf);
         }
 
 

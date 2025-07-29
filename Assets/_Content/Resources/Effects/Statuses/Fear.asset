@@ -19,4 +19,5 @@ MonoBehaviour:
   CanBeNegative: 0
   Trigger: 1
   _tags: 0200000001000000
-  Explanations: []
+  Explanations:
+  - {fileID: 11400000, guid: 1ff478473a2b34cc2ad2948f954277ee, type: 2}

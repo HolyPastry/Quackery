@@ -82,7 +82,7 @@ namespace Quackery
                     _helperText.text = "Unplayable";
             }
 
-
+            Tooltips.ShowTooltipRequest?.Invoke(pileUI.TopCard);
             DeckServices.StartPlayCardLoop(pileUI.TopCard);
             OnCardSelected?.Invoke(pileUI);
         }
@@ -102,8 +102,7 @@ namespace Quackery
             _helperText.text = "";
             _followTouchPointPileUI = pileUI;
             DeckServices.StartPlayCardLoop(pileUI.TopCard);
-            if (!pileUI.IsEmpty)
-                Tooltips.ShowTooltipRequest?.Invoke(pileUI.TopCard);
+
         }
 
 
@@ -113,6 +112,7 @@ namespace Quackery
             if (_followTouchPointPileUI == null)
                 return;
 
+            Tooltips.HideTooltipRequest();
             _followTouchPointPileUI = null;
 
             bool slid = (_originalPosition - _mousePositionAction.action.ReadValue<Vector2>())
@@ -130,8 +130,6 @@ namespace Quackery
                 }
                 else
                 {
-
-                    Tooltips.HideTooltipRequest();
                     DeckServices.StopPlayCardLoop();
                 }
             }
@@ -139,9 +137,11 @@ namespace Quackery
             {
                 if (_selectedPileUI == ui)
                 {
+
                     _selectedPileUI = null;
+
                     OnCardSelected?.Invoke(null);
-                    Tooltips.HideTooltipRequest();
+
                     DeckServices.StopPlayCardLoop();
                 }
                 else
@@ -258,6 +258,7 @@ namespace Quackery
                 {
                     DeckServices.SelectCard(cardPile.Type, cardPile.PileIndex);
                     _followTouchPointPileUI = null;
+                    Tooltips.HideTooltipRequest?.Invoke();
                 }
             }
             cardPile.transform.position = targetPosition;

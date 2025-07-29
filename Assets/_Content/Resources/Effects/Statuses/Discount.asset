@@ -18,6 +18,7 @@ MonoBehaviour:
   CanBeNegative: 0
   Trigger: 1
   _tags: 020000000500000006000000
-  Explanations: []
+  Explanations:
+  - {fileID: 11400000, guid: 862d03602568c4487903a0f570a3c644, type: 2}
   Ratio: 0.5
   _category: 0

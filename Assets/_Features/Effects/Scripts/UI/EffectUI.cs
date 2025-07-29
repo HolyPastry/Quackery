@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 namespace Quackery
 {
-    public class EffectUI : ValidatedMonoBehaviour, ITooltipTarget, IPointerDownHandler
+    public class EffectUI : ValidatedMonoBehaviour, ITooltipTarget, IPointerClickHandler
     {
         [SerializeField, Self] private AnimatedRect _animatedRect;
         [SerializeField] private Image _icon;
@@ -77,11 +77,13 @@ namespace Quackery
 
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public void OnPointerClick(PointerEventData eventData)
         {
-            Tooltips.ShowTooltipRequest?.Invoke(this);
             transform.SetAsLastSibling();
+            Tooltips.ShowTooltipRequest?.Invoke(this);
+            eventData.Use();
         }
+
     }
 }
 

@@ -8,12 +8,6 @@ namespace Quackery
     {
         [SerializeField, Child] private TextMeshProUGUI _textGUI;
 
-
-        void Awake()
-        {
-            gameObject.SetActive(false);
-        }
-
         public void Show(string text)
         {
             _textGUI.text = text;
