@@ -39,3 +39,5 @@ MonoBehaviour:
     Color: {r: 1, g: 1, b: 1, a: 1}
   - Id: Curse
     Color: {r: 0.23605345, g: 0.066082254, b: 0.31132078, a: 1}
+  - Id: TempCurse
+    Color: {r: 0.46747023, g: 0.2179601, b: 0.5849056, a: 1}

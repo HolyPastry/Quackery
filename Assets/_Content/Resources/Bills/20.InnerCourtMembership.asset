@@ -15,6 +15,5 @@ MonoBehaviour:
   MasterText: Magic Coven Inner Court Membership
   Icon: {fileID: 0}
   Chance: 1
-  _startPrice: 0
   _shape: {fileID: 1576521035343058335, guid: ac931eff24e804cd49f2b15464110de7, type: 3}
   PaymentInterval: 0

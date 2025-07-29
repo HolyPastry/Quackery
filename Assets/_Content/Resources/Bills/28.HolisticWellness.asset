@@ -15,6 +15,5 @@ MonoBehaviour:
   MasterText: Holistic Wellness Subscription
   Icon: {fileID: 0}
   Chance: 1
-  _startPrice: 0
-  _shape: {fileID: 1576521035343058335, guid: 2f77a699f08cd4dc881f38fd331622fb, type: 3}
+  _shape: {fileID: 1576521035343058335, guid: ac2b84658bc66486785540488d13f6d0, type: 3}
   PaymentInterval: 0

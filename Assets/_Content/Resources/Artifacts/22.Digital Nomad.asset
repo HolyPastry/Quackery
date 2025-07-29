@@ -17,10 +17,9 @@ MonoBehaviour:
   ShopBanner: {fileID: 0}
   Description: 
   UpgradeFor: {fileID: 0}
-  Level: 2
+  Level: 1
   Requirements: []
   Explanations: []
-  Rarity: 1
   Effects: []
   Price: 0
   FollowersRequirement: 0

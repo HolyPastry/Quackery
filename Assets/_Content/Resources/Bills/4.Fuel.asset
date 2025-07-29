@@ -15,6 +15,5 @@ MonoBehaviour:
   MasterText: Fuel
   Icon: {fileID: 0}
   Chance: 1
-  _startPrice: 0
   _shape: {fileID: 1576521035343058335, guid: b4e83628b0b2a4c2d8f15af8d61e1058, type: 3}
   PaymentInterval: 0
