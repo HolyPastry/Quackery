@@ -3305,7 +3305,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 1.5
   m_Viewport: {fileID: 3349893582197649464}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -4454,9 +4454,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 2936349488194569449}
-  _animationDuration: 0.5
+  _animationDuration: 0.8
   _scaleDuration: 0.2
-  _animationEaseIn: 27
+  _animationEaseIn: 15
   _animationEaseOut: 26
   _startHidden: 0
   _overridePosition: {x: 0, y: 0}

@@ -21,6 +21,7 @@ namespace Quackery.Decks
         [SerializeField] private Card _itemCardPrefab;
         [SerializeField] private Card _skillCardPrefab;
         [SerializeField] private Card _curseCardPrefab;
+        [SerializeField] private Card _tempCurseCardPrefab;
 
 
         [SerializeField] private int _initialHandSize = 4;
@@ -59,7 +60,10 @@ namespace Quackery.Decks
 
         void Awake()
         {
-            _cardFactory = new CardFactory(_itemCardPrefab, _skillCardPrefab, _curseCardPrefab);
+            _cardFactory = new CardFactory(_itemCardPrefab,
+                                            _skillCardPrefab,
+                                            _curseCardPrefab,
+                                            _tempCurseCardPrefab);
         }
         void OnDisable()
         {
@@ -715,7 +719,6 @@ namespace Quackery.Decks
             DestroyEffemeralCards(_drawPile);
             DestroyEffemeralCards(_discardPile);
             DestroyEffemeralCards(_exhaustPile);
-
 
             _drawPile.MergeBelow(_exhaustPile);
             _drawPile.MergeBelow(_discardPile);

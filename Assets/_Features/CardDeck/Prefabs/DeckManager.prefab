@@ -47,3 +47,6 @@ MonoBehaviour:
   _itemCardPrefab: {fileID: 6731137627167711707, guid: 03dbf7e978b69493d920d1772c05a0e5, type: 3}
   _skillCardPrefab: {fileID: 2446934000018219670, guid: 6392071cf50924d129ab15ac34f11071, type: 3}
   _curseCardPrefab: {fileID: 832881459970330863, guid: 4940249e0de5840d7b424fa34f325e83, type: 3}
+  _tempCurseCardPrefab: {fileID: 832881459970330863, guid: 34bdb4c2233264a5187558219c881704, type: 3}
+  _initialHandSize: 4
+  _initialSelectionSize: 4

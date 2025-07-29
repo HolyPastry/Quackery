@@ -44,7 +44,7 @@ namespace Quackery
         public void InitLoop()
         {
             var clientListState = new ClientListState(this);
-            var activeClientChatState = new CardGameState(this);
+            var cardGameState = new CardGameState(this);
             var passiveClientChatState = new PassiveClientChatState(this);
             var mainMenuState = new MainScreenState(this);
             var shopState = new ShopState(this);
@@ -55,8 +55,8 @@ namespace Quackery
 
             At(notificationState, clientListState, () => !NotificationApp.IsOpened);
 
-            At(clientListState, activeClientChatState, () => ActiveClientSelected);
-            At(activeClientChatState, billState, () => SelectedClient == null);
+            At(clientListState, cardGameState, () => ActiveClientSelected);
+            At(cardGameState, billState, () => SelectedClient == null);
             At(shopState, sleepState, () => !ShopApp.IsOpened);
 
             At(billState, shopState, () => !BillApp.IsOpened && !BillApp.IsGameOver);

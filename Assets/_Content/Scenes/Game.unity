@@ -696,9 +696,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 1725876107}
-  _animationDuration: 0.5
+  _animationDuration: 1.3
   _scaleDuration: 0.2
-  _animationEaseIn: 27
+  _animationEaseIn: 15
   _animationEaseOut: 26
   _startHidden: 0
   _overridePosition: {x: 0, y: 0}
@@ -2022,7 +2022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c705b4d9e7d49a9a1ceb01d3a7a94e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugState: 1
+  _debugState: 0
   _delayDuration: 1
   CardGameController: {fileID: 1203412792}
   ShopApp: {fileID: 479571801}
@@ -2173,6 +2173,7 @@ MonoBehaviour:
   BillDataList:
   - {fileID: 11400000, guid: c3cfd774a0a174e8b88163873d376fe4, type: 2}
   - {fileID: 11400000, guid: 60257488f3ae74d9abf932debc661d68, type: 2}
+  - {fileID: 11400000, guid: 8e4993fd5e318433688419c4aa8cc36f, type: 2}
   NumOverdueBills: 0
 --- !u!114 &1072491522
 MonoBehaviour:

@@ -53,10 +53,10 @@ MonoBehaviour:
   - Type: 1
     Weight: 10
   - Type: 2
-    Weight: 20
+    Weight: -1
   - Type: 2
     Weight: 30
   - Type: 0
-    Weight: 5
+    Weight: -1
   - Type: 0
-    Weight: 5
+    Weight: 10

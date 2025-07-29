@@ -10,13 +10,15 @@ namespace Quackery.Decks
         private readonly Card _itemCardPrefab;
         private readonly Card _skillCardPrefab;
         private readonly Card _curseCardPrefab;
+        private readonly Card _tempCurseCardPrefab;
         private readonly Transform _parent;
 
-        public CardFactory(Card itemCardPrefab, Card skillCardPrefab, Card curseCardPrefab)
+        public CardFactory(Card itemCardPrefab, Card skillCardPrefab, Card curseCardPrefab, Card tempCurseCardPrefab)
         {
             _itemCardPrefab = itemCardPrefab;
             _skillCardPrefab = skillCardPrefab;
             _curseCardPrefab = curseCardPrefab;
+            _tempCurseCardPrefab = tempCurseCardPrefab;
         }
 
         public Card Create(Item item)
@@ -25,8 +27,10 @@ namespace Quackery.Decks
 
             if (item.Category == EnumItemCategory.Skill)
                 card = GameObject.Instantiate(_skillCardPrefab, _parent);
-            else if (item.Category == EnumItemCategory.Curse || EnumItemCategory.TempCurse == item.Category)
+            else if (item.Category == EnumItemCategory.Curse)
                 card = GameObject.Instantiate(_curseCardPrefab, _parent);
+            else if (item.Category == EnumItemCategory.TempCurse)
+                card = GameObject.Instantiate(_tempCurseCardPrefab, _parent);
             else
                 card = GameObject.Instantiate(_itemCardPrefab, _parent);
 

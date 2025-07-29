@@ -14,7 +14,7 @@ namespace Quackery.Notifications
         [SerializeField] protected RectTransform _panel;
         [SerializeField] private bool _enableTap = true;
         [SerializeField] private bool _destroyOnFinish = true;
-        [SerializeField] private float _screenRatioBeforeSliding = 0.4f;
+        [SerializeField] private float _screenRatioBeforeSliding = 0.3f;
 
 
         [ShowIf("_enableTap")]
@@ -69,6 +69,7 @@ namespace Quackery.Notifications
         public void OnPointerUp(PointerEventData eventData)
         {
             _grabbed = false;
+            if (_sliding) return;
             if (_tapTimer?.IsRunning ?? false)
             {
                 OnTapped?.Invoke();
@@ -76,7 +77,7 @@ namespace Quackery.Notifications
             }
             else
             {
-                if (!_sliding) SlideBack();
+                SlideBack();
             }
 
         }

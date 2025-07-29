@@ -36,7 +36,7 @@ namespace Quackery.TetrisBill
 
         void Start()
         {
-            _root = GetComponentInParent<Canvas>().transform as RectTransform;
+
             _image = GetComponent<Image>();
 
         }
@@ -55,7 +55,6 @@ namespace Quackery.TetrisBill
         {
             _tween?.Kill();
             _tween = null;
-            _image.color = Color.clear;
             Destroy(gameObject);
         }
 
@@ -68,6 +67,8 @@ namespace Quackery.TetrisBill
 
         private bool RectTransformUtilityMethod(TetrisCube other)
         {
+            _root = _root != null ? _root : GetComponentInParent<Canvas>().transform as RectTransform;
+
             var boundsA = RectTransformUtility.CalculateRelativeRectTransformBounds(_root, this.rectTransform);
             var boundsB = RectTransformUtility.CalculateRelativeRectTransformBounds(_root, other.rectTransform);
             boundsA.size *= 0.9f; // Adjust size to avoid false positives due to pixel snapping

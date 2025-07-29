@@ -28,6 +28,15 @@ namespace Quackery
         {
             GetComponentsInChildren(true, _tooltips);
             _tooltipTarget = GetComponentInParent<ITooltipTarget>();
+            if (_tooltipTarget == null)
+            {
+                Debug.LogWarning($"No ITooltipTarget found in parent hierarchy.{transform.parent.name}", this);
+                return;
+            }
+            foreach (var tooltip in _tooltips)
+            {
+                tooltip.Hide();
+            }
         }
         void OnEnable()
         {

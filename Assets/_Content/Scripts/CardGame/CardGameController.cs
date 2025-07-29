@@ -145,22 +145,12 @@ namespace Quackery.Decks
             var cashInCart = CartServices.GetValue() + CartServices.GetBonus();
 
             if (cashInCart <= 0) return;
-            // CartValueUI cartValueUI = _client.Budget > 0 ? _budgetCartValue : _cartValue;
 
             PurseServices.Modify(cashInCart);
             _gameStats.DayYield += cashInCart;
             CartServices.ResetCart();
             _gameStats.TotalRating += 5;
-            // cartValueUI.MoveTo(_purseTransform, () =>
-            // {
-            //     PurseServices.Modify(cashInCart);
-            //     _purseTransform.DOPunchScale(Vector3.one * 0.2f, 0.2f, 10, 0.1f);
 
-            //     _gameStats.DayYield += cashInCart;
-            //     CartServices.SetCartValue(0);
-            //     _gameStats.TotalRating += 5; // Assuming each round gives a fixed rating of 5
-
-            // });
         }
 
         internal void StartNewRound(Client client)
@@ -229,8 +219,8 @@ namespace Quackery.Decks
                 // yield return CartServices.CalculateCart();
 
             }
+
             yield return DeckServices.DiscardHand();
-            // EffectServices.CleanEffects();
 
             EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundEnd, null);
             _endOfRound = true;

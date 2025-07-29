@@ -22,21 +22,29 @@ namespace Quackery.Decks
             public Sprite Icon;
             public EnumItemCategory Category;
         }
-        [Header("Catergory Icons")]
-        [SerializeField] private List<CategoryIcons> _categoryIcons = new();
+        // [Header("Catergory Icons")]
+        // [SerializeField] private List<CategoryIcons> _categoryIcons = new();
         [Header("Card Components")]
+        [SerializeField] private Image _base;
         [SerializeField] private Image _cardBackground;
         [SerializeField] private Image _cardForeground;
-        [SerializeField] private Image _PriceBackground;
-        [SerializeField] private Image _categoryIcon;
+
+        [SerializeField] private List<Image> _categoryIcons = new();
+        [SerializeField] private Image _cutoutBackground;
+        // [SerializeField] private Image _PriceBackground;
+        // [SerializeField] private Image _categoryIcon;
         //[SerializeField] private Image _RatingBackground;
-        [SerializeField] private TextMeshProUGUI _cardName;
+        [SerializeField] private TextMeshProUGUI _cardTitle;
+
+        [SerializeField] private TextMeshProUGUI _cardDescription;
         [SerializeField] private TextMeshProUGUI _cardPrice;
         //[SerializeField] private TextMeshProUGUI _cardRating;
         [SerializeField] private Image _outline;
 
         public List<Explanation> Explanations => Item.Data.Explanations;
         public RectTransform RectTransform => transform as RectTransform;
+
+        public event Action<EnumItemCategory> OnCategoryChanged = delegate { };
 
         public Item Item
         {
@@ -49,14 +57,15 @@ namespace Quackery.Decks
 
                 //  UpdateEffects();
                 _cardForeground.sprite = _item.Data.Icon;
-                _cardName.text = Sprites.Replace(_item.ShortDescription); //Data.GetDescription();
+                _cardTitle.text = Sprites.Replace(_item.Name);
+                _cardDescription.text = Sprites.Replace(_item.ShortDescription);
 
                 InitEffects();
                 UpdatePrice();
+                if (IsItemCard(_item))
+                    _cardBackground.color = Colors.Get(_item.Category.ToString());
+                OnCategoryChanged.Invoke(_item.Category);
 
-                if (IsSkill) return;
-                SetCategoryIcon();
-                _cardBackground.color = Colors.Get(_item.Category.ToString());
             }
         }
 
@@ -74,48 +83,58 @@ namespace Quackery.Decks
             }
         }
 
+        public static bool IsItemCard(Item item)
+        {
+            return item.Category == EnumItemCategory.Ayurveda ||
+                     item.Category == EnumItemCategory.Chinese ||
+                     item.Category == EnumItemCategory.Crystals ||
+                     item.Category == EnumItemCategory.Energy ||
+                     item.Category == EnumItemCategory.Herbs ||
+                        item.Category == EnumItemCategory.Magic;
+        }
+
         private void UpdatePrice()
         {
             if (_toBeDestroyed) return;
-            _PriceBackground.gameObject.SetActive(_item.Category != EnumItemCategory.Curse);
-            _cardPrice.gameObject.SetActive(_item.Category != EnumItemCategory.Curse);
+            // _PriceBackground.gameObject.SetActive(_item.Category != EnumItemCategory.Curse);
+            _cardPrice.gameObject.SetActive(IsItemCard(_item));
             _cardPrice.text = Price.ToString();
 
             if (Price > _item.BasePrice)
                 _cardPrice.color = Color.green;
             else if (Price == _item.BasePrice)
-                _cardPrice.color = Color.white;
+                _cardPrice.color = Color.black;
             else if (Price < _item.BasePrice)
                 _cardPrice.color = Color.red;
 
         }
 
-        private void SetCategoryIcon()
-        {
-            if (_categoryIcon == null) return;
+        // private void SetCategoryIcon()
+        // {
+        //     if (_categoryIcon == null) return;
 
-            if (
-                _item.Category == EnumItemCategory.Any ||
-                 _item.Category == EnumItemCategory.Skill)
-            {
-                _categoryIcon.gameObject.SetActive(false);
-            }
-            else
-            {
+        //     if (
+        //         _item.Category == EnumItemCategory.Any ||
+        //          _item.Category == EnumItemCategory.Skill)
+        //     {
+        //         _categoryIcon.gameObject.SetActive(false);
+        //     }
+        //     else
+        //     {
 
-                if (_categoryIcons.Exists(icon => icon.Category == _item.Category))
-                {
-                    _categoryIcon.gameObject.SetActive(true);
-                    _categoryIcon.sprite = _categoryIcons.Find(icon => icon.Category == _item.Category).Icon;
-                }
-                else
-                {
-                    _categoryIcon.gameObject.SetActive(false);
-                    Debug.LogWarning($"No icon found for category: {_item.Category}", this);
-                }
+        //         if (_categoryIcons.Exists(icon => icon.Category == _item.Category))
+        //         {
+        //             _categoryIcon.gameObject.SetActive(true);
+        //             _categoryIcon.sprite = _categoryIcons.Find(icon => icon.Category == _item.Category).Icon;
+        //         }
+        //         else
+        //         {
+        //             _categoryIcon.gameObject.SetActive(false);
+        //             Debug.LogWarning($"No icon found for category: {_item.Category}", this);
+        //         }
 
-            }
-        }
+        //     }
+        // }
 
         private bool IsSkill => _item.Category == EnumItemCategory.Skill;
         public string Name => _item.Name;
@@ -183,7 +202,7 @@ namespace Quackery.Decks
         {
             if (IsSkill) return;
             _item.OverrideCategory = EnumItemCategory.Any;
-            SetCategoryIcon();
+            // SetCategoryIcon();
             // Rating = _item.Rating;
             UpdatePrice();
 
@@ -198,7 +217,7 @@ namespace Quackery.Decks
         {
             if (_toBeDestroyed) return;
             UpdatePrice();
-            _cardName.text = Sprites.Replace(_item.ShortDescription);
+            _cardDescription.text = Sprites.Replace(_item.ShortDescription);
         }
 
         internal void Destroy()
@@ -217,8 +236,10 @@ namespace Quackery.Decks
         {
             if (_toBeDestroyed) return;
             _item.OverrideCategory = category;
-            _cardBackground.color = Colors.Get(category.ToString());
-            SetCategoryIcon();
+
+            if (IsItemCard(_item))
+                _cardBackground.color = Colors.Get(category.ToString());
+            OnCategoryChanged.Invoke(_item.Category);
         }
 
 
@@ -226,11 +247,32 @@ namespace Quackery.Decks
         {
             if (_toBeDestroyed) return;
             _item.OverrideCategory = EnumItemCategory.Any;
+            if (IsItemCard(_item))
+                _cardBackground.color = Colors.Get(_item.Category.ToString());
+            OnCategoryChanged?.Invoke(_item.Category);
         }
 
         public override string ToString()
         {
             return $"{_item.Name} - {_item.BasePrice}  - {Effects.ToString()} ";
+        }
+
+        internal void Strip(bool stripCard)
+        {
+            _base.gameObject.SetActive(!stripCard);
+            _cardBackground.gameObject.SetActive(!stripCard);
+            _cardDescription.gameObject.SetActive(!stripCard);
+            _cardTitle.gameObject.SetActive(!stripCard);
+
+            foreach (var categoryIcon in _categoryIcons)
+            {
+                categoryIcon.gameObject.SetActive(!stripCard);
+            }
+            if (IsItemCard(_item))
+            {
+                _cutoutBackground.color = stripCard ? Colors.Get(_item.Category.ToString()) : Color.white;
+            }
+
         }
     }
 }

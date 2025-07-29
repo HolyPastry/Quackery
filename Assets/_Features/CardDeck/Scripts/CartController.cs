@@ -185,6 +185,7 @@ namespace Quackery.Decks
             _cartValue = 0;
             RewardHistory.Clear();
             UpdateCartMode();
+            DiscardCart();
         }
 
         private int GetMaxValue()

@@ -15,6 +15,7 @@ namespace Quackery.Decks
 
         [SerializeField] private Color _highlightColor = Color.yellow;
         [SerializeField] private Color _defaultColor = Color.green;
+        [SerializeField] private Color _backgroundColor = Color.blue;
         private bool _highlighted;
 
 
@@ -23,6 +24,8 @@ namespace Quackery.Decks
             base.OnEnable();
             CartEvents.OnCartRewardCalculated += ShowReward;
             CartEvents.OnStacksHighlighted += HighlightStack;
+            OnCardMovedIn += UpdateBackground;
+            OnCardMovedOut += UpdateBackground;
         }
 
         protected override void OnDisable()
@@ -30,6 +33,21 @@ namespace Quackery.Decks
             base.OnDisable();
             CartEvents.OnCartRewardCalculated -= ShowReward;
             CartEvents.OnStacksHighlighted -= HighlightStack;
+            OnCardMovedIn -= UpdateBackground;
+            OnCardMovedOut -= UpdateBackground;
+        }
+
+        private void UpdateBackground()
+        {
+            var image = GetComponent<Image>();
+            if (IsEmpty)
+            {
+                image.color = _defaultColor;
+            }
+            else
+            {
+                image.color = Color.clear;
+            }
         }
 
         private void ShowReward(int index, CardReward reward, int deltaScore, float duration)

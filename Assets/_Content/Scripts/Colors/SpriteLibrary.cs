@@ -17,5 +17,19 @@ namespace Quackery
         }
 
         public List<CategorySprite> Categories;
+
+        public Sprite GetCategoryIcon(EnumItemCategory category)
+        {
+            foreach (var categorySprite in Categories)
+            {
+                if (categorySprite.Category == category)
+                {
+                    return categorySprite.Icon;
+                }
+            }
+
+            Debug.LogWarning($"No icon found for category: {category}");
+            return null;
+        }
     }
 }

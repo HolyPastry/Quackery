@@ -187,8 +187,10 @@ namespace Quackery.Shops
             rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
             base.SetupPost(shopReward);
 
-            _titleGUI.text = shopReward.Title;
-            _descriptionGUI.text = shopReward.Description;
+            if (_titleGUI != null)
+                _titleGUI.text = shopReward.Title;
+            if (_descriptionGUI != null)
+                _descriptionGUI.text = shopReward.Description;
 
             _billShopWidget.Hide();
 

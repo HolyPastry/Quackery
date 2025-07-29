@@ -16,6 +16,9 @@ namespace Quackery.Decks
         [SerializeField] protected float _moveSpeed = 0.5f;
         [SerializeField] protected Ease _easeType = Ease.OutBack;
         [SerializeField] protected float _staggerDelay = 0.1f;
+        [SerializeField] protected Transform _cardParent;
+
+        [SerializeField] protected bool _stripCard = false;
 
 
 
@@ -53,6 +56,8 @@ namespace Quackery.Decks
 
         protected virtual void OnEnable()
         {
+            if (_cardParent == null)
+                _cardParent = transform;
             DeckEvents.OnCardMovedTo += OnCardMoved;
             DeckEvents.OnShuffle += OnShuffle;
             DeckEvents.OnPileDestroyed += OnPileDestroyed;
@@ -143,7 +148,7 @@ namespace Quackery.Decks
 
         private IEnumerator StaggeredMoveRoutine()
         {
-            var scaleRatio = Height / CardOriginalHeight;
+            //var scaleRatio = Height / CardOriginalHeight;
             while (true)
             {
                 if (_moveQueue.Count > 0)
@@ -151,7 +156,7 @@ namespace Quackery.Decks
                     var cardTransform = _moveQueue.Dequeue();
                     if (cardTransform == null)
                         continue; // Skip if the card transform is null
-                    cardTransform.DOScale(scaleRatio, _moveSpeed).SetEase(Ease.Linear);
+                    cardTransform.DOScale(1, _moveSpeed).SetEase(Ease.Linear);
                     cardTransform.DOAnchorPos(Vector3.zero, _moveSpeed).SetEase(_easeType);
                     cardTransform.DOLocalRotate(Vector3.zero, _moveSpeed);
 
@@ -173,8 +178,10 @@ namespace Quackery.Decks
 
         internal void MoveCardToPile(Card card, bool atTheTop, bool isInstant)
         {
-            card.transform.SetParent(transform);
+            card.transform.SetParent(_cardParent);
             card.transform.localScale = Vector3.one;
+            card.Strip(_stripCard);
+
             if (atTheTop)
             {
                 card.transform.SetAsLastSibling();

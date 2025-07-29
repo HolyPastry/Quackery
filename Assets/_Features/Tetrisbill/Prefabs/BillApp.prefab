@@ -2161,9 +2161,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 1523584363815890866}
-  _animationDuration: 0.5
+  _animationDuration: 0.8
   _scaleDuration: 0.2
-  _animationEaseIn: 27
+  _animationEaseIn: 15
   _animationEaseOut: 26
   _startHidden: 0
   _overridePosition: {x: 0, y: 0}
