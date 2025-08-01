@@ -159,6 +159,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5f4e8ccbac8764679a5423d5026d8d37, type: 2}
   - {fileID: 11400000, guid: 8fbc1d46b407e4c4e877ebc87cfd0b6f, type: 2}
   - {fileID: 11400000, guid: c6fc7d27a457448fb9fe84540c312852, type: 2}
+  - {fileID: 11400000, guid: ca49e28baf65d4459b3ec05af8e693c5, type: 2}
+  - {fileID: 11400000, guid: b6a9783fa112243dfb011fbbd7c87157, type: 2}
   NumOverdueBills: 2
 --- !u!114 &63932436
 MonoBehaviour:
@@ -200,7 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _disable: 0
-  _initialAmount: 45
+  _initialAmount: 345
 --- !u!1 &181391071
 GameObject:
   m_ObjectHideFlags: 0

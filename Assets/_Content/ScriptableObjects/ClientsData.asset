@@ -229,6 +229,7 @@ MonoBehaviour:
     SurvivalThreshold: 30
     NormalThreshold: 100
     QueueSizeRange: {x: 1, y: 1}
+    CartSize: 2
   - Effects:
     - _data: {fileID: 11400000, guid: 861ac0bc84a78446c827fec2cb151274, type: 2}
       Value: 1
@@ -239,7 +240,9 @@ MonoBehaviour:
     SurvivalThreshold: 100
     NormalThreshold: 500
     QueueSizeRange: {x: 3, y: 4}
+    CartSize: 3
   - Effects: []
     SurvivalThreshold: 500
     NormalThreshold: 1000
     QueueSizeRange: {x: 4, y: 5}
+    CartSize: 4

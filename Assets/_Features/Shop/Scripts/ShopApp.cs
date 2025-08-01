@@ -218,6 +218,7 @@ namespace Quackery.Shops
             // post.OnPostClicked += OnPostClicked;
             post.OnBuyClicked += OnBuyClicked;
             post.AnchoredPosition = new Vector2(0, verticalPosition);
+            post.SizeDelta = new Vector2(Screen.width, Screen.height);
 
             return post;
         }

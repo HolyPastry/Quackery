@@ -8,7 +8,7 @@ namespace Quackery
 {
     public class ShopDots : MonoBehaviour
     {
-        [SerializeField] private ShopScrollRect _shopScrollRect;
+        [SerializeField] private ScrollRect _shopScrollRect;
         [SerializeField] private ShopApp _shopApp;
         [SerializeField] private List<Image> _dots;
         private int _numDots;
@@ -16,7 +16,7 @@ namespace Quackery
 
         private void OnEnable()
         {
-            _shopScrollRect.OnMoveScreen += HighlightDot;
+            //_shopScrollRect.OnMoveScreen += HighlightDot;
             _shopApp.OnPostListUpdated += UpdateDots;
 
             _numDots = -1;
@@ -26,7 +26,7 @@ namespace Quackery
 
         private void OnDisable()
         {
-            _shopScrollRect.OnMoveScreen -= HighlightDot;
+            //_shopScrollRect.OnMoveScreen -= HighlightDot;
             _shopApp.OnPostListUpdated -= UpdateDots;
         }
 

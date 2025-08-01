@@ -6,11 +6,12 @@ namespace Quackery.TetrisBill
 {
     public class BlockPool : MonoBehaviour
     {
-        private const int Spacing = 100;
+        [SerializeField] private RectTransform _blockParent;
+        [SerializeField] private int _spacing = 100;
         public TetrisBlock SpawnBlock(TetrisBlock prefab)
         {
-            var block = Instantiate(prefab, transform);
-            block.transform.SetParent(transform);
+            var block = Instantiate(prefab, _blockParent);
+            block.transform.SetParent(_blockParent);
             block.transform.localScale = Vector3.one;
             UpdateBlocksPosition();
             return block;
@@ -20,10 +21,10 @@ namespace Quackery.TetrisBill
         {
 
             block = null;
-            if (transform.childCount == 0) return false;
+            if (_blockParent.childCount == 0) return false;
 
-            int randomIndex = UnityEngine.Random.Range(0, transform.childCount);
-            block = transform.GetChild(randomIndex).GetComponent<TetrisBlock>();
+            int randomIndex = UnityEngine.Random.Range(0, _blockParent.childCount);
+            block = _blockParent.GetChild(randomIndex).GetComponent<TetrisBlock>();
             block.transform.SetParent(newParent);
             block.transform.localScale = Vector3.one;
             UpdateBlocksPosition(animate: true);
@@ -33,18 +34,18 @@ namespace Quackery.TetrisBill
         private void UpdateBlocksPosition(bool animate = false)
         {
             int totalWidth = 0;
-            for (int i = 0; i < transform.childCount; i++)
+            for (int i = 0; i < _blockParent.childCount; i++)
             {
-                Transform child = transform.GetChild(i);
+                Transform child = _blockParent.GetChild(i);
                 totalWidth += (int)child.GetComponent<RectTransform>().rect.width;
 
             }
 
-            totalWidth += (transform.childCount - 1) * Spacing;
+            totalWidth += (_blockParent.childCount - 1) * _spacing;
             int offset = -totalWidth / 2;
-            for (int i = 0; i < transform.childCount; i++)
+            for (int i = 0; i < _blockParent.childCount; i++)
             {
-                Transform child = transform.GetChild(i);
+                Transform child = _blockParent.GetChild(i);
                 RectTransform rectTransform = child.GetComponent<RectTransform>();
                 if (animate)
                 {
@@ -55,8 +56,9 @@ namespace Quackery.TetrisBill
                     rectTransform.anchoredPosition = new Vector2(offset + (rectTransform.rect.width / 2), 0);
                 }
 
-                offset += (int)rectTransform.rect.width + Spacing;
+                offset += (int)rectTransform.rect.width + _spacing;
             }
+            _blockParent.sizeDelta = new Vector2(totalWidth, _blockParent.sizeDelta.y);
         }
     }
 }

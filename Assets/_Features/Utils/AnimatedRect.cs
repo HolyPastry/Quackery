@@ -4,7 +4,6 @@ using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Quackery
 {
@@ -74,7 +73,7 @@ namespace Quackery
             _rectTransform.localScale = Vector3.one;
             _rectTransform.gameObject.SetActive(true);
 
-            // return this;
+            //return this;
             return SlideToZero();
         }
 
@@ -218,6 +217,27 @@ namespace Quackery
         internal void Hide()
         {
             _rectTransform.gameObject.SetActive(false);
+        }
+
+        internal void SlideToTop(int yOffset)
+        {
+
+            _isAnimating = true;
+            var offset = (Screen.height / 2) + yOffset;
+
+            _rectTransform.DOAnchorPosY(offset, _animationDuration)
+                .SetEase(_animationEaseIn)
+                .OnComplete(() =>
+                {
+                    EndAnimation();
+                });
+        }
+
+        internal void TeleportToMiddle(int yOffset)
+        {
+            // _rectTransform.anchorMin = new Vector2(0, 0.5f);
+            // _rectTransform.anchorMax = new Vector2(1, 0.5f);
+            _rectTransform.anchoredPosition = new Vector2(0, yOffset);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Quackery.Followers
         public static Action<int> ModifyFollowers = delegate { };
         public static Action<int> SetNumberOfFollowers = delegate { };
 
-        public static Func<int, int> RewardFollowers = (SuccessRating) => 0;
+        public static Func<CartMode, bool, int> RewardFollowers = (cartMode, concluded) => 0;
 
         public static Func<FollowerLevel> GetCurrentLevel = () => default;
         public static Func<int> GetNumFollowersToNextLevel = () => 0;

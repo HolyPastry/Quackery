@@ -10,7 +10,7 @@ namespace Quackery.Effects
     {
         public override IEnumerator Execute(Effect effect)
         {
-            CardGameController.EndTransactionRequest();
+            CardGameApp.EndTransactionRequest();
             yield return DefaultWaitTime;
         }
 

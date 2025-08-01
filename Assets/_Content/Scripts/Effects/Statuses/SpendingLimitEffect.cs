@@ -13,7 +13,7 @@ namespace Quackery.Effects
         {
             if (CartServices.GetValue() >= effect.Value) yield break;
 
-            CardGameController.InterruptRoundRequest();
+            CardGameApp.InterruptRoundRequest();
         }
     }
 }

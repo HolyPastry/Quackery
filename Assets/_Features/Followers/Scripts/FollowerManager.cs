@@ -39,7 +39,7 @@ namespace Quackery.Followers
             FollowerServices.GetNumberOfFollowers = () => 0;
             FollowerServices.ModifyFollowers = delegate { };
             FollowerServices.SetNumberOfFollowers = delegate { };
-            FollowerServices.RewardFollowers = (SuccessRating) => 0;
+            FollowerServices.RewardFollowers = (cartMode, concluded) => 0;
             FollowerServices.GetCurrentLevel = () => default;
             FollowerServices.GetNumFollowersToNextLevel = () => 0;
             FollowerServices.GetNextLevel = () => default;
@@ -73,8 +73,16 @@ namespace Quackery.Followers
             var nextLevel = _followerData.Levels.Find(level => level.Level == currentLevel.Level + 1);
             return nextLevel.FollowerRequirement - _serial.NumFollowers;
         }
-        private int RewardFollowers(int successRating)
+        private int RewardFollowers(CartMode cartMode, bool concluded)
         {
+            if (!concluded) return 0;
+            int successRating = cartMode switch
+            {
+                CartMode.Survival => 2,
+                CartMode.Normal => 4,
+                CartMode.SuperSaiyan => 8,
+                _ => throw new NotImplementedException()
+            };
             int newFollowers = (UnityEngine.Random.Range(1, 5) + successRating);
             ModifyFollowers(newFollowers);
             return newFollowers;

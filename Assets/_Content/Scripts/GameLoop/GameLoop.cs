@@ -16,7 +16,7 @@ namespace Quackery
     public class GameLoop : StateMachine
     {
         [SerializeField] private float _delayDuration = 1f;
-        public CardGameController CardGameController;
+        public CardGameApp CardGameApp;
         //   public ClientListUI ClientListUI;
         //  public ClientChatRotatingPanels ClientTextChat;
 
@@ -28,6 +28,8 @@ namespace Quackery
         public App SleepApp;
 
         public App GameOverApp;
+
+        public App EndOfWeekApp;
 
         public NotificationApp NotificationApp;
 
@@ -52,11 +54,15 @@ namespace Quackery
             var sleepState = new SleepState(this);
             var notificationState = new NotificationState(this);
             var gameOverState = new GameOverState(this);
+            var endOfWeekState = new EndOfWeekState(this);
 
             At(notificationState, clientListState, () => !NotificationApp.IsOpened);
 
             At(clientListState, cardGameState, () => ActiveClientSelected);
-            At(cardGameState, billState, () => SelectedClient == null);
+            At(cardGameState, endOfWeekState, () => SelectedClient == null);
+            At(endOfWeekState, billState, () => !EndOfWeekApp.IsOpened);
+
+
             At(shopState, sleepState, () => !ShopApp.IsOpened);
 
             At(billState, shopState, () => !BillApp.IsOpened && !BillApp.IsGameOver);

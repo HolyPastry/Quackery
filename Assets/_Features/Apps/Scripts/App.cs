@@ -18,10 +18,9 @@ namespace Quackery
         public event Action OnStartClosing = delegate { };
         public event Action OnClosed = delegate { };
 
-
-
         public void Open()
         {
+            transform.SetAsLastSibling();
             _canvas.gameObject.SetActive(true);
             IsOpened = true;
             OnStartOpening?.Invoke();
@@ -42,5 +41,7 @@ namespace Quackery
             OnClosed?.Invoke();
             _canvas.gameObject.SetActive(false);
         }
+
+
     }
 }

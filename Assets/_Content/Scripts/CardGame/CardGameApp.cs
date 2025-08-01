@@ -12,24 +12,17 @@ using UnityEngine.UI;
 namespace Quackery.Decks
 {
 
-    public class CardGameController : MonoBehaviour
+    public class CardGameApp : App
     {
         [Header("References")]
 
         [SerializeField] private ClientGameUI _clientGameUI;
-        [SerializeField] private Canvas _canvas;
-        [SerializeField] private AnimatedRect _animatable;
         [SerializeField] private CartGauge _cartValue;
         [SerializeField] private BudgetCartValueUI _budgetCartValue;
 
-        // [SerializeField] private Transform _purseTransform;
-
         [SerializeField] private CardPool _cardSelectPanel;
-        // [SerializeField] private GameObject _cardBonusRealization;
 
         [SerializeReference] private Button _EndRoundButton;
-
-        [SerializeField] private EndDayScreen _endDayScreen;
         [SerializeField] private EndOfRoundScreen _endRoundScreen;
 
         private Client _client;
@@ -37,27 +30,6 @@ namespace Quackery.Decks
 
         private bool _endButtonPressed;
 
-        public class GameStats
-        {
-            public int NumClientsServed;
-            public int AverageRating
-                    => NumClientsServed > 0 ? TotalRating / NumClientsServed : 0;
-            public int TotalRating;
-            public int AverageCashPerClient
-                => NumClientsServed > 0 ? DayYield / NumClientsServed : 0;
-            public int DayYield;
-            public int NumQuacks;
-
-            public void Reset()
-            {
-                NumClientsServed = 0;
-                TotalRating = 0;
-                DayYield = 0;
-                NumQuacks = 0;
-            }
-        }
-        private GameStats _gameStats;
-        private bool _endOfDay;
         public static Action InterruptRoundRequest = delegate { };
         public static Action EndTransactionRequest = delegate { };
         private bool _endOfRound;
@@ -67,7 +39,6 @@ namespace Quackery.Decks
         {
             _cartValue.Hide();
             _budgetCartValue.Hide();
-            _gameStats = new GameStats();
             _EndRoundButton.interactable = false;
         }
 
@@ -75,10 +46,8 @@ namespace Quackery.Decks
         {
 
             DeckEvents.OnCardsMovingToSelectPile += OnCardsMovingToSelectPile;
-            //      DeckEvents.OnCalculatingCartPile += OnPileMovedToCart;
             DeckEvents.OnCardSelected += OnCardSelected;
-            //  DeckEvents.OnCashingPile += OnCashingPile;
-            _endDayScreen.OnCloseGame += EndTheDay;
+
             InterruptRoundRequest = () => RoundInterrupted = true;
             EndTransactionRequest = () => _endButtonPressed = true;
 
@@ -91,7 +60,6 @@ namespace Quackery.Decks
             DeckEvents.OnCardsMovingToSelectPile -= OnCardsMovingToSelectPile;
             DeckEvents.OnCardSelected -= OnCardSelected;
 
-            _endDayScreen.OnCloseGame -= EndTheDay;
             InterruptRoundRequest = delegate { };
             EndTransactionRequest = delegate { };
             _EndRoundButton.onClick.RemoveAllListeners();
@@ -99,38 +67,16 @@ namespace Quackery.Decks
 
         }
 
-        public void Show()
+        public void Init()
         {
             CartServices.ResetCart();
+            DeckServices.Shuffle();
             _clientGameUI.Hide();
-            _endOfDay = false;
-            _gameStats.Reset();
-            _endDayScreen.Hide();
             _endRoundScreen.Hide(instant: true);
-            _canvas.gameObject.SetActive(true);
-            //_animatable.Show();
-            _animatable.SlideIn(Direction.Right);
         }
 
-        private void EndTheDay() => _endOfDay = true;
-
-        public void Hide()
-        {
-            _animatable.Hide();
-            // _animatable.SlideOut(Direction.Right).DoComplete(() =>
-            // {
-
-            // });
-        }
         private void OnCardSelected(Card card, List<Card> list)
         {
-            _cardSelectPanel.Hide();
-            //StartCoroutine(DelayedSwitchOffSelectPanel());
-        }
-
-        private IEnumerator DelayedSwitchOffSelectPanel()
-        {
-            yield return null;
             _cardSelectPanel.Hide();
         }
 
@@ -147,10 +93,7 @@ namespace Quackery.Decks
             if (cashInCart <= 0) return;
 
             PurseServices.Modify(cashInCart);
-            _gameStats.DayYield += cashInCart;
             CartServices.ResetCart();
-            _gameStats.TotalRating += 5;
-
         }
 
         internal void StartNewRound(Client client)
@@ -161,8 +104,6 @@ namespace Quackery.Decks
             _endOfRound = false;
 
             _client = client;
-
-            _gameStats.NumClientsServed++;
             StartCoroutine(RoundRoutine());
 
         }
@@ -216,11 +157,8 @@ namespace Quackery.Decks
 
                 if (_endButtonPressed == true)
                     break;
-                // yield return CartServices.CalculateCart();
 
             }
-
-            yield return DeckServices.DiscardHand();
 
             EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundEnd, null);
             _endOfRound = true;
@@ -250,57 +188,22 @@ namespace Quackery.Decks
             }
         }
 
-        // private IEnumerator ApplyRatingBonus()
-        // {
-        //     var cardBonus = RatingServices.GetCardBonus();
-
-        //     if (cardBonus == -1)
-        //     {
-        //         CartServices.SetRatingCartSizeModifier(cardBonus);
-        //         _cardBonusRealization.SetActive(true);
-
-        //         yield return new WaitForSeconds(1f);
-
-        //         _cardBonusRealization.SetActive(false);
-        //     }
-        //     else if (cardBonus >= 1)
-        //     {
-        //         CartServices.SetRatingCartSizeModifier(0);
-        //         _cardBonusRealization.SetActive(true);
-        //         yield return new WaitForSeconds(1f);
-        //         _cardBonusRealization.SetActive(false);
-        //         CartServices.SetRatingCartSizeModifier(cardBonus);
-        //     }
-        //     else
-        //         CartServices.SetRatingCartSizeModifier(cardBonus);
-        // }
-
         internal WaitUntil WaitUntilEndOfRound()
         {
             return new WaitUntil(() => _endOfRound);
         }
 
-        public void ShowEndRoundScreen(bool success, out bool wasBoss)
+        public void ShowEndRoundScreen(out bool wasBoss)
         {
+
             wasBoss = !ClientServices.IsCurrentClientAnonymous() &&
                       ClientServices.GetRevealedClient() == null;
 
-            StartCoroutine(_endRoundScreen.Show(_client, success));
+            StartCoroutine(_endRoundScreen.Show(_client, !RoundInterrupted, CartServices.GetMode()));
         }
         public void HideEndRoundScreen()
         {
             _endRoundScreen.Hide(instant: false);
-        }
-
-        internal void ShowEndDayScreen()
-        {
-            _endDayScreen.Init(_gameStats);
-            _endDayScreen.Show();
-        }
-
-        internal object WaitUntilEndOfDayValidated()
-        {
-            return new WaitUntil(() => _endOfDay);
         }
 
         internal WaitUntil WaitUntilEndOfRoundScreenClosed()
@@ -310,16 +213,6 @@ namespace Quackery.Decks
             return new WaitUntil(() =>
                 Time.time - time > 10f ||
                 !_endRoundScreen.gameObject.activeSelf);
-        }
-
-        internal void ApplyEndRoundEffects()
-        {
-            var tablepiles = DeckServices.GetTablePile();
-            foreach (var pile in tablepiles)
-            {
-                if (pile.IsEmpty || !pile.Enabled) continue;
-                //EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundEnd, pile.TopCard);
-            }
         }
     }
 }

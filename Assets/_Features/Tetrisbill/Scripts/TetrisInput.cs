@@ -1,18 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using Holypastry.Bakery;
 using Quackery.TetrisBill;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Quackery
 {
-    public class TetrisInput : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
+    public class TetrisInput : MonoBehaviour,
+                             IDragHandler,
+                             IBeginDragHandler,
+                              IEndDragHandler,
+                               IPointerDownHandler,
+                                IPointerUpHandler
     {
+        [SerializeField] private float _dragThreshold = 75f; // Minimum drag distance to register a drag
         [SerializeField] private float _dragResetTime = 0.5f;
-        public int DragDirection = 0; // -1 for left, 1 for right, 0 for no drag
+        [SerializeField] private float _holdTimerDuration = 0.5f; // Duration to hold before rotating
+        public int DragDirection { get; private set; } = 0;  // -1 for left, 1 for right, 0 for no drag
         private bool _dragged;
         private float _timer;
+        private bool _rotated;
 
+        private CountdownTimer _holdTimer;
+
+        void Awake()
+        {
+            _holdTimer = new CountdownTimer(_holdTimerDuration);
+            _holdTimer.OnTimerEnd += () =>
+            {
+                TetrisGame.SetFastFall(true);
+            };
+        }
+
+        void Update()
+        {
+            _holdTimer.Tick(Time.deltaTime);
+        }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
@@ -22,33 +46,45 @@ namespace Quackery
 
         public void OnDrag(PointerEventData eventData)
         {
+            Debug.Log(eventData.delta);
             // Determine drag direction based on mouse position
-            if (eventData.delta.x > 10)
+            if (eventData.delta.x > _dragThreshold)
             {
+                _holdTimer.Stop();
+                TetrisGame.SetFastFall(false);
                 DragDirection = 1; // Right drag
+                return;
             }
-            else if (eventData.delta.x < 10)
+            if (eventData.delta.x < -_dragThreshold)
             {
+                _holdTimer.Stop();
+                TetrisGame.SetFastFall(false);
                 DragDirection = -1; // Left drag
+                return;
             }
-            else
+
+            DragDirection = 0; // No horizontal drag
+
+            if (eventData.delta.y > _dragThreshold && !_rotated)
             {
-                DragDirection = 0; // No horizontal drag
+                _holdTimer.Stop();
+                TetrisGame.SetFastFall(false);
+                TetrisGame.Rotate();
+                _rotated = true;
+                return;
             }
+
+
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            _rotated = false;
             // Reset drag direction when the drag ends
             DragDirection = 0;
 
         }
 
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (DragDirection == 0)
-                TetrisGame.Rotate();
-        }
 
 
         void LateUpdate()
@@ -80,6 +116,18 @@ namespace Quackery
             }
 
             DragDirection = 0;
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            _holdTimer.Stop();
+            _holdTimer.Start();
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            _holdTimer.Stop();
+            TetrisGame.SetFastFall(false);
         }
     }
 }

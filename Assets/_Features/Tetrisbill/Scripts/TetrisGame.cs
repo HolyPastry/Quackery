@@ -12,7 +12,8 @@ namespace Quackery.TetrisBill
         [SerializeField] private int _gridWidth = 10;
         [SerializeField] private int _gridHeight = 16;
         [SerializeField] private int _cellSize = 100;
-        [SerializeField] private float _speed = 1.0f;
+        [SerializeField] private float _normalSpeed = 1.0f;
+        [SerializeField] private float _fastFallSpeed = 5.0f;
         [SerializeField] private BlockPool _shapePool;
 
         [SerializeField] private TetrisCube _startingCubePrefab;
@@ -25,11 +26,10 @@ namespace Quackery.TetrisBill
         private List<int> _startingCubeIndexes = new();
 
         private TetrisBlock _currentBlock;
-
-
         internal static Action MoveRight = delegate { };
         internal static Action MoveLeft = delegate { };
         internal static Action Rotate = delegate { };
+        internal static Action<bool> SetFastFall = delegate { };
         internal static Action<int> SetBudgetIndex = delegate { };
         public static Func<int> CellSize = () => 1;
 
@@ -38,6 +38,8 @@ namespace Quackery.TetrisBill
         private bool _removingLines;
         private int _budgetIndex;
 
+        private float _speed => _fastFallEnabled ? _fastFallSpeed : _normalSpeed;
+        private bool _fastFallEnabled = false;
 
         void OnEnable()
         {
@@ -46,7 +48,11 @@ namespace Quackery.TetrisBill
             Rotate = () => _needRotation = true;
             SetBudgetIndex = (index) => _budgetIndex = index;
             CellSize = () => _cellSize;
+            SetFastFall = (isOn) => _fastFallEnabled = isOn;
+
         }
+
+
 
         void OnDisable()
         {
@@ -55,6 +61,7 @@ namespace Quackery.TetrisBill
             Rotate = delegate { };
             SetBudgetIndex = delegate { };
             CellSize = () => 1;
+            SetFastFall = delegate { };
         }
 
 
@@ -252,8 +259,17 @@ namespace Quackery.TetrisBill
             cube.PositionX = (randomIndex - _gridWidth / 2 + 0.5f) * _cellSize;
             cube.PositionY = 0;
             _cubes.Add(cube);
+        }
 
-
+        internal void Reset()
+        {
+            _cubes.Where(c => c != null && !c.IsBorder)
+                 .ToList()
+                 .ForEach(c =>
+                    {
+                        _cubes.Remove(c);
+                        Destroy(c.gameObject);
+                    });
         }
     }
 }

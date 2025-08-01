@@ -9,7 +9,7 @@ namespace Quackery
 {
     public class CardGameControllerTest : MonoBehaviour
     {
-        [SerializeField] private CardGameController _controller;
+        [SerializeField] private CardGameApp _controller;
 
         // Start is called before the first frame update
         IEnumerator Start()

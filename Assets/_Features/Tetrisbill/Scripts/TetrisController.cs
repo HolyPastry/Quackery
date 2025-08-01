@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Quackery.Bills;
 using UnityEngine;
 
 namespace Quackery.TetrisBill
@@ -11,14 +10,17 @@ namespace Quackery.TetrisBill
         [SerializeField] private TetrisGame _tetrisGame;
         [SerializeField] private TetrisStartScreen _startScreen;
         [SerializeField] private TetrisOverdueUI _overdueUI;
-        private bool _startedOnce;
+        [SerializeField] private TetrisEndScreen _endScreen;
 
+        private bool _startedOnce;
+        internal static Action ResetRequest = delegate { };
         void OnEnable()
         {
             _startScreen.OnStart += StartGame;
             _tetrisGame.OnGameOver += GameOver;
-            if (_startedOnce) Setup();
+            ResetRequest = Reset;
 
+            if (_startedOnce) Setup();
 
         }
 
@@ -26,6 +28,7 @@ namespace Quackery.TetrisBill
         {
             _startScreen.OnStart -= StartGame;
             _tetrisGame.OnGameOver -= GameOver;
+            ResetRequest = delegate { };
         }
 
         IEnumerator Start()
@@ -42,9 +45,16 @@ namespace Quackery.TetrisBill
             _startScreen.Show();
             _tetrisGame.PrepareGame();
             _overdueUI.Setup();
+        }
 
+        private void Reset()
+        {
+            _tetrisGame.Reset();
+            _overdueUI.Reset();
+            _endScreen.Hide();
 
         }
+
         public void StartGame()
         {
             StartCoroutine(StartGameRoutine());
@@ -95,14 +105,15 @@ namespace Quackery.TetrisBill
                 _overdueUI.AddOneCross();
             }
             yield return new WaitForSeconds(0.5f);
-            if (numCrossAdded > 0)
-            {
-                BillServices.SetNumOverdueBills(numCrossAdded);
-                yield return StartCoroutine(_overdueUI.ActOverdueBillRoutine());
-            }
-            yield return new WaitForSeconds(1f);
-            BillApp.ContinueAction();
+            _endScreen.Show(numCrossAdded);
+
+
         }
+
+
+
+
+
     }
 }
 

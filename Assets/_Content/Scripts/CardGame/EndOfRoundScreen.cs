@@ -20,7 +20,7 @@ namespace Quackery
         private Client _revealedClient;
         private bool _clickPressed;
 
-        public IEnumerator Show(Client client, bool success)
+        public IEnumerator Show(Client client, bool success, CartMode cartMode)
         {
             _revealedClient = null;
             _clickPressed = false;
@@ -34,7 +34,7 @@ namespace Quackery
             yield return _animatedRect.WaitForAnimation();
             if (client.IsAnonymous)
             {
-                _anonymousClientPanel.Show(client, success);
+                _anonymousClientPanel.Show(client, success, cartMode);
                 _revealedClient = ClientServices.GetRevealedClient();
                 if (_revealedClient == null) yield break;
 

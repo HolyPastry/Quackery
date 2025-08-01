@@ -20,30 +20,40 @@ namespace Quackery
         [SerializeField] private TextMeshProUGUI _resultString;
         [SerializeField] private FollowerBadge _followerBadge;
 
-        public void Show(Client client, bool isSuccess)
+        public void Show(Client client, bool concluded, CartMode cartMode)
         {
 
             _portrait.sprite = client.Portrait;
             _portrait.color = Color.white;
             _nameText.text = client.LoginName;
-            //    var evaluation = CartServices.GetCartEvaluation();
+
             var cartValue = CartServices.GetValue();
             var cartBonus = CartServices.GetBonus();
 
-            //  int newFollowers = FollowerServices.RewardFollowers(evaluation.Index);
-
-            // StartCoroutine(_followerBadge.CountFollowersUpRoutine(newFollowers));
-            // _audioSource.PlayOneShot(evaluation.SoundBite);
-
-            if (isSuccess)
+            string evaluation = cartMode switch
             {
-                // _resultString.text = Sprites.Replace($"{evaluation.Description} Transaction");
+                CartMode.Survival => "Poor",
+                CartMode.Normal => "Good",
+                CartMode.SuperSaiyan => "Outstanding",
+                _ => throw new NotImplementedException()
+            };
+
+            int newFollowers = FollowerServices.RewardFollowers(cartMode, concluded);
+
+
+            // _audioSource.PlayOneShot(evaluation.SoundBite);  
+
+            if (concluded)
+            {
+                _resultString.text = Sprites.Replace($"{evaluation} Transaction");
                 _cartAmount.text = Sprites.Replace($"{cartValue + cartBonus}#Coin");
+                StartCoroutine(_followerBadge.CountFollowersUpRoutine(newFollowers));
             }
             else
             {
                 _resultString.text = Sprites.Replace("Client left without paying!");
                 _cartAmount.text = Sprites.Replace("0#Coin");
+                _followerBadge.Hide();
             }
             _hiddable.SetActive(true);
 

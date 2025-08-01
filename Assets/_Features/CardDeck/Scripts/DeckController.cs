@@ -653,18 +653,15 @@ namespace Quackery.Decks
             card.InHandPriceBonus = 0;
             card.UpdateUI();
             card.Discard();
-
-            //DeckEvents.OnCardMovedTo(card, EnumCardPile.Discard, _discardPile.Index, true);
         }
 
         private IEnumerator DiscardHand()
         {
-
-            var cardsToDiscard = new List<Card>();
             foreach (var pile in _handPiles)
             {
                 if (pile.IsEmpty || !pile.Enabled) continue;
-                cardsToDiscard.AddRange(pile.Cards);
+
+
                 yield return EffectServices.Execute(EnumEffectTrigger.OnDiscard, pile.TopCard);
                 Discard(pile.TopCard);
                 yield return new WaitForSeconds(0.2f);
@@ -716,6 +713,12 @@ namespace Quackery.Decks
 
         private void ResetDecks()
         {
+            foreach (var pile in _handPiles)
+            {
+                if (pile.IsEmpty) continue;
+                DestroyEffemeralCards(pile);
+                _drawPile.MergeBelow(pile);
+            }
             DestroyEffemeralCards(_drawPile);
             DestroyEffemeralCards(_discardPile);
             DestroyEffemeralCards(_exhaustPile);

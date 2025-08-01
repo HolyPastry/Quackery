@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be27fb51dba2a453d935213998b9e72b, type: 3}
   m_Name: Excited
   m_EditorClassIdentifier: 
-  MasterText: Enthused
+  MasterText: Excited
   Icon: {fileID: 21300000, guid: f99864556e23f8f49a57cd041376e11d, type: 3}
   Description: Increase Cart Size
   CanBeNegative: 0
