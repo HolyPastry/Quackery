@@ -53,6 +53,7 @@ namespace Quackery.Shops
             yield return new WaitForSeconds(1f);
             _cardAnimated.RectTransform = _selectedCard.transform as RectTransform;
 
+            yield return ShopApp.SpendMoneyRequest(_reward.Price);
 
             if (_reward is RemoveCardReward)
             {
@@ -71,6 +72,8 @@ namespace Quackery.Shops
             yield return new WaitForSeconds(2f);
             OnExited(true);
             Hide();
+
+
 
         }
 
@@ -97,13 +100,17 @@ namespace Quackery.Shops
             }
             _cards.Clear();
 
-            // Create new cards
-            foreach (var item in InventoryServices.GetAllItems())
+            var cards = DeckServices.GetMatchingCards(card =>
+                            card.Category != Inventories.EnumItemCategory.Curse &&
+                            card.Category != Inventories.EnumItemCategory.TempCurse, EnumCardPile.Draw);
+
+
+            foreach (var card in cards)
             {
-                var cardInstance = DeckServices.CreateCard(item.Data);
+                var cardInstance = DeckServices.CreateCard(card.Item.Data);
                 cardInstance.transform.localScale = Vector3.one * 0.75f;
                 cardInstance.transform.SetParent(_cardParent, false);
-                cardInstance.Item = item;
+                cardInstance.Item = card.Item;
                 var overlay = Instantiate(_clickableOverlay, cardInstance.transform);
                 overlay.Init(cardInstance);
                 overlay.OnClicked += SelectCard;
@@ -129,12 +136,14 @@ namespace Quackery.Shops
 
         public override void Show(ShopReward reward)
         {
+
             base.Show(reward);
             _realizationText.gameObject.SetActive(false);
             _cardParent.gameObject.SetActive(true);
             _buttons.SetActive(true);
 
             _confirmButton.interactable = false;
+            _confirmButton.GetComponentInChildren<TextMeshProUGUI>().text = Sprites.Replace($"#Money {reward.Price}");
 
             if (reward is RemoveCardReward)
                 _explanationText.text = "Select a card to remove from your deck.";

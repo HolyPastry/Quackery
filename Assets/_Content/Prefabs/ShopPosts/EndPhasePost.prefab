@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5238169167343278151}
-  - component: {fileID: 2196704910166057223}
+  - component: {fileID: 7021598415081743221}
   m_Layer: 5
   m_Name: EndPhasePost
   m_TagString: Untagged
@@ -37,7 +37,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 1000}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &2196704910166057223
+--- !u!114 &7021598415081743221
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4837139895895988484}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53ebf73982cab4ead9a56ae39e5e18b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 27728274f703a41adaab0ccb88c2bb0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7995209318697487319

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Quackery.Shops
 {
-    public class EndPost : ShopPost
+    public class EmptyPost : ShopPost
     {
         public override void SetupPost(ShopReward reward)
         {

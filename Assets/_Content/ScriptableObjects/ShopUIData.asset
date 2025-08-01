@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cffead54f51c946ebada7ce6b26fa634, type: 3}
+  m_Name: ShopUIData
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  CardUIData:
+  - ItemCategory: 1
+    BrandLogo: {fileID: 21300000, guid: 904b3307831ba457c9a69e2110932d8e, type: 3}
+    BackgroundColor: {r: 0.36862746, g: 0.47843137, b: 0.32156864, a: 1}
+    HighlightImage: {fileID: 21300000, guid: 51af7fe9e9d694f9a82536dac6f04681, type: 3}
+  - ItemCategory: 3
+    BrandLogo: {fileID: 21300000, guid: 7a62642f0cefc41ccb0db984a74654fe, type: 3}
+    BackgroundColor: {r: 0.7764706, g: 0.6431373, b: 0.5137255, a: 1}
+    HighlightImage: {fileID: 21300000, guid: 33abb800389de42f2a8ba2de4590149f, type: 3}
+  - ItemCategory: 2
+    BrandLogo: {fileID: 21300000, guid: 658c65b09399f4b148979254a04beae4, type: 3}
+    BackgroundColor: {r: 0.07450981, g: 0.07058824, b: 0.09019608, a: 1}
+    HighlightImage: {fileID: 21300000, guid: d3e8c1b769a8c4ee9b2f614e298b8db2, type: 3}

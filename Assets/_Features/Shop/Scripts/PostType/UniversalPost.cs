@@ -6,7 +6,6 @@ using DG.Tweening;
 using Quackery.Artifacts;
 using Quackery.Decks;
 using Quackery.Followers;
-using Quackery.Inventories;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -99,34 +98,15 @@ namespace Quackery.Shops
             {
                 yield return StartCoroutine(ArtifactRewardRoutine(artifactReward.ArtifactData));
             }
-            else if (_shopReward is NewCardReward newCardReward)
-            {
-                yield return StartCoroutine(CardRewardRoutine(newCardReward.ItemData));
-            }
+            // else if (_shopReward is NewCardReward newCardReward)
+            // {
+            //     yield return StartCoroutine(CardRewardRoutine(newCardReward.ItemData));
+            // }
             yield return new WaitForSeconds(1f);
             OnBuyClicked?.Invoke(this);
         }
 
-        private IEnumerator CardRewardRoutine(ItemData itemData)
-        {
-            DeckServices.AddNew(
-                    itemData,
-                    EnumCardPile.Draw,
-                    EnumPlacement.ShuffledIn,
-                    EnumLifetime.Permanent);
 
-            Card card = _cardParent.GetComponentInChildren<Card>();
-            AudioSource cardAudio = _cardParent.GetComponentInChildren<AudioSource>();
-            if (cardAudio != null)
-                cardAudio.Play();
-            if (card != null)
-                (card.transform as RectTransform).DOAnchorPosX(-Screen.width, 0.5f)
-                    .OnComplete(() =>
-                    {
-                        Destroy(card.gameObject);
-                    });
-            yield return new WaitForSeconds(0.5f);
-        }
 
         private IEnumerator ArtifactRewardRoutine(ArtifactData artifactData)
         {
@@ -151,7 +131,7 @@ namespace Quackery.Shops
 
             foreach (var itemData in artifactData.BonusItems)
             {
-                SpawnCard(itemData);
+                // SpawnCard(itemData);
                 yield return new WaitForSeconds(0.5f);
             }
             foreach (var itemData in artifactData.BonusItems)
@@ -159,26 +139,6 @@ namespace Quackery.Shops
                 DeckServices.DestroyCardType(itemData);
             }
 
-        }
-
-        private void SpawnCard(ItemData itemData)
-        {
-            DeckServices.AddNew(
-                               itemData,
-                                EnumCardPile.Draw,
-                                EnumPlacement.ShuffledIn,
-                                EnumLifetime.Permanent);
-
-            Card card = _cardParent.GetComponentInChildren<Card>();
-            AudioSource cardAudio = _cardParent.GetComponentInChildren<AudioSource>();
-            if (cardAudio != null)
-                cardAudio.Play();
-            if (card != null)
-                (card.transform as RectTransform).DOAnchorPosX(-Screen.width, 0.5f)
-                    .OnComplete(() =>
-                    {
-                        Destroy(card.gameObject);
-                    });
         }
 
         public override void SetupPost(ShopReward shopReward)

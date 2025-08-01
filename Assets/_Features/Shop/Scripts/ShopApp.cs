@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace Quackery.Shops
@@ -13,13 +12,13 @@ namespace Quackery.Shops
 
         [Header("References")]
 
-
-        [SerializeField] private ShopPost _continuePostPrefab;
         [SerializeField] private RectTransform _postsContainer;
         [SerializeField] private ConfirmationPanel _confirmationPanel;
         [SerializeField] private ShopSelectCard _selectCardPanel;
         [SerializeField] private ScrollRect _shopScrollRect;
 
+        [SerializeField] private ShopPost _firstPostPrefab;
+        [SerializeField] private ShopPost _lastPostPrefab;
         [SerializeField] private ShopPost _defaultPostPrefab;
         [SerializeField] private ShopPost _qualityOfLifePostPrefab;
         [SerializeField] private ShopPost _cardPostPrefab;
@@ -30,13 +29,14 @@ namespace Quackery.Shops
 
         private readonly List<ShopPost> _posts = new();
 
-
         public event Action PhaseEnded = delegate { };
         public event Action<int, int> OnPostListUpdated = (numPost, highlightedIndex) => { };
 
         public static Action<ShopPost> ShowConfirmation = delegate { };
 
         internal static Action<ShopPost> RemovePostRequest = delegate { };
+
+        internal static Func<int, Coroutine> SpendMoneyRequest = (amount) => null;
         private ShopPost _selectingPost;
 
         void OnEnable()
@@ -48,8 +48,12 @@ namespace Quackery.Shops
 
             ShowConfirmation = ShowConfirmationPanel;
             RemovePostRequest = RemovePost;
+            SpendMoneyRequest = (amount) => StartCoroutine(SpendMoneyRoutine(amount));
 
         }
+
+
+
         void OnDisable()
         {
             _confirmationPanel.OnExited -= OnConfirmationExited;
@@ -60,6 +64,7 @@ namespace Quackery.Shops
 
             ShowConfirmation = delegate { };
             RemovePostRequest = delegate { };
+            SpendMoneyRequest = (amount) => null;
         }
 
         private void OnMoveScreen(int postIndex)
@@ -75,6 +80,13 @@ namespace Quackery.Shops
             postToMove.transform.SetAsLastSibling();
         }
 
+
+        private IEnumerator SpendMoneyRoutine(int amount)
+        {
+            PurseServices.Modify(-amount);
+            yield return new WaitForSeconds(1f);
+
+        }
         private void OnConfirmationExited(bool succeed)
         {
             if (succeed) RemovePost(_selectingPost);
@@ -88,46 +100,38 @@ namespace Quackery.Shops
 
         private void RemovePost(ShopPost postToRemove)
         {
-            //var post = _posts.Find(x => x.ShopReward == _currentReward);
-            if (postToRemove != null)
+            if (postToRemove is ChooseACardPost chooseACardPost)
             {
-                postToRemove.Hide();
-                postToRemove.OnBuyClicked -= OnBuyClicked;
-                int postIndex = _posts.IndexOf(postToRemove);
-                _posts.Remove(postToRemove);
-                Destroy(postToRemove.gameObject);
-                OnPostListUpdated(_posts.Count, postIndex);
-                //  _shopScrollRect.LockMovement();
-                for (int i = postIndex; i < _posts.Count; i++)
-                {
-                    _posts[i].MoveUp();
-
-                }
-                if (_posts.Count <= 2)
-                {
-                    // if (_posts.TrueForAll(x => x is EndPost))
-                    //     //shopScrollRect.LockScrolling();
-                    // else
-                    //         {
-                    //             // if (_posts[0] is EndPost)
-                    //             //     AddLastPost(insertAtStart: true);
-                    //             // else
-                    //             //     AddLastPost();
-                    //         }
-                }
-
-                // _shopScrollRect.UnlockMovement();
+                chooseACardPost.HideButton();
+                // var button = chooseACardPost.GetComponentInChildren<Button>();
+                // button.gameObject.SetActive(false);
             }
+
+            // //var post = _posts.Find(x => x.ShopReward == _currentReward);
+            // if (postToRemove != null)
+            // {
+            //     postToRemove.Hide();
+            //     postToRemove.OnBuyClicked -= OnBuyClicked;
+            //     int postIndex = _posts.IndexOf(postToRemove);
+            //     _posts.Remove(postToRemove);
+            //     Destroy(postToRemove.gameObject);
+            //     OnPostListUpdated(_posts.Count, postIndex);
+            //     //  _shopScrollRect.LockMovement();
+            //     for (int i = postIndex; i < _posts.Count; i++)
+            //     {
+            //         _posts[i].MoveUp();
+
+            //     }
+
+            //     int height = _posts.Count * Screen.height;
+            //     _postsContainer.sizeDelta = new Vector2(_postsContainer.sizeDelta.x, height);
+
+            // }
         }
 
         public void PopulatingPosts()
         {
-            //_canvas.gameObject.SetActive(true);
             CleanPosts();
-
-            // _animatedRect.SlideIn(Direction.Right)
-            //     .DoComplete(() =>
-            // StartCoroutine(ShowPostsRoutine()));
             StartCoroutine(ShowPostsRoutine());
 
         }
@@ -146,13 +150,10 @@ namespace Quackery.Shops
         private IEnumerator ShowPostsRoutine()
         {
 
-            //yield return new WaitForSeconds(0.5f);
-            List<ShopReward> rewards = ShopServices.GetRewards(_numberOfRewards);
-            // var post = Instantiate(_freeRewardPostPrefab, _postsContainer);
-            // post.SetupPost(null);
-            // post.AnchoredPosition = new Vector2(0, 0);
-            // _posts.Add(post);
 
+            List<ShopReward> rewards = ShopServices.GetRewards(_numberOfRewards);
+
+            AddPost(_firstPostPrefab);
             for (int i = 0; i < rewards.Count; i++)
             {
                 var reward = rewards[i];
@@ -162,43 +163,28 @@ namespace Quackery.Shops
 
             }
 
-            AddLastPost();
+            var lastPost = AddPost(_lastPostPrefab);
+            _continueButton = lastPost.GetComponentInChildren<Button>();
+            _continueButton.onClick.AddListener(EndShopPhase);
 
-
-            // if (_posts.Count < 2)
-            //     _shopScrollRect.LockScrolling();
             int height = _posts.Count * Screen.height;
             _postsContainer.sizeDelta = new Vector2(_postsContainer.sizeDelta.x, height);
-
             OnPostListUpdated?.Invoke(_posts.Count, 0);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(_postsContainer);
             yield return null;
 
         }
 
-        private void AddLastPost(bool insertAtStart = false)
+        private ShopPost AddPost(ShopPost prefab)
         {
-            var lastPost = Instantiate(_continuePostPrefab, _postsContainer);
-            if (insertAtStart)
-            {
-                lastPost.AnchoredPosition = new Vector2(0, Screen.height);
-            }
-            else
-            {
-                lastPost.AnchoredPosition = new Vector2(0, _posts.Count * -Screen.height);
-            }
+            var lastPost = Instantiate(prefab, _postsContainer);
 
+            lastPost.AnchoredPosition = new Vector2(0, _posts.Count * -Screen.height);
             lastPost.SizeDelta = new Vector2(Screen.width, Screen.height);
             lastPost.gameObject.SetActive(true);
-            lastPost.transform.SetAsLastSibling();
-            _continueButton = lastPost.GetComponentInChildren<Button>();
-            _continueButton.onClick.AddListener(EndShopPhase);
-            if (insertAtStart)
-            {
-                _posts.Insert(0, lastPost);
-            }
-            else
-                _posts.Add(lastPost);
+            lastPost.transform.SetAsFirstSibling();
+
+            _posts.Add(lastPost);
+            return lastPost;
         }
 
         private ShopPost InstantiatePost(ShopReward reward, int verticalPosition)
@@ -217,6 +203,7 @@ namespace Quackery.Shops
             post.SetupPost(reward);
             // post.OnPostClicked += OnPostClicked;
             post.OnBuyClicked += OnBuyClicked;
+            post.transform.SetAsFirstSibling();
             post.AnchoredPosition = new Vector2(0, verticalPosition);
             post.SizeDelta = new Vector2(Screen.width, Screen.height);
 

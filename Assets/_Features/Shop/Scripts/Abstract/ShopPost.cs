@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using KBCore.Refs;
+using Quackery.Decks;
+using Quackery.Inventories;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.EnhancedTouch;
@@ -8,7 +11,7 @@ using UnityEngine.InputSystem.EnhancedTouch;
 
 namespace Quackery.Shops
 {
-    public abstract class ShopPost : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+    public class ShopPost : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     {
         // [SerializeField, Self] private AnimatedRect _animatedRect;
         private Vector2 _position;
@@ -82,6 +85,25 @@ namespace Quackery.Shops
             var currentPosY = _rectTransform.anchoredPosition.y;
             var newPosY = currentPosY + Screen.height;
             _rectTransform.DOAnchorPosY(newPosY, 0.5f, true);
+        }
+        private void AddCardToDesk(ItemData itemData, RectTransform cardParent)
+        {
+            DeckServices.AddNew(
+                               itemData,
+                                EnumCardPile.Draw,
+                                EnumPlacement.ShuffledIn,
+                                EnumLifetime.Permanent);
+
+            Card card = cardParent.GetComponentInChildren<Card>();
+            AudioSource cardAudio = cardParent.GetComponentInChildren<AudioSource>();
+            if (cardAudio != null)
+                cardAudio.Play();
+            if (card != null)
+                (card.transform as RectTransform).DOAnchorPosX(-Screen.width, 0.5f)
+                    .OnComplete(() =>
+                    {
+                        Destroy(card.gameObject);
+                    });
         }
     }
 }

@@ -5497,6 +5497,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2031364929}
     m_Modifications:
+    - target: {fileID: 5497147284024201246, guid: ee79d44860f35434982a489985513e2c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7502394093125466052, guid: ee79d44860f35434982a489985513e2c, type: 3}
       propertyPath: m_Name
       value: ShopApp
