@@ -154,7 +154,7 @@ namespace Quackery
 
         void Update()
         {
-            Vector2 B = (Vector2)transform.position;
+            Vector2 B = new Vector3(transform.position.x, transform.position.y, 0);
             Vector2 A = B - 0.5f * (Screen.width - _sideMargin) * Vector2.right;
             Vector2 C = B + 0.5f * (Screen.width - _sideMargin) * Vector2.right;
             Vector2 D = B + _cardHandRadius * Vector2.down;

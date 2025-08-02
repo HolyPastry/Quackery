@@ -1,4 +1,5 @@
 using Quackery.Clients;
+using Quackery.GameMenu;
 
 namespace Quackery
 {
@@ -11,6 +12,7 @@ namespace Quackery
         public override void Enter()
         {
             ClientServices.GenerateDailyQueue();
+            GameMenuController.ShowRequest();
             _gameLoop.NotificationApp.Open();
         }
     }

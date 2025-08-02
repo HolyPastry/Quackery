@@ -60,7 +60,7 @@ public class PurseManager : Service
         if (_purse.Amount < 0)
             _purse.Amount = 0;
         SaveServices.Save(SaveKey, _purse);
-        PurseEvents.OnPurseUpdated?.Invoke(_purse.Amount);
+        PurseEvents.OnPurseUpdated?.Invoke(amount);
     }
 
 }

@@ -239,5 +239,25 @@ namespace Quackery
             // _rectTransform.anchorMax = new Vector2(1, 0.5f);
             _rectTransform.anchoredPosition = new Vector2(0, yOffset);
         }
+
+
+        public void TeleportOffscreen(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Left:
+                    _rectTransform.anchoredPosition = new Vector2(-Screen.width, 0);
+                    break;
+                case Direction.Right:
+                    _rectTransform.anchoredPosition = new Vector2(Screen.width, 0);
+                    break;
+                case Direction.Top:
+                    _rectTransform.anchoredPosition = new Vector2(0, Screen.height);
+                    break;
+                case Direction.Bottom:
+                    _rectTransform.anchoredPosition = new Vector2(0, -Screen.height);
+                    break;
+            }
+        }
     }
 }

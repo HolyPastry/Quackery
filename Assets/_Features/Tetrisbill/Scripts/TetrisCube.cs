@@ -87,5 +87,12 @@ namespace Quackery.TetrisBill
         {
             throw new NotImplementedException();
         }
+
+        public void PlayDestroyEffect(float duration, Material material)
+        {
+            if (_image == null) _image = GetComponent<Image>();
+            _image.material = material;
+            _image.material.DOFloat(1, "_disolveAmount", duration);
+        }
     }
 }

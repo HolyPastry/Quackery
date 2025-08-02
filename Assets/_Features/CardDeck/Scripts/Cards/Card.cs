@@ -10,6 +10,7 @@ using Quackery.Effects;
 using DG.Tweening;
 using UnityEngine.Assertions;
 using Holypastry.Bakery;
+using System.Collections;
 
 
 namespace Quackery.Decks
@@ -274,5 +275,21 @@ namespace Quackery.Decks
             }
 
         }
+
+        public IEnumerator PlayDestroyEffect(float duration, Material material)
+        {
+            _outline.gameObject.SetActive(false);
+
+            _cardBackground.material = material;
+            _cardForeground.material = material;
+            _base.material = material;
+            _cutoutBackground.material = material;
+
+            material.DOFloat(1, "_disolveAmount", duration);
+
+            yield return new WaitForSeconds(duration);
+        }
+
+
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using Quackery.Clients;
 using Quackery.Decks;
+using Quackery.GameMenu;
 using UnityEngine;
 
 namespace Quackery
@@ -20,6 +21,7 @@ namespace Quackery
 
         public override IEnumerator StateRoutine()
         {
+            GameMenuController.HideRequest();
             _cardGame.Init();
             _cardGame.Open();
 

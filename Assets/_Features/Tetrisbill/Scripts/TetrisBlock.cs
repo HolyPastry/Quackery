@@ -47,5 +47,11 @@ namespace Quackery.TetrisBill
             _logo.sprite = logo;
             _logo.enabled = logo != null;
         }
+
+        internal void PlayDestroyEffect(float duration, Material material)
+        {
+            _logo.enabled = false;
+            _cubes.ForEach(c => c.PlayDestroyEffect(duration, material));
+        }
     }
 }

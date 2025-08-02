@@ -2734,6 +2734,22 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 213
       objectReference: {fileID: 0}
+    - target: {fileID: 8365817150606355919, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 369808125}
+    - target: {fileID: 8365817150606355919, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365817150606355919, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: m_PlaneDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365817150606355919, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
+      propertyPath: m_UpdateRectTransformForStandalone
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8529717665866227372, guid: 93fcb5a648fac4532877488bb6a6dfe1, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
