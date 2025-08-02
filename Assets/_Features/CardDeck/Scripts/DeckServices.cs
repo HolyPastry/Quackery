@@ -82,6 +82,6 @@ namespace Quackery
 
         internal static Func<EnumCardPile, int, bool> IsPilePlayable = (pile, index) => true;
 
-        internal static Action<ItemData> DestroyCardType = (itemData) => { };
+        internal static Func<ItemData, Coroutine> DestroyCardType = (itemData) => null;
     }
 }

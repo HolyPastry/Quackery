@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84cded2995d6f4f8ebe0945017c4660d, type: 3}
-  m_Name: Draw Less Cards Next Round
+  m_Script: {fileID: 11500000, guid: ce89e11506a7242a0adb9a38bda40547, type: 3}
+  m_Name: FollowerMonetization
   m_EditorClassIdentifier: 
-  MasterText: Motivation
+  MasterText: 
   Icon: {fileID: 0}
   Description: 
   CanBeNegative: 0
-  Trigger: 6
-  _tags: 050000000200000007000000
+  Trigger: 11
+  _tags: 
   Explanations: []

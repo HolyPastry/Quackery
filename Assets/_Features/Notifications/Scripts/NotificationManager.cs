@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Holypastry.Bakery.Flow;
 using TMPro;
 using UnityEngine;
@@ -86,7 +87,8 @@ namespace Quackery.Notifications
 
         private void ShowExpandedPanel(NotificationInfo info)
         {
-            if (IsExpandedPanelOn) return;
+            if (info.Data.ExpandedPanelPrefab == null ||
+                IsExpandedPanelOn) return;
             StartCoroutine(ExpandedPanelRoutine(info));
         }
 

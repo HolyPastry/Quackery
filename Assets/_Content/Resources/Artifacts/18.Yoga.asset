@@ -21,7 +21,7 @@ MonoBehaviour:
   Requirements: []
   Explanations: []
   Effects: []
-  Price: 0
+  Price: 41
   FollowersRequirement: 0
   FollowerBonus: 0
   Bill: {fileID: 11400000, guid: bd99b5986c80e44b295fc87a06528bb3, type: 2}

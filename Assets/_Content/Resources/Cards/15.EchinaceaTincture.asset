@@ -27,4 +27,4 @@ MonoBehaviour:
     Value: 1
     Tags: 0200000001000000
   ValueEvaluator: {fileID: 0}
-  Rarity: 0
+  Rarity: 1

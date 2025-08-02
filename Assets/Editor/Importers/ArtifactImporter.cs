@@ -20,6 +20,7 @@ namespace Quackery
     public class ArtifactImporter : DataImporter<ArtifactData>
     {
         [SerializeField] private string _iconPath = "Assets/_Content/2DArt/Sprites/Artifacts";
+        [SerializeField] private string _shopBannerPath = "Assets/_Content/2DArt/Sprites/Shop/ArtifactsBanners";
 
         [SerializeField] private string EffectCollectionKey = "Effects";
         [SerializeField] private string ExplanationCollectionKey = "Explanations";
@@ -49,6 +50,11 @@ namespace Quackery
             if (artifactData.Icon == null)
             {
                 log += $" - Icon: {Path.Join(_iconPath, "Artifacts=" + fields[2].Trim() + ".png")}\n";
+            }
+            artifactData.ShopBanner = AssetDatabase.LoadAssetAtPath<Sprite>(Path.Join(_shopBannerPath, "ArtifactBanners=" + fields[2].Trim() + ".jpg"));
+            if (artifactData.ShopBanner == null)
+            {
+                log += $" - Shop Banner: {Path.Join(_shopBannerPath, "ArtifactBanners=" + fields[2].Trim() + ".png")}\n";
             }
             artifactData.UpgradeFor = AssetDatabase.LoadAssetAtPath<ArtifactData>(Path.Join(DATA_PATH, fields[5] + ".asset"));
             ParseRequirements(artifactData, fields[6]);

@@ -31,6 +31,7 @@ namespace Quackery.Effects
 
             EffectServices.Execute = (trigger, card) => null;
             EffectServices.ExecutePile = (trigger, cardPile) => null;
+            EffectServices.AddArtifact = (trigger, artifact) => null;
 
             EffectServices.GetCurrent = () => new();
 
@@ -78,6 +79,9 @@ namespace Quackery.Effects
                         => StartCoroutine(Execute(trigger, card));
             EffectServices.ExecutePile = (trigger, cardPile)
                         => StartCoroutine(ExecutePile(trigger, cardPile));
+            EffectServices.AddArtifact = (trigger, artifact)
+                        => StartCoroutine(ExecuteArtifact(trigger, artifact));
+
             EffectServices.GetCurrent = () => new List<Effect>(_effects);
 
             EffectServices.ModifyValue = ModifyValue;
@@ -119,6 +123,8 @@ namespace Quackery.Effects
             CartEvents.OnNewCartPileUsed += ExecuteNewCartPileEffects;
             CartEvents.OnStackHovered += OnStackHovered;
         }
+
+
 
         private void UpdateHandSize()
         {
@@ -595,6 +601,25 @@ namespace Quackery.Effects
                 else
 
                     yield return StartCoroutine(effect.Data.Execute(effect));
+            }
+
+        }
+
+        private IEnumerator ExecuteArtifact(EnumEffectTrigger trigger, ArtifactData artifact)
+        {
+
+            var effectToExecute = artifact.Effects.FindAll(effect => effect.Trigger == trigger);
+            effectToExecute.AddRange(_effects.FindAll(effect => effect.Trigger == trigger));
+
+            foreach (var effect in effectToExecute)
+            {
+                yield return StartCoroutine(effect.Data.Execute(effect));
+            }
+            var passiveEffects = artifact.Effects.FindAll(effect => effect.Trigger == EnumEffectTrigger.Passive);
+            foreach (var effect in passiveEffects)
+            {
+                Add(effect);
+                yield return new WaitForSeconds(0.5f);
             }
 
         }

@@ -23,6 +23,7 @@ namespace Quackery
 
         internal static Func<EnumEffectTrigger, Card, Coroutine> Execute = (trigger, card) => null;
         public static Func<EnumEffectTrigger, CardPile, Coroutine> ExecutePile = (trigger, cardPile) => null;
+        public static Func<EnumEffectTrigger, ArtifactData, Coroutine> AddArtifact = (trigger, artifact) => null;
 
         internal static Action<List<CardPile>> RemoveEffectsLinkedToPiles = delegate { };
 

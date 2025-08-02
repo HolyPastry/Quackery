@@ -9,13 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84cded2995d6f4f8ebe0945017c4660d, type: 3}
-  m_Name: Draw More Cards Next Round
+  m_Script: {fileID: 11500000, guid: 355ff43aa2e104f50aacd73766716d00, type: 3}
+  m_Name: Destroy Distraction
   m_EditorClassIdentifier: 
-  MasterText: Motivation
+  MasterText: 
   Icon: {fileID: 0}
   Description: 
   CanBeNegative: 0
-  Trigger: 6
-  _tags: 050000000200000007000000
+  Trigger: 12
+  _tags: 
   Explanations: []
+  _cardType: {fileID: 11400000, guid: 2c3295ae38875438b9376bacb0c661e7, type: 2}

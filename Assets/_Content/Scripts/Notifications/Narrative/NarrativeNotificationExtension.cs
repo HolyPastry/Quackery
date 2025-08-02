@@ -1,3 +1,4 @@
+using System.Security;
 using Quackery.Narrative;
 
 namespace Quackery.Notifications

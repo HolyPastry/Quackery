@@ -11,5 +11,7 @@ namespace Quackery.Effects
         OnRoundEnd = 8,
         OnDiscard = 9,
         OnNewCartPileUsed = 10,
+        OnStartWeek = 11,
+        OnArtifactAcquired = 12,
     }
 }

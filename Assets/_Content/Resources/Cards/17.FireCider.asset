@@ -28,4 +28,4 @@ MonoBehaviour:
     Value: 2
     Tags: 050000000200000004000000
   ValueEvaluator: {fileID: 0}
-  Rarity: 0
+  Rarity: 1

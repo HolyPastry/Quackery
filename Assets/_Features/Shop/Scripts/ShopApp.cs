@@ -20,7 +20,7 @@ namespace Quackery.Shops
         [SerializeField] private ShopPost _firstPostPrefab;
         [SerializeField] private ShopPost _lastPostPrefab;
         [SerializeField] private ShopPost _defaultPostPrefab;
-        [SerializeField] private ShopPost _qualityOfLifePostPrefab;
+        [SerializeField] private ShopPost _artifactPost;
         [SerializeField] private ShopPost _cardPostPrefab;
         [SerializeField] private ShopPost _removeCardPostPrefab;
         [SerializeField] private ShopPost _freeRewardPostPrefab;
@@ -84,7 +84,7 @@ namespace Quackery.Shops
         private IEnumerator SpendMoneyRoutine(int amount)
         {
             PurseServices.Modify(-amount);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.7f);
 
         }
         private void OnConfirmationExited(bool succeed)
@@ -192,7 +192,7 @@ namespace Quackery.Shops
             ShopPost post;
 
             if (reward is ArtifactReward)
-                post = Instantiate(_qualityOfLifePostPrefab, _postsContainer);
+                post = Instantiate(_artifactPost, _postsContainer);
             else if (reward is NewCardReward)
                 post = Instantiate(_cardPostPrefab, _postsContainer);
             else if (reward is RemoveCardReward)

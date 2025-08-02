@@ -15,13 +15,13 @@ MonoBehaviour:
   MasterText: Ergonomic Office
   Icon: {fileID: 21300000, guid: 3ef7b5119070d1648a4757196ab8725c, type: 3}
   ShopBanner: {fileID: 0}
-  Description: 
+  Description: +1 Motivation
   UpgradeFor: {fileID: 11400000, guid: 09c2003b11fdd4728b1dc27fcc20d977, type: 2}
   Level: 2
   Requirements: []
   Explanations: []
   Effects: []
-  Price: 0
+  Price: 34
   FollowersRequirement: 0
   FollowerBonus: 0
   Bill: {fileID: 0}

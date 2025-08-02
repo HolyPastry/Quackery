@@ -16,5 +16,8 @@ MonoBehaviour:
   DATA_PATH: Assets/_Content/Resources/Artifacts
   SHEET_NAME: Artifacts
   _iconPath: Assets/_Content/2DArt/Sprites/Artifacts
+  _shopBannerPath: Assets/_Content/2DArt/Sprites/ArtifactBanners
   EffectCollectionKey: Effects
   ExplanationCollectionKey: Explanations
+  BillCollectionKey: Bills
+  CardCollectionKey: Cards

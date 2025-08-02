@@ -118,7 +118,7 @@ namespace Quackery.Decks
             DeckServices.SetCustomDraw = (numCard) => { };
 
             DeckServices.IsPilePlayable = (type, index) => true;
-            DeckServices.DestroyCardType = (itemData) => { };
+            DeckServices.DestroyCardType = (itemData) => null;
 
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
@@ -179,7 +179,7 @@ namespace Quackery.Decks
             DeckServices.IsPilePlayable = (type, index) => _handPiles.Any(p => p.Type == type &&
                                                                              p.Index == index &&
                                                                                 p.Playable);
-            DeckServices.DestroyCardType = DestroyCardType;
+            DeckServices.DestroyCardType = (itemData) => StartCoroutine(DestroyCardType(itemData));
 
             EffectEvents.OnAdded += UpdateCardUI;
             EffectEvents.OnRemoved += UpdateCardUI;
@@ -211,15 +211,16 @@ namespace Quackery.Decks
             }
             _isReady = true;
         }
-        private void DestroyCardType(ItemData data)
+        private IEnumerator DestroyCardType(ItemData data)
         {
-            if (data == null) return;
+            if (data == null) yield break;
 
             var cards = _cardPiles.SelectMany(p => p.Cards).Where(c => c.Item.Data == data).ToList();
             foreach (var card in cards)
             {
                 InventoryServices.RemoveItem(card.Item);
                 DestroyCard(card);
+                yield return null;
             }
         }
 

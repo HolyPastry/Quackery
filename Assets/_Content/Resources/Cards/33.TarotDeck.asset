@@ -26,4 +26,4 @@ MonoBehaviour:
     Value: 2
     Tags: 
   ValueEvaluator: {fileID: 0}
-  Rarity: 0
+  Rarity: 1

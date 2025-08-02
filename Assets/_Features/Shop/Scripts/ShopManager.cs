@@ -50,7 +50,7 @@ namespace Quackery.Shops
                                         itemData.Rarity == rarity);
                             if (itemData == null)
                             {
-                                Debug.LogWarning("No matching item data found for NewCard reward.");
+                                Debug.LogWarning("Shop - Rolling for a new card. no matching card found for: " + rarity);
                                 continue;
                             }
                             rewards.Add(new NewCardReward(itemData));

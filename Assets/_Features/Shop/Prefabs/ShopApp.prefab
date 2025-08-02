@@ -3183,7 +3183,7 @@ MonoBehaviour:
   _firstPostPrefab: {fileID: 3667220107854115084, guid: 24fab21b02b9944bfb31abeda1379c5f, type: 3}
   _lastPostPrefab: {fileID: 3667220107854115084, guid: fa54b31244afa46789cade17f53557b5, type: 3}
   _defaultPostPrefab: {fileID: 7112576916909820497, guid: 50073c891cc8d41fd8a44e37e12ede8b, type: 3}
-  _qualityOfLifePostPrefab: {fileID: 2981934572084366141, guid: f147ffff4a0b64ab194c998b52cb0ae3, type: 3}
+  _artifactPost: {fileID: 3388344243536344371, guid: f147ffff4a0b64ab194c998b52cb0ae3, type: 3}
   _cardPostPrefab: {fileID: 1511181713765384878, guid: 99d3dc8cfa23543cc857d1a3a26233c8, type: 3}
   _removeCardPostPrefab: {fileID: 3787647994380078569, guid: b9476a9ed8cbc458aa544c1d293f76ad, type: 3}
   _freeRewardPostPrefab: {fileID: 8006366328515021746, guid: a832b20cef26c42ae9afd7c04323396d, type: 3}

@@ -45,9 +45,9 @@ namespace Quackery.Shops
 
         private IEnumerator CardRewardRoutine()
         {
-
-            yield return ShopApp.SpendMoneyRequest(_cardShopReward.Price);
             _buyButton.gameObject.SetActive(false);
+            yield return ShopApp.SpendMoneyRequest(_cardShopReward.Price);
+
             DeckServices.AddNew(
                     _cardShopReward.ItemData,
                     EnumCardPile.Draw,
@@ -64,7 +64,6 @@ namespace Quackery.Shops
                     {
                         Destroy(card.gameObject);
                     });
-            yield return new WaitForSeconds(0.5f);
         }
 
         private bool SetupNewCard()

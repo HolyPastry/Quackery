@@ -14,7 +14,7 @@ namespace Quackery
 
         void OnEnable()
         {
-            OnStartOpening += GenerateNotification;
+            OnStartOpening += StartTheWeek;
             OnClosed += RemoveNotifications;
             CloseRequest = Close;
             OpenRequest = Open;
@@ -24,7 +24,7 @@ namespace Quackery
 
         void OnDisable()
         {
-            OnStartOpening -= GenerateNotification;
+            OnStartOpening -= StartTheWeek;
             OnClosed -= RemoveNotifications;
             CloseRequest = delegate { };
             OpenRequest = delegate { };
@@ -35,8 +35,9 @@ namespace Quackery
             NotificationServices.RemoveWeeklyNotifications();
         }
 
-        private void GenerateNotification()
+        private void StartTheWeek()
         {
+
             NotificationServices.GenerateWeeklyNotification();
         }
 
