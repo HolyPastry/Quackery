@@ -58,10 +58,10 @@ namespace Quackery.Decks
                 var targetPosition = originalPosition + distanceFromOrigin;
                 if (_useDottedLine && _cardPileUI.HasCartTarget)
                 {
-                    if (distanceFromOrigin.y > _maxSlideDistanceY)
-                        OverlayCanvas.GenerateDottedLine(targetPosition, mousePosition);
-                    else
-                        OverlayCanvas.HideDottedLine();
+                    // if (distanceFromOrigin.y > _maxSlideDistanceY)
+                    //     DottedLine.GenerateDottedLine(targetPosition, mousePosition);
+                    // else
+                    //     DottedLine.HideDottedLine();
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace Quackery.Decks
             if (_isSliding)
             {
                 ResetMovements();
-                OverlayCanvas.HideDottedLine();
+                DottedLine.HideDottedLine();
                 DeckServices.StopPlayCardLoop();
                 return;
             }

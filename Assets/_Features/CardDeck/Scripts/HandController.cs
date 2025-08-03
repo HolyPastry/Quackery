@@ -16,18 +16,16 @@ namespace Quackery
         [SerializeField] private float _cardHandRadius = 100f;
         [SerializeField] private float _sideMargin = 200f;
 
-        [SerializeField] private GameObject Aobj;
-        [SerializeField] private GameObject Bobj;
-        [SerializeField] private GameObject Cobj;
-        [SerializeField] private GameObject Dobj;
+        [SerializeField] private RectTransform Aobj;
+        [SerializeField] private RectTransform Bobj;
+        [SerializeField] private RectTransform Cobj;
+        [SerializeField] private RectTransform Dobj;
 
 
         [Header("CardControls")]
-        [SerializeField] private InputActionReference _mousePositionAction;
         [SerializeField] private float _maxSlideDistance = 420f;
         [SerializeField] private float _maxSlideDistanceY = 300f;
         [SerializeField] private float _selectedCardOffset = 150f;
-        [SerializeField] private bool _useDottedLine = true;
         [SerializeField] private float _slideStartThreshold = 10f;
 
 
@@ -115,13 +113,13 @@ namespace Quackery
             Tooltips.HideTooltipRequest();
             _followTouchPointPileUI = null;
 
-            bool slid = (_originalPosition - _mousePositionAction.action.ReadValue<Vector2>())
+            bool slid = (_originalPosition - Anchor.Instance.GetLocalMousePosition(ui.transform.parent as RectTransform))
                         .sqrMagnitude > _slideStartThreshold * _slideStartThreshold;
 
             if (slid)
             {
 
-                OverlayCanvas.HideDottedLine();
+                DottedLine.HideDottedLine();
 
                 if (CartServices.GetHoveredPile() == null)
                 {
@@ -154,16 +152,19 @@ namespace Quackery
 
         void Update()
         {
-            Vector2 B = new Vector3(transform.position.x, transform.position.y, 0);
+            var center = (transform as RectTransform).anchoredPosition;
+
+
+            Vector2 B = new Vector3(center.x, center.y, 0);
             Vector2 A = B - 0.5f * (Screen.width - _sideMargin) * Vector2.right;
             Vector2 C = B + 0.5f * (Screen.width - _sideMargin) * Vector2.right;
             Vector2 D = B + _cardHandRadius * Vector2.down;
 
 
-            Aobj.transform.position = A;
-            Bobj.transform.position = B;
-            Cobj.transform.position = C;
-            Dobj.transform.position = D;
+            Aobj.anchoredPosition = A;
+            Bobj.anchoredPosition = B;
+            Cobj.anchoredPosition = C;
+            Dobj.anchoredPosition = D;
 
             var angle = Vector2.Angle(D - B, D - C);
 
@@ -208,12 +209,14 @@ namespace Quackery
                 }
                 position += Vector2.up * selectedOffset;
 
-                cardPile.transform.SetPositionAndRotation(position,
-                             Quaternion.Euler(0, 0, angleOffset));
+                cardPile.AnchoredPosition = position;
+                cardPile.transform.eulerAngles = new Vector3(0, 0, angleOffset);
                 cardPile.transform.localScale = Vector3.one * scale;
             }
 
         }
+
+
 
         private void ResetTopCardRotation(CardPileUI cardPile)
         {
@@ -232,36 +235,41 @@ namespace Quackery
         private void FollowTouch(CardPileUI cardPile)
         {
 
-            var mousePosition = _mousePositionAction.action.ReadValue<Vector2>();
+            var mousePosition = Anchor.Instance.GetLocalMousePosition(cardPile.transform.parent as RectTransform);
+            Debug.Log($"Mouse Position: {mousePosition} | Original Position: {_originalPosition}");
 
             var distanceFromOrigin = mousePosition - _originalPosition;
+            //Debug.Log(distanceFromOrigin.sqrMagnitude);
             distanceFromOrigin = Vector2.ClampMagnitude(distanceFromOrigin, _maxSlideDistance);
-
             if (distanceFromOrigin.sqrMagnitude < _slideStartThreshold * _slideStartThreshold)
             {
-                cardPile.transform.position = _originalPosition;
+                cardPile.AnchoredPosition = _originalPosition;
                 return;
             }
 
             var targetPosition = _originalPosition + distanceFromOrigin;
+            cardPile.AnchoredPosition = targetPosition;
 
-            if (_useDottedLine && cardPile.HasCartTarget)
+            if (cardPile.HasCartTarget)
             {
-                if (distanceFromOrigin.y > _maxSlideDistanceY)
-                    OverlayCanvas.GenerateDottedLine(targetPosition, mousePosition);
+                if (distanceFromOrigin.y > 0)
+                    DottedLine.GenerateDottedLine(
+                        cardPile.transform.position);
                 else
-                    OverlayCanvas.HideDottedLine();
+                    DottedLine.HideDottedLine();
             }
             else
             {
-                if (distanceFromOrigin.y > _maxSlideDistanceY)
+                if (distanceFromOrigin.y > 0 &&
+                    distanceFromOrigin.sqrMagnitude > _maxSlideDistanceY * _maxSlideDistanceY)
                 {
                     DeckServices.SelectCard(cardPile.Type, cardPile.PileIndex);
                     _followTouchPointPileUI = null;
                     Tooltips.HideTooltipRequest?.Invoke();
                 }
             }
-            cardPile.transform.position = targetPosition;
+
+            //cardPile.transform.position = targetPosition;
         }
     }
 }

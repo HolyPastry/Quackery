@@ -44,6 +44,7 @@ namespace Quackery.Decks
             set => (transform as RectTransform).anchoredPosition = value;
         }
 
+
         public const float CardOriginalHeight = 512;
         protected readonly Queue<RectTransform> _moveQueue = new();
 

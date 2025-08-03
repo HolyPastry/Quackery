@@ -5,14 +5,12 @@ using UnityEngine;
 
 namespace Quackery
 {
-    public class OverlayCanvas : MonoBehaviour
+    public class DottedLine : MonoBehaviour
     {
         [SerializeField] private int _maxSegments = 8;
         [SerializeField] private RectTransform _dottedLinePrefab;
-        public static Action<Vector3, Vector3> GenerateDottedLine = delegate { };
+        public static Action<Vector3> GenerateDottedLine = (worldPosition) => { };
         public static Action HideDottedLine = delegate { };
-        public static Action<RectTransform, float, Action<RectTransform>> MoveOnTop = delegate { };
-        private Transform _previousParent;
         private readonly List<RectTransform> _dottedLineObjects = new();
 
 
@@ -20,8 +18,6 @@ namespace Quackery
         {
             GenerateDottedLine += Generate;
             HideDottedLine += Hide;
-
-            MoveOnTop += MoveOnTopHandler;
         }
 
 
@@ -29,32 +25,35 @@ namespace Quackery
         {
             GenerateDottedLine -= Generate;
             HideDottedLine -= Hide;
-            MoveOnTop -= MoveOnTopHandler;
-        }
-
-        private void MoveOnTopHandler(RectTransform transform, float duration, Action<RectTransform> action)
-        {
-            StartCoroutine(MoveOnTopCoroutine(transform, duration, action));
 
         }
 
-        private IEnumerator MoveOnTopCoroutine(RectTransform transform, float duration, Action<RectTransform> action)
-        {
-            _previousParent = transform.parent;
-            transform.SetParent(this.transform, false);
-            transform.SetAsLastSibling();
-            action?.Invoke(transform);
-            yield return new WaitForSeconds(duration);
-            transform.SetParent(_previousParent, false);
-        }
+        // private void MoveOnTopHandler(RectTransform transform, float duration, Action<RectTransform> action)
+        // {
+        //     StartCoroutine(MoveOnTopCoroutine(transform, duration, action));
 
-        private void Generate(Vector3 originPosition, Vector3 mousePosition)
+        // }
+
+        // private IEnumerator MoveOnTopCoroutine(RectTransform transform, float duration, Action<RectTransform> action)
+        // {
+        //     _previousParent = transform.parent;
+        //     transform.SetParent(this.transform, false);
+        //     transform.SetAsLastSibling();
+        //     action?.Invoke(transform);
+        //     yield return new WaitForSeconds(duration);
+        //     transform.SetParent(_previousParent, false);
+        // }
+
+        private void Generate(Vector3 worldPosition)
         {
+            var mousePosition = Anchor.Instance.GetLocalMousePosition(transform.parent as RectTransform);
+            var originLocalPoint = Anchor.Instance.GetLocalAnchoredPosition(worldPosition,
+                                            transform.parent as RectTransform);
 
             var dotWidth = _dottedLinePrefab.rect.width;
 
             // var direction = (mousePosition - originPosition).normalized;
-            var distance = Vector3.Distance(mousePosition, originPosition);
+            var distance = Vector3.Distance(mousePosition, originLocalPoint);
             var segments = Mathf.FloorToInt(distance / dotWidth);
             if (segments > _maxSegments)
             {
@@ -72,14 +71,13 @@ namespace Quackery
                 {
                     var dot = _dottedLineObjects[i];
                     dot.gameObject.SetActive(true);
-                    dot.position = Vector3.Lerp(originPosition, mousePosition, (float)i / segments);
+                    dot.anchoredPosition = Vector3.Lerp(originLocalPoint, mousePosition, (float)i / segments);
                     continue;
                 }
                 else
                 {
-                    var dot = Instantiate(_dottedLinePrefab);
-                    dot.transform.SetParent(transform, false);
-                    dot.position = Vector3.Lerp(originPosition, mousePosition, (float)i / segments);
+                    var dot = Instantiate(_dottedLinePrefab, transform);
+                    dot.anchoredPosition = Vector3.Lerp(originLocalPoint, mousePosition, (float)i / segments);
                     _dottedLineObjects.Add(dot);
                 }
             }
