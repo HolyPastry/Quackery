@@ -28,13 +28,13 @@ namespace Quackery.TetrisBill
         private TetrisBlock _currentBlock;
         internal static Action MoveRight = delegate { };
         internal static Action MoveLeft = delegate { };
-        internal static Action Rotate = delegate { };
+        internal static Action<int> Rotate = delegate { };
         internal static Action<bool> SetFastFall = delegate { };
         internal static Action<int> SetBudgetIndex = delegate { };
         public static Func<int> CellSize = () => 1;
 
         private Vector2 _moveDirection;
-        private bool _needRotation;
+        private int _needRotation = 0;
         private bool _removingLines;
         private int _budgetIndex;
 
@@ -45,7 +45,7 @@ namespace Quackery.TetrisBill
         {
             MoveRight = () => _moveDirection = Vector2.right;
             MoveLeft = () => _moveDirection = Vector2.left;
-            Rotate = () => _needRotation = true;
+            Rotate = (direction) => _needRotation = direction;
             SetBudgetIndex = (index) => _budgetIndex = index;
             CellSize = () => _cellSize;
             SetFastFall = (isOn) => _fastFallEnabled = isOn;
@@ -122,18 +122,18 @@ namespace Quackery.TetrisBill
 
         private void RotateCurrentBlock()
         {
-            _currentBlock.Rotate(90);
+            _currentBlock.Rotate(90 * _needRotation);
             if (_currentBlock.OverlapOtherCubes(_cubes))
-                _currentBlock.Rotate(-90);
+                _currentBlock.Rotate(-90 * _needRotation); // Revert the rotation if it overlaps with other cubes
 
         }
         private void MoveCurrentBlock()
         {
 
-            if (_needRotation)
+            if (_needRotation != 0)
             {
                 RotateCurrentBlock();
-                _needRotation = false;
+                _needRotation = 0;
                 return;
             }
 

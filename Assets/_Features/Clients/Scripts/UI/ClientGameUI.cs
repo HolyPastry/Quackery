@@ -14,8 +14,13 @@ namespace Quackery
         [SerializeField] private TMPro.TextMeshProUGUI _clientNameText;
         private Client _client;
 
-        internal void Hide()
+        internal void Hide(bool instant = false)
         {
+            if (instant)
+                _animatable.Hide();
+
+            else
+                _animatable.SlideOut(Direction.Left);
             // _animatable.SlideOut(Direction.Top, instant: true);
         }
 
@@ -29,6 +34,7 @@ namespace Quackery
                 _clientImageTransform.localScale = Vector3.one * 0.5f;
             else
                 _clientImageTransform.localScale = Vector3.one;
+            _animatable.Show();
             _animatable.SlideToZero();
             //_animatable.SlideIn(Direction.Bottom);
             yield return _animatable.WaitForAnimation();

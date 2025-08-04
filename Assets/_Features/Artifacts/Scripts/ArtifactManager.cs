@@ -61,13 +61,7 @@ namespace Quackery.Artifacts
                 RemoveArtifact(data.UpgradeFor);
             }
             _ownedArtifacts.Add(data);
-            foreach (var effect in data.Effects)
-            {
-                effect.Initialize();
-                effect.Tags.AddUnique(Effects.EnumEffectTag.Artifact);
-                effect.LinkedArtifact = data;
-                EffectServices.AddEffect(effect);
-            }
+
             Save();
             ArtifactEvents.OnArtifactAdded(data);
         }

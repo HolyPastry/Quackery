@@ -1,6 +1,6 @@
+
 using System;
-using Holypastry.Bakery;
-using Quackery.Clients;
+using Ink.Runtime;
 using Quackery.Decks;
 using TMPro;
 using UnityEngine;
@@ -10,15 +10,12 @@ namespace Quackery
     public class CartGauge : StackedGauges
     {
         [SerializeField] private TextMeshProUGUI _cartValueText;
+
+        [SerializeField] private int _survivalGaugeWidth = 300;
         // private float _margin;
 
         private RectTransform rectTransform => transform as RectTransform;
 
-
-        // void Awake()
-        // {
-        //     _margin = rectTransform.anchorMin.x;
-        // }
 
         void OnEnable()
         {
@@ -29,9 +26,6 @@ namespace Quackery
             OnGameModeChange(CartServices.GetMode());
 
         }
-
-
-
 
         void OnDisable()
         {
@@ -48,7 +42,7 @@ namespace Quackery
             switch (mode)
             {
                 case CartMode.Survival:
-                    width = Screen.width / 3;
+                    width = _survivalGaugeWidth;
                     break;
                 case CartMode.Normal:
                     width = Screen.width / 2;
@@ -66,6 +60,8 @@ namespace Quackery
         public void Show()
         {
             gameObject.SetActive(true);
+            _cartValueText.text = string.Empty;
+
         }
 
         public void Hide()
@@ -101,9 +97,17 @@ namespace Quackery
                 _gaugeValues[1].text = "";
 
             if (superMode)
-                _cartValueText.text = $"<sprite name=Coin> {totalValue}";
+                _cartValueText.text = $"<sprite name=Money>{totalValue}";
             else
-                _cartValueText.text = $"<sprite name=Coin> {totalValue} / {SurvivalValue}";
+            {
+
+                _cartValueText.text = $"<sprite name=Money>{totalValue}/{SurvivalValue}";
+            }
+        }
+
+        internal void HideValue()
+        {
+            _cartValueText.text = string.Empty;
         }
     }
 }

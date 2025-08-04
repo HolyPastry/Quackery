@@ -91,8 +91,8 @@ namespace Quackery.Shops
         {
             PurseServices.Modify(-price);
             yield return new WaitForSeconds(1.5f);
-            InventoryServices.RemoveItem(item);
-            yield return GameMenuController.RemoveFromDeckRequest?.Invoke(item.Data, true);
+            DeckServices.DestroyCardType(item.Data);
+            yield return GameMenuController.RemoveFromDeckRequest?.Invoke(item.Data, false);
         }
         private IEnumerator SpendMoneyRoutine(int amount)
         {
@@ -184,6 +184,7 @@ namespace Quackery.Shops
             _postsContainer.sizeDelta = new Vector2(_postsContainer.sizeDelta.x, height);
             OnPostListUpdated?.Invoke(_posts.Count, 0);
             yield return null;
+            _shopScrollRect.verticalNormalizedPosition = 1f; // Scroll to the top
 
         }
 

@@ -19,8 +19,8 @@ namespace Quackery
 
             Text = $"<sprite name=Money>{PurseServices.GetString()}";
             Punch();
-            if (value < _lastPurseValue)
-                PlayAudio();
+            // if (value < _lastPurseValue)
+            //     PlayAudio();
             _lastPurseValue = value;
         }
 

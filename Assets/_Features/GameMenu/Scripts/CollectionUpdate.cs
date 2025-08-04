@@ -18,6 +18,7 @@ namespace Quackery.GameMenu
         [SerializeField] private float _animationDuration = 0.5f;
 
         [SerializeField] private Transform _parent;
+        public Transform Parent => _parent;
         public RectTransform RectTransform => transform as RectTransform;
 
         [SerializeField] private Image _artifactImagePrefab;

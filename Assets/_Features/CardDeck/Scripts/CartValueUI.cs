@@ -26,7 +26,11 @@ namespace Quackery.Decks
 
         protected virtual void UpdateCartValue()
         {
-            _cartValueText.text = $"<sprite name=Coin> {CartServices.GetValue()}";
+            var value = CartServices.GetValue();
+            if (value == 0)
+                _cartValueText.text = string.Empty;
+            else
+                _cartValueText.text = $"<sprite name=Money>{CartServices.GetValue()}";
         }
         public void Show()
         {

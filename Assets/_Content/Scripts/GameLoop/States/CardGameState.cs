@@ -8,7 +8,7 @@ namespace Quackery
 {
     public class CardGameState : GameState
     {
-        private CardGameApp _cardGame;
+        private readonly CardGameApp _cardGame;
         public CardGameState(GameLoop gameLoop) : base(gameLoop)
         {
             _cardGame = gameLoop.CardGameApp;
@@ -22,14 +22,15 @@ namespace Quackery
         public override IEnumerator StateRoutine()
         {
             GameMenuController.HideRequest();
-            _cardGame.Init();
+            _cardGame.Reset();
             _cardGame.Open();
+
+            yield return _cardGame.StartTheWeek();
 
             while (true)
             {
                 var client = ClientServices.GetNextClient();
 
-                CartServices.ResetCart();
                 _cardGame.StartNewRound(client);
 
                 yield return _cardGame.WaitUntilEndOfRound();
@@ -62,12 +63,14 @@ namespace Quackery
                 if (!ClientServices.HasNextClient() || wasBoss)
                 {
                     DeckServices.ResetDecks();
+                    CartServices.ResetCart();
                     ClientServices.ClientLeaves();
                     break;
                 }
                 else
                 {
-                    DeckServices.DiscardHand();
+                    yield return DeckServices.DiscardHand();
+                    CartServices.ResetCart();
                 }
             }
         }

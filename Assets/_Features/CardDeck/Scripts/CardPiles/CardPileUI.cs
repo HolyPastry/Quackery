@@ -161,6 +161,7 @@ namespace Quackery.Decks
                     cardTransform.DOAnchorPos(Vector3.zero, _moveSpeed).SetEase(_easeType);
                     cardTransform.DOLocalRotate(Vector3.zero, _moveSpeed);
 
+
                     yield return new WaitForSeconds(_staggerDelay); // Stagger the movement of cards
                 }
                 else
@@ -179,7 +180,7 @@ namespace Quackery.Decks
 
         internal void MoveCardToPile(Card card, bool atTheTop, bool isInstant)
         {
-            card.transform.SetParent(_cardParent);
+            card.transform.SetParent(_cardParent, false);
             card.transform.localScale = Vector3.one;
             card.Strip(_stripCard);
 

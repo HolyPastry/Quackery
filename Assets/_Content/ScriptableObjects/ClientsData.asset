@@ -228,7 +228,7 @@ MonoBehaviour:
       Tags: 0200000001000000
     SurvivalThreshold: 30
     NormalThreshold: 100
-    QueueSizeRange: {x: 1, y: 1}
+    QueueSizeRange: {x: 2, y: 2}
     CartSize: 2
   - Effects:
     - _data: {fileID: 11400000, guid: 861ac0bc84a78446c827fec2cb151274, type: 2}

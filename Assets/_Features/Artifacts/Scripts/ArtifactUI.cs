@@ -13,6 +13,8 @@ namespace Quackery.Artifacts
         [SerializeField] private Image Icon;
         private ArtifactData _artifactData;
 
+        public RectTransform RectTransform => transform as RectTransform;
+
         public ArtifactData Artifact
         {
             get => _artifactData;

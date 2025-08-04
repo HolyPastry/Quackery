@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Quackery.Clients;
-
+using Quackery.GameMenu;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,8 +37,8 @@ namespace Quackery.Decks
 
         void Awake()
         {
-            _cartValue.Hide();
-            _budgetCartValue.Hide();
+            //_cartValue.Hide();
+            // _budgetCartValue.Hide();
             _EndRoundButton.interactable = false;
         }
 
@@ -67,11 +67,12 @@ namespace Quackery.Decks
 
         }
 
-        public void Init()
+        public void Reset()
         {
             CartServices.ResetCart();
-            DeckServices.Shuffle();
-            _clientGameUI.Hide();
+            _cartValue.HideValue();
+            _clientGameUI.Hide(instant: true);
+            _EndRoundButton.gameObject.SetActive(false);
             _endRoundScreen.Hide(instant: true);
         }
 
@@ -166,6 +167,7 @@ namespace Quackery.Decks
 
         private void SetEndRoundButtonInteractable(bool isOn)
         {
+            _EndRoundButton.gameObject.SetActive(true);
             _EndRoundButton.interactable = isOn;
             if (isOn && DeckServices.NoPlayableCards())
             {
@@ -204,6 +206,7 @@ namespace Quackery.Decks
         public void HideEndRoundScreen()
         {
             _endRoundScreen.Hide(instant: false);
+            _clientGameUI.Hide();
         }
 
         internal WaitUntil WaitUntilEndOfRoundScreenClosed()
@@ -213,6 +216,17 @@ namespace Quackery.Decks
             return new WaitUntil(() =>
                 Time.time - time > 10f ||
                 !_endRoundScreen.gameObject.activeSelf);
+        }
+
+        public Coroutine StartTheWeek() => StartCoroutine(MondayRoutine());
+
+
+        private IEnumerator MondayRoutine()
+        {
+            yield return new WaitForSeconds(1f);
+            yield return GameMenuController.TakeDeckOut();
+            yield return new WaitForSeconds(0.5f);
+            yield return GameMenuController.TakeArtifactsOut();
         }
     }
 }

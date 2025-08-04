@@ -47,15 +47,12 @@ namespace Quackery.Decks
         {
             foreach (var item in items)
                 AddToDeck(item);
+            Shuffle();
         }
-        private void AddToDeck(Item item, Transform origin = null)
+        private void AddToDeck(Item item)
         {
             Card card = _cardFactory.Create(item);
-
-            if (origin != null)
-                card.StartCoroutine(DramaMoveRoutine(card));
-            else AddAtTheBottom(card);
-
+            AddAtTheBottom(card, isInstant: true);
         }
 
         private IEnumerator DramaMoveRoutine(Card card)
@@ -120,41 +117,9 @@ namespace Quackery.Decks
             return true;
         }
 
-
-
         internal Card DrawCategoryCard(EnumItemCategory category)
         {
             return Cards.Find(c => c.Category == category);
         }
-
-
-        private void AddNewCard(ItemData data, bool isPermanent, Transform origin)
-        {
-            if (isPermanent)
-
-                AddToDeck(InventoryServices.AddNewItem(data), origin);
-            else
-
-                AddToDeck(new Item(data), origin);
-        }
-
-
-
-        // internal void AddMultipleNew(ItemData data, int numCards)
-        // {
-        //     for (int i = 0; i < numCards; i++)
-        //     {
-        //         Item item = InventoryServices.AddNewItem(data);
-        //         AddToDeck(item);
-        //     }
-        // }
-        // internal void AddNewCardsToDeck(List<ItemData> list)
-        // {
-        //     foreach (var itemData in list)
-        //     {
-        //         var item = InventoryServices.AddNewItem(itemData);
-        //         AddToDeck(item);
-        //     }
-        // }
     }
 }

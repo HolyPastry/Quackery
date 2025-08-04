@@ -236,7 +236,7 @@ namespace Quackery
         {
 
             var mousePosition = Anchor.Instance.GetLocalMousePosition(cardPile.transform.parent as RectTransform);
-            Debug.Log($"Mouse Position: {mousePosition} | Original Position: {_originalPosition}");
+
 
             var distanceFromOrigin = mousePosition - _originalPosition;
             //Debug.Log(distanceFromOrigin.sqrMagnitude);

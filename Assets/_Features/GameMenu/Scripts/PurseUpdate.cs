@@ -8,10 +8,12 @@ using UnityEngine.UI;
 
 namespace Quackery.GameMenu
 {
+    [RequireComponent(typeof(AudioSource))]
     public class PurseUpdate : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _textGUI;
         [SerializeField] private TextMeshProUGUI _bonusTextGUI;
+        [SerializeField] private AudioSource _audioSource;
         private int _value;
 
         public RectTransform RectTransform => transform as RectTransform;
@@ -47,6 +49,7 @@ namespace Quackery.GameMenu
                 _bonusTextGUI.text = $"{amount}";
                 _bonusTextGUI.color = Color.red;
             }
+            _audioSource.Play();
 
             _bonusTextGUI.gameObject.SetActive(true);
             _bonusTextGUI.rectTransform.DOAnchorPosY(100, 0.5f).SetEase(Ease.OutQuad);

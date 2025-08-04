@@ -69,7 +69,15 @@ namespace Quackery
             {
                 _holdTimer.Stop();
                 TetrisGame.SetFastFall(false);
-                TetrisGame.Rotate();
+                TetrisGame.Rotate(1);
+                _rotated = true;
+                return;
+            }
+            if (eventData.delta.y < -_dragThreshold && !_rotated)
+            {
+                _holdTimer.Stop();
+                TetrisGame.SetFastFall(false);
+                TetrisGame.Rotate(-1);
                 _rotated = true;
                 return;
             }

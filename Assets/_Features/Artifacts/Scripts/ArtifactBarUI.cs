@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using DG.Tweening;
+using Holypastry.Bakery;
 using UnityEngine;
 
 
@@ -8,51 +11,54 @@ namespace Quackery.Artifacts
 {
     public class ArtifactBarUI : MonoBehaviour
     {
-        [SerializeField] private ArtifactUI _prefab;
+        [SerializeField] private RectTransform _rootPrefab;
+        public static Action<ArtifactUI> TransferRequest = delegate { };
+
+
         void OnEnable()
         {
-            ArtifactEvents.OnArtifactAdded += OnArtifactAdded;
+            // ArtifactEvents.OnArtifactAdded += OnArtifactAdded;
+            TransferRequest = Transfer;
         }
+
 
         void OnDisable()
         {
-            ArtifactEvents.OnArtifactAdded -= OnArtifactAdded;
+            //ArtifactEvents.OnArtifactAdded -= OnArtifactAdded;
+            TransferRequest = delegate { };
         }
 
-        IEnumerator Start()
-        {
-            yield return FlowServices.WaitUntilEndOfSetup();
-            yield return ArtifactServices.WaitUntilReady();
-            var artifacts = ArtifactServices.GetAllArtifacts();
-            foreach (var artifact in artifacts)
-                OnArtifactAdded(artifact);
 
-        }
-
-        private void OnArtifactAdded(ArtifactData data)
+        private void Transfer(ArtifactUI ui)
         {
-            if (data.IsUpgrade)
-            {
-                foreach (var child in transform)
+            var parent = Instantiate(_rootPrefab, transform);
+            parent.transform.SetParent(transform);
+            parent.localScale = Vector3.one;
+            ui.transform.SetParent(parent.transform, false);
+            ui.RectTransform.DOAnchorPos(Vector2.zero, 0.5f);
+            ui.RectTransform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack)
+                .OnComplete(() =>
                 {
-                    var artifactUI = child as ArtifactUI;
-                    if (artifactUI.Artifact == data.UpgradeFor)
+
+                    foreach (var effect in ui.Artifact.Effects)
                     {
-                        artifactUI.Artifact = data;
-                        break;
+                        effect.Initialize();
+                        effect.Tags.AddUnique(Effects.EnumEffectTag.Artifact);
+                        effect.LinkedArtifact = ui.Artifact;
+                        EffectServices.AddEffect(effect);
                     }
+                    ;
                 }
-                return;
-            }
+                );
 
-            var ui = Instantiate(_prefab, transform);
-            ui.Artifact = data;
-
+            // ui.RectTransform.sizeDelta = new Vector2(100, 100);
         }
 
         private void OnArtifactUpdated(ArtifactData data)
         {
 
         }
+
+
     }
 }

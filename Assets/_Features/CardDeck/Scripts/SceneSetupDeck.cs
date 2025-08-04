@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Holypastry.Bakery.Flow;
-using System.Collections.Generic;
-using Quackery.Inventories;
+
 namespace Quackery.Decks
 {
     public class SceneSetupDeck : SceneSetupScript

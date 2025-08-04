@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Holypastry.Bakery;
 using KBCore.Refs;
 using Quackery.Decks;
+using Quackery.GameMenu;
 using UnityEngine;
 
 namespace Quackery
@@ -28,6 +29,7 @@ namespace Quackery
         void OnEnable()
         {
             DeckEvents.OnCardMovedTo += PlaySound;
+            GameMenuController.OnCardMovement += PlaySound;
         }
 
 
@@ -35,6 +37,7 @@ namespace Quackery
         void OnDisable()
         {
             DeckEvents.OnCardMovedTo -= PlaySound;
+            GameMenuController.OnCardMovement -= PlaySound;
         }
 
         void Update()
@@ -52,6 +55,9 @@ namespace Quackery
 
 
         private void PlaySound(Card card, EnumCardPile pile, int arg3, bool arg4, bool arg5)
+        => PlaySound();
+
+        private void PlaySound()
         {
             int randomIndex = UnityEngine.Random.Range(0, _sounds.Count);
             AudioClip clip = _sounds[randomIndex];

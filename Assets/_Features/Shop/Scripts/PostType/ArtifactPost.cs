@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Quackery.Artifacts;
 using Quackery.Effects;
 using Quackery.GameMenu;
 using Quackery.TetrisBill;
@@ -96,8 +97,7 @@ namespace Quackery.Shops
 
         private IEnumerator ArtifactRewardRoutine()
         {
-            EffectServices.AddArtifact(EnumEffectTrigger.OnArtifactAcquired,
-                                   _artifactReward.ArtifactData);
+            ArtifactServices.Add(_artifactReward.ArtifactData);
             _buyButton.gameObject.SetActive(false);
             yield return ShopApp.SpendMoneyRequest(_artifactReward.Price);
 

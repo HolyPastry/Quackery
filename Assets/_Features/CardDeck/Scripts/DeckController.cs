@@ -216,12 +216,10 @@ namespace Quackery.Decks
             if (data == null) yield break;
 
             var cards = _cardPiles.SelectMany(p => p.Cards).Where(c => c.Item.Data == data).ToList();
-            foreach (var card in cards)
-            {
-                InventoryServices.RemoveItem(card.Item);
-                DestroyCard(card);
-                yield return null;
-            }
+            if (cards.Count == 0) yield break;
+            InventoryServices.RemoveItem(cards[0].Item);
+            DestroyCard(cards[0]);
+
         }
 
         private List<Card> GetMatchingCards(System.Predicate<Card> predicate, EnumCardPile pile)
@@ -647,6 +645,11 @@ namespace Quackery.Decks
 
         private void Discard(Card card)
         {
+            if (card == null)
+            {
+                Debug.LogWarning("Tried to discard a null card.", this);
+                return;
+            }
             if (_exhaustPile.Contains(card)) return;
 
             RemoveFromAllPiles(card);
@@ -680,16 +683,26 @@ namespace Quackery.Decks
             if (_drawPile.RemoveCard(card))
                 DeckEvents.OnPileUpdated(_drawPile.Type, _drawPile.Index);
 
+            if (_exhaustPile.RemoveCard(card))
+                DeckEvents.OnPileUpdated(_exhaustPile.Type, _exhaustPile.Index);
 
-            _discardPile.RemoveCard(card);
+            if (_discardPile.RemoveCard(card))
+                DeckEvents.OnPileUpdated(_discardPile.Type, _discardPile.Index);
             foreach (var pile in _handPiles)
-                pile.RemoveCard(card);
+            {
+
+                if (pile.RemoveCard(card))
+                    DeckEvents.OnPileUpdated(pile.Type, pile.Index);
+            }
 
             CartServices.RemoveCard(card, false);
 
 
             foreach (var pile in _selectPiles)
-                pile.RemoveCard(card);
+            {
+                if (pile.RemoveCard(card))
+                    DeckEvents.OnPileUpdated(pile.Type, pile.Index);
+            }
 
         }
 
@@ -706,6 +719,7 @@ namespace Quackery.Decks
             var effemeralCards = pile.Cards.FindAll(c => c.Item.Lifetime == EnumLifetime.Effemeral);
             while (effemeralCards.Count > 0)
             {
+
                 var card = effemeralCards[0];
                 effemeralCards.RemoveAt(0);
                 DestroyCard(card);

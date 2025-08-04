@@ -9,7 +9,7 @@ PlayerSettings:
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
   defaultScreenOrientation: 4
-  targetDevice: 2
+  targetDevice: 0
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Not Here, Not There
@@ -139,9 +139,10 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 0.0.8
+  bundleVersion: 0.0.9
   preloadedAssets:
   - {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  - {fileID: 3941683865709642883, guid: 5e0327dcf3bae4dfd9a0e00ad05f9f03, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -165,15 +166,15 @@ PlayerSettings:
     Android: com.nhnt.quackery
     Lumin: com.DefaultCompany.com.unity.template.mobile2D
     Standalone: com.nhnt.quackery
-    iPhone: com.DefaultCompany.com.unity.template.mobile2D
+    iPhone: com.nhnt.quackery
     tvOS: com.DefaultCompany.com.unity.template.mobile2D
   buildNumber:
-    Standalone: 9
+    Standalone: 10
     VisionOS: 0
-    iPhone: 9
+    iPhone: 10
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 10
+  AndroidBundleVersionCode: 11
   AndroidMinSdkVersion: 22
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -268,8 +269,7 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: /Users/sebastienberton/My Drive/Projects/NotHereNotThere/4.
-    Product Development/Quackery/Keys/Quackery.keystore
+  AndroidKeystoreName: /Users/sebastienberton/Projects/Quackery/Quackery.keystore
   AndroidKeyaliasName: quackery-key
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0
@@ -818,13 +818,14 @@ PlayerSettings:
     WebGL: DOTWEEN
     Windows Store Apps: DOTWEEN
     XboxOne: DOTWEEN
-    iPhone: DOTWEEN
+    iPhone: BUILD_TYPE_PROTOTYPE;BUILD_PLATFORM_IOS;BUILD_TARGET_PLAYER;BUILD_BACKEND_IL2CPP;DOTWEEN;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ODIN_INSPECTOR_3_2;ODIN_INSPECTOR_3_3;INK_RUNTIME;INK_EDITOR
     tvOS: DOTWEEN
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
     Standalone: 1
+    iPhone: 1
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   managedStrippingLevel:

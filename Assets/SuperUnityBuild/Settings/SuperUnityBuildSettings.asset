@@ -66,9 +66,9 @@ MonoBehaviour:
     openFolderPostBuild: 1
     constantsFileLocation: Assets/SuperUnityBuild
   _productParameters:
-    buildCounter: 9
-    buildVersion: 0.0.8
-    versionTemplate: 0.0.8
+    buildCounter: 10
+    buildVersion: 0.0.9
+    versionTemplate: 0.0.9
     autoGenerate: 0
     syncWithPlayerSettings: 0
   _releaseTypeList:
@@ -79,7 +79,7 @@ MonoBehaviour:
       productName: Quackery
       syncAppNameWithProduct: 1
       appBuildName: Quackery
-      buildOptions: 0
+      buildOptions: 1
       customDefines: 
       sceneList:
         releaseScenes:
@@ -90,13 +90,14 @@ MonoBehaviour:
     - {fileID: 8030532183746009011}
     - {fileID: -4944712547968660327}
     - {fileID: 3426505695556247613}
+    - {fileID: 6274375765632327511}
   _projectConfigurations:
     configSet:
-      _Buckets: ffffffffffffffff02000000ffffffff07000000ffffffffffffffff080000000100000003000000ffffffffffffffffffffffff090000000400000005000000ffffffff
-      _HashCodes: c389d5180c3e293fd2c1b540665747046013e53d86f3fd3036fc8a7c5140943358c73a356c1dc87600000000000000000000000000000000000000000000000000000000
-      _Next: ffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff06000000ffffffff00000000000000000000000000000000000000000000000000000000
-      _Count: 10
-      _Version: 10
+      _Buckets: ffffffffffffffff02000000ffffffff07000000ffffffffffffffff080000000100000003000000ffffffff0a000000ffffffff0c0000000900000005000000ffffffff
+      _HashCodes: c389d5180c3e293fd2c1b540665747046013e53d86f3fd3036fc8a7c5140943358c73a35067a6b00d99de228b6783a3d6c1dc87600000000000000000000000000000000
+      _Next: ffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff0600000004000000ffffffffffffffff0b00000000000000000000000000000000000000
+      _Count: 13
+      _Version: 13
       _FreeList: -1
       _FreeCount: 0
       _Keys:
@@ -109,10 +110,10 @@ MonoBehaviour:
       - Prototype/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single Binary,Auto,Auto,Public)/IL2CPP
       - Prototype/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single Binary,Auto,Auto,Public)
       - Prototype/Android
+      - Prototype/iOS/Player (iPhoneOnly,Device SDK,Release)/IL2CPP
+      - Prototype/iOS/Player (iPhoneOnly,Device SDK,Release)
+      - Prototype/iOS
       - Prototype
-      - 
-      - 
-      - 
       - 
       - 
       - 
@@ -143,16 +144,19 @@ MonoBehaviour:
         childKeys:
         - Prototype/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single Binary,Auto,Auto,Public)
       - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys:
+        - Prototype/iOS/Player (iPhoneOnly,Device SDK,Release)/IL2CPP
+      - enabled: 1
+        childKeys:
+        - Prototype/iOS/Player (iPhoneOnly,Device SDK,Release)
+      - enabled: 1
         childKeys:
         - Prototype/macOS
         - Prototype/Windows
         - Prototype/Android
-      - enabled: 1
-        childKeys: []
-      - enabled: 1
-        childKeys: []
-      - enabled: 1
-        childKeys: []
+        - Prototype/iOS
       - enabled: 1
         childKeys: []
       - enabled: 1
@@ -166,8 +170,7 @@ MonoBehaviour:
     showBuildInfo: 0
     hideDisabled: 0
     treeView: 0
-    selectedKeyChain: Prototype/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single
-      Binary,Auto,Auto,Public)/IL2CPP
+    selectedKeyChain: Prototype/iOS/Player (iPhoneOnly,Device SDK,Release)/IL2CPP
   _preBuildActions:
     buildActions: []
   _postBuildActions:
@@ -296,6 +299,53 @@ MonoBehaviour:
     enabled: 1
   platformName: Android
   targetGroup: 7
+--- !u!114 &6274375765632327511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bef8779c491f5c644abe870eaa46e52c, type: 3}
+  m_Name: iOS
+  m_EditorClassIdentifier: 
+  enabled: 1
+  distributionList:
+    distributions: []
+  targets:
+  - type: 9
+    name: Player
+    enabled: 1
+    binaryNameFormat: 
+    subtarget: 0
+  variants:
+  - variantName: Device Type
+    selectedIndex: 0
+    values:
+    - iPhoneOnly
+    - iPadOnly
+    - iPhoneAndiPad
+    isFlag: 0
+  - variantName: Target SDK
+    selectedIndex: 0
+    values:
+    - Device SDK
+    - Simulator SDK
+    isFlag: 0
+  - variantName: Build Type
+    selectedIndex: 1
+    values:
+    - Debug
+    - Release
+    isFlag: 0
+  scriptingBackends:
+  - scriptingImplementation: 1
+    name: IL2CPP
+    enabled: 1
+  platformName: iOS
+  targetGroup: 4
 --- !u!114 &8030532183746009011
 MonoBehaviour:
   m_ObjectHideFlags: 0
