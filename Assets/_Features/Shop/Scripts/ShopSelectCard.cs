@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using Quackery.Decks;
+using Quackery.GameMenu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,46 +37,13 @@ namespace Quackery.Shops
         }
 
         private void Confirm()
-            => StartCoroutine(ConfirmRoutine());
-
-
-        private IEnumerator ConfirmRoutine()
         {
             _buttons.SetActive(false);
-            _cards.Remove(_selectedCard);
-
-            _explanationText.text = "";
-            _cardParent.gameObject.SetActive(false);
-            _selectedCard.SetOutline(false);
-            _selectedCard.transform.SetParent(_cardAnimated.RectTransform);
-            _selectedCard.transform.DOLocalMove(Vector3.zero, 0.2f).SetEase(Ease.Linear);
-            _selectedCard.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.Linear);
-            yield return new WaitForSeconds(1f);
-            _cardAnimated.RectTransform = _selectedCard.transform as RectTransform;
-
-            yield return ShopApp.SpendMoneyRequest(_reward.Price);
-
-            if (_reward is RemoveCardReward)
-            {
-                InventoryServices.RemoveItem(_selectedCard.Item);
-                _realizationText.text = $"Card Removed from your deck.";
-                _realizationText.gameObject.SetActive(true);
-            }
-            else if (_reward is UpgradeCard upgradeCard)
-            {
-                //DeckServices.UpgradeCard(_selectedCard.Item, upgradeCard.UpgradeData);
-                _realizationText.text = $"Upgraded";
-                _realizationText.gameObject.SetActive(true);
-            }
-            _cardAnimated.ZoomOut(false).DoComplete(() => Destroy(_selectedCard.gameObject));
-
-            yield return new WaitForSeconds(2f);
+            ShopApp.RemoveCardRequest(_reward.Price, _selectedCard.Item);
             OnExited(true);
             Hide();
-
-
-
         }
+
 
         void OnDisable()
         {

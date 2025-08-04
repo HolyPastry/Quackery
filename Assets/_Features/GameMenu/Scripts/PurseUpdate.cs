@@ -4,6 +4,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.UI;
 
 namespace Quackery.GameMenu
 {
@@ -18,12 +19,14 @@ namespace Quackery.GameMenu
         void Awake()
         {
             _bonusTextGUI.gameObject.SetActive(false);
+
         }
 
         public void UpdateUI()
         {
             _value = PurseServices.GetAmount();
             _textGUI.text = $"<sprite name=Money>{PurseServices.GetString()}";
+            LayoutRebuilder.ForceRebuildLayoutImmediate(RectTransform);
 
         }
 

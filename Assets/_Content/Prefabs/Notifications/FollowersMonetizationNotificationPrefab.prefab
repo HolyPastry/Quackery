@@ -276,7 +276,7 @@ MonoBehaviour:
   _panel: {fileID: 3098404072652870034}
   _enableTap: 0
   _destroyOnFinish: 1
-  _screenRatioBeforeSliding: 0.3
+  _screenRatioBeforeSliding: 0.1
   _tapTimeOut: 0.5
   _message: {fileID: 7125631504013563398}
 --- !u!1 &8790131540262861810

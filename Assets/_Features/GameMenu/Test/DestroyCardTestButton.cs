@@ -18,7 +18,7 @@ namespace Quackery.GameMenu.Test
 
         private void OnButtonClick()
         {
-            GameMenuController.RemoveFromDeckRequest?.Invoke(_itemData);
+            GameMenuController.RemoveFromDeckRequest?.Invoke(_itemData, true);
         }
     }
 }

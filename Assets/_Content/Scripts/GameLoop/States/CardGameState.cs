@@ -51,9 +51,10 @@ namespace Quackery
                 }
 
                 _cardGame.ShowEndRoundScreen(out bool wasBoss);
+                yield return new WaitForSeconds(1f);
+                _cardGame.TransfertCartToPurse();
                 yield return _cardGame.WaitUntilEndOfRoundScreenClosed();
                 _cardGame.HideEndRoundScreen();
-                _cardGame.TransfertCartToPurse();
 
                 EffectServices.CleanEffects();
                 yield return new WaitForSeconds(1f);

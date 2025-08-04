@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using DG.Tweening;
 using Quackery.Decks;
+using Quackery.GameMenu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,12 +59,7 @@ namespace Quackery.Shops
             AudioSource cardAudio = _cardParent.GetComponentInChildren<AudioSource>();
             if (cardAudio != null)
                 cardAudio.Play();
-            if (card != null)
-                (card.transform as RectTransform).DOAnchorPosX(-Screen.width, 0.5f)
-                    .OnComplete(() =>
-                    {
-                        Destroy(card.gameObject);
-                    });
+            GameMenuController.AddToDeckRequest(new() { card });
         }
 
         private bool SetupNewCard()

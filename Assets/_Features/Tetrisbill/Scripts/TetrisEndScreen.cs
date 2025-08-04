@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using DG.Tweening;
 using Quackery.Decks;
+using Quackery.GameMenu;
 using Quackery.Inventories;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +15,8 @@ namespace Quackery.TetrisBill
         [SerializeField] private ItemData _overdueCurse;
         [SerializeField] private Transform _cardRoot;
         [SerializeField] private Button _continueButton;
+        [SerializeField] private TextMeshProUGUI _resultText;
+        [SerializeField] private TextMeshProUGUI _debtWarningText;
 
         internal void Hide()
         {
@@ -34,42 +38,50 @@ namespace Quackery.TetrisBill
             BillApp.ContinueAction();
         }
 
-        internal void Show(int numCrossAdded)
+        internal void Show(int numCrossAdded, int MoneyLost)
         {
+            _resultText.text = "";
             gameObject.SetActive(true);
             _continueButton.gameObject.SetActive(false);
-            if (numCrossAdded > 0)
-            {
-                BillServices.SetNumOverdueBills(numCrossAdded);
-                StartCoroutine(ActOverdueBillRoutine());
-            }
-            else
-            {
-                _continueButton.gameObject.SetActive(true);
-            }
+
+            StartCoroutine(RealRoutine(numCrossAdded, MoneyLost));
 
         }
 
-        internal IEnumerator ActOverdueBillRoutine()
+        internal IEnumerator RealRoutine(int numCrossAdded, int MoneyLost)
         {
+            yield return new WaitForSeconds(0.1f);
+            _resultText.text = $"<b>Well Done!</b>";
+            yield return new WaitForSeconds(0.2f);
 
-            yield return new WaitForSeconds(0.5f);
+            _resultText.text += $"\nAmount Due: {MoneyScale.GetMoneyAmount()}";
+            PurseServices.Modify(-MoneyScale.GetMoneyAmount());
+            yield return new WaitForSeconds(2f);
 
-            Card card = DeckServices.CreateCard(_overdueCurse);
+            if (numCrossAdded > 0)
+            {
+                _resultText.text += $"\n<color=red>Debt Due: <b>{numCrossAdded}</b></color>";
+                yield return new WaitForSeconds(0.5f);
+                _debtWarningText.gameObject.SetActive(true);
 
-            card.transform.SetParent(_cardRoot);
-            card.transform.position = Vector3.zero;
-            card.transform.localScale = Vector3.zero;
-            card.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
-            yield return new WaitForSeconds(1f);
-            card.transform.DOLocalMove(Vector3.zero, 0.5f).SetEase(Ease.OutBack);
-            yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.8f);
+                Card card = DeckServices.CreateCard(_overdueCurse);
 
-            DeckServices.AddNew(_overdueCurse,
-                               EnumCardPile.Draw,
-                               EnumPlacement.ShuffledIn,
-                               EnumLifetime.Permanent);
+                card.transform.SetParent(_cardRoot);
+                card.transform.localPosition = Vector3.zero;
+                card.transform.localScale = Vector3.zero;
+                card.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
+                yield return new WaitForSeconds(2f);
 
+                GameMenuController.AddToDeckRequest(new() { card });
+
+                DeckServices.AddNew(_overdueCurse,
+                                   EnumCardPile.Draw,
+                                   EnumPlacement.ShuffledIn,
+                                   EnumLifetime.Permanent);
+            }
+            yield return new WaitForSeconds(2f);
+            _debtWarningText.gameObject.SetActive(false);
             _continueButton.gameObject.SetActive(true);
         }
     }

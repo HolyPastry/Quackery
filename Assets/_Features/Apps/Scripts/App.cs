@@ -8,7 +8,7 @@ namespace Quackery
     public class App : ValidatedMonoBehaviour
     {
         [SerializeField, Self] protected AnimatedRect _animatedRect;
-        [SerializeField] protected Canvas _canvas;
+        [SerializeField, Child] protected Canvas _canvas;
 
 
         public bool IsOpened { get; private set; }

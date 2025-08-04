@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Quackery.Effects;
+using Quackery.GameMenu;
 using Quackery.TetrisBill;
 using TMPro;
 using UnityEngine;
@@ -95,22 +96,20 @@ namespace Quackery.Shops
 
         private IEnumerator ArtifactRewardRoutine()
         {
+            EffectServices.AddArtifact(EnumEffectTrigger.OnArtifactAcquired,
+                                   _artifactReward.ArtifactData);
             _buyButton.gameObject.SetActive(false);
             yield return ShopApp.SpendMoneyRequest(_artifactReward.Price);
 
-            _billBlockParent.DOMoveY(-Screen.height, 0.5f).SetEase(Ease.InOutQuad);
+            yield return GameMenuController.AddToArtifactRequest(_artifactIcon.transform as RectTransform);
+
             yield return new WaitForSeconds(0.5f);
-            _artifactIcon.transform.DOMoveY(-Screen.height, 0.5f).SetEase(Ease.InOutQuad);
-            yield return new WaitForSeconds(0.5f);
-            _billBlockParent.gameObject.SetActive(false);
-            _artifactIcon.gameObject.SetActive(false);
+            if (_artifactReward.ArtifactData.Bill != null)
+            {
+                yield return GameMenuController.AddToBillsRequest(_billBlockParent as RectTransform);
 
-
-
-            EffectServices.AddArtifact(EnumEffectTrigger.OnArtifactAcquired,
-                                    _artifactReward.ArtifactData);
-
-
+                yield return new WaitForSeconds(0.5f);
+            }
 
         }
 

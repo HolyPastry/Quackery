@@ -1,3 +1,5 @@
+using Quackery.GameMenu;
+
 namespace Quackery
 {
     public class BillState : GameState
@@ -7,6 +9,7 @@ namespace Quackery
 
         public override void Enter()
         {
+            GameMenuController.HideRequest();
             _gameLoop.BillApp.Open();
         }
     }

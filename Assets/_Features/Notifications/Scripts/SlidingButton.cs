@@ -23,6 +23,7 @@ namespace Quackery.Notifications
         private bool _grabbed;
         private bool _sliding;
         private bool _grabbable = true;
+        private float _velocity;
         private Vector2 _pointerDownPosition;
         private CountdownTimer _tapTimer;
 
@@ -56,6 +57,37 @@ namespace Quackery.Notifications
         void Update()
         {
             _tapTimer?.Tick(Time.deltaTime);
+
+        }
+
+        void LateUpdate()
+        {
+            if (_velocity == 0) return;
+            var movementX = Mathf.Lerp(_panel.anchoredPosition.x,
+                             _panel.anchoredPosition.x + _velocity,
+                              Time.deltaTime * 10);
+            movementX = Mathf.Clamp(movementX, -Screen.width, 0);
+            _panel.anchoredPosition = new Vector2(movementX, _panel.anchoredPosition.y);
+
+            if (!_sliding && _panel.anchoredPosition.x < -Screen.width * _screenRatioBeforeSliding)
+            {
+
+                _grabbable = false;
+                _tapTimer?.Stop();
+                _grabbed = false;
+                _velocity = -200;
+                _sliding = true;
+
+            }
+
+            if (_panel.anchoredPosition.x < -Screen.width * 0.4f)
+            {
+                OnFinishSliding?.Invoke();
+                _velocity = 0;
+                _panel.gameObject.SetActive(false);
+                if (_destroyOnFinish)
+                    Destroy(gameObject);
+            }
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -68,6 +100,7 @@ namespace Quackery.Notifications
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (!_grabbed) return;
             _grabbed = false;
             if (_sliding) return;
             if (_tapTimer?.IsRunning ?? false)
@@ -84,44 +117,19 @@ namespace Quackery.Notifications
 
         public void OnPointerMove(PointerEventData eventData)
         {
+            if (_sliding) return;
+            _velocity = 0;
             if (!_grabbed) return;
 
-            float deltaX = eventData.position.x - _pointerDownPosition.x;
-            _panel.anchoredPosition += new Vector2(deltaX, 0);
+            _velocity = Mathf.Min(0, eventData.position.x - _pointerDownPosition.x);
             _pointerDownPosition = eventData.position;
-            if (_panel.anchoredPosition.x < -Screen.width * _screenRatioBeforeSliding ||
-                 _panel.anchoredPosition.x > Screen.width * _screenRatioBeforeSliding)
-            {
-                _grabbable = false;
-                _tapTimer?.Stop();
-                _grabbed = false;
-                _sliding = true;
-                OnStartSliding?.Invoke();
-                FinishSliding();
-            }
         }
 
         private void SlideBack()
         {
-            _panel.DOAnchorPosX(0, 0.5f).OnComplete(() =>
+            _panel.DOAnchorPosX(0, 0.1f).OnComplete(() =>
             {
                 _sliding = false;
-            });
-        }
-
-        internal void FinishSliding()
-        {
-            var destination = Screen.width;
-            if (_panel.anchoredPosition.x < 0)
-                destination = -Screen.width;
-
-            _panel.DOAnchorPosX(destination, 0.5f).OnComplete(() =>
-            {
-                _sliding = false;
-                OnFinishSliding?.Invoke();
-                _panel.gameObject.SetActive(false);
-                if (_destroyOnFinish)
-                    Destroy(gameObject);
             });
         }
     }

@@ -114,6 +114,7 @@ namespace Quackery.TetrisBill
             {
                 var block = _shapePool.SpawnBlock(bill.Data.BlockPrefab);
                 block.SetLogo(bill.Data.Icon);
+                block.name = $"Block_{bill.Data.MasterText}";
                 yield return new WaitForSeconds(0.2f); // Small delay to visualize the spawning
             }
 
@@ -162,7 +163,7 @@ namespace Quackery.TetrisBill
             var nextPositionDelta = _speed * Time.deltaTime * Vector2.down;
             _currentBlock.PositionY += nextPositionDelta.y;
 
-            if (_currentBlock.Collided)
+            if (_currentBlock.OverlapOtherCubes(_cubes))
             {
                 _currentBlock.PositionY -= nextPositionDelta.y; // Revert the position
                 PlaceCurrentBlock();
@@ -238,6 +239,7 @@ namespace Quackery.TetrisBill
                GetSpawnXPosition() + ((block.IsOdd) ? _cellSize / 2 : 0),
                 _spawnOffset + _cellSize
             );
+
             return block;
         }
 
@@ -258,6 +260,7 @@ namespace Quackery.TetrisBill
             var cube = Instantiate(_startingCubePrefab, transform);
             cube.PositionX = (randomIndex - _gridWidth / 2 + 0.5f) * _cellSize;
             cube.PositionY = 0;
+
             _cubes.Add(cube);
         }
 

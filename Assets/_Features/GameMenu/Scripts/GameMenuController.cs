@@ -31,7 +31,7 @@ namespace Quackery.GameMenu
         public static Action HideRequest = delegate { };
 
         public static Func<List<Card>, Coroutine> AddToDeckRequest = (card) => null;
-        public static Func<ItemData, Coroutine> RemoveFromDeckRequest = (card) => null;
+        public static Func<ItemData, bool, Coroutine> RemoveFromDeckRequest = (card, allMatchingCard) => null;
 
         public static Func<RectTransform, Coroutine> AddToArtifactRequest = (artifact) => null;
 
@@ -58,7 +58,7 @@ namespace Quackery.GameMenu
             _menuToggle.onValueChanged.AddListener(OnMenuToggleChanged);
 
             AddToDeckRequest = (cards) => StartCoroutine(AddToDeckRoutine(cards));
-            RemoveFromDeckRequest = (card) => StartCoroutine(RemoveFromDeckRoutine(card));
+            RemoveFromDeckRequest = (card, allMatchingCards) => StartCoroutine(RemoveFromDeckRoutine(card, allMatchingCards));
 
             AddToArtifactRequest = (artifact) => StartCoroutine(AddToArtifactsRoutine(artifact));
             RemoveFromArtifactRequest = (artifact) => StartCoroutine(RemoveFromArtifactsRoutine(artifact));
@@ -80,7 +80,7 @@ namespace Quackery.GameMenu
             _menuToggle.onValueChanged.RemoveListener(OnMenuToggleChanged);
 
             AddToDeckRequest = (cards) => null;
-            RemoveFromDeckRequest = (card) => null;
+            RemoveFromDeckRequest = (card, allMatchingCards) => null;
 
             AddToArtifactRequest = (artifact) => null;
             RemoveFromArtifactRequest = (artifact) => null;
@@ -112,9 +112,9 @@ namespace Quackery.GameMenu
 
             _menuToggle.isOn = false;
             TweenUtil.SlideIn(_purseUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.7f);
             yield return StartCoroutine(_purseUpdate.AddMoney((int)amount));
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(1f);
             TweenUtil.SlideOut(_purseUpdate.RectTransform);
             yield return new WaitForSeconds(0.5f);
         }
@@ -174,19 +174,25 @@ namespace Quackery.GameMenu
             _artifactUpdate.DestroyItems();
         }
 
-        private IEnumerator RemoveFromDeckRoutine(ItemData itemData)
+        private IEnumerator RemoveFromDeckRoutine(ItemData itemData, bool allMatching)
         {
             var items = InventoryServices.GetAllItems();
             items = items.FindAll(item => item.Data == itemData);
             if (items.Count == 0) yield break;
             _menuToggle.isOn = false;
 
-
-
             List<Card> newCards = new List<Card>();
-            foreach (var item in items)
+            if (allMatching)
             {
-                var newCard = _cardUpdate.PutOut(item.Data);
+                foreach (var item in items)
+                {
+                    var newCard = _cardUpdate.PutOut(item.Data);
+                    newCards.Add(newCard);
+                }
+            }
+            else
+            {
+                var newCard = _cardUpdate.PutOut(itemData);
                 newCards.Add(newCard);
             }
             TweenUtil.SlideIn(_cardUpdate.RectTransform);
@@ -212,7 +218,7 @@ namespace Quackery.GameMenu
                 yield return new WaitForSeconds(0.1f);
             }
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
             TweenUtil.SlideOut(_cardUpdate.RectTransform);
             yield return new WaitForSeconds(0.5f);
             _cardUpdate.DestroyItems();

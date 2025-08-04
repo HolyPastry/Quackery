@@ -9,7 +9,6 @@ namespace Quackery.TetrisBill
     {
         [SerializeField] private Image _logo;
         [SerializeField] private bool _isOdd = false;
-        public bool Collided => _cubes.Any(c => c.Collided);
         public List<TetrisCube> Cubes => _cubes;
         public bool IsOdd => _isOdd;
         private List<TetrisCube> _cubes = new();
@@ -19,7 +18,13 @@ namespace Quackery.TetrisBill
         void Awake()
         {
             GetComponentsInChildren(true, _cubes);
+            foreach (var cube in _cubes)
+            {
+                cube.enabled = true;
+            }
         }
+
+
 
         internal bool OverlapOtherCubes(List<TetrisCube> allCubes)
         {

@@ -54,6 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _logo: {fileID: 4041061013122753338}
+  _isOdd: 0
 --- !u!1 &4998513942552980927
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3682642361787903412, guid: 605919f48f380446881edd6a880d789d, type: 3}
       propertyPath: m_Name
-      value: T Cube (2)
+      value: L Cube 2
       objectReference: {fileID: 0}
     - target: {fileID: 5049868675480193955, guid: 605919f48f380446881edd6a880d789d, type: 3}
       propertyPath: m_Color.g
@@ -257,7 +258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3682642361787903412, guid: 605919f48f380446881edd6a880d789d, type: 3}
       propertyPath: m_Name
-      value: T Cube (1)
+      value: L Cube 1
       objectReference: {fileID: 0}
     - target: {fileID: 5049868675480193955, guid: 605919f48f380446881edd6a880d789d, type: 3}
       propertyPath: m_Color.g
@@ -375,7 +376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3682642361787903412, guid: 605919f48f380446881edd6a880d789d, type: 3}
       propertyPath: m_Name
-      value: T Cube (3)
+      value: L Cube 3
       objectReference: {fileID: 0}
     - target: {fileID: 5049868675480193955, guid: 605919f48f380446881edd6a880d789d, type: 3}
       propertyPath: m_Color.g
@@ -489,7 +490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3682642361787903412, guid: 605919f48f380446881edd6a880d789d, type: 3}
       propertyPath: m_Name
-      value: T Cube
+      value: L Cube
       objectReference: {fileID: 0}
     - target: {fileID: 5049868675480193955, guid: 605919f48f380446881edd6a880d789d, type: 3}
       propertyPath: m_Color.g

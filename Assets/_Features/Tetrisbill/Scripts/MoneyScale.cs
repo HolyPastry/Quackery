@@ -89,9 +89,10 @@ namespace Quackery.TetrisBill
                 int newAmount = amount + preAmount;
                 preAmount = amount;
                 amount = newAmount;
-
-
             }
+            if (budget == 0)
+                BudgetIndex = 0;
+
         }
 
         private void SetText(TextMeshProUGUI textComponent, int budget, bool isBudget)

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using System.Collections.Generic;
 
 namespace Quackery.TetrisBill
 {
@@ -22,18 +23,6 @@ namespace Quackery.TetrisBill
 
         public bool IsBorder => _isBorder;
 
-
-        public bool Collided { get; private set; }
-
-        public void OnTriggerEnter2D(Collider2D other)
-        {
-            Collided = true;
-        }
-        public void OnTriggerExit2D(Collider2D other)
-        {
-            Collided = false;
-        }
-
         void Start()
         {
 
@@ -48,6 +37,7 @@ namespace Quackery.TetrisBill
 
         internal void FlashColor()
         {
+            if (_image == null) _image = GetComponent<Image>();
             _tween = _image.DOColor(Color.black, 0.2f).SetLoops(-1, LoopType.Yoyo);
         }
 
@@ -57,13 +47,6 @@ namespace Quackery.TetrisBill
             _tween = null;
             Destroy(gameObject);
         }
-
-        internal void MoveY(int v, float duration)
-        {
-            rectTransform.DOAnchorPosY(rectTransform.anchoredPosition.y + v, duration);
-        }
-
-
 
         private bool RectTransformUtilityMethod(TetrisCube other)
         {
@@ -83,10 +66,6 @@ namespace Quackery.TetrisBill
             rectTransform.DOAnchorPosY(newIndex * TetrisGame.CellSize(), duration);
         }
 
-        internal void Clear()
-        {
-            throw new NotImplementedException();
-        }
 
         public void PlayDestroyEffect(float duration, Material material)
         {

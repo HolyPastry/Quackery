@@ -1,12 +1,12 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using KBCore.Refs;
+using Quackery.GameMenu;
 using Quackery.Inventories;
 using Quackery.Progression;
 using Quackery.Shops;
-using TMPro;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +28,7 @@ namespace Quackery.Decks
 
         void OnEnable()
         {
-            _skipButton.onClick.AddListener(CloseGame);
+            _skipButton.onClick.AddListener(() => StartCoroutine(CloseGameRoutine()));
             _confirmButton.onClick.AddListener(ConfirmCard);
             Show();
         }
@@ -49,6 +49,9 @@ namespace Quackery.Decks
 
         private IEnumerator ShowCoroutine()
         {
+            _confirmButton.gameObject.SetActive(true);
+            _skipButton.gameObject.SetActive(true);
+
             _cards.Clear();
             _selectedCard = null;
             _confirmButton.interactable = false;
@@ -96,20 +99,24 @@ namespace Quackery.Decks
             _confirmButton.interactable = true;
         }
 
-        private void CloseGame()
+        private IEnumerator CloseGameRoutine()
         {
-            _confirmButton.interactable = false;
+            _confirmButton.gameObject.SetActive(false);
+            _skipButton.gameObject.SetActive(false);
             foreach (var card in _cards)
             {
                 if (_selectedCard == card)
                 {
-                    card.transform.DOMoveX(-Screen.width, 0.5f)
-                        .OnComplete(() => Destroy(card.gameObject));
+                    yield return GameMenuController.AddToDeckRequest(new() { card });
+
+                    // card.transform.DOMoveX(-Screen.width, 0.5f)
+                    //     .OnComplete(() => Destroy(card.gameObject));
                 }
                 else
                 {
                     card.transform.DOScale(0, 0.5f)
                         .OnComplete(() => Destroy(card.gameObject));
+                    yield return new WaitForSeconds(0.5f);
                 }
 
             }
@@ -121,7 +128,7 @@ namespace Quackery.Decks
         {
             if (_selectedCard != null)
                 DeckServices.AddNew(_selectedCard.Item.Data, EnumCardPile.Draw, EnumPlacement.AtTheBottom, EnumLifetime.Permanent);
-            CloseGame();
+            StartCoroutine(CloseGameRoutine());
         }
     }
 

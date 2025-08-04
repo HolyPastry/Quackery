@@ -84,17 +84,14 @@ namespace Quackery.TetrisBill
         private IEnumerator GameOverRoutine(List<TetrisCube> cubesOverTheLine)
         {
 
-            yield return new WaitForSeconds(1f);
-            int budget = MoneyScale.GetMoneyAmount();
-            PurseServices.Modify(-budget);
+            yield return new WaitForSeconds(0.5f);
 
-            yield return new WaitForSeconds(1f);
             int numCrossAdded = 0;
             foreach (var cube in cubesOverTheLine)
             {
                 numCrossAdded++;
                 cube.FlashColor();
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.6f);
                 cube.Destroy();
                 if (numCrossAdded > 3)
                 {
@@ -105,7 +102,7 @@ namespace Quackery.TetrisBill
                 _overdueUI.AddOneCross();
             }
             yield return new WaitForSeconds(0.5f);
-            _endScreen.Show(numCrossAdded);
+            _endScreen.Show(numCrossAdded, MoneyScale.GetMoneyAmount());
 
 
         }

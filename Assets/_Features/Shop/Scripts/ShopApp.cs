@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Quackery.GameMenu;
+using Quackery.Inventories;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,6 +39,9 @@ namespace Quackery.Shops
         internal static Action<ShopPost> RemovePostRequest = delegate { };
 
         internal static Func<int, Coroutine> SpendMoneyRequest = (amount) => null;
+
+        internal static Action<int, Item> RemoveCardRequest = (price, item) => { };
+
         private ShopPost _selectingPost;
 
         void OnEnable()
@@ -49,6 +54,7 @@ namespace Quackery.Shops
             ShowConfirmation = ShowConfirmationPanel;
             RemovePostRequest = RemovePost;
             SpendMoneyRequest = (amount) => StartCoroutine(SpendMoneyRoutine(amount));
+            RemoveCardRequest = (price, data) => StartCoroutine(RemoveCardRoutine(price, data));
 
         }
 
@@ -65,6 +71,7 @@ namespace Quackery.Shops
             ShowConfirmation = delegate { };
             RemovePostRequest = delegate { };
             SpendMoneyRequest = (amount) => null;
+            RemoveCardRequest = (price, data) => { };
         }
 
         private void OnMoveScreen(int postIndex)
@@ -80,11 +87,17 @@ namespace Quackery.Shops
             postToMove.transform.SetAsLastSibling();
         }
 
-
+        private IEnumerator RemoveCardRoutine(int price, Item item)
+        {
+            PurseServices.Modify(-price);
+            yield return new WaitForSeconds(1.5f);
+            InventoryServices.RemoveItem(item);
+            yield return GameMenuController.RemoveFromDeckRequest?.Invoke(item.Data, true);
+        }
         private IEnumerator SpendMoneyRoutine(int amount)
         {
             PurseServices.Modify(-amount);
-            yield return new WaitForSeconds(0.7f);
+            yield return new WaitForSeconds(1.5f);
 
         }
         private void OnConfirmationExited(bool succeed)
@@ -205,7 +218,7 @@ namespace Quackery.Shops
             post.OnBuyClicked += OnBuyClicked;
             post.transform.SetAsFirstSibling();
             post.AnchoredPosition = new Vector2(0, verticalPosition);
-            post.SizeDelta = new Vector2(Screen.width, Screen.height);
+            //post.SizeDelta = new Vector2(Screen.width, Screen.height);
 
             return post;
         }
@@ -225,8 +238,8 @@ namespace Quackery.Shops
                     break;
 
                 case RemoveCardReward removeCardReward:
-
                     _selectCardPanel.Show(removeCardReward);
+
                     break;
 
                 case ArtifactReward qualityOfLifeReward:

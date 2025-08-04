@@ -246,7 +246,7 @@ MonoBehaviour:
   _panel: {fileID: 5705549857628891825}
   _enableTap: 1
   _destroyOnFinish: 1
-  _screenRatioBeforeSliding: 0.4
+  _screenRatioBeforeSliding: 0.1
   _tapTimeOut: 0.2
   _portraitImages:
   - {fileID: 2505331243738015887}

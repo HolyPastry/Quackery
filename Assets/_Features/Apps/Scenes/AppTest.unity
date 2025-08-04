@@ -584,7 +584,8 @@ PrefabInstance:
       value: AppCanvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1750767389854977065, guid: 9042ab9981c6c41ffb364854c65cfecc, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3392872476432010178, guid: 9042ab9981c6c41ffb364854c65cfecc, type: 3}
       insertIndex: -1

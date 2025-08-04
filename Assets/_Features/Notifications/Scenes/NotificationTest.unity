@@ -741,6 +741,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6240159018429569054, guid: 3a6b2ee63415d45f2b8c0cc52c40bd77, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2107382977}
     - target: {fileID: 6600848261915745713, guid: 3a6b2ee63415d45f2b8c0cc52c40bd77, type: 3}
       propertyPath: m_LocalPosition.x
       value: 486.16373

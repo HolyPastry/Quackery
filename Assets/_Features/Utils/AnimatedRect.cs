@@ -68,7 +68,8 @@ namespace Quackery
             // if (_overridePositionEnabled)
             //     Teleport(_overridePosition);
             // else
-            TeleportTo(DirectionVector(from));
+            TeleportOffscreen(from);
+            // TeleportTo(DirectionVector(from));
 
             _rectTransform.localScale = Vector3.one;
             _rectTransform.gameObject.SetActive(true);

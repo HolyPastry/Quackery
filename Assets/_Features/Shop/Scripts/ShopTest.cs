@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Quackery.GameMenu;
 using UnityEngine;
 
 namespace Quackery.Shops
@@ -10,7 +11,7 @@ namespace Quackery.Shops
         IEnumerator Start()
         {
             yield return FlowServices.WaitUntilEndOfSetup();
-
+            GameMenuController.ShowRequest();
             _instagramUI.Open();
         }
     }
