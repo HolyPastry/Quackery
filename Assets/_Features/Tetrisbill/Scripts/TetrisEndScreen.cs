@@ -43,6 +43,7 @@ namespace Quackery.TetrisBill
             _resultText.text = "";
             gameObject.SetActive(true);
             _continueButton.gameObject.SetActive(false);
+            _debtWarningText.gameObject.SetActive(false);
 
             StartCoroutine(RealRoutine(numCrossAdded, MoneyLost));
 
@@ -55,14 +56,20 @@ namespace Quackery.TetrisBill
             yield return new WaitForSeconds(0.2f);
 
             _resultText.text += $"\nAmount Due: {MoneyScale.GetMoneyAmount()}";
-            PurseServices.Modify(-MoneyScale.GetMoneyAmount());
-            yield return new WaitForSeconds(2f);
+            if (MoneyLost > 0)
+            {
+                PurseServices.Modify(-MoneyScale.GetMoneyAmount());
+                DeckServices.AddNew(_overdueCurse,
+                                      EnumCardPile.Draw,
+                                      EnumPlacement.ShuffledIn,
+                                      EnumLifetime.Permanent);
+                yield return new WaitForSeconds(2f);
+            }
 
             if (numCrossAdded > 0)
             {
                 _resultText.text += $"\n<color=red>Debt Due: <b>{numCrossAdded}</b></color>";
                 yield return new WaitForSeconds(0.5f);
-                _debtWarningText.gameObject.SetActive(true);
 
                 yield return new WaitForSeconds(0.8f);
                 Card card = DeckServices.CreateCard(_overdueCurse);
@@ -73,15 +80,11 @@ namespace Quackery.TetrisBill
                 card.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
                 yield return new WaitForSeconds(2f);
 
-                GameMenuController.AddToDeckRequest(new() { card });
-
-                DeckServices.AddNew(_overdueCurse,
-                                   EnumCardPile.Draw,
-                                   EnumPlacement.ShuffledIn,
-                                   EnumLifetime.Permanent);
+                yield return GameMenuController.AddToDeckRequest(new() { card });
+                _debtWarningText.gameObject.SetActive(true);
+                yield return new WaitForSeconds(0.4f);
             }
-            yield return new WaitForSeconds(2f);
-            _debtWarningText.gameObject.SetActive(false);
+
             _continueButton.gameObject.SetActive(true);
         }
     }

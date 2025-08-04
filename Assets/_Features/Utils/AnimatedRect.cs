@@ -224,7 +224,7 @@ namespace Quackery
         {
 
             _isAnimating = true;
-            var offset = (Screen.height / 2) + yOffset;
+            var offset = yOffset;
 
             _rectTransform.DOAnchorPosY(offset, _animationDuration)
                 .SetEase(_animationEaseIn)
