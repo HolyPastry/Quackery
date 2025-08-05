@@ -7,7 +7,7 @@ namespace SuperUnityBuild.Generated
     public enum ReleaseType
     {
         None,
-        Test,
+        Prototype,
     }
 
     public enum Platform
@@ -15,12 +15,15 @@ namespace SuperUnityBuild.Generated
         None,
         macOS,
         Windows,
+        Android,
+        iOS,
     }
 
     public enum ScriptingBackend
     {
         None,
         IL2CPP,
+        Mono,
     }
 
     public enum Target
@@ -36,11 +39,11 @@ namespace SuperUnityBuild.Generated
 
     public static class BuildConstants
     {
-        public static readonly DateTime buildDate = new DateTime(638867967036426980);
-        public const string version = "0.0.0";
-        public const int buildCounter = 1;
-        public const ReleaseType releaseType = ReleaseType.Test;
-        public const Platform platform = Platform.macOS;
+        public static readonly DateTime buildDate = new DateTime(638899986390620740);
+        public const string version = "0.0.10";
+        public const int buildCounter = 11;
+        public const ReleaseType releaseType = ReleaseType.Prototype;
+        public const Platform platform = Platform.iOS;
         public const ScriptingBackend scriptingBackend = ScriptingBackend.IL2CPP;
         public const Target target = Target.Player;
         public const Distribution distribution = Distribution.None;

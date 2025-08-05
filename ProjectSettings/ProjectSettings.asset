@@ -142,7 +142,7 @@ PlayerSettings:
   bundleVersion: 0.0.10
   preloadedAssets:
   - {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  - {fileID: -4708948242128619538, guid: 5e0327dcf3bae4dfd9a0e00ad05f9f03, type: 2}
+  - {fileID: 3941683865709642883, guid: 5e0327dcf3bae4dfd9a0e00ad05f9f03, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -163,10 +163,10 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: co.nhnt.quackery
+    Android: com.nhnt.quackery
     Lumin: com.DefaultCompany.com.unity.template.mobile2D
     Standalone: com.nhnt.quackery
-    iPhone: co.nhnt.quackery
+    iPhone: com.nhnt.quackery
     tvOS: com.DefaultCompany.com.unity.template.mobile2D
   buildNumber:
     Standalone: 11
@@ -818,7 +818,7 @@ PlayerSettings:
     WebGL: DOTWEEN
     Windows Store Apps: DOTWEEN
     XboxOne: DOTWEEN
-    iPhone: DOTWEEN;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ODIN_INSPECTOR_3_2;ODIN_INSPECTOR_3_3;INK_RUNTIME;INK_EDITOR
+    iPhone: BUILD_TYPE_PROTOTYPE;BUILD_PLATFORM_IOS;BUILD_TARGET_PLAYER;BUILD_BACKEND_IL2CPP;DOTWEEN;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ODIN_INSPECTOR_3_2;ODIN_INSPECTOR_3_3;INK_RUNTIME;INK_EDITOR
     tvOS: DOTWEEN
   additionalCompilerArguments: {}
   platformArchitecture: {}
