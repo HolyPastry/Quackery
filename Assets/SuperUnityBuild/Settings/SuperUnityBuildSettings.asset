@@ -66,15 +66,15 @@ MonoBehaviour:
     openFolderPostBuild: 1
     constantsFileLocation: Assets/SuperUnityBuild
   _productParameters:
-    buildCounter: 10
-    buildVersion: 0.0.9
-    versionTemplate: 0.0.9
+    buildCounter: 11
+    buildVersion: 0.0.10
+    versionTemplate: 0.0.10
     autoGenerate: 0
     syncWithPlayerSettings: 0
   _releaseTypeList:
     releaseTypes:
     - typeName: Prototype
-      bundleIdentifier: 
+      bundleIdentifier: co.nhnt.quackery
       companyName: Not Here, Not There
       productName: Quackery
       syncAppNameWithProduct: 1
