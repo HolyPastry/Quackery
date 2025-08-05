@@ -11,6 +11,7 @@ public class AppCloseButton : ValidatedMonoBehaviour
 
     void OnEnable()
     {
+        _button.gameObject.SetActive(true);
         _button.onClick.AddListener(OnClick);
     }
     void OnDisable()
@@ -19,6 +20,7 @@ public class AppCloseButton : ValidatedMonoBehaviour
     }
     private void OnClick()
     {
+        _button.gameObject.SetActive(false);
         _app.Close();
     }
 }

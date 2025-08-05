@@ -8,7 +8,6 @@ using Quackery.Effects;
 
 using UnityEngine.Assertions;
 using System;
-using DG.Tweening;
 
 
 
@@ -18,32 +17,25 @@ namespace Quackery.Decks
 
     public class DeckController : MonoBehaviour
     {
-        [SerializeField] private Card _itemCardPrefab;
-        [SerializeField] private Card _skillCardPrefab;
-        [SerializeField] private Card _curseCardPrefab;
-        [SerializeField] private Card _tempCurseCardPrefab;
 
 
         [SerializeField] private int _initialHandSize = 4;
         [SerializeField] private int _initialSelectionSize = 4;
 
-        private CardFactory _cardFactory;
 
         #region Service Properties
 
         private readonly List<CardPile> _cardPiles = new();
-
-        private bool _cardPlayed;
-
         private DrawPile _drawPile;
 
+        private bool _cardPlayed;
         private bool _isReady;
         private Card _cardBeingPlayed;
         private int _customDraw;
         private Card _cardSelected;
-        private List<Card> _otherCards;
+        private List<Card> _otherCards = new();
         private int _handSize;
-        private HandSizeEffect _handSizeEffectInstance;
+
 
         private CardPile _discardPile => _cardPiles.Find(p => p.Type == EnumCardPile.Discard);
         private List<CardPile> _handPiles => _cardPiles.FindAll(p => p.Type == EnumCardPile.Hand);
@@ -51,20 +43,13 @@ namespace Quackery.Decks
 
         private CardPile _exhaustPile => _cardPiles.Find(p => p.Type == EnumCardPile.Exhaust);
 
-
-
+        private List<Card> _cards => _cardPiles.SelectMany(p => p.Cards).ToList();
         #endregion
 
 
         #region Service Hookups
 
-        void Awake()
-        {
-            _cardFactory = new CardFactory(_itemCardPrefab,
-                                            _skillCardPrefab,
-                                            _curseCardPrefab,
-                                            _tempCurseCardPrefab);
-        }
+
         void OnDisable()
         {
             DeckServices.WaitUntilReady = () => new WaitUntil(() => true);
@@ -77,9 +62,6 @@ namespace Quackery.Decks
             DeckServices.DiscardHand = () => null;
             DeckServices.Discard = (card) => { };
             DeckServices.DiscardCards = (amount) => { };
-
-            DeckServices.DestroyCard = (cards) => { };
-            DeckServices.DuplicateCard = (card) => null;
 
             DeckServices.GetTablePile = () => new();
             DeckServices.SelectCard = (pileType, index) => { };
@@ -100,16 +82,12 @@ namespace Quackery.Decks
             DeckServices.NoPlayableCards = () => false;
 
             DeckServices.MoveToPile = (source, target) => { };
-
-            DeckServices.CreateCard = (itemData) => null;
-
-
             DeckServices.StartPlayCardLoop = delegate { };
             DeckServices.StopPlayCardLoop = () => { };
 
             DeckServices.BoostPriceOfCardsInHand = (value, predicate) => { };
-            DeckServices.AddNew =
-                (itemData, pileType, pileLocation, lifetime) => null;
+            // DeckServices.AddNew =
+            //     (itemData, pileType, pileLocation, lifetime) => null;
             DeckServices.MoveCard = (card, pileType, placement, delay) => { };
 
             DeckServices.ReplaceCard = (card, replacementCard) => { };
@@ -118,11 +96,15 @@ namespace Quackery.Decks
             DeckServices.SetCustomDraw = (numCard) => { };
 
             DeckServices.IsPilePlayable = (type, index) => true;
+
+            DeckServices.RemoveFromAllPiles = (card) => { };
             DeckServices.DestroyCardType = (itemData) => null;
+            DeckServices.DestroyEffemeralCards = () => { };
 
             EffectEvents.OnAdded -= UpdateCardUI;
             EffectEvents.OnRemoved -= UpdateCardUI;
             EffectEvents.OnUpdated -= UpdateCardUI;
+            Reset();
 
         }
 
@@ -139,8 +121,7 @@ namespace Quackery.Decks
             DeckServices.DiscardHand = DiscardHand;
             DeckServices.DiscardCards = DiscardRandomCards;
 
-            DeckServices.DestroyCard = DestroyCard;
-            DeckServices.DuplicateCard = DuplicateCard;
+            DeckServices.RemoveFromAllPiles = RemoveFromAllPiles;
 
             DeckServices.SelectCard = SelectCard;
             DeckServices.GetTablePile = () => _handPiles;
@@ -163,7 +144,7 @@ namespace Quackery.Decks
                     () => _handPiles.All(p => p.Enabled && (p.IsEmpty || !p.Playable));
 
             DeckServices.MoveToPile = MovePileTo;
-            DeckServices.CreateCard = CreateCard;
+
 
             DeckServices.StartPlayCardLoop = StartPlayCardLoop;
             DeckServices.StopPlayCardLoop = StopPlayCardLoop;
@@ -180,47 +161,50 @@ namespace Quackery.Decks
                                                                              p.Index == index &&
                                                                                 p.Playable);
             DeckServices.DestroyCardType = (itemData) => StartCoroutine(DestroyCardType(itemData));
-
+            DeckServices.DestroyEffemeralCards = DestroyEffemeralCards;
             EffectEvents.OnAdded += UpdateCardUI;
             EffectEvents.OnRemoved += UpdateCardUI;
             EffectEvents.OnUpdated += UpdateCardUI;
+            Initialize();
         }
 
-
-
-        IEnumerator Start()
+        public void Initialize()
         {
-            yield return FlowServices.WaitUntilEndOfSetup();
-            yield return InventoryServices.WaitUntilReady();
 
-            _drawPile = new DrawPile(_cardFactory);
+            _cardPlayed = false;
+
+            _cardBeingPlayed = null;
+            _cardSelected = null;
+            _customDraw = 0;
+
+            _otherCards.Clear();
+
+            _handSize = _initialHandSize;
+
+            _drawPile ??= new DrawPile();
 
             _cardPiles.Add(_drawPile);
             _cardPiles.Add(new CardPile(EnumCardPile.Discard, 0));
             _cardPiles.Add(new CardPile(EnumCardPile.Exhaust, 0));
             _cardPiles.Add(new CardPile(EnumCardPile.Effect, 0));
 
-            _handSize = _initialHandSize;
             for (int i = 0; i < _initialHandSize; i++)
-            {
                 _cardPiles.Add(new CardPile(EnumCardPile.Hand, i));
-            }
+
             for (int i = 0; i < _initialSelectionSize; i++)
-            {
                 _cardPiles.Add(new CardPile(EnumCardPile.Selection, i));
-            }
+            _drawPile.Populate();
             _isReady = true;
         }
-        private IEnumerator DestroyCardType(ItemData data)
+
+        public void Reset()
         {
-            if (data == null) yield break;
-
-            var cards = _cardPiles.SelectMany(p => p.Cards).Where(c => c.Item.Data == data).ToList();
-            if (cards.Count == 0) yield break;
-            InventoryServices.RemoveItem(cards[0].Item);
-            DestroyCard(cards[0]);
-
+            _cards.ForEach(c => DeckServices.DestroyCard(c));
+            _cardPiles.Clear();
+            _drawPile.Clear();
+            _isReady = false;
         }
+
 
         private List<Card> GetMatchingCards(System.Predicate<Card> predicate, EnumCardPile pile)
         {
@@ -241,7 +225,7 @@ namespace Quackery.Decks
             MoveCard(card, EnumCardPile.Effect, EnumPlacement.OnTop);
             yield return new WaitForSeconds(0.5f);
 
-            Card newCard = DeckServices.AddNew(data,
+            Card newCard = AddNew(data,
                                     EnumCardPile.Effect,
                                     EnumPlacement.OnTop,
                                     EnumLifetime.Permanent);
@@ -300,7 +284,7 @@ namespace Quackery.Decks
                            EnumLifetime lifetime)
         {
 
-            Card card = _cardFactory.Create(data);
+            Card card = DeckServices.CreateCard(data);
             if (lifetime == EnumLifetime.Permanent)
                 InventoryServices.AddItem(card.Item);
 
@@ -324,11 +308,23 @@ namespace Quackery.Decks
             }
         }
 
-
-        private Card CreateCard(ItemData data)
+        private IEnumerator DestroyCardType(ItemData data)
         {
-            return _cardFactory.Create(data);
+            if (data == null) yield break;
+
+            var card = _cards.Where(c => c.Item.Data == data)
+                        .First();
+            if (card == null) yield break;
+            DeckServices.DestroyCard(card);
+
         }
+
+        private void DestroyEffemeralCards()
+        {
+            _cards.FindAll(c => c.Item.Lifetime == EnumLifetime.Effemeral)
+                 .ForEach(card => DeckServices.DestroyCard(card));
+        }
+
 
         private void StartPlayCardLoop(Card card)
         {
@@ -348,7 +344,6 @@ namespace Quackery.Decks
                 StartCoroutine(PlayCardRoutine(_cardBeingPlayed, selectedPile));
 
         }
-
 
         private int GetCardPoolSize(EnumCardPile cardPileType)
         {
@@ -373,30 +368,13 @@ namespace Quackery.Decks
         }
 
 
-        private Card DuplicateCard(Card card)
-        {
-            if (card == null) return null;
 
-            var duplicate = Instantiate(card);
-
-            duplicate.name = card.name;
-            duplicate.Item = card.Item;
-            duplicate.OverrideCategory(card.Category);
-
-            return duplicate;
-        }
 
 
         #endregion
 
         #region Managing Effects 
-        private void DestroyCard(Card card)
-        {
-            RemoveFromAllPiles(card);
-            card.transform.DOKill();
-            card.Destroy();
 
-        }
 
         private void RestoreCardCategories()
         {
@@ -714,29 +692,16 @@ namespace Quackery.Decks
             DeckEvents.OnShuffle(EnumCardPile.Draw, _drawPile.Index, _drawPile.Cards);
         }
 
-        private void DestroyEffemeralCards(CardPile pile)
-        {
-            var effemeralCards = pile.Cards.FindAll(c => c.Item.Lifetime == EnumLifetime.Effemeral);
-            while (effemeralCards.Count > 0)
-            {
 
-                var card = effemeralCards[0];
-                effemeralCards.RemoveAt(0);
-                DestroyCard(card);
-            }
-        }
 
         private void ResetDecks()
         {
+            DeckServices.DestroyEffemeralCards();
             foreach (var pile in _handPiles)
             {
                 if (pile.IsEmpty) continue;
-                DestroyEffemeralCards(pile);
                 _drawPile.MergeBelow(pile);
             }
-            DestroyEffemeralCards(_drawPile);
-            DestroyEffemeralCards(_discardPile);
-            DestroyEffemeralCards(_exhaustPile);
 
             _drawPile.MergeBelow(_exhaustPile);
             _drawPile.MergeBelow(_discardPile);

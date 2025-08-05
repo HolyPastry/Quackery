@@ -16,6 +16,10 @@ namespace Quackery
     {
         public static Func<WaitUntil> WaitUntilReady = () => new WaitUntil(() => true);
 
+        public static Func<ItemData, Card> CreateCard = (itemData) => null;
+        internal static Func<ItemData, Coroutine> DestroyCardType = (itemData) => null;
+
+        public static Action<Card> RemoveFromAllPiles = (card) => { };
 
         public static Action Shuffle = () => { };
         public static Action<List<Card>> Discard = (card) => { };
@@ -58,7 +62,6 @@ namespace Quackery
 
         public static Func<bool> NoPlayableCards = () => false;
 
-        public static Func<ItemData, Card> CreateCard = (itemData) => null;
 
         public static Action<Card> StartPlayCardLoop = delegate { };
 
@@ -82,11 +85,7 @@ namespace Quackery
 
         internal static Func<EnumCardPile, int, bool> IsPilePlayable = (pile, index) => true;
 
-        internal static Func<ItemData, Coroutine> DestroyCardType = (itemData) => null;
+        internal static Action DestroyEffemeralCards = () => { };
 
-        internal static object TakeDeckOut()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

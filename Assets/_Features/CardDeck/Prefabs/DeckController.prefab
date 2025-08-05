@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8325368523498031099}
   - component: {fileID: 4537268485761887857}
   m_Layer: 0
-  m_Name: DeckManager
+  m_Name: DeckController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

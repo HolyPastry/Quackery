@@ -48,14 +48,10 @@ namespace Quackery.Shops
         {
             _buyButton.gameObject.SetActive(false);
             yield return ShopApp.SpendMoneyRequest(_cardShopReward.Price);
-
-            DeckServices.AddNew(
-                    _cardShopReward.ItemData,
-                    EnumCardPile.Draw,
-                    EnumPlacement.ShuffledIn,
-                    EnumLifetime.Permanent);
-
             Card card = _cardParent.GetComponentInChildren<Card>();
+            InventoryServices.AddItem(card.Item);
+
+
             AudioSource cardAudio = _cardParent.GetComponentInChildren<AudioSource>();
             if (cardAudio != null)
                 cardAudio.Play();

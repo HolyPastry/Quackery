@@ -157,6 +157,7 @@ namespace Quackery.Decks
                     var cardTransform = _moveQueue.Dequeue();
                     if (cardTransform == null)
                         continue; // Skip if the card transform is null
+
                     cardTransform.DOScale(1, _moveSpeed).SetEase(Ease.Linear);
                     cardTransform.DOAnchorPos(Vector3.zero, _moveSpeed).SetEase(_easeType);
                     cardTransform.DOLocalRotate(Vector3.zero, _moveSpeed);
@@ -180,22 +181,23 @@ namespace Quackery.Decks
 
         internal void MoveCardToPile(Card card, bool atTheTop, bool isInstant)
         {
-            card.transform.SetParent(_cardParent, false);
+            card.transform.SetParent(_cardParent);
             card.transform.localScale = Vector3.one;
             card.Strip(_stripCard);
-
             if (atTheTop)
-            {
                 card.transform.SetAsLastSibling();
-            }
             else
-            {
                 card.transform.SetAsFirstSibling();
-            }
+
             if (isInstant)
             {
-                card.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+
+
+
+                card.RectTransform.anchoredPosition = Vector2.zero;
+                card.transform.localRotation = Quaternion.identity;
                 card.transform.localScale = Vector3.one;
+
                 OnCardMovedIn?.Invoke();
             }
             else

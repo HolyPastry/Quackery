@@ -74,7 +74,7 @@ MonoBehaviour:
   _releaseTypeList:
     releaseTypes:
     - typeName: Prototype
-      bundleIdentifier: com.nhnt.quackery
+      bundleIdentifier: 
       companyName: Not Here, Not There
       productName: Quackery
       syncAppNameWithProduct: 1
@@ -170,7 +170,8 @@ MonoBehaviour:
     showBuildInfo: 0
     hideDisabled: 0
     treeView: 0
-    selectedKeyChain: Prototype/iOS/Player (iPhoneOnly,Device SDK,Release)/IL2CPP
+    selectedKeyChain: Prototype/Android/Player (ARMv7+ARM64,Generic,App,AAB,Single
+      Binary,Auto,Auto,Public)/IL2CPP
   _preBuildActions:
     buildActions: []
   _postBuildActions:

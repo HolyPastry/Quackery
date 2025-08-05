@@ -10,20 +10,23 @@ namespace Quackery.Decks
 
     public class DrawPile : CardPile
     {
-        private readonly CardFactory _cardFactory;
+
         private List<ItemData> _forcedOnNextDraw;
 
-        public DrawPile(CardFactory cardFactory) : base(EnumCardPile.Draw, 0)
+        public DrawPile() : base(EnumCardPile.Draw, 0)
         {
-            _cardFactory = cardFactory;
-            var allItems = InventoryServices.GetAllItems();
-            Populate(allItems);
             RegisterServices();
         }
 
         ~DrawPile()
         {
             UnregisterServices();
+        }
+
+        public void Populate()
+        {
+            var allItems = InventoryServices.GetAllItems();
+            Populate(allItems);
         }
 
         private void RegisterServices()
@@ -51,7 +54,7 @@ namespace Quackery.Decks
         }
         private void AddToDeck(Item item)
         {
-            Card card = _cardFactory.Create(item);
+            Card card = DeckServices.CreateCard(item.Data);
             AddAtTheBottom(card, isInstant: true);
         }
 

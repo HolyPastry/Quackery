@@ -516,6 +516,7 @@ namespace Quackery.Decks
         {
             int newCartSize = ClientServices.GetCartSize() + _ratingCartSizeModifier + EffectServices.GetCartSizeModifier();
             newCartSize = Mathf.Max(newCartSize, 2);
+            if (CartSize == newCartSize) return;
 
             while (_cartPiles.Count < newCartSize)
             {
@@ -540,6 +541,8 @@ namespace Quackery.Decks
                 if (pile.IsEmpty && pile.Enabled)
                 {
                     pile.Enabled = false;
+                    DeckEvents.OnPileUpdated(pile.Type, pile.Index);
+                    DeckEvents.OnCardPoolSizeDecrease(pile.Type, pile.Index);
                 }
             }
 

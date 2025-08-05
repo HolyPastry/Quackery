@@ -59,10 +59,8 @@ namespace Quackery.TetrisBill
             if (MoneyLost > 0)
             {
                 PurseServices.Modify(-MoneyScale.GetMoneyAmount());
-                DeckServices.AddNew(_overdueCurse,
-                                      EnumCardPile.Draw,
-                                      EnumPlacement.ShuffledIn,
-                                      EnumLifetime.Permanent);
+                InventoryServices.AddItem(new(_overdueCurse));
+
                 yield return new WaitForSeconds(2f);
             }
 

@@ -187,7 +187,7 @@ namespace Quackery
                 if (cardPile == _selectedPileUI)
                 {
                     selectedOffset = _selectedCardOffset;
-                    scale = 1.2f;
+                    //scale = 1.2f;
                     SetTopCardStraight(angleOffset, cardPile);
                 }
                 else

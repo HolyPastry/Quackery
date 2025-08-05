@@ -127,7 +127,8 @@ namespace Quackery.Decks
         private void ConfirmCard()
         {
             if (_selectedCard != null)
-                DeckServices.AddNew(_selectedCard.Item.Data, EnumCardPile.Draw, EnumPlacement.AtTheBottom, EnumLifetime.Permanent);
+                InventoryServices.AddItem(_selectedCard.Item);
+
             StartCoroutine(CloseGameRoutine());
         }
     }

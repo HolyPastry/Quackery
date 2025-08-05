@@ -54,8 +54,11 @@ namespace Quackery
         }
 
 
-        private void PlaySound(Card card, EnumCardPile pile, int arg3, bool arg4, bool arg5)
-        => PlaySound();
+        private void PlaySound(Card card, EnumCardPile pile, int arg3, bool arg4, bool isInstant)
+        {
+            if (isInstant) return;
+            PlaySound();
+        }
 
         private void PlaySound()
         {

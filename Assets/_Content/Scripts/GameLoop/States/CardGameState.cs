@@ -64,6 +64,7 @@ namespace Quackery
                 {
                     DeckServices.ResetDecks();
                     CartServices.ResetCart();
+                    yield return new WaitForSeconds(0.5f);
                     ClientServices.ClientLeaves();
                     break;
                 }
@@ -71,6 +72,7 @@ namespace Quackery
                 {
                     yield return DeckServices.DiscardHand();
                     CartServices.ResetCart();
+                    yield return new WaitForSeconds(1f);
                 }
             }
         }

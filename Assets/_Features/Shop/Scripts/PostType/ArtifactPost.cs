@@ -98,6 +98,8 @@ namespace Quackery.Shops
         private IEnumerator ArtifactRewardRoutine()
         {
             ArtifactServices.Add(_artifactReward.ArtifactData);
+
+
             _buyButton.gameObject.SetActive(false);
             yield return ShopApp.SpendMoneyRequest(_artifactReward.Price);
 
@@ -106,6 +108,7 @@ namespace Quackery.Shops
             yield return new WaitForSeconds(0.5f);
             if (_artifactReward.ArtifactData.Bill != null)
             {
+                BillServices.AddNewBill(_artifactReward.ArtifactData.Bill, true);
                 yield return GameMenuController.AddToBillsRequest(_billBlockParent as RectTransform);
 
                 yield return new WaitForSeconds(0.5f);
