@@ -11,7 +11,7 @@ namespace Quackery.Effects
          order = 1)]
     public class BundleEffect : EffectData
     {
-        public override void Cancel(Effect effect)
+        public override void OnRemove(Effect effect)
         {
 
         }

@@ -66,16 +66,16 @@ namespace Quackery.Artifacts
             ArtifactEvents.OnArtifactAdded(data);
         }
 
-        private void RemoveArtifact(ArtifactData data)
+        private void RemoveArtifact(ArtifactData artifactData)
         {
-            if (_ownedArtifacts.Remove(data))
+            if (_ownedArtifacts.Remove(artifactData))
             {
-                EffectServices.RemoveArtifactEffects(data);
+                EffectServices.Remove(e => e.LinkedArtifact == artifactData);
                 Save();
             }
             else
             {
-                Debug.LogWarning($"Artifact {data.name} not found in collection.");
+                Debug.LogWarning($"Artifact {artifactData.name} not found in collection.");
             }
         }
 

@@ -33,12 +33,9 @@ namespace Quackery
         public static Func<EnumCardPile, Card> GetTopCard = (pileType) => null;
 
         public static Action<List<Card>> MoveToCardSelect = (cards) => { };
-        //  public static Action InterruptDraw = delegate { };
 
-        //  public static Action ResumeDraw = delegate { };
         public static Action<Card> MoveToTable = delegate { };
         public static Func<Coroutine> DrawBackToFull = () => null;
-        public static Func<int, List<Card>> Draw = (numberCards) => new();
 
         public static Action<Card> DestroyCard = (cards) => { };
 
@@ -49,7 +46,6 @@ namespace Quackery
         public static Action<int> DiscardCards = (amount) => { };
 
         public static Action RestoreCardCategories = () => { };
-
 
         public static Func<EnumItemCategory, Card> DrawCategory = (category) => null;
 
@@ -81,7 +77,6 @@ namespace Quackery
 
         internal static Action<int> SetCustomDraw = (numCard) => { };
 
-        internal static Action<int> ModifyHandSize = (handSizeModifier) => { };
 
         internal static Func<EnumCardPile, int, bool> IsPilePlayable = (pile, index) => true;
 

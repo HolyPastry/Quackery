@@ -41,8 +41,8 @@ namespace Quackery
             }
         }
 
-        public int Value;
-        public EnumEffectTrigger Trigger => Data.Trigger;
+        public int Value { get; private set; }
+        //public EnumEffectTrigger Trigger => Data.Trigger;
 
         [HideInInspector]
         public List<EnumEffectTag> Tags = new();

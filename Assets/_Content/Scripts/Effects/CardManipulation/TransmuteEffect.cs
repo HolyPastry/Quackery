@@ -19,7 +19,7 @@ namespace Quackery.Effects
             yield return DefaultWaitTime;
         }
 
-        public override void Cancel(Effect effect)
+        public override void OnRemove(Effect effect)
         {
             DeckServices.RestoreCardCategories();
         }

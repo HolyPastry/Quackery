@@ -78,9 +78,6 @@ namespace Quackery.Decks
                 effect.LinkedCard = this;
                 if (Item.Category != EnumItemCategory.Skill)
                     effect.Tags.Add(EnumEffectTag.ItemCard);
-                if (effect.Trigger == EnumEffectTrigger.Passive)
-                    effect.Tags.AddUnique(EnumEffectTag.Status);
-
             }
         }
 

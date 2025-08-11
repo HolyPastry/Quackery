@@ -45,7 +45,7 @@ namespace Quackery.Artifacts
                         effect.Initialize();
                         effect.Tags.AddUnique(Effects.EnumEffectTag.Artifact);
                         effect.LinkedArtifact = ui.Artifact;
-                        EffectServices.AddEffect(effect);
+                        EffectServices.Add(effect);
                     }
                     ;
                 }

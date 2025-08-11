@@ -18,8 +18,8 @@ namespace Quackery.Effects
         [SerializeField] private List<EffectData> _whiteList;
         public override IEnumerator Execute(Effect effect)
         {
-            EffectServices.CancelAllEffects(_whiteList);
-            yield return new WaitForSeconds(0.5f);
+            EffectServices.Remove(e => _whiteList.Contains(e.Data));
+            yield return null;
         }
     }
 }

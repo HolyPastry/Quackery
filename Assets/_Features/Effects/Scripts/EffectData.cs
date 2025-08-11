@@ -28,7 +28,7 @@ namespace Quackery.Effects
         public virtual IEnumerator Execute(Effect effect) { yield break; }
         public virtual IEnumerator ExecutePile(Effect effect, CardPile pile) => null;
 
-        public virtual void Cancel(Effect effect) { }
+        public virtual void OnRemove(Effect effect) { }
         internal virtual void CheckValidity() { }
 
         public virtual void Setup(Effect effect)

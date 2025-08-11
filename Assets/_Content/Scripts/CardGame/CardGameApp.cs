@@ -186,7 +186,7 @@ namespace Quackery.Decks
             foreach (var effect in _client.Effects)
             {
                 yield return new WaitForSeconds(0.2f);
-                EffectServices.AddEffect(effect);
+                EffectServices.Add(effect);
             }
         }
 

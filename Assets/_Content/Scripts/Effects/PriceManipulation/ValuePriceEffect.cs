@@ -5,7 +5,6 @@ using UnityEngine;
 namespace Quackery.Effects
 {
 
-
     [CreateAssetMenu(fileName = "BoostPriceEffect", menuName = "Quackery/Effects/Price/ValuePrice")]
     public class ValuePriceEffect : EffectData, IPriceModifierEffect, ICategoryEffect
     {

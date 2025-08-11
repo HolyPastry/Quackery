@@ -538,7 +538,7 @@ namespace Quackery.Decks
 
             yield return EffectServices.Execute(EnumEffectTrigger.OnCardPlayed, card);
 
-            yield return EffectServices.AddEffectsFromCard(card);
+            yield return EffectServices.AddStatuses(card.Effects);
 
             CartServices.AddToCartValue(card.Price);
 

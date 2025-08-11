@@ -514,7 +514,9 @@ namespace Quackery.Decks
 
         private void UpdateCartSize()
         {
-            int newCartSize = ClientServices.GetCartSize() + _ratingCartSizeModifier + EffectServices.GetCartSizeModifier();
+            int newCartSize = ClientServices.GetCartSize() +
+                 EffectServices.GetModifier(typeof(CartSizeModifierEffect));
+
             newCartSize = Mathf.Max(newCartSize, 2);
             if (CartSize == newCartSize) return;
 
@@ -747,7 +749,9 @@ namespace Quackery.Decks
 
         private void DiscardCart()
         {
-            EffectServices.RemoveEffectsLinkedToPiles(_cartPiles);
+            List<Card> topCards = GetTopCards();
+            EffectServices.Remove(e => topCards.Contains(e.LinkedCard));
+
             List<Card> cardsToDiscard = new();
             foreach (var cartPile in _cartPiles)
                 foreach (var card in cartPile.Cards)
@@ -759,6 +763,12 @@ namespace Quackery.Decks
             _lastCartPile = null;
             UpdateEffects();
             UpdateUI();
+        }
+
+        private List<Card> GetTopCards()
+        {
+            return _cartPiles.Where(p => !p.IsEmpty)
+                        .Select(p => p.TopCard).ToList();
         }
 
         private bool CanAddToCart(Card topCard)
