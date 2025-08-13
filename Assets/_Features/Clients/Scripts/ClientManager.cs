@@ -285,7 +285,7 @@ namespace Quackery.Clients
             ClientEvents.ClientListUpdated?.Invoke();
         }
 
-        private void AddUnknownClient(Effect effect)
+        private void AddUnknownClient(EffectData effect)
         {
             var client = new Client();
             client.InitUnknown(_clientsData, effect);

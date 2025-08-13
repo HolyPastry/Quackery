@@ -15,7 +15,7 @@ namespace Quackery.Effects
         {
             if (card.Category == Category || Category == EnumItemCategory.Any)
             {
-                return effect.Value;
+                return (int)effect.Value;
             }
             return 0;
         }

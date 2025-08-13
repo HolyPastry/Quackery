@@ -18,7 +18,7 @@ namespace Quackery.Effects
             _cardSelected = null;
             _otherCards = null;
 
-            DeckServices.SetCustomDraw(effect.Value);
+            DeckServices.SetCustomDraw((int)effect.Value);
 
             yield return null;
 

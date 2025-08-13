@@ -10,7 +10,7 @@ namespace Quackery.Effects
     {
         public override IEnumerator Execute(Effect effect)
         {
-            RatingServices.Modify(effect.Value);
+            RatingServices.Modify((int)effect.Value);
             yield return DefaultWaitTime;
         }
 

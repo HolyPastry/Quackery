@@ -21,7 +21,7 @@ namespace Quackery.Effects
 
         public override IEnumerator Execute(Effect effect)
         {
-            int countered = EffectServices.CounterEffect(_counterEffect, effect.Value);
+            int countered = EffectServices.CounterEffect(_counterEffect, (int)effect.Value);
 
 
             for (int i = 0; i < effect.Value - countered; i++)

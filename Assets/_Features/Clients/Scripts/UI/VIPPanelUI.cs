@@ -78,8 +78,8 @@ namespace Quackery
 
         private void SetEffectBar()
         {
-            foreach (var effect in _client.Effects)
-                _effectBarUI.AddStatusUI(effect);
+            // foreach (var effect in _client.Effects)
+            //     _effectBarUI.AddStatusUI(effect);
         }
 
         private void SetQuestInfo()

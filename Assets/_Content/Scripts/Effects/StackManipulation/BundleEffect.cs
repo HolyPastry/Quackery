@@ -24,7 +24,9 @@ namespace Quackery.Effects
 
             foreach (var pile in piles)
             {
-                if (pile.Category != effect.LinkedCard.Category) continue;
+                Card card = effect.LinkedObject as Card;
+
+                if (card == null || pile.Category != card.Category) continue;
                 DeckServices.MoveToPile(pile, owningPile);
 
             }

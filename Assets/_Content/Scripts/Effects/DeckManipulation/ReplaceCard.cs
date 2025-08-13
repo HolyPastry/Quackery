@@ -22,10 +22,11 @@ namespace Quackery.Effects
         // [SerializeField] private EnumCardPile _targetDeck = EnumCardPile.Discard;
         public override IEnumerator Execute(Effect effect)
         {
-            if (effect.LinkedCard == null)
-                yield break;
 
-            Card card = effect.LinkedCard;
+
+
+            Card card = effect.LinkedObject as Card;
+            if (card == null) yield break;
             Item item = card.Item;
 
             if (_condition == EnumCondition.NumberOfDraws && item.NumberOfDraws >= effect.Value)

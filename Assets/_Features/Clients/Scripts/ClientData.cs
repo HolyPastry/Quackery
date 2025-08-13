@@ -23,7 +23,7 @@ namespace Quackery.Clients
         }
         public CharacterData CharacterData;
         public Sprite Icon;
-        public List<Effect> Effects;
+        public List<EffectData> Effects;
 
         public Reward FirstReward;
 

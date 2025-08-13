@@ -11,10 +11,10 @@ namespace Quackery.Effects
 
         public override IEnumerator Execute(Effect effect)
         {
-            if (effect.LinkedCard == null) yield break;
 
             int value = CartServices.GetValue();
             CartServices.AddToCartValue(Mathf.FloorToInt(value * ((float)effect.Value / 100)));
+            yield return null;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Quackery
         public override IEnumerator Execute(Effect effect)
         {
             int numFollowers = FollowerServices.GetNumberOfFollowers();
-            int cash = numFollowers / effect.Value;
+            float cash = numFollowers / effect.Value;
             if (cash > 0)
                 PurseServices.Modify(cash);
             yield return null;

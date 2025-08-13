@@ -11,7 +11,7 @@ namespace Quackery.Clients
     [Serializable]
     public struct ClientLevelData
     {
-        public List<Effect> Effects;
+        public List<EffectData> Effects;
         public int SurvivalThreshold;
         public int NormalThreshold;
         public Vector2Int QueueSizeRange;
@@ -35,7 +35,7 @@ namespace Quackery.Clients
 
         public Sprite RandomIcon => Icons[Random.Range(0, Icons.Count)];
 
-        internal List<Effect> RandomEffects => GenerateRandomEffects();
+        internal List<EffectData> RandomEffects => GenerateRandomEffects();
 
         public string RandomName
         {
@@ -48,7 +48,7 @@ namespace Quackery.Clients
             }
         }
 
-        private List<Effect> GenerateRandomEffects()
+        private List<EffectData> GenerateRandomEffects()
         {
             var level = ProgressionServices.GetLevel();
             if (level >= LevelsData.Count)
@@ -56,10 +56,9 @@ namespace Quackery.Clients
                 Debug.LogWarning($"No client data found for level {level}");
                 return new();
             }
-            Effect effect = new(LevelsData[level].Effects[Random.Range(0, LevelsData[level].Effects.Count)]);
-
-            return new() { effect };
+            return new() { LevelsData[level].Effects[Random.Range(0, LevelsData[level].Effects.Count)] };
         }
+
 
         internal int GetThreshold(CartMode mode)
         {

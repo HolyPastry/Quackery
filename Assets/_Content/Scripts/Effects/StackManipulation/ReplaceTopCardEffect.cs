@@ -11,7 +11,9 @@ namespace Quackery
     {
         public override IEnumerator Execute(Effect effect)
         {
-            CartServices.ReplaceTopCard(effect.LinkedCard);
+            Card card = effect.LinkedObject as Card;
+            if (card == null) yield break;
+            CartServices.ReplaceTopCard(card);
             yield return DefaultWaitTime;
         }
     }

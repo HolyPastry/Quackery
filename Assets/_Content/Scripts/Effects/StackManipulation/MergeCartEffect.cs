@@ -14,7 +14,7 @@ namespace Quackery.Effects
         public EnumItemCategory Category => _category;
         public override IEnumerator Execute(Effect effect)
         {
-            CartServices.MergeCart(effect.Value, Category);
+            CartServices.MergeCart((int)effect.Value, Category);
             yield return DefaultWaitTime;
         }
     }

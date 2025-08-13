@@ -42,6 +42,7 @@ namespace Quackery.Effects
         }
 
         public float Value { get; internal set; }
+
         //public EnumEffectTrigger Trigger => Data.Trigger;
 
         [HideInInspector]

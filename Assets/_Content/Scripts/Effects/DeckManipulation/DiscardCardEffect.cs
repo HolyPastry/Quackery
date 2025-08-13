@@ -12,7 +12,7 @@ namespace Quackery.Effects
         // [SerializeField] private int _amount = -1;
         public override IEnumerator Execute(Effect effect)
         {
-            DeckServices.DiscardCards(effect.Value);
+            DeckServices.DiscardCards((int)effect.Value);
             yield return DefaultWaitTime;
         }
     }
