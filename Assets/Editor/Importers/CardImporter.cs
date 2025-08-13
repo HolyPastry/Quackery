@@ -65,7 +65,7 @@ namespace Quackery
                 }
                 var newEffect = new Effect(effectData, effectValue);
 
-                itemData.Effects.Add(newEffect);
+                //  itemData.Effects.Add(newEffect);
             }
             var explanations = fields[index++];
             ParseExplanations(itemData, explanations);

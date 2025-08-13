@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Holypastry.Bakery.Flow;
+using Quackery.Effects;
 using Quackery.Followers;
 using Quackery.Progression;
 using UnityEngine;

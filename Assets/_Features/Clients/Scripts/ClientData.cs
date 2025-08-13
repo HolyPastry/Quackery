@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Bakery.Dialogs;
 using Holypastry.Bakery.Quests;
+using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery.Clients

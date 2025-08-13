@@ -515,7 +515,7 @@ namespace Quackery.Decks
         private void UpdateCartSize()
         {
             int newCartSize = ClientServices.GetCartSize() +
-                 EffectServices.GetModifier(typeof(CartSizeModifierEffect));
+                (int)EffectServices.GetModifier(typeof(CartSizeModifierEffect));
 
             newCartSize = Mathf.Max(newCartSize, 2);
             if (CartSize == newCartSize) return;
@@ -640,9 +640,9 @@ namespace Quackery.Decks
         }
         private void UpdateEffects()
         {
-            EffectServices.UpdateCardEffects(
-                      _cartPiles.FindAll(p => p.Enabled && !p.IsEmpty)
-                              .ConvertAll(p => p.TopCard));
+            // EffectServices.UpdateCardEffects(
+            //           _cartPiles.FindAll(p => p.Enabled && !p.IsEmpty)
+            //                   .ConvertAll(p => p.TopCard));
         }
         private bool AddCardToCartPile(Card topCard, CardPile pile)
         {
@@ -750,7 +750,7 @@ namespace Quackery.Decks
         private void DiscardCart()
         {
             List<Card> topCards = GetTopCards();
-            EffectServices.Remove(e => topCards.Contains(e.LinkedCard));
+            EffectServices.Remove(e => topCards.Exists(card => card.gameObject == e.LinkedObject));
 
             List<Card> cardsToDiscard = new();
             foreach (var cartPile in _cartPiles)

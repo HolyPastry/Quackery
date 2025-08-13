@@ -538,7 +538,7 @@ namespace Quackery.Decks
 
             yield return EffectServices.Execute(EnumEffectTrigger.OnCardPlayed, card);
 
-            yield return EffectServices.AddStatuses(card.Effects);
+            //yield return EffectServices.AddStatuses(card.Effects);
 
             CartServices.AddToCartValue(card.Price);
 
@@ -814,7 +814,7 @@ namespace Quackery.Decks
             _cardPlayed = false;
             List<Card> drawnCards = new();
 
-            int handSizeModifier = EffectServices.GetModifier(typeof(HandSizeEffect));
+            int handSizeModifier = (int)EffectServices.GetModifier(typeof(HandSizeEffect));
             if (_handSize != _initialHandSize + handSizeModifier)
             {
                 yield return StartCoroutine(UpdateHandSizeRoutine(handSizeModifier));

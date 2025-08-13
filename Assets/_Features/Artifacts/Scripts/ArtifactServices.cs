@@ -17,5 +17,8 @@ namespace Quackery.Artifacts
 
         internal static Func<ArtifactData, bool> Owns = (artifactData) => false;
 
+        public static Func<Coroutine> TakeArtifactsOut = () => null;
+        public static Action PackArtifacts = delegate { };
+
     }
 }

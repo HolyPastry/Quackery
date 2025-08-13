@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Holypastry.Bakery;
 using Holypastry.Bakery.Quests;
 using Quackery.Decks;
+using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery.Clients

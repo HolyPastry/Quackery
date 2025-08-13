@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Holypastry.Bakery;
 using Quackery.Decks;
-
+using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery.Inventories
@@ -37,7 +37,7 @@ namespace Quackery.Inventories
         public EnumItemCategory Category;
 
 
-        public List<Effect> Effects = new();
+        public List<EffectData> Effects = new();
 
         public ValueEvaluator ValueEvaluator;
 

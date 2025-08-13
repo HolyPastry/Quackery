@@ -77,7 +77,7 @@ namespace Quackery
                     continue;
                 }
                 var newEffect = new Effect(effectData, effectValue);
-                artifactData.Effects.Add(newEffect);
+                //  artifactData.Effects.Add(newEffect);
             }
             var explanations = fields[index++];
             ParseExplanations(artifactData, explanations);

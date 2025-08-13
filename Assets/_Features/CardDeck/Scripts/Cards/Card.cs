@@ -9,7 +9,6 @@ using Quackery.Effects;
 
 using DG.Tweening;
 using UnityEngine.Assertions;
-using Holypastry.Bakery;
 using System.Collections;
 
 
@@ -75,7 +74,7 @@ namespace Quackery.Decks
             foreach (var effect in _item.Effects)
             {
                 effect.Initialize();
-                effect.LinkedCard = this;
+                effect.LinkedObject = this.gameObject;
                 if (Item.Category != EnumItemCategory.Skill)
                     effect.Tags.Add(EnumEffectTag.ItemCard);
             }

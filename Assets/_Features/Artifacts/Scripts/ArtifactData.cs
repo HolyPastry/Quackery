@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Holypastry.Bakery;
 using Quackery.Bills;
+using Quackery.Effects;
 using Quackery.Inventories;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ namespace Quackery.Artifacts
         public List<Explanation> Explanations = new();
         public bool IsUpgrade => UpgradeFor != null;
 
-        public List<Effect> Effects = new();
+        public List<EffectData> Effects = new();
 
         public int Price = 0;
 

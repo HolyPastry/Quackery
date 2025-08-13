@@ -6,7 +6,7 @@ using Quackery.Decks;
 using Quackery.Effects;
 using UnityEngine;
 
-namespace Quackery
+namespace Quackery.Effects
 {
 
     [Serializable]
@@ -41,7 +41,7 @@ namespace Quackery
             }
         }
 
-        public int Value { get; private set; }
+        public float Value { get; internal set; }
         //public EnumEffectTrigger Trigger => Data.Trigger;
 
         [HideInInspector]
@@ -49,8 +49,7 @@ namespace Quackery
 
         public Sprite Icon => Data.Icon;
 
-        public Card LinkedCard { get; set; }
-        public ArtifactData LinkedArtifact { get; internal set; }
+        public object LinkedObject;
 
         public string Description => Data == null ?
                          "No Effect Data Assigned" :
@@ -63,6 +62,7 @@ namespace Quackery
         public Effect(EffectData data)
         {
             Data = data;
+            Value = data.Value;
         }
 
         public Effect(Effect effect)
@@ -70,8 +70,7 @@ namespace Quackery
             Data = effect.Data;
             Value = effect.Value;
             Tags = new List<EnumEffectTag>(effect.Tags);
-            LinkedCard = effect.LinkedCard;
-            LinkedArtifact = effect.LinkedArtifact;
+            LinkedObject = effect.LinkedObject;
 
         }
 

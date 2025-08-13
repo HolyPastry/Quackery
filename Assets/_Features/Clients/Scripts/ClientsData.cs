@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Quackery.Effects;
 using Quackery.Progression;
 using Sirenix.OdinInspector;
 using UnityEngine;

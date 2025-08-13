@@ -26,7 +26,7 @@ namespace Quackery.GameMenu
 
         [SerializeField] private RectTransform _drawPileUITransform;
 
-        [SerializeField] private ArtifactUI _prefab;
+        [SerializeField] private ArtifactUI _artifactUIprefab;
 
         private bool _isMenuOpen;
 
@@ -46,6 +46,7 @@ namespace Quackery.GameMenu
         public static Func<BillData, Coroutine> RemoveFromBillsRequest = (bill) => null;
         internal static Func<Coroutine> TakeArtifactsOut = () => null;
         internal static Func<Coroutine> TakeDeckOut = () => null;
+        public static Func<ArtifactData, Image> SpawnArtifactUIRequest = (data) => null;
 
         private bool _initialized;
 
@@ -76,6 +77,7 @@ namespace Quackery.GameMenu
 
             TakeArtifactsOut = () => StartCoroutine(TakeArtifactsOutRoutine());
             TakeDeckOut = () => StartCoroutine(TakeDeckOutRoutine());
+            SpawnArtifactUIRequest = SpawnArtifactUI;
 
 
             if (_initialized)
@@ -103,6 +105,7 @@ namespace Quackery.GameMenu
 
             TakeArtifactsOut = () => null;
             TakeDeckOut = () => null;
+            SpawnArtifactUIRequest = (data) => null;
 
             PurseEvents.OnPurseUpdated -= UpdatePurse;
 
@@ -134,7 +137,20 @@ namespace Quackery.GameMenu
             TweenUtil.SlideOut(_purseUpdate.RectTransform);
             yield return new WaitForSeconds(0.5f);
         }
+        private Image SpawnArtifactUI(ArtifactData data)
+        {
+            return _artifactUpdate.PutOut(data); ;
+        }
 
+        private IEnumerator TakeArtifactsOutRoutine()
+        {
+            _menuToggle.isOn = false;
+            TweenUtil.SlideIn(_artifactUpdate.RectTransform);
+            yield return new WaitForSeconds(0.5f);
+            yield return ArtifactServices.TakeArtifactsOut();
+            TweenUtil.SlideOut(_artifactUpdate.RectTransform);
+            yield return new WaitForSeconds(0.5f);
+        }
 
 
         private IEnumerator RemoveFromBillsRoutine(BillData billData)
@@ -319,27 +335,7 @@ namespace Quackery.GameMenu
             }
         }
 
-        private IEnumerator TakeArtifactsOutRoutine()
-        {
-            var artifacts = ArtifactServices.GetAllArtifacts();
-            if (artifacts.Count == 0) yield break;
-            _menuToggle.isOn = false;
-            TweenUtil.SlideIn(_artifactUpdate.RectTransform);
 
-            yield return new WaitForSeconds(0.5f);
-            foreach (var artifact in artifacts)
-            {
-                var artifactIcon = Instantiate(_prefab, _artifactUpdate.Parent);
-                artifactIcon.RectTransform.localScale = Vector3.one * 3f;
-                artifactIcon.RectTransform.anchoredPosition = Vector2.zero;
-                artifactIcon.Artifact = artifact;
-                yield return new WaitForSeconds(0.2f);
-                ArtifactBarUI.TransferRequest(artifactIcon);
-                yield return new WaitForSeconds(0.5f);
-            }
-            TweenUtil.SlideOut(_artifactUpdate.RectTransform);
-
-        }
 
 
     }

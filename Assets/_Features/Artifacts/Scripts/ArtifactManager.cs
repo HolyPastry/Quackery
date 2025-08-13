@@ -5,6 +5,7 @@ using System.Linq;
 using Bakery.Saves;
 using Holypastry.Bakery;
 using Holypastry.Bakery.Flow;
+using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery.Artifacts
@@ -28,6 +29,7 @@ namespace Quackery.Artifacts
             ArtifactServices.GetAllArtifacts = () => _ownedArtifacts.All;
             ArtifactServices.GetRandomSuitable = GetRandomMatching;
             ArtifactServices.Owns = (artifactData) => _ownedArtifacts.Contains(artifactData);
+            ArtifactServices.TakeArtifactsOut = () => StartCoroutine(TakeArtifactsOutRoutine());
         }
 
 
@@ -38,6 +40,7 @@ namespace Quackery.Artifacts
             ArtifactServices.GetAllArtifacts = () => new();
             ArtifactServices.GetRandomSuitable = (level, amount) => new();
             ArtifactServices.Owns = (artifactData) => false;
+            ArtifactServices.TakeArtifactsOut = () => null;
         }
 
         protected override IEnumerator Start()
@@ -66,11 +69,28 @@ namespace Quackery.Artifacts
             ArtifactEvents.OnArtifactAdded(data);
         }
 
+        private IEnumerator TakeArtifactsOutRoutine()
+        {
+            var artifacts = ArtifactServices.GetAllArtifacts();
+            if (artifacts.Count == 0) yield break;
+
+            foreach (var artifact in artifacts)
+            {
+                ArtifactEvents.OnArtifactOut(artifact);
+                yield return new WaitForSeconds(0.5f);
+                foreach (var effectData in artifact.Effects)
+                    EffectServices.Add(effectData, artifact);
+
+            }
+
+
+        }
+
         private void RemoveArtifact(ArtifactData artifactData)
         {
             if (_ownedArtifacts.Remove(artifactData))
             {
-                EffectServices.Remove(e => e.LinkedArtifact == artifactData);
+                EffectServices.Remove(e => e.LinkedObject == (object)artifactData);
                 Save();
             }
             else
