@@ -24,7 +24,7 @@ namespace Quackery
         [SerializeField] private GameObject _offlineBadge;
         [SerializeField] private GameObject _newBadge;
 
-        [SerializeField] private EffectBarUI _effectBarUI;
+        [SerializeField] private StatusBarUI _effectBarUI;
 
         public Client Client
         {

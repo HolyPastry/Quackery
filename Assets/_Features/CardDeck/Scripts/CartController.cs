@@ -750,7 +750,7 @@ namespace Quackery.Decks
         private void DiscardCart()
         {
             List<Card> topCards = GetTopCards();
-            EffectServices.Remove(e => topCards.Exists(card => card.gameObject == e.LinkedObject));
+            EffectServices.Remove(e => topCards.Exists(card => (object)card.gameObject == e.LinkedObject));
 
             List<Card> cardsToDiscard = new();
             foreach (var cartPile in _cartPiles)

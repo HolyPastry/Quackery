@@ -119,8 +119,7 @@ namespace Quackery.Decks
                 yield return DialogQueueServices.WaitUntilAllDialogEnds();
             }
             yield return new WaitForSeconds(1f);
-            yield return StartCoroutine(AddClientEffects());
-
+            yield return EffectServices.Add(_client);
 
             yield return new WaitForSeconds(1.5f);
 
@@ -181,14 +180,6 @@ namespace Quackery.Decks
             }
         }
 
-        private IEnumerator AddClientEffects()
-        {
-            foreach (var effect in _client.Effects)
-            {
-                yield return new WaitForSeconds(0.2f);
-                EffectServices.Add(effect, _client);
-            }
-        }
 
         internal WaitUntil WaitUntilEndOfRound()
         {

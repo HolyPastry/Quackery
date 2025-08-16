@@ -47,14 +47,8 @@ namespace Quackery.Inventories
         {
 
             List<CardReward> rewards = new();
-            // {
-            //     new()
-            //     {
-            //         Type = EnumCardReward.BaseReward,
-            //         Value = topCard.Price
-            //     }
-            // };
-            (int multiplier, int bonus) = EffectServices.GetSynergyBonuses(topCard, subItems);
+
+            (int multiplier, int bonus) = CardEffectServices.GetSynergyBonuses(topCard, subItems);
 
             if (subItems.Count > 0 && subItems.TrueForAll(i => i.Category == topCard.Category))
             {

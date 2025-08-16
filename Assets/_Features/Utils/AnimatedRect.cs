@@ -26,10 +26,6 @@ namespace Quackery
         }
         public float Height => _rectTransform.rect.height;
 
-        [Header("Animation Settings")]
-        [SerializeField] private float _animationDuration = 0.5f;
-        //[SerializeField] private float _scaleFactor = 1.1f;
-        [SerializeField] private float _scaleDuration = 0.2f;
         [SerializeField] private Ease _animationEaseIn = Ease.OutBack;
         [SerializeField] private Ease _animationEaseOut = Ease.InBack;
         [SerializeField] private bool _startHidden = true;
@@ -126,7 +122,7 @@ namespace Quackery
             var targetPosition = _overridePositionEnabled ? _overridePosition : DirectionVector(to);
             _inprogressZoomTween.Kill();
             _rectTransform
-               .DOAnchorPos(targetPosition, _animationDuration)
+               .DOAnchorPos(targetPosition, Tempo.Beat)
                .SetEase(_animationEaseOut)
                .OnComplete(() =>
                {
@@ -141,7 +137,7 @@ namespace Quackery
             _isAnimating = true;
             _rectTransform.gameObject.SetActive(true);
             _inprogressZoomTween.Kill();
-            _inprogressZoomTween = _rectTransform.transform.DOScale(Vector3.one, _animationDuration).SetEase(_animationEaseIn)
+            _inprogressZoomTween = _rectTransform.transform.DOScale(Vector3.one, Tempo.Beat).SetEase(_animationEaseIn)
                 .OnComplete(() =>
                 {
                     EndAnimation();
@@ -159,7 +155,7 @@ namespace Quackery
             }
             _isAnimating = true;
             _inprogressZoomTween.Kill();
-            _inprogressZoomTween = _rectTransform.transform.DOScale(Vector3.zero, _animationDuration).SetEase(_animationEaseOut)
+            _inprogressZoomTween = _rectTransform.transform.DOScale(Vector3.zero, Tempo.Beat).SetEase(_animationEaseOut)
                  .OnComplete(() =>
                  {
                      _rectTransform.gameObject.SetActive(false);
@@ -184,7 +180,7 @@ namespace Quackery
         {
 
             _isAnimating = true;
-            _rectTransform.DOPunchScale(Vector3.one * 1.1f, _scaleDuration, 10, 0.1f).OnComplete(() =>
+            _rectTransform.DOPunchScale(Vector3.one * 1.1f, Tempo.Beat, 10, 0.1f).OnComplete(() =>
             {
                 EndAnimation();
             });
@@ -201,7 +197,7 @@ namespace Quackery
         internal AnimatedRect SlideToZero()
         {
             _isAnimating = true;
-            _rectTransform.DOLocalMove(Vector3.zero, _animationDuration)
+            _rectTransform.DOLocalMove(Vector3.zero, Tempo.Beat)
                 .SetEase(_animationEaseIn)
                 .OnComplete(() =>
                 {
@@ -226,7 +222,7 @@ namespace Quackery
             _isAnimating = true;
             var offset = yOffset;
 
-            _rectTransform.DOAnchorPosY(offset, _animationDuration)
+            _rectTransform.DOAnchorPosY(offset, Tempo.Beat)
                 .SetEase(_animationEaseIn)
                 .OnComplete(() =>
                 {

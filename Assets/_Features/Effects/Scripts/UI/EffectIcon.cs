@@ -17,7 +17,7 @@ namespace Quackery.Effects
                 _effect = value;
                 if (_icon != null && _effect != null)
                 {
-                    _icon.sprite = _effect.Icon;
+                    // _icon.sprite = _effect.Icon;
                 }
             }
         }

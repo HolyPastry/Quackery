@@ -536,9 +536,9 @@ namespace Quackery.Decks
 
             yield return new WaitForSeconds(0.5f);
 
-            yield return EffectServices.Execute(EnumEffectTrigger.OnCardPlayed, card);
+            yield return EffectServices.Add(card);
 
-            //yield return EffectServices.AddStatuses(card.Effects);
+            yield return EffectServices.Execute(EnumEffectTrigger.OnCardPlayed, card);
 
             CartServices.AddToCartValue(card.Price);
 
@@ -764,7 +764,7 @@ namespace Quackery.Decks
                     pile.Playable = CartServices.CanAddToCart(topCard);
                 }
 
-                pile.Playable &= EffectServices.IsCardPlayable(topCard);
+                pile.Playable &= CardEffectServices.IsPlayable(topCard);
                 DeckEvents.OnActivatePile(pile.Type, pile.Index, pile.Playable);
             }
 

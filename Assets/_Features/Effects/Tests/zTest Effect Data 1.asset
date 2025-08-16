@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ebb1164b960441518dce71a12144699, type: 3}
+  m_Name: zTest Effect Data 1
+  m_EditorClassIdentifier: 
+  Description: 
+  CanBeNegative: 0
+  Tags: 
+  Explanations: []
+  Value: 3
+  _status: {fileID: 11400000, guid: 9118a0219ffd44b4d922d429b4205213, type: 2}
+  _trigger: 5

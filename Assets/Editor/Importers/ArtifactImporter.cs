@@ -60,7 +60,7 @@ namespace Quackery
             ParseRequirements(artifactData, fields[6]);
 
             int index = 8;
-            artifactData.Effects.Clear();
+            // artifactData.Effects.Clear();
             for (int i = 0; i < 3; i++)
             {
                 var effectName = fields[index++];

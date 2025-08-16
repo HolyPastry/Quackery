@@ -85,31 +85,31 @@ namespace Quackery
                     continue;
                 }
                 statusNames.Add(effect.name);
-                if (!effect._tags.Contains(EnumEffectTag.Status))
+                if (!effect.Tags.Contains(EnumEffectTag.Status))
                 {
                     logs += $"EffectData {effect.name} is not a status.\n";
                     continue;
                 }
-                if (effect.Icon == null)
-                {
-                    if (!UpdateIcon(effect, out string iconLog))
-                    {
-                        logs += iconLog;
-                        continue;
-                    }
+                // if (effect.Icon == null)
+                // {
+                //     if (!UpdateIcon(effect, out string iconLog))
+                //     {
+                //         logs += iconLog;
+                //         continue;
+                //     }
 
-                }
-                string path = AssetDatabase.GetAssetPath(effect.Icon);
-                if (!path.Contains($"Icon={effect.name}"))
-                {
-                    if (!UpdateIcon(effect, out string iconLog))
-                    {
-                        effect.Icon = null; // Reset icon if it cannot be updated
-                        EditorUtility.SetDirty(effect);
-                        logs += iconLog;
-                        continue;
-                    }
-                }
+                // }
+                // string path = AssetDatabase.GetAssetPath(effect.Icon);
+                // if (!path.Contains($"Icon={effect.name}"))
+                // {
+                //     if (!UpdateIcon(effect, out string iconLog))
+                //     {
+                //         effect.Icon = null; // Reset icon if it cannot be updated
+                //         EditorUtility.SetDirty(effect);
+                //         logs += iconLog;
+                //         continue;
+                //     }
+                // }
             }
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -142,7 +142,7 @@ namespace Quackery
             Sprite icon = AssetDatabase.LoadAssetAtPath<Sprite>(Path.Combine(_iconPath, $"Icon={effect.name}.png"));
             if (icon != null)
             {
-                effect.Icon = icon;
+                // effect.Icon = icon;
                 EditorUtility.SetDirty(effect);
                 return true;
             }

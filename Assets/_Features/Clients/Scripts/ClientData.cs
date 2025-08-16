@@ -31,6 +31,8 @@ namespace Quackery.Clients
 
         public string Name => CharacterData.MasterText;
 
+
+
         public int Budget = -1;
     }
 }

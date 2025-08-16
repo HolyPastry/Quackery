@@ -13,7 +13,6 @@ namespace Quackery.Effects
     public class Effect
     {
         private bool _isInitialized;
-        public Effect(string[] defaults) { Debug.Log(defaults); }
         [SerializeField] private EffectData _data;
         public EffectData Data
         {
@@ -48,7 +47,7 @@ namespace Quackery.Effects
         [HideInInspector]
         public List<EnumEffectTag> Tags = new();
 
-        public Sprite Icon => Data.Icon;
+        //public Sprite Icon => Data.Icon;
 
         public object LinkedObject;
 
@@ -94,9 +93,6 @@ namespace Quackery.Effects
                 return;
             }
             Data.CheckValidity();
-
         }
-
-
     }
 }

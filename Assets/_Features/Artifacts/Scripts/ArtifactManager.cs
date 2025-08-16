@@ -77,10 +77,8 @@ namespace Quackery.Artifacts
             foreach (var artifact in artifacts)
             {
                 ArtifactEvents.OnArtifactOut(artifact);
-                yield return new WaitForSeconds(0.5f);
-                foreach (var effectData in artifact.Effects)
-                    EffectServices.Add(effectData, artifact);
 
+                yield return EffectServices.Add(artifact);
             }
 
 

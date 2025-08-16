@@ -7,16 +7,17 @@ using UnityEngine;
 namespace Quackery
 {
 
-    public class EffectBarUI : MonoBehaviour
+    public class StatusBarUI : MonoBehaviour
     {
         [SerializeField] private bool _listenToChange;
         [SerializeField] private SpeechBubble _clientSpeechBubble;
-        [SerializeField] private List<EnumEffectTag> _tagFilters;
-        private readonly List<EffectUI> _statusUIPool = new();
+        [SerializeField] private List<EnumTarget> _targetFilter;
+        private readonly List<StatusUI> _statusUIPool = new();
 
 
         void Awake()
         {
+
             GetComponentsInChildren(true, _statusUIPool);
             for (int i = 0; i < _statusUIPool.Count; i++)
                 _statusUIPool[i].gameObject.SetActive(false);
@@ -27,101 +28,82 @@ namespace Quackery
         {
             if (!_listenToChange) return;
 
-            EffectEvents.OnStackMultiplerUpdate += UpdateStackMultiplierUI;
             EffectEvents.OnUpdated += UpdateStatusUI;
-            EffectEvents.OnAdded += AddStatusUI;
-            EffectEvents.OnRemoved += RemoveStatusUI;
+            EffectEvents.OnAdded += UpdateStatusUI;
+            EffectEvents.OnRemoved += UpdateStatusUI;
         }
 
         void OnDisable()
         {
-            EffectEvents.OnStackMultiplerUpdate -= UpdateStackMultiplierUI;
             EffectEvents.OnUpdated -= UpdateStatusUI;
-            EffectEvents.OnAdded -= AddStatusUI;
-            EffectEvents.OnRemoved -= RemoveStatusUI;
+            EffectEvents.OnAdded -= UpdateStatusUI;
+            EffectEvents.OnRemoved -= UpdateStatusUI;
         }
 
-        private void UpdateStackMultiplierUI(int multiplier)
-        {
-            // if (multiplier <= 1)
-            // {
-            //     _stackMultiplierUI.gameObject.SetActive(false);
-            //     return;
-            // }
-            // _stackMultiplierUI.gameObject.SetActive(true);
-            // _stackMultiplierUI.UpdateMultipler(multiplier);
-        }
-
-        public void RemoveStatusUI(Effect effect)
+        private void RemoveStatus(Status status)
         {
             for (int i = 0; i < _statusUIPool.Count; i++)
             {
                 if (!_statusUIPool[i].gameObject.activeSelf) continue;
-                if (_statusUIPool[i].Effect == null) continue;
-                if (_statusUIPool[i].Effect.Data == effect.Data)
+                if (_statusUIPool[i].Status == null) continue;
+                if (_statusUIPool[i].Status == status)
                 {
                     _statusUIPool[i].Hide();
                     return;
                 }
             }
-            Debug.LogWarning($"StatusUI for {effect.Data.name} not found in pool.");
+            Debug.LogWarning($"StatusUI for {status.name} not found in pool.");
         }
 
-        public void AddStatusUI(Effect effect)
+        private void AddStatus(Status status, int value)
         {
-            bool containsTag = _tagFilters.TrueForAll(tag => effect.Tags.Contains(tag));
-            if (!containsTag) return;
             foreach (var statusUI in _statusUIPool)
             {
                 if (statusUI.gameObject.activeSelf) continue;
-                StartCoroutine(AddClientStatusRoutine(statusUI, effect));
+                StartCoroutine(AddClientStatusRoutine(statusUI, status, value));
                 return;
             }
         }
 
-        private IEnumerator AddClientStatusRoutine(EffectUI statusUI, Effect effect)
+        private IEnumerator AddClientStatusRoutine(StatusUI statusUI, Status status, int value)
         {
             if (_clientSpeechBubble == null)
             {
-                statusUI.UpdateStatus(effect, animate: true);
+                statusUI.UpdateStatus(status, value, animate: true);
                 yield break;
             }
 
-            _clientSpeechBubble.SetText($"<sprite name={effect.Data.name}>");
+            _clientSpeechBubble.SetText($"<sprite name={status.name}>");
             yield return new WaitForSeconds(1f);
 
-            statusUI.UpdateStatus(effect, origin: _clientSpeechBubble.transform.position);
+            statusUI.UpdateStatus(status, value, origin: _clientSpeechBubble.transform.position);
             _clientSpeechBubble.Hide();
         }
 
         public void UpdateStatusUI(Effect effect)
         {
-            List<Effect> effects = EffectServices.GetCurrent();
+            if (effect.Data is not IStatusEffect statusEffect) return;
+            if (_targetFilter.Count > 0 &&
+                 !_targetFilter.Contains(statusEffect.Status.Target)) return;
 
-            for (int i = 0; i < effects.Count; i++)
+            Dictionary<Status, int> statuses = EffectServices.GetActiveStatuses();
+
+            //if the status is no longer active, it should be removed
+            if (!statuses.TryGetValue(statusEffect.Status, out int newValue))
             {
-                var statusUI = _statusUIPool.Find(ui
-                        => ui.Effect != null &&
-                             ui.Effect.Data == effects[i].Data &&
-                            ui.gameObject.activeSelf == true
-                            );
-                if (statusUI != null)
-                {
-                    statusUI.UpdateStatus(effects[i], animate: true);
-                    continue;
-                }
-
+                RemoveStatus(statusEffect.Status);
+                return;
             }
-            for (int i = 0; i < _statusUIPool.Count; i++)
+
+            foreach (var statusUI in _statusUIPool)
             {
-                if (_statusUIPool[i].gameObject.activeSelf == false ||
-                   effects.Exists(s => s.Data == _statusUIPool[i].Effect.Data))
-                    continue;
+                if (statusUI.Status != statusEffect.Status) continue;
 
-                _statusUIPool[i].Hide();
+                statusUI.UpdateStatus(statusEffect.Status, newValue, true);
+                return;
             }
+            //if the status is not found in the pool, it should be added
+            AddStatus(statusEffect.Status, newValue);
         }
-
-
     }
 }

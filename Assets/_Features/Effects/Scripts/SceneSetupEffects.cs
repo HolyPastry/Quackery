@@ -5,17 +5,14 @@ using UnityEngine;
 
 namespace Quackery.Effects
 {
-    public class SceneSetupEffects : SceneSetupScript
+    public class SceneSetupEffects : SceneSetupScript, IEffectCarrier
     {
         [SerializeField] private List<EffectData> _initialEffects;
-        [SerializeField] private Transform _effectOrigin;
+        public List<EffectData> EffectDataList => _initialEffects;
+
         public override IEnumerator Routine()
         {
-            foreach (var effect in _initialEffects)
-            {
-                EffectServices.Add(effect, _effectOrigin);
-            }
-            yield return null;
+            yield return EffectServices.Add(this);
         }
     }
 }

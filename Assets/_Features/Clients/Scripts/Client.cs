@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using Holypastry.Bakery;
 using Holypastry.Bakery.Quests;
-using Quackery.Decks;
+
 using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery.Clients
 {
-    public record Client
+    public class Client : IEffectCarrier
     {
         public enum EnumState
         {
@@ -68,6 +68,8 @@ namespace Quackery.Clients
         public bool QuestFullfilled => FirstQuest == null || QuestServices.IsQuestCompleted(FirstQuest);
 
         public Condition RevealCondition { get; internal set; }
+
+        public List<EffectData> EffectDataList => Effects;
 
         public void InitUnknown(ClientsData unknownClientsData, EffectData effect = null)
         {

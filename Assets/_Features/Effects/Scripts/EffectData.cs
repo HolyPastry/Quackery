@@ -11,17 +11,17 @@ using UnityEngine;
 namespace Quackery.Effects
 {
 
-    public abstract class EffectData : ContentTag
+    public abstract class EffectData : ScriptableObject
     {
-        public Sprite Icon;
+        //public Sprite Icon;
 
         public string Description;
 
         public bool CanBeNegative = false;
 
+        // public EnumEffectTrigger Trigger = EnumEffectTrigger.OnCardPlayed;
 
-
-        public List<EnumEffectTag> _tags;
+        public List<EnumEffectTag> Tags;
         public List<Explanation> Explanations;
         public WaitForSeconds DefaultWaitTime = new(0.5f);
 
@@ -35,7 +35,7 @@ namespace Quackery.Effects
 
         public virtual void Setup(Effect effect)
         {
-            effect.Tags.AddUniqueRange(_tags);
+            effect.Tags.AddUniqueRange(Tags);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Quackery.Artifacts
 
 
     [CreateAssetMenu(menuName = "Quackery/ArtifactData")]
-    public class ArtifactData : ContentTag
+    public class ArtifactData : ContentTag, IEffectCarrier
     {
         public Sprite Icon;
 
@@ -30,7 +30,9 @@ namespace Quackery.Artifacts
         public List<Explanation> Explanations = new();
         public bool IsUpgrade => UpgradeFor != null;
 
-        public List<EffectData> Effects = new();
+        public List<EffectData> EffectDataList => _effectDatas;
+
+        [SerializeField] private List<EffectData> _effectDatas = new();
 
         public int Price = 0;
 
