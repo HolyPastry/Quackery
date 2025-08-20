@@ -89,7 +89,7 @@ namespace Quackery.Bills
                         _overdueCrosses[i].SetState(OverdueCross.State.NotDue);
                     }
                 }
-                yield return new WaitForSeconds(0.2f);
+                yield return Tempo.WaitForABeat;
             }
         }
 
@@ -104,14 +104,14 @@ namespace Quackery.Bills
                 yield break;
             }
             _overduePanel.SetActive(true);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             for (int i = 0; i < _overdueCrosses.Count; i++)
             {
                 if (_overdueCrosses[i].CurrentState == OverdueCross.State.Overdue ||
                    _overdueCrosses[i].CurrentState == OverdueCross.State.NotDue)
                     continue;
                 _overdueCrosses[i].SetState(OverdueCross.State.Overdue);
-                yield return new WaitForSeconds(0.5f);
+                yield return Tempo.WaitForABeat;
                 Card card = DeckServices.CreateCard(_overdueCurse);
                 card.transform.SetParent(_animatedCardRect.transform);
                 card.transform.position = _overdueCrosses[i].transform.position;
@@ -126,7 +126,7 @@ namespace Quackery.Bills
                 InventoryServices.AddItem(new(_overdueCurse));
 
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             StopAllCoroutines();
         }
     }

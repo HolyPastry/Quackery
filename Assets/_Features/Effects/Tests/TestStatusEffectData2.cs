@@ -13,9 +13,12 @@ namespace Quackery
         [SerializeField] private Status _status;
 
         [SerializeField] private EnumEffectTrigger _trigger;
+        [SerializeField] private float _value;
         public Status Status => _status;
 
         public EnumEffectTrigger Trigger => _trigger;
+
+        public float Value => _value;
 
         public override IEnumerator Execute(Effect effect)
         {

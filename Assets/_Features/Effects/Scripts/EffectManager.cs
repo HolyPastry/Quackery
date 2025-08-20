@@ -8,7 +8,7 @@ using Quackery.Decks;
 using Quackery.Inventories;
 
 using UnityEngine;
-using UnityEngine.Assertions;
+
 
 
 namespace Quackery.Effects
@@ -16,6 +16,7 @@ namespace Quackery.Effects
     public class EffectManager : MonoBehaviour
     {
         private readonly List<Effect> _effects = new();
+
         private DataCollection<EffectData> _effectCollection;
 
         void Awake()
@@ -28,6 +29,7 @@ namespace Quackery.Effects
             EffectServices.Add = (effectCarrier) => null;
             EffectServices.Remove = (effect) => null;
             EffectServices.RemoveLinkedToObject = (linkedObject) => null;
+            EffectServices.Get = (predicate) => new List<Effect>();
 
             EffectServices.Execute = (trigger, card) => null;
             EffectServices.ExecutePile = (trigger, cardPile) => null;
@@ -57,6 +59,7 @@ namespace Quackery.Effects
             EffectServices.RemoveLinkedToObject = (linkedObject)
                     => StartCoroutine(RemoveRoutine(e => e.LinkedObject == linkedObject &&
                     !e.Tags.Contains(EnumEffectTag.Persistent)));
+            EffectServices.Get = Get;
 
 
             EffectServices.Execute = (trigger, effectCarrier)
@@ -81,6 +84,13 @@ namespace Quackery.Effects
             CartEvents.OnStackHovered += OnStackHovered;
         }
 
+        private IEnumerable<Effect> Get(Predicate<Effect> predicate)
+        {
+            return _effects.Where(e =>
+                !(e.Data is IStatusEffect
+                    && !e.LinkedObject.ActivatedCondition(e))).Where(e => predicate(e));
+        }
+
         private IEnumerator RemoveRoutine(Predicate<Effect> predicate)
         {
             var effects = _effects.FindAll(predicate);
@@ -90,7 +100,7 @@ namespace Quackery.Effects
                 EffectEvents.OnRemoved?.Invoke(effect);
                 yield return Tempo.WaitForABeat;
             }
-            ;
+
         }
 
         private Dictionary<Status, int> GetActiveStatuses()
@@ -99,7 +109,8 @@ namespace Quackery.Effects
 
             foreach (var effect in _effects)
             {
-                if (effect.Data is not IStatusEffect statusEffect)
+                if (effect.Data is not IStatusEffect statusEffect ||
+                        !effect.LinkedObject.ActivatedCondition(effect))
                     continue;
 
                 if (statuses.TryGetValue(statusEffect.Status, out int currentValue))
@@ -112,7 +123,10 @@ namespace Quackery.Effects
 
         private float GetModifier(Type type)
         {
-            var effects = _effects.Where(e => e.Data.GetType().Equals(type)).ToList();
+            var effects = _effects.Where(e =>
+                !(e.Data is IStatusEffect && !e.LinkedObject.ActivatedCondition(e)))
+                        .Where(e => e.Data.GetType().Equals(type)).ToList();
+            if (effects.Count == 0) return 0;
             float modifier = 0;
             foreach (var e in effects)
             {
@@ -135,18 +149,19 @@ namespace Quackery.Effects
         }
 
 
-        private int CounterEffect(EffectData data, int valueToCounter)
-        {
-            valueToCounter = Mathf.Abs(valueToCounter);
-            var counterEffect = _effects.Find(effect => effect.Data == data);
 
-            if (counterEffect != null)
-            {
-                float counteredValue = Math.Abs(counterEffect.Value);
-                counteredValue = Math.Min(valueToCounter, counteredValue);
-                // ModifyValue(data, -counteredValue);
-                return (int)counteredValue;
-            }
+        private int CounterEffect(Status data, int valueToCounter)
+        {
+            // valueToCounter = Mathf.Abs(valueToCounter);
+            // var counterEffect = _effects.Find(effect => effect.Data == data);
+
+            // if (counterEffect != null)
+            // {
+            //     float counteredValue = Math.Abs(counterEffect.Value);
+            //     counteredValue = Math.Min(valueToCounter, counteredValue);
+            //     // ModifyValue(data, -counteredValue);
+            //     return (int)counteredValue;
+            // }
             return 0;
 
         }
@@ -208,7 +223,7 @@ namespace Quackery.Effects
             foreach (var effectData in effectCarrier.EffectDataList)
             {
                 var effect = new Effect(effectData);
-                _effects.Add(effect);
+                _effects.Insert(0, effect);
                 effect.LinkedObject = effectCarrier;
                 EffectEvents.OnAdded?.Invoke(effect);
                 if (effect.Data is IStatusEffect)
@@ -222,8 +237,7 @@ namespace Quackery.Effects
             var card = pile.TopCard;
 
             var effectToExecute = card.Effects
-                .FindAll(effect => effect.Data is IStatusEffect statusEffect &&
-                         statusEffect.Trigger == trigger);
+                .FindAll(effect => effect.Data.Trigger == trigger);
 
             foreach (var effect in effectToExecute)
                 yield return StartCoroutine(effect.Data.ExecutePile(effect, pile));
@@ -234,24 +248,13 @@ namespace Quackery.Effects
         {
 
             var effectToExecute = _effects
-                .FindAll(effect =>
-
-                            (effect.Data is IStatusEffect statusEffect &&
-                            statusEffect.Trigger == trigger)
-
-                            ||
-
-                            (effect.Data is not IStatusEffect &&
-                            trigger == EnumEffectTrigger.OnCardPlayed &&
-                            effect.LinkedObject == carrier)
-                        );
-
-
+                .FindAll(effect => effect.Data.Trigger == trigger &&
+                    ((effect.Data is IStatusEffect && effect.LinkedObject.ActivatedCondition(effect))
+                        || effect.LinkedObject == carrier));
 
             foreach (var effect in effectToExecute)
-            {
                 yield return StartCoroutine(effect.Data.Execute(effect));
-            }
+
         }
 
         private IEnumerator UpdateDurationEffects()

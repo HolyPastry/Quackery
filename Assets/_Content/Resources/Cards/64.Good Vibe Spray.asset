@@ -21,9 +21,6 @@ MonoBehaviour:
   Explanations: []
   SubscriptionCost: 13
   Category: 7
-  Effects:
-  - _data: {fileID: 11400000, guid: 3595818e79b0a41709da42f7deae28b8, type: 2}
-    Value: 1
-    Tags: 0200000005000000
+  Effects: []
   ValueEvaluator: {fileID: 0}
   Rarity: 0

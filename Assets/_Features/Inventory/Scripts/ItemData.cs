@@ -32,14 +32,11 @@ namespace Quackery.Inventories
 
         public List<Explanation> Explanations = new();
 
-        public int SubscriptionCost;
+        public int ShopPrice;
 
         public EnumItemCategory Category;
 
-
         public List<EffectData> Effects = new();
-
-        public ValueEvaluator ValueEvaluator;
 
         public EnumRarity Rarity;
 
@@ -86,10 +83,10 @@ namespace Quackery.Inventories
             // }
 
 
-            if (ValueEvaluator != null)
-            {
-                rewards.AddRange(ValueEvaluator.Evaluate(topCard, subItems, otherPiles));
-            }
+            // if (ValueEvaluator != null)
+            // {
+            //     rewards.AddRange(ValueEvaluator.Evaluate(topCard, subItems, otherPiles));
+            // }
             return rewards;
         }
 

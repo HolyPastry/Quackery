@@ -9,7 +9,10 @@ namespace Quackery.Effects
     public class ValuePriceEffect : EffectData, IPriceModifierEffect, ICategoryEffect
     {
         [SerializeField] private EnumItemCategory _category = EnumItemCategory.Any;
+        [SerializeField] private float _value;
         public EnumItemCategory Category => _category;
+
+        public float Value => _value;
 
         public int PriceModifier(Effect effect, Card card)
         {

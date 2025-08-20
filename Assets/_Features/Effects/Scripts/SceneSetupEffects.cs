@@ -10,6 +10,8 @@ namespace Quackery.Effects
         [SerializeField] private List<EffectData> _initialEffects;
         public List<EffectData> EffectDataList => _initialEffects;
 
+        public bool ActivatedCondition(Effect effect) => true;
+
         public override IEnumerator Routine()
         {
             yield return EffectServices.Add(this);

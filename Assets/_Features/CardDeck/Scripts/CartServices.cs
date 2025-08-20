@@ -65,6 +65,10 @@ namespace Quackery.Decks
 
         internal static Func<Predicate<Card>, List<Card>> GetMatchingCards = (predicate) => new();
 
+        public static Action InitCart = delegate { };
+
+        internal static Func<Card, bool> IsTopCard = (card) => true;
+
         // internal static Action<int> ModifyValue = (value) => { };
 
     }

@@ -14,7 +14,7 @@ namespace Quackery
             Card card = effect.LinkedObject as Card;
             if (card == null) yield break;
             CartServices.ReplaceTopCard(card);
-            yield return DefaultWaitTime;
+            yield return Tempo.WaitForABeat;
         }
     }
 }

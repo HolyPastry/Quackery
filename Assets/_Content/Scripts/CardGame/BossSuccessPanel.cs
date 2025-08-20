@@ -41,7 +41,7 @@ namespace Quackery
             _ratingText.text = client.LastReviewText;
 
             yield return StartCoroutine(_ratingPanel.SetRatingRoutine(client.LastRating));
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             _successText.SetActive(true);
             yield return new WaitForSeconds(1f);
             _rewardText.gameObject.SetActive(true);

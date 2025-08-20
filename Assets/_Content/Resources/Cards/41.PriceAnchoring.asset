@@ -21,17 +21,7 @@ MonoBehaviour:
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 8940ffcbd8b7a416eb34dcafcd8c4948, type: 2}
-  SubscriptionCost: 3
+  ShopPrice: 3
   Category: 7
-  Effects:
-  - _data: {fileID: 11400000, guid: 2af380b045bc34ed2a6a5b7acf7de466, type: 2}
-    Value: 7
-    Tags: 
-  - _data: {fileID: 11400000, guid: 801a0a2ba11034396948a755cdf973ab, type: 2}
-    Value: 0
-    Tags: 
-  - _data: {fileID: 11400000, guid: 9fd96427358ac4196af546c123289864, type: 2}
-    Value: 1
-    Tags: 
-  ValueEvaluator: {fileID: 0}
+  Effects: []
   Rarity: 0

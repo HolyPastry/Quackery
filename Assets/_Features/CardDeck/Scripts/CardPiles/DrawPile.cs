@@ -101,9 +101,10 @@ namespace Quackery.Decks
                 }
             }
 
+
             card.UpdateUI();
             card.Item.NumberOfDraws++;
-            EffectServices.Execute(EnumEffectTrigger.OnDraw, card);
+
             return card;
         }
 

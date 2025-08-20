@@ -135,7 +135,7 @@ namespace Quackery.GameMenu
             yield return StartCoroutine(_purseUpdate.AddMoney((int)amount));
             yield return new WaitForSeconds(1f);
             TweenUtil.SlideOut(_purseUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
         }
         private Image SpawnArtifactUI(ArtifactData data)
         {
@@ -146,10 +146,10 @@ namespace Quackery.GameMenu
         {
             _menuToggle.isOn = false;
             TweenUtil.SlideIn(_artifactUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             yield return ArtifactServices.TakeArtifactsOut();
             TweenUtil.SlideOut(_artifactUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
         }
 
 
@@ -160,11 +160,11 @@ namespace Quackery.GameMenu
 
             TweenUtil.SlideIn(_billUpdate.RectTransform);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             yield return StartCoroutine(_destroyZone.DestroyBill(block));
 
             TweenUtil.SlideOut(_billUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
         }
 
         private IEnumerator AddToBillRoutine(RectTransform bill)
@@ -175,7 +175,7 @@ namespace Quackery.GameMenu
             StartCoroutine(_billUpdate.MoveIn(bill));
             yield return new WaitForSeconds(0.7f);
             TweenUtil.SlideOut(_billUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             _billUpdate.DestroyItems();
         }
 
@@ -186,11 +186,11 @@ namespace Quackery.GameMenu
 
             TweenUtil.SlideIn(_artifactUpdate.RectTransform);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             yield return StartCoroutine(_destroyZone.DestroyArtifact(artifactIcon));
 
             TweenUtil.SlideOut(_artifactUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
         }
 
         private IEnumerator AddToArtifactsRoutine(RectTransform artifactIcon)
@@ -202,7 +202,7 @@ namespace Quackery.GameMenu
             yield return new WaitForSeconds(0.7f);
 
             TweenUtil.SlideOut(_artifactUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             _artifactUpdate.DestroyItems();
         }
 
@@ -228,14 +228,14 @@ namespace Quackery.GameMenu
                 newCards.Add(newCard);
             }
             TweenUtil.SlideIn(_cardUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             foreach (var newCard in newCards)
             {
                 OnCardMovement?.Invoke();
                 yield return StartCoroutine(_destroyZone.DestroyCard(newCard));
             }
             TweenUtil.SlideOut(_cardUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
         }
 
         private IEnumerator AddToDeckRoutine(List<Card> cards)
@@ -244,7 +244,7 @@ namespace Quackery.GameMenu
 
 
             TweenUtil.SlideIn(_cardUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             foreach (var card in cards)
             {
                 StartCoroutine(_cardUpdate.MoveIn(card.RectTransform));
@@ -254,7 +254,7 @@ namespace Quackery.GameMenu
 
             yield return new WaitForSeconds(1f);
             TweenUtil.SlideOut(_cardUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             _cardUpdate.DestroyItems();
 
         }
@@ -307,7 +307,7 @@ namespace Quackery.GameMenu
             }
 
             TweenUtil.SlideIn(_cardUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
 
             foreach (var newCard in newCards)
             {
@@ -322,7 +322,7 @@ namespace Quackery.GameMenu
 
             }
             TweenUtil.SlideOut(_cardUpdate.RectTransform);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             for (int i = newCards.Count - 1; i >= 0; i--)
             {
                 var newCard = newCards[i];

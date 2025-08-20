@@ -15,19 +15,12 @@ MonoBehaviour:
   MasterText: Fake It Until You Make It
   Icon: {fileID: 21300000, guid: edff08fb053f55748ad9ddc81114bcc3, type: 3}
   BasePrice: 0
-  ShortDescription: Draw one more Card\n -1 Vibes
+  ShortDescription: Draw one more Card\n -1 <b>Vibes</b>
   LongDescription: 
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 48f617e1041c14b9d855f83da3a9fb1e, type: 2}
-  SubscriptionCost: 13
+  ShopPrice: 13
   Category: 7
-  Effects:
-  - _data: {fileID: 11400000, guid: 39a8fbd3013e54c5abcf778ff57aa125, type: 2}
-    Value: 1
-    Tags: 050000000200000007000000
-  - _data: {fileID: 11400000, guid: 3595818e79b0a41709da42f7deae28b8, type: 2}
-    Value: -1
-    Tags: 0200000005000000
-  ValueEvaluator: {fileID: 0}
+  Effects: []
   Rarity: 0

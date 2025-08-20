@@ -25,7 +25,7 @@ namespace Quackery
 
         internal static Action CleanEffects = delegate { };
 
-        internal static Func<EffectData, int, int> CounterEffect = (counterEffect, value) => 0;
+        internal static Func<Status, int, int> CounterEffect = (counterStatus, value) => 0;
 
         internal static Func<Coroutine> UpdateDurationEffects = () => null;
 

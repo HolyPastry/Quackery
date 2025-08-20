@@ -9,7 +9,7 @@ namespace Quackery.Effects
     {
         public Sprite Icon;
         public string Name;
-        public List<Explanation> Explanations = new();
+        public Explanation Explanation;
         public EnumTarget Target;
     }
 }

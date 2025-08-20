@@ -210,33 +210,12 @@ MonoBehaviour:
   - Coyote
   - Hyena
   LevelsData:
-  - Effects:
-    - _data: {fileID: 11400000, guid: 800b97147ddac41c6ae43562328104db, type: 2}
-      Value: 1
-      Tags: 0200000001000000
-    - _data: {fileID: 11400000, guid: 0efb1bb5a0fe24d2e9a540c5bbc4b250, type: 2}
-      Value: 1
-      Tags: 0200000001000000
-    - _data: {fileID: 11400000, guid: f46eaadc5c50444de8d8e4db6280921c, type: 2}
-      Value: 1
-      Tags: 0200000001000000
-    - _data: {fileID: 11400000, guid: 20ce1060ae6814fe092e901535c4d6be, type: 2}
-      Value: 1
-      Tags: 0200000001000000
-    - _data: {fileID: 11400000, guid: 0c626a7a36b8a460b8d88aab4412ca1c, type: 2}
-      Value: 1
-      Tags: 0200000001000000
+  - Effects: []
     SurvivalThreshold: 30
     NormalThreshold: 100
     QueueSizeRange: {x: 2, y: 2}
     CartSize: 2
-  - Effects:
-    - _data: {fileID: 11400000, guid: 861ac0bc84a78446c827fec2cb151274, type: 2}
-      Value: 1
-      Tags: 
-    - _data: {fileID: 11400000, guid: f321226eb75b8475190c295c7e7b2f6f, type: 2}
-      Value: 1
-      Tags: 
+  - Effects: []
     SurvivalThreshold: 100
     NormalThreshold: 500
     QueueSizeRange: {x: 3, y: 4}

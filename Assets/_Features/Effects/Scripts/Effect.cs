@@ -49,11 +49,7 @@ namespace Quackery.Effects
 
         //public Sprite Icon => Data.Icon;
 
-        public object LinkedObject;
-
-        public string Description => Data == null ?
-                         "No Effect Data Assigned" :
-                 Data.Description.Replace("#Value", Value.ToString());
+        public IEffectCarrier LinkedObject;
 
         public Effect()
         {
@@ -62,7 +58,8 @@ namespace Quackery.Effects
         public Effect(EffectData data)
         {
             Data = data;
-            Value = data.Value;
+            if (data is IValueEffect valueEffect)
+                Value = valueEffect.Value;
         }
 
         public Effect(Effect effect)

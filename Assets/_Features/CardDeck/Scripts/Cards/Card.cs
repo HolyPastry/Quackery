@@ -65,7 +65,7 @@ namespace Quackery.Decks
             foreach (var effect in _item.Effects)
             {
                 effect.Initialize();
-                effect.LinkedObject = this.gameObject;
+                effect.LinkedObject = this;
                 if (Item.Category != EnumItemCategory.Skill)
                     effect.Tags.Add(EnumEffectTag.ItemCard);
             }
@@ -104,6 +104,8 @@ namespace Quackery.Decks
 
         public List<Effect> Effects => _item.Effects;
 
+        public bool ActivatedCondition(Effect effect) => CartServices.IsTopCard(this);
+
         private Item _item;
 
         public int Price => CardEffectServices.Price(this) + InHandPriceBonus;
@@ -115,6 +117,7 @@ namespace Quackery.Decks
         public bool HasCartTarget => Category != EnumItemCategory.Skill;
 
         public List<EffectData> EffectDataList => _item.Data.Effects;
+
 
         private List<EffectIcon> _effectIconPool = new();
         private bool _toBeDestroyed;

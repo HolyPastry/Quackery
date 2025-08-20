@@ -15,7 +15,7 @@ namespace Quackery.Effects
         public override IEnumerator Execute(Effect effect)
         {
             CartServices.MergeCart((int)effect.Value, Category);
-            yield return DefaultWaitTime;
+            yield return Tempo.WaitForABeat;
         }
     }
 }

@@ -127,6 +127,7 @@ namespace Quackery.Decks
                 _budgetCartValue.Show();
             else
                 _cartValue.Show();
+            CartServices.InitCart();
 
             yield return new WaitForSeconds(1f);
             yield return EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundStart, null);
@@ -216,7 +217,7 @@ namespace Quackery.Decks
         {
             yield return new WaitForSeconds(1f);
             yield return GameMenuController.TakeDeckOut();
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             yield return GameMenuController.TakeArtifactsOut();
         }
     }

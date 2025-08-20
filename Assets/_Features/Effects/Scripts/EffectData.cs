@@ -13,19 +13,9 @@ namespace Quackery.Effects
 
     public abstract class EffectData : ScriptableObject
     {
-        //public Sprite Icon;
-
-        public string Description;
-
-        public bool CanBeNegative = false;
-
-        // public EnumEffectTrigger Trigger = EnumEffectTrigger.OnCardPlayed;
+         public EnumEffectTrigger Trigger;
 
         public List<EnumEffectTag> Tags;
-        public List<Explanation> Explanations;
-        public WaitForSeconds DefaultWaitTime = new(0.5f);
-
-        public float Value;
 
         public virtual IEnumerator Execute(Effect effect) { yield break; }
         public virtual IEnumerator ExecutePile(Effect effect, CardPile pile) => null;

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d79c35ac54384bf494bf40d23c5eaf0, type: 3}
+  m_Name: StatusImporter
+  m_EditorClassIdentifier: 
+  _googleSheetAPI: {fileID: 11400000, guid: 03b7f9bb2d0a640628f3bb6b6aa8c506, type: 2}
+  DATA_PATH: Assets/_Content/ScriptableObjects/Statuses
+  SHEET_NAME: Statuses
+  _iconPath: Assets/_Content/2DArt/Sprites/Icons

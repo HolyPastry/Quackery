@@ -7,5 +7,6 @@ namespace Quackery.Effects
     {
         public List<EffectData> EffectDataList { get; }
 
+        public bool ActivatedCondition(Effect effect);
     }
 }

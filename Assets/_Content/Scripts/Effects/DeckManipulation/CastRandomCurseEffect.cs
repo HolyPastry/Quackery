@@ -14,7 +14,7 @@ namespace Quackery.Effects
         {
             var curseEffect = _curseEffect[Random.Range(0, _curseEffect.Count)];
             curseEffect.Data.Execute(curseEffect);
-            yield return DefaultWaitTime;
+            yield return Tempo.WaitForABeat;
         }
     }
 }

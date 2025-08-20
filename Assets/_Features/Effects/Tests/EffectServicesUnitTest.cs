@@ -144,5 +144,7 @@ namespace Quackery
             Time.timeScale = 1f;
         }
 
+        public bool ActivatedCondition(Effect effect) => true;
+
     }
 }

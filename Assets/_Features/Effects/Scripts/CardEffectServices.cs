@@ -23,10 +23,12 @@ namespace Quackery.Effects
         {
             if (card == null) return 0;
 
-            var effects = EffectServices.Get(e => e is IPriceModifierEffect);
+            var effects = EffectServices.Get(e => e.Data is IPriceModifierEffect);
 
             float priceModifier = effects.Sum(e => (e.Data as IPriceModifierEffect).PriceModifier(e, card));
-            float ratioModifier = effects.Sum(e => (e.Data as IPriceModifierEffect).PriceMultiplier(e, card));
+
+            float ratioModifier = (effects.Count() == 0) ? 1 :
+                                    effects.Sum(e => (e.Data as IPriceModifierEffect).PriceMultiplier(e, card));
 
             float basePrice = card.Item.BasePrice;
 

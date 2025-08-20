@@ -21,17 +21,7 @@ MonoBehaviour:
   Explanations:
   - {fileID: 11400000, guid: 8940ffcbd8b7a416eb34dcafcd8c4948, type: 2}
   - {fileID: 11400000, guid: 087b2f6255ad244ceaf0e3f2e3391556, type: 2}
-  SubscriptionCost: 0
+  ShopPrice: 0
   Category: 7
-  Effects:
-  - _data: {fileID: 11400000, guid: ae795ef46d110457dbb25d3c4c07f67f, type: 2}
-    Value: 0
-    Tags: 
-  - _data: {fileID: 11400000, guid: 941b13ba70d4b4b9d923d3a35d86ba36, type: 2}
-    Value: 1
-    Tags: 
-  - _data: {fileID: 11400000, guid: 801a0a2ba11034396948a755cdf973ab, type: 2}
-    Value: 0
-    Tags: 
-  ValueEvaluator: {fileID: 0}
+  Effects: []
   Rarity: 0

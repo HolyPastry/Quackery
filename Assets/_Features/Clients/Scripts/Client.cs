@@ -26,6 +26,7 @@ namespace Quackery.Clients
         public bool Served;
 
         public List<EffectData> Effects;
+          public bool ActivatedCondition(Effect effect) => true;
 
         public string ChatLastLine
         {

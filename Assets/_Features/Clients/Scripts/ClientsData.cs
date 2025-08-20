@@ -56,6 +56,7 @@ namespace Quackery.Clients
                 Debug.LogWarning($"No client data found for level {level}");
                 return new();
             }
+            if (LevelsData[level].Effects.Count == 0) return new();
             return new() { LevelsData[level].Effects[Random.Range(0, LevelsData[level].Effects.Count)] };
         }
 

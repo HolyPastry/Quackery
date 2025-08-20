@@ -22,14 +22,7 @@ MonoBehaviour:
   Explanations:
   - {fileID: 11400000, guid: 2c6a8ca528d854daa997ce3aae573eec, type: 2}
   - {fileID: 11400000, guid: 6a88eaf0137fd44388d07980a3253e71, type: 2}
-  SubscriptionCost: 4
+  ShopPrice: 4
   Category: 2
-  Effects:
-  - _data: {fileID: 11400000, guid: 263fde966d9864a73892b13c1ccb9add, type: 2}
-    Value: 0
-    Tags: 
-  - _data: {fileID: 11400000, guid: 9fd96427358ac4196af546c123289864, type: 2}
-    Value: 1
-    Tags: 
-  ValueEvaluator: {fileID: 0}
+  Effects: []
   Rarity: 0

@@ -15,20 +15,14 @@ MonoBehaviour:
   MasterText: Sea Horse
   Icon: {fileID: 21300000, guid: 15dc33facf1fb4d61965e3db742dcd84, type: 3}
   BasePrice: 8
-  ShortDescription: Tuck\n Shuffle a suspicion into your draw pile.
+  ShortDescription: <b>Tuck</b>\n Shuffle a suspicion into your draw pile.
   LongDescription: 
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 983c0d4bfc73a498d89b8f49b39d70c3, type: 2}
-  - {fileID: 11400000, guid: 6a88eaf0137fd44388d07980a3253e71, type: 2}
-  SubscriptionCost: 3
+  ShopPrice: 3
   Category: 6
   Effects:
-  - _data: {fileID: 11400000, guid: b93a9d0ee4da14f49aaae9e0dbb5cc69, type: 2}
-    Value: 0
-    Tags: 
-  - _data: {fileID: 11400000, guid: 9fd96427358ac4196af546c123289864, type: 2}
-    Value: 1
-    Tags: 
-  ValueEvaluator: {fileID: 0}
+  - {fileID: 11400000, guid: b9557c2abc4f6405c82f541ad04e3162, type: 2}
+  - {fileID: 11400000, guid: e118b9259ed90459fa6dc7b7112e3d1c, type: 2}
   Rarity: 0

@@ -20,11 +20,8 @@ MonoBehaviour:
     Time.
   ShopDescription: 
   Explanations: []
-  SubscriptionCost: 0
+  ShopPrice: 0
   Category: 8
   Effects:
-  - _data: {fileID: 11400000, guid: f4649cd32b2564e8990e3d8d125257c7, type: 2}
-    Value: 10
-    Tags: 
-  ValueEvaluator: {fileID: 0}
+  - {fileID: 11400000, guid: 13fb9496ce6c3458e976b6930ff5b5da, type: 2}
   Rarity: 0

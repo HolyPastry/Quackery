@@ -21,7 +21,7 @@ namespace Quackery
 
         public Status Status { get; private set; }
 
-        public List<Explanation> Explanations => Status.Explanations;
+        public List<Explanation> Explanations { get; private set; }
 
         public RectTransform RectTransform => transform as RectTransform;
 
@@ -44,6 +44,8 @@ namespace Quackery
 
             Status = status;
             _icon.sprite = status.Icon;
+
+            Explanations = new() { status.Explanation };
             if (value == 0)
                 _valueText.text = string.Empty;
             else

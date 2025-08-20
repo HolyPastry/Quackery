@@ -14,7 +14,7 @@ namespace Quackery
 
     public static class DeckServices
     {
-        public static Func<WaitUntil> WaitUntilReady = () => new WaitUntil(() => true);
+        public static Func<WaitUntil> WaitUntilReady = () => new WaitUntil(() => false);
 
         public static Func<ItemData, Card> CreateCard = (itemData) => null;
         internal static Func<ItemData, Coroutine> DestroyCardType = (itemData) => null;
@@ -69,7 +69,7 @@ namespace Quackery
                                 AddNew = (itemData, pileType, pileLocation, lifetime) => null;
 
         public static Action<Card, EnumCardPile, EnumPlacement, float> MoveCard = (card, pileType, placement, delay) => { };
-        public static Action<Card, ItemData> ReplaceCard = (card, replacementCard) => { };
+        public static Func<Card, ItemData, Coroutine> ReplaceCard = (card, replacementCard) => null;
 
         internal static Func<Predicate<Card>, EnumCardPile, List<Card>> GetMatchingCards = (condition, pile) => new List<Card>();
 

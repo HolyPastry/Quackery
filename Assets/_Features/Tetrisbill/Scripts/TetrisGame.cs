@@ -80,7 +80,7 @@ namespace Quackery.TetrisBill
 
         private IEnumerator GameLoopRoutine()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             while (true)
             {
                 yield return null;
@@ -115,7 +115,7 @@ namespace Quackery.TetrisBill
                 var block = _shapePool.SpawnBlock(bill.Data.BlockPrefab);
                 block.SetLogo(bill.Data.Icon);
                 block.name = $"Block_{bill.Data.MasterText}";
-                yield return new WaitForSeconds(0.2f); // Small delay to visualize the spawning
+                yield return Tempo.WaitForABeat; // Small delay to visualize the spawning
             }
 
         }
@@ -211,7 +211,7 @@ namespace Quackery.TetrisBill
                     _cubes.Remove(cube);
                     cube.FlashColor();
                 }
-                yield return new WaitForSeconds(0.5f);
+                yield return Tempo.WaitForABeat;
                 foreach (var cube in cubesToRemove)
                 {
                     cube.Destroy();
@@ -222,7 +222,7 @@ namespace Quackery.TetrisBill
                 {
                     cube.MoveDownOne(0.2f);
                 }
-                yield return new WaitForSeconds(0.2f);
+                yield return Tempo.WaitForABeat;
             }
             int highestLineIndex = _cubes.Max(c => c.LineIndex);
             MoneyScale.SetMoneyAmount(highestLineIndex);

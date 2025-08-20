@@ -13,7 +13,7 @@ namespace Quackery.Effects
         public override IEnumerator Execute(Effect effect)
         {
             DeckServices.DiscardCards((int)effect.Value);
-            yield return DefaultWaitTime;
+            yield return Tempo.WaitForABeat;
         }
     }
 }

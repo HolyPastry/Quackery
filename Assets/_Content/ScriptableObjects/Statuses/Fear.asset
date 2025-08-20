@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54834f85537c549fd906b6894edf405e, type: 3}
   m_Name: Fear
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  Name: 
-  Explanation: {fileID: 0}
-  Target: 0
+  Icon: {fileID: 21300000, guid: f2bea8ce288d56345be049d159864d07, type: 3}
+  Name: Fear
+  Explanation: {fileID: 11400000, guid: 1ff478473a2b34cc2ad2948f954277ee, type: 2}
+  Target: 2

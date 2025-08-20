@@ -15,16 +15,12 @@ MonoBehaviour:
   MasterText: Chamomile Tea
   Icon: {fileID: 21300000, guid: ab608cb3480376c40a6e2799603da090, type: 3}
   BasePrice: 5
-  ShortDescription: Bundle
+  ShortDescription: <b>Bundle</b>
   LongDescription: 
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 760c3bfef0017439c9584611bb013c30, type: 2}
-  SubscriptionCost: 2
+  ShopPrice: 2
   Category: 1
-  Effects:
-  - _data: {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}
-    Value: 0
-    Tags: 
-  ValueEvaluator: {fileID: 0}
+  Effects: []
   Rarity: 1

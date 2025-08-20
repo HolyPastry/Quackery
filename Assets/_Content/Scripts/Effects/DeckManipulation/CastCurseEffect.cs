@@ -10,18 +10,21 @@ namespace Quackery.Effects
 {
 
     [CreateAssetMenu(fileName = "Cast Curse Effect", menuName = "Quackery/Effects/Deck/Cast Curse Effect")]
-    public class CastCurseEffect : EffectData
+    public class CastCurseEffect : EffectData, IValueEffect
     {
-        [SerializeField] private EffectData _counterEffect;
+        [SerializeField] private Status _counterStatus;
         [SerializeField] private ItemData _curseCard;
+        [SerializeField] private int _numCards;
 
         public EnumCardPile TargetDeck = EnumCardPile.Discard;
         public EnumLifetime Lifetime = EnumLifetime.Permanent;
         public EnumPlacement Placement = EnumPlacement.OnTop;
 
+        public float Value => _numCards;
+
         public override IEnumerator Execute(Effect effect)
         {
-            int countered = EffectServices.CounterEffect(_counterEffect, (int)effect.Value);
+            int countered = EffectServices.CounterEffect(_counterStatus, (int)effect.Value);
 
 
             for (int i = 0; i < effect.Value - countered; i++)

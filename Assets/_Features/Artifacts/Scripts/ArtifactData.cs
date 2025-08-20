@@ -31,6 +31,8 @@ namespace Quackery.Artifacts
         public bool IsUpgrade => UpgradeFor != null;
 
         public List<EffectData> EffectDataList => _effectDatas;
+        public bool ActivatedCondition(Effect effect) => true;
+        
 
         [SerializeField] private List<EffectData> _effectDatas = new();
 

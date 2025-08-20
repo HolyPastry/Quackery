@@ -11,7 +11,7 @@ namespace Quackery.Effects
         public override IEnumerator Execute(Effect effect)
         {
             RatingServices.Modify((int)effect.Value);
-            yield return DefaultWaitTime;
+            yield return Tempo.WaitForABeat;
         }
 
     }

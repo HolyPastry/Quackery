@@ -25,7 +25,7 @@ namespace Quackery
                 if (i < rating)
                 {
                     _ratingStars[i].isOn = true;
-                    yield return new WaitForSeconds(0.5f);
+                    yield return Tempo.WaitForABeat;
                 }
                 else
                 {
