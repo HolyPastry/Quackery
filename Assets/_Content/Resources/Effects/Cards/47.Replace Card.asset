@@ -16,4 +16,4 @@ MonoBehaviour:
   Tags: 
   _condition: 0
   _replacementCard: {fileID: 11400000, guid: d1dd6d98e8dcf481389e0bfb879565e1, type: 2}
-  _numberDraws: 0
+  _numberDraws: 30
