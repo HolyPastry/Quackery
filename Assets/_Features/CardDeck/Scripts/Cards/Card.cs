@@ -251,8 +251,11 @@ namespace Quackery.Decks
             _cutoutBackground.material = material;
 
             material.DOFloat(1, "_disolveAmount", duration);
+            _cardTitle.gameObject.SetActive(false);
+            _cardDescription.gameObject.SetActive(false);
 
             yield return new WaitForSeconds(duration);
+            Destroy(gameObject);
         }
 
 

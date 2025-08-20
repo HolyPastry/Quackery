@@ -422,6 +422,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1885378671}
     m_Modifications:
+    - target: {fileID: 425217175075358375, guid: 244d5b8ffbd674335905f66e59e77d68, type: 3}
+      propertyPath: _destroyMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: a63d6323970444e739e085d29a5dd723, type: 2}
     - target: {fileID: 4725487945872712277, guid: 244d5b8ffbd674335905f66e59e77d68, type: 3}
       propertyPath: m_Name
       value: CardManager
@@ -4138,7 +4142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1272677141
 Transform:
   m_ObjectHideFlags: 0
@@ -4379,7 +4383,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1363930898
 Transform:
   m_ObjectHideFlags: 0
@@ -4807,7 +4811,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _controller: {fileID: 574024749}
-  _timeScale: 1
 --- !u!4 &1638354142
 Transform:
   m_ObjectHideFlags: 0

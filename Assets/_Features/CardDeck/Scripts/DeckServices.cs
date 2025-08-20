@@ -37,7 +37,7 @@ namespace Quackery
         public static Action<Card> MoveToTable = delegate { };
         public static Func<Coroutine> DrawBackToFull = () => null;
 
-        public static Action<Card> DestroyCard = (cards) => { };
+        public static Func<Card, Coroutine> DestroyCard = (cards) => null;
 
         public static Action<List<ItemData>> ForceOnNextDraw = (cards) => { };
 
@@ -68,8 +68,7 @@ namespace Quackery
         public static Func<ItemData, EnumCardPile, EnumPlacement, EnumLifetime, Card>
                                 AddNew = (itemData, pileType, pileLocation, lifetime) => null;
 
-        public static Action<Card, EnumCardPile, EnumPlacement, float> MoveCard = (card, pileType, placement, delay) => { };
-        public static Func<Card, ItemData, Coroutine> ReplaceCard = (card, replacementCard) => null;
+        public static Func<Card, EnumCardPile, EnumPlacement, float, Coroutine> MoveCard = (card, pileType, placement, delay) => null;
 
         internal static Func<Predicate<Card>, EnumCardPile, List<Card>> GetMatchingCards = (condition, pile) => new List<Card>();
 

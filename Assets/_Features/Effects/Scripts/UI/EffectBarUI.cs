@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Quackery.Decks;
 using Quackery.Effects;
 using UnityEngine;
 
@@ -31,13 +32,20 @@ namespace Quackery
             EffectEvents.OnUpdated += UpdateStatusUI;
             EffectEvents.OnAdded += UpdateStatusUI;
             EffectEvents.OnRemoved += UpdateStatusUI;
+            EffectEvents.OnEffectActivated += UpdateStatusUI;
+            // DeckEvents.OnCardPlayed += UpdateStatusUI;
         }
+
+        // private void UpdateStatusUI(Card card) => 
+
 
         void OnDisable()
         {
             EffectEvents.OnUpdated -= UpdateStatusUI;
             EffectEvents.OnAdded -= UpdateStatusUI;
             EffectEvents.OnRemoved -= UpdateStatusUI;
+            EffectEvents.OnEffectActivated -= UpdateStatusUI;
+            // DeckEvents.OnCardPlayed -= UpdateStatusUI
         }
 
         private void RemoveStatus(Status status)

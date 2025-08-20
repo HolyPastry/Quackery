@@ -22,7 +22,7 @@ namespace Quackery
         [SerializeField] private string _tempCursePath = "Assets/_Content/2DArt/Sprites/TempCurses";
 
         [Header("Collections Keys")]
-        [SerializeField] private string EffectCollectionKey = "Effects";
+        // [SerializeField] private string EffectCollectionKey = "Effects";
         [SerializeField] private string ExplanationCollectionKey = "Explanations";
 
         [Header("Card Prefixes")]

@@ -25,12 +25,23 @@ namespace Quackery.Effects
         {
 
             Card card = effect.LinkedObject as Card;
-            if (card == null) yield break;
-            Item item = card.Item;
 
-            if (_condition == EnumCondition.NumberOfDraws && item.NumberOfDraws >= effect.Value)
-                yield return DeckServices.ReplaceCard(card, _replacementCard);
+            if (card == null ||
+                _condition != EnumCondition.NumberOfDraws ||
+                 card.Item.NumberOfDraws < effect.Value)
+                yield break;
 
+            yield return DeckServices.MoveCard(card, EnumCardPile.Effect, EnumPlacement.OnTop, Tempo.Beat);
+            yield return Tempo.WaitForABeat;
+
+            Card newCard = DeckServices.AddNew(_replacementCard,
+                                    EnumCardPile.Effect,
+                                    EnumPlacement.OnTop,
+                                    EnumLifetime.Permanent);
+            yield return Tempo.WaitForABeat;
+            yield return DeckServices.DestroyCard(card);
+
+            yield return DeckServices.MoveCard(newCard, EnumCardPile.Discard, EnumPlacement.OnTop, Tempo.Beat);
         }
     }
 }

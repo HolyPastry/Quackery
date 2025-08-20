@@ -87,9 +87,8 @@ namespace Quackery.Decks
             DeckServices.BoostPriceOfCardsInHand = (value, predicate) => { };
             // DeckServices.AddNew =
             //     (itemData, pileType, pileLocation, lifetime) => null;
-            DeckServices.MoveCard = (card, pileType, placement, delay) => { };
+            DeckServices.MoveCard = (card, pileType, placement, delay) => null;
 
-            DeckServices.ReplaceCard = (card, replacementCard) => null;
             DeckServices.GetMatchingCards = (condition, pile) => new List<Card>();
             DeckServices.ResetDecks = () => { };
             DeckServices.SetCustomDraw = (numCard) => { };
@@ -150,8 +149,7 @@ namespace Quackery.Decks
 
             DeckServices.BoostPriceOfCardsInHand = BoostPriceOfCardsInHand;
             DeckServices.AddNew = AddNew;
-            DeckServices.MoveCard = MoveCard;
-            DeckServices.ReplaceCard = (card, data) => StartCoroutine(CardReplaceRoutine(card, data)); ;
+            DeckServices.MoveCard = (card, enumPile, EnumPlacement, delay) => StartCoroutine(DelayedMoveCard(card, enumPile, EnumPlacement, delay));
 
             DeckServices.GetMatchingCards = GetMatchingCards;
             DeckServices.SetCustomDraw = (numDraw) => _customDraw = Mathf.Max(numDraw, _customDraw);
@@ -219,24 +217,6 @@ namespace Quackery.Decks
             };
         }
 
-        private IEnumerator CardReplaceRoutine(Card card, ItemData data)
-        {
-            MoveCard(card, EnumCardPile.Effect, EnumPlacement.OnTop);
-            yield return Tempo.WaitForABeat;
-
-            Card newCard = AddNew(data,
-                                    EnumCardPile.Effect,
-                                    EnumPlacement.OnTop,
-                                    EnumLifetime.Permanent);
-
-
-            yield return DelayedMoveCard(newCard, EnumCardPile.Discard, EnumPlacement.OnTop, 2f);
-            DeckServices.DestroyCard(card);
-            yield return null;
-
-            StartCoroutine(DrawBackToFull());
-
-        }
         private void MoveCard(Card card, EnumCardPile pile, EnumPlacement placement, float delay)
         {
             if (delay <= 0)
@@ -840,26 +820,33 @@ namespace Quackery.Decks
                 _cardSelected = null;
                 _otherCards = null;
             }
-
-            int cardsNeeded = _handPiles.FindAll(p => p.IsEmpty && p.Enabled).Count;
-            if (cardsNeeded <= 0)
+            int cardsNeeded = 0;
+            int iteration = 100;
+            do
             {
-                yield return Tempo.WaitForABeat;
-                // DeckServices.ActivateTableCards();
-                yield break;
-            }
+                cardsNeeded = _handPiles.FindAll(p => p.IsEmpty && p.Enabled).Count;
 
-            drawnCards = _drawPile.DrawMany(cardsNeeded);
-            foreach (var card in drawnCards)
-            {
-                DeckServices.MoveToTable(card);
-                yield return EffectServices.Add(card);
-                yield return EffectServices.Execute(EnumEffectTrigger.OnDraw, card);
-                card.UpdateUI();
-            }
+                drawnCards = _drawPile.DrawMany(cardsNeeded);
+                foreach (var card in drawnCards)
+                {
+                    DeckServices.MoveToTable(card);
+                    yield return EffectServices.Add(card);
+                    yield return EffectServices.Execute(EnumEffectTrigger.OnDraw, card);
+                    if (card == null) continue;
+                    card.UpdateUI();
+                }
+                iteration--;
 
-            // yield return new WaitForSeconds(drawnCards.Count * 0.2f);
+                cardsNeeded = _handPiles.FindAll(p => p.IsEmpty && p.Enabled).Count;
+            }
+            while (cardsNeeded > 0 && EnoughCards(cardsNeeded) && iteration >= 0);
+
             yield return Tempo.WaitForABeat;
+        }
+
+        private bool EnoughCards(int cardsNeeded)
+        {
+            return _drawPile.Count + _discardPile.Count > cardsNeeded;
         }
 
         private void OnCardSelected(Card card, List<Card> list)

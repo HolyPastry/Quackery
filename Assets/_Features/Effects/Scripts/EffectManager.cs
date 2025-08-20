@@ -6,7 +6,7 @@ using Holypastry.Bakery;
 
 using Quackery.Decks;
 using Quackery.Inventories;
-
+using Sirenix.Utilities;
 using UnityEngine;
 
 
@@ -18,10 +18,12 @@ namespace Quackery.Effects
         private readonly List<Effect> _effects = new();
 
         private DataCollection<EffectData> _effectCollection;
+        private List<Effect> _activatedEffect;
 
         void Awake()
         {
             _effectCollection = new("Effects");
+            _activatedEffect = new();
         }
 
         void OnDisable()
@@ -97,6 +99,7 @@ namespace Quackery.Effects
             foreach (var effect in effects)
             {
                 _effects.Remove(effect);
+                _activatedEffect.Remove(effect);
                 EffectEvents.OnRemoved?.Invoke(effect);
                 yield return Tempo.WaitForABeat;
             }
@@ -246,7 +249,7 @@ namespace Quackery.Effects
 
         private IEnumerator Execute(EnumEffectTrigger trigger, IEffectCarrier carrier)
         {
-
+            CheckForNewActivatedEffect();
             var effectToExecute = _effects
                 .FindAll(effect => effect.Data.Trigger == trigger &&
                     ((effect.Data is IStatusEffect && effect.LinkedObject.ActivatedCondition(effect))
@@ -255,6 +258,18 @@ namespace Quackery.Effects
             foreach (var effect in effectToExecute)
                 yield return StartCoroutine(effect.Data.Execute(effect));
 
+        }
+
+        private void CheckForNewActivatedEffect()
+        {
+            var activatedEffect = _effects
+                .Where(e => e.Data is IStatusEffect && e.LinkedObject.ActivatedCondition(e))
+                .ForEach(e =>
+                {
+                    if (_activatedEffect.Contains(e)) return;
+                    EffectEvents.OnUpdated(e);
+                    _activatedEffect.Add(e);
+                });
         }
 
         private IEnumerator UpdateDurationEffects()
