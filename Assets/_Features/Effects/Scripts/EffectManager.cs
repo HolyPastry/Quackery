@@ -230,7 +230,7 @@ namespace Quackery.Effects
                 effect.LinkedObject = effectCarrier;
                 EffectEvents.OnAdded?.Invoke(effect);
                 if (effect.Data is IStatusEffect)
-                    yield return new WaitForSeconds(Tempo.Beat);
+                    yield return new WaitForSeconds(Tempo.WholeBeat);
             }
         }
 
@@ -285,7 +285,7 @@ namespace Quackery.Effects
                 else
                 {
                     EffectEvents.OnUpdated?.Invoke(effect);
-                    yield return new WaitForSeconds(Tempo.Beat);
+                    yield return new WaitForSeconds(Tempo.WholeBeat);
                 }
             }
         }

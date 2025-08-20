@@ -641,8 +641,8 @@ namespace Quackery.Decks
         {
             var topCards = _cartPiles.FindAll(p => p.Enabled && !p.IsEmpty)
                               .ConvertAll(p => p.TopCard);
-            EffectServices.Remove(e => e.LinkedObject is Card card &&
-                !topCards.Exists(c => c == card));
+            // EffectServices.Remove(e => e.LinkedObject is Card card &&
+            //     !topCards.Exists(c => c == card));
         }
         private bool AddCardToCartPile(Card topCard, CardPile pile)
         {

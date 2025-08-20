@@ -51,7 +51,7 @@ namespace Quackery.Decks
             if (card == null) yield break;
             DeckServices.RemoveFromAllPiles(card);
             card.transform.DOKill();
-            yield return card.PlayDestroyEffect(Tempo.Beat, Instantiate(_destroyMaterial));
+            yield return card.PlayDestroyEffect(Tempo.WholeBeat, Instantiate(_destroyMaterial));
         }
 
         private Card DuplicateCard(Card card)

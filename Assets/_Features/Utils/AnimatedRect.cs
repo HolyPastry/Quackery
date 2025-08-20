@@ -122,7 +122,7 @@ namespace Quackery
             var targetPosition = _overridePositionEnabled ? _overridePosition : DirectionVector(to);
             _inprogressZoomTween.Kill();
             _rectTransform
-               .DOAnchorPos(targetPosition, Tempo.Beat)
+               .DOAnchorPos(targetPosition, Tempo.WholeBeat)
                .SetEase(_animationEaseOut)
                .OnComplete(() =>
                {
@@ -137,7 +137,7 @@ namespace Quackery
             _isAnimating = true;
             _rectTransform.gameObject.SetActive(true);
             _inprogressZoomTween.Kill();
-            _inprogressZoomTween = _rectTransform.transform.DOScale(Vector3.one, Tempo.Beat).SetEase(_animationEaseIn)
+            _inprogressZoomTween = _rectTransform.transform.DOScale(Vector3.one, Tempo.WholeBeat).SetEase(_animationEaseIn)
                 .OnComplete(() =>
                 {
                     EndAnimation();
@@ -155,7 +155,7 @@ namespace Quackery
             }
             _isAnimating = true;
             _inprogressZoomTween.Kill();
-            _inprogressZoomTween = _rectTransform.transform.DOScale(Vector3.zero, Tempo.Beat).SetEase(_animationEaseOut)
+            _inprogressZoomTween = _rectTransform.transform.DOScale(Vector3.zero, Tempo.WholeBeat).SetEase(_animationEaseOut)
                  .OnComplete(() =>
                  {
                      _rectTransform.gameObject.SetActive(false);
@@ -180,7 +180,7 @@ namespace Quackery
         {
 
             _isAnimating = true;
-            _rectTransform.DOPunchScale(Vector3.one * 1.1f, Tempo.Beat, 10, 0.1f).OnComplete(() =>
+            _rectTransform.DOPunchScale(Vector3.one * 1.1f, Tempo.WholeBeat, 10, 0.1f).OnComplete(() =>
             {
                 EndAnimation();
             });
@@ -197,7 +197,7 @@ namespace Quackery
         internal AnimatedRect SlideToZero()
         {
             _isAnimating = true;
-            _rectTransform.DOLocalMove(Vector3.zero, Tempo.Beat)
+            _rectTransform.DOLocalMove(Vector3.zero, Tempo.WholeBeat)
                 .SetEase(_animationEaseIn)
                 .OnComplete(() =>
                 {
@@ -222,7 +222,7 @@ namespace Quackery
             _isAnimating = true;
             var offset = yOffset;
 
-            _rectTransform.DOAnchorPosY(offset, Tempo.Beat)
+            _rectTransform.DOAnchorPosY(offset, Tempo.WholeBeat)
                 .SetEase(_animationEaseIn)
                 .OnComplete(() =>
                 {

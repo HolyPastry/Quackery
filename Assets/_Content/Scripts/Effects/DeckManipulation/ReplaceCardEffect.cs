@@ -31,7 +31,7 @@ namespace Quackery.Effects
                  card.Item.NumberOfDraws < effect.Value)
                 yield break;
 
-            yield return DeckServices.MoveCard(card, EnumCardPile.Effect, EnumPlacement.OnTop, Tempo.Beat);
+            yield return DeckServices.MoveCard(card, EnumCardPile.Effect, EnumPlacement.OnTop, Tempo.WholeBeat);
             yield return Tempo.WaitForABeat;
 
             Card newCard = DeckServices.AddNew(_replacementCard,
@@ -41,7 +41,7 @@ namespace Quackery.Effects
             yield return Tempo.WaitForABeat;
             yield return DeckServices.DestroyCard(card);
 
-            yield return DeckServices.MoveCard(newCard, EnumCardPile.Discard, EnumPlacement.OnTop, Tempo.Beat);
+            yield return DeckServices.MoveCard(newCard, EnumCardPile.Discard, EnumPlacement.OnTop, Tempo.WholeBeat);
         }
     }
 }

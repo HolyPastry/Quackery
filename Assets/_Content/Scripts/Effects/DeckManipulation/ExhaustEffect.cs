@@ -18,10 +18,7 @@ namespace Quackery
         {
             Card card = effect.LinkedObject as Card;
             Assert.IsNotNull(card, "ExhaustEffect requires a linked card to execute.");
-            DeckServices.MoveCard(card, EnumCardPile.Exhaust, EnumPlacement.OnTop, 0.5f);
-            yield return Tempo.WaitForABeat;
-            yield return DeckServices.DrawBackToFull();
-            yield return Tempo.WaitForABeat;
+            yield return DeckServices.MoveCard(card, EnumCardPile.Exhaust, EnumPlacement.OnTop, 0.5f);
         }
     }
 }

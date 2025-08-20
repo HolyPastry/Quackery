@@ -22,8 +22,10 @@ namespace Quackery
         public static Action<Card> RemoveFromAllPiles = (card) => { };
 
         public static Action Shuffle = () => { };
-        public static Action<List<Card>> Discard = (card) => { };
-        public static Func<IEnumerator> DiscardHand = () => null;
+        public static Func<List<Card>, Coroutine> Discard = (card) => null;
+        public static Func<Coroutine> DiscardHand = () => null;
+        public static Func<int, Coroutine> DiscardCards = (amount) => null;
+
         public static Func<List<CardPile>> GetTablePile = () => new();
 
         public static Action<EnumCardPile, int> SelectCard = (pileType, index) => { };
@@ -43,7 +45,7 @@ namespace Quackery
 
         public static Action<EnumItemCategory, EnumCardSelection> ChangeCardCategory = delegate { };
 
-        public static Action<int> DiscardCards = (amount) => { };
+
 
         public static Action RestoreCardCategories = () => { };
 

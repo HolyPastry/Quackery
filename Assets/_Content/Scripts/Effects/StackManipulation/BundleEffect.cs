@@ -11,10 +11,6 @@ namespace Quackery.Effects
          order = 1)]
     public class BundleEffect : EffectData
     {
-        public override void OnRemove(Effect effect)
-        {
-
-        }
 
         // public override string Description => "<b>Bundle:</b> Allows you to bundle up to #Value cards together.";
 
