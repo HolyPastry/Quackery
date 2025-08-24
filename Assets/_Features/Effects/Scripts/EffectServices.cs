@@ -30,5 +30,7 @@ namespace Quackery
         internal static Func<Coroutine> UpdateDurationEffects = () => null;
 
         internal static Func<Dictionary<Status, int>> GetActiveStatuses = () => new();
+
+        internal static Func<EffectData, IEffectCarrier, Coroutine> AddToCarrier = (effect, target) => null;
     }
 }

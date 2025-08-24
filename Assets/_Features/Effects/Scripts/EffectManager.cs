@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Holypastry.Bakery;
-
 using Quackery.Decks;
 using Quackery.Inventories;
 using Sirenix.Utilities;
@@ -15,6 +14,7 @@ namespace Quackery.Effects
 {
     public class EffectManager : MonoBehaviour
     {
+        [SerializeField] private PlayerEffects _playerEffects;
         private readonly List<Effect> _effects = new();
 
         private DataCollection<EffectData> _effectCollection;
@@ -29,6 +29,7 @@ namespace Quackery.Effects
         void OnDisable()
         {
             EffectServices.Add = (effectCarrier) => null;
+            EffectServices.AddToCarrier = (effect, target) => null;
             EffectServices.Remove = (effect) => null;
             EffectServices.RemoveLinkedToObject = (linkedObject) => null;
             EffectServices.Get = (predicate) => new List<Effect>();
@@ -57,6 +58,7 @@ namespace Quackery.Effects
         void OnEnable()
         {
             EffectServices.Add = (effectCarrier) => StartCoroutine(AddEffectRoutine(effectCarrier));
+            EffectServices.AddToCarrier = (effect, target) => StartCoroutine(AddToCarrierRoutine(effect, target));
             EffectServices.Remove = (predicate) => StartCoroutine(RemoveRoutine(predicate));
             EffectServices.RemoveLinkedToObject = (linkedObject)
                     => StartCoroutine(RemoveRoutine(e => e.LinkedObject == linkedObject &&
@@ -85,6 +87,8 @@ namespace Quackery.Effects
             CartEvents.OnNewCartPileUsed += ExecuteNewCartPileEffects;
             CartEvents.OnStackHovered += OnStackHovered;
         }
+
+
 
         private IEnumerable<Effect> Get(Predicate<Effect> predicate)
         {
@@ -197,8 +201,6 @@ namespace Quackery.Effects
         }
 
 
-
-
         private void ExecuteOnAppliedEffect(Effect _)
         {
 
@@ -224,14 +226,21 @@ namespace Quackery.Effects
         private IEnumerator AddEffectRoutine(IEffectCarrier effectCarrier)
         {
             foreach (var effectData in effectCarrier.EffectDataList)
-            {
-                var effect = new Effect(effectData);
-                _effects.Insert(0, effect);
-                effect.LinkedObject = effectCarrier;
-                EffectEvents.OnAdded?.Invoke(effect);
-                if (effect.Data is IStatusEffect)
-                    yield return new WaitForSeconds(Tempo.WholeBeat);
-            }
+                yield return StartCoroutine(AddToCarrierRoutine(effectData, effectCarrier));
+        }
+
+        private IEnumerator AddToCarrierRoutine(EffectData effectData, IEffectCarrier target)
+        {
+            var effect = new Effect(effectData);
+            _effects.Insert(0, effect);
+            if (target == null)
+                effect.LinkedObject = _playerEffects;
+            else
+                effect.LinkedObject = target;
+
+            EffectEvents.OnAdded?.Invoke(effect);
+            if (effect.Data is IStatusEffect)
+                yield return new WaitForSeconds(Tempo.WholeBeat);
         }
 
         private IEnumerator ExecutePile(EnumEffectTrigger trigger, CardPile pile)
@@ -289,5 +298,7 @@ namespace Quackery.Effects
                 }
             }
         }
+
+
     }
 }

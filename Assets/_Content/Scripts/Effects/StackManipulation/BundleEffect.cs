@@ -26,7 +26,7 @@ namespace Quackery.Effects
                 DeckServices.MoveToPile(pile, owningPile);
 
             }
-            yield return null;
+            yield return Tempo.WaitForABeat;
 
         }
     }

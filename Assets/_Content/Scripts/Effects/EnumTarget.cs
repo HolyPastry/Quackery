@@ -5,6 +5,7 @@ namespace Quackery.Effects
         None = 0,
         Player = 1,
         Client = 2,
+        Card = 3
 
     }
 }

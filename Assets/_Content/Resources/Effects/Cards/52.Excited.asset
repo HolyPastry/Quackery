@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be27fb51dba2a453d935213998b9e72b, type: 3}
+  m_Name: 52.Excited
+  m_EditorClassIdentifier: 
+  Trigger: 6
+  Tags: 
+  _status: {fileID: 11400000, guid: 4217fe63aee6c40b2807bf91e6822998, type: 2}
+  _sizeModifier: 1

@@ -55,5 +55,7 @@ namespace Quackery.Clients
 
         internal static Func<int> GetCartSize = () => 3;
 
+        internal static Func<Client> GetClient = () => null;
+
     }
 }

@@ -23,6 +23,7 @@ namespace Quackery.Clients
             ClientServices.WaitUntilReady = () => WaitUntilReady;
             ClientServices.AddKnownClient = AddKnownClient;
             ClientServices.AddUnknownClients = AddUnknownClients;
+            ClientServices.GetClient = () => _selectedClient;
 
             ClientServices.HasNextClient = HasNextClient;
             ClientServices.GetNextClient = GetNextClient;
