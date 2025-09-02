@@ -28,7 +28,7 @@ namespace Quackery
 
         //public static Func<List<CardPileUI>> GetTablePile = () => new();
 
-        public static Action<EnumCardPile, int> SelectCard = (pileType, index) => { };
+        public static Action<CardPile> SelectCard = (cardPile) => { };
 
         public static Action<EnumCardPile, EnumCardPile> MovePileType = (sourcePile, targetPile) => { };
         //public static Action<CardPileUI, CardPileUI> MoveToPile = (source, target) => { };
@@ -72,7 +72,7 @@ namespace Quackery
 
         public static Func<Card, EnumCardPile, EnumPlacement, float, Coroutine> MoveCard = (card, pileType, placement, delay) => null;
 
-        internal static Func<Predicate<Card>, EnumCardPile, List<Card>> GetMatchingCards = (condition, pile) => new List<Card>();
+        internal static Func<Predicate<Card>, EnumCardPile, IEnumerable<Card>> GetMatchingCards = (condition, pile) => new List<Card>();
 
         internal static Action ResetDecks = () => { };
 

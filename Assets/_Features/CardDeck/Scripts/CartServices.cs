@@ -49,9 +49,9 @@ namespace Quackery.Decks
         internal static Action<Card> SetStacksHighlights = (card) => { };
         internal static Func<CardPile> GetHoveredPile = () => null;
 
-        public static Action<int> HoverPile = (index) => { };
+        public static Action<CardPile> HoverPile = (index) => { };
 
-        public static Action<int> UnhoverPile = (index) => { };
+        public static Action<CardPile> UnhoverPile = (index) => { };
 
         public static Func<int> GetBonus = () => 0;
 

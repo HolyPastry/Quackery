@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Quackery.Decks;
 using Quackery.Inventories;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Quackery.Effects
         public override IEnumerator Execute(Effect effect)
         {
             var cards = DeckServices.GetMatchingCards(c => true,
-                                                       EnumCardPile.Cart);
+                                                       EnumCardPile.Cart).ToList();
 
             //   int numStatuses = EffectServices.GetNumStatuses() - 1; // Subtract 1 for the effect itself
             int numStatuses = 1;

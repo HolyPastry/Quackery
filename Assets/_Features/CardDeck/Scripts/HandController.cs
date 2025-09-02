@@ -37,7 +37,7 @@ namespace Quackery
         private CardPile _followTouchPointPileUI;
         private Vector2 _originalPosition;
 
-
+        public IEnumerable<Card> Cards => _cardPiles.SelectMany(pile => pile.Cards);
 
         public static event Action<CardPile> OnCardSelected = delegate { };
 
@@ -246,7 +246,11 @@ namespace Quackery
 
             var distanceFromOrigin = mousePosition - _originalPosition;
             //Debug.Log(distanceFromOrigin.sqrMagnitude);
-            distanceFromOrigin = Vector2.ClampMagnitude(distanceFromOrigin, _maxSlideDistance);
+            if (cardPile.HasCartTarget)
+                distanceFromOrigin = Vector2.ClampMagnitude(distanceFromOrigin, _maxSlideDistance);
+            else
+                distanceFromOrigin = Vector2.ClampMagnitude(distanceFromOrigin, _maxSlideDistanceY);
+
             if (distanceFromOrigin.sqrMagnitude < _slideStartThreshold * _slideStartThreshold)
             {
                 cardPile.AnchoredPosition = _originalPosition;
@@ -269,7 +273,7 @@ namespace Quackery
                 if (distanceFromOrigin.y > 0 &&
                     distanceFromOrigin.sqrMagnitude > _maxSlideDistanceY * _maxSlideDistanceY)
                 {
-                    DeckServices.SelectCard(cardPile.Type, cardPile.PileIndex);
+                    DeckServices.SelectCard(cardPile);
                     _followTouchPointPileUI = null;
                     Tooltips.HideTooltipRequest?.Invoke();
                 }

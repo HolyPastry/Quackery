@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Quackery.Decks;
 using Quackery.Inventories;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace Quackery.Effects
                 DeckServices.GetMatchingCards(card => card.Item.Data == CardData, CardPile);
 
             yield return Tempo.WaitForABeat;
-            if (numCardInHand.Count + 1 >= effect.Value) CardGameApp.InterruptRoundRequest();
+            if (numCardInHand.Count() + 1 >= effect.Value) CardGameApp.InterruptRoundRequest();
         }
     }
 }

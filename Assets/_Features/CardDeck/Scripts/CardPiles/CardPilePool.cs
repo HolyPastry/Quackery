@@ -33,15 +33,7 @@ namespace Quackery.Decks
         {
             if (EnabledCount == size) yield break;
 
-            if (_cardPiles.Count < size)
-                InstantiateNewPool(size - _cardPiles.Count);
-
-            for (int i = 0; i < _cardPiles.Count; i++)
-            {
-                if (EnabledCount >= size) continue;
-                if (!_cardPiles[i].Enabled)
-                    _cardPiles[i].Enabled = true;
-            }
+            IncreasePoolTo(size);
 
 
             //Try to be nice and disable Empty Piles first
@@ -78,6 +70,7 @@ namespace Quackery.Decks
             for (int i = 0; i < diff; i++)
             {
                 CardPile newCardPileUI = Instantiate(_cardPilePrefab, _container.transform);
+                newCardPileUI.transform.localScale = Vector3.one;
                 _cardPiles.Add(newCardPileUI);
                 newCardPileUI.OnTouchPress += OnCardPileTouchPress;
                 newCardPileUI.OnTouchRelease += OnCardPileTouchRelease;
@@ -92,13 +85,26 @@ namespace Quackery.Decks
 
             if (!expandIfFull) return null;
 
-            SetPoolSize(EnabledCount + 1);
+            IncreasePoolTo(EnabledCount + 1);
 
             foreach (var pile in _cardPiles)
                 if (pile.Enabled && pile.IsEmpty) return pile;
 
             Debug.LogError("We should have reached this point", this);
             return null;
+        }
+
+        private void IncreasePoolTo(int size)
+        {
+            if (_cardPiles.Count < size)
+                InstantiateNewPool(size - _cardPiles.Count);
+
+            for (int i = 0; i < _cardPiles.Count; i++)
+            {
+                if (EnabledCount >= size) continue;
+                if (!_cardPiles[i].Enabled)
+                    _cardPiles[i].Enabled = true;
+            }
         }
 
         internal void DisableEmptyPiles()

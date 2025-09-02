@@ -17,6 +17,9 @@ namespace Quackery.Decks
 
         [SerializeField] protected bool _stripCard = false;
 
+        [SerializeField] private float _cardScale = 1f;
+        [SerializeField] private Vector3 _cardOffset = Vector3.zero;
+
         protected readonly List<Card> _cards = new();
         public int PileIndex => transform.GetSiblingIndex();
 
@@ -31,7 +34,11 @@ namespace Quackery.Decks
         public bool Enabled
         {
             get => gameObject.activeSelf;
-            set => gameObject.SetActive(value);
+            set
+            {
+                gameObject.SetActive(value);
+                transform.SetAsLastSibling();
+            }
         }
 
 
@@ -48,6 +55,7 @@ namespace Quackery.Decks
             get => (transform as RectTransform).anchoredPosition;
             set => (transform as RectTransform).anchoredPosition = value;
         }
+        public IEnumerable<Card> Cards => _cards;
 
         protected readonly Queue<RectTransform> _moveQueue = new();
 
@@ -233,22 +241,20 @@ namespace Quackery.Decks
             //var scaleRatio = Height / CardOriginalHeight;
             while (true)
             {
-                if (_moveQueue.Count > 0)
-                {
-                    var cardTransform = _moveQueue.Dequeue();
-                    if (cardTransform == null)
-                        continue; // Skip if the card transform is null
+                yield return null;
+                if (_moveQueue.Count == 0)
+                    continue;
 
-                    cardTransform.DOScale(1, Tempo.WholeBeat).SetEase(Ease.Linear);
-                    cardTransform.DOAnchorPos(Vector3.zero, Tempo.WholeBeat).SetEase(Ease.OutBack);
-                    cardTransform.DOLocalRotate(Vector3.zero, Tempo.WholeBeat);
+                var cardTransform = _moveQueue.Dequeue();
+                if (cardTransform == null)
+                    continue;
 
-                    yield return new WaitForSeconds(Tempo.EighthBeat); // Stagger the movement of cards
-                }
-                else
-                {
-                    yield return null; // Wait for the next frame if no cards to move
-                }
+                cardTransform.DOScale(_cardScale, Tempo.WholeBeat).SetEase(Ease.Linear);
+                cardTransform.DOAnchorPos(Vector3.zero + _cardOffset, Tempo.WholeBeat).SetEase(Ease.OutBack);
+                cardTransform.DOLocalRotate(Vector3.zero, Tempo.WholeBeat);
+
+                yield return new WaitForSeconds(Tempo.EighthBeat); // Stagger the movement of cards
+
             }
         }
 

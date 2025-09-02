@@ -20,6 +20,7 @@ namespace Quackery
         public IEnumerator Move(Card card)
         {
             CardPile pile = GetEmptyPile(expandIfFull: true);
+            yield return null;
             pile.AddOnTop(card, isInstant: false);
             yield return Tempo.WaitForABeat;
         }

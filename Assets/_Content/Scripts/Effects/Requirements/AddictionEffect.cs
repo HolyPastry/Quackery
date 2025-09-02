@@ -1,3 +1,4 @@
+using System.Linq;
 using Quackery.Decks;
 using Quackery.Effects;
 using Quackery.Inventories;
@@ -16,7 +17,8 @@ namespace Quackery
         public bool IsFulfilled(Effect effect, Card card)
         {
             return card.Category == _category ||
-                DeckServices.GetMatchingCards(c => c.Category == _category, EnumCardPile.Hand).Count == 0;
+                DeckServices.GetMatchingCards(c => c.Category == _category, EnumCardPile.Hand)
+                    .Count() == 0;
         }
 
     }
