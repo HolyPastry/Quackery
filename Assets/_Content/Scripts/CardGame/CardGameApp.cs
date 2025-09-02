@@ -22,7 +22,9 @@ namespace Quackery.Decks
         [SerializeField] private CartGauge _cartValue;
         [SerializeField] private BudgetCartValueUI _budgetCartValue;
 
-        [SerializeField] private CardPool _cardSelectPanel;
+        //TODO:: Shouldn't be a CardPilePool, I think it is the Effect Pile Controller
+        // To be confirmed
+        [SerializeField] private CardPilePool _cardSelectPanel;
 
         [SerializeReference] private Button _EndRoundButton;
         [SerializeField] private EndOfRoundScreen _endRoundScreen;
@@ -80,12 +82,12 @@ namespace Quackery.Decks
 
         private void OnCardSelected(Card card, List<Card> list)
         {
-            _cardSelectPanel.Hide();
+            //_cardSelectPanel.Hide();
         }
 
         private void OnCardsMovingToSelectPile()
         {
-            _cardSelectPanel.Show();
+            //_cardSelectPanel.Show();
         }
 
         public void TransfertCartToPurse()
@@ -142,7 +144,7 @@ namespace Quackery.Decks
 
                 yield return DeckServices.DrawBackToFull();
 
-                DeckServices.ActivateTableCards();
+                DeckServices.ActivateHand();
 
                 SetEndRoundButtonInteractable(true);
 

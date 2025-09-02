@@ -1,13 +1,15 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Quackery.Decks;
 using TMPro;
 
 using UnityEngine;
-using UnityEngine.InputSystem;
+
 
 namespace Quackery
 {
-    public class HandController : CardPool
+    public class HandController : CardPilePool
     {
 
         [Header("Hand Settings")]
@@ -31,22 +33,24 @@ namespace Quackery
 
         private const float NightyDegree = 90f;
 
-        private CardPileUI _selectedPileUI;
-        private CardPileUI _followTouchPointPileUI;
+        private CardPile _selectedPileUI;
+        private CardPile _followTouchPointPileUI;
         private Vector2 _originalPosition;
 
-        public static event Action<CardPileUI> OnCardSelected = delegate { };
 
-        protected override void OnEnable()
+
+        public static event Action<CardPile> OnCardSelected = delegate { };
+
+        protected void OnEnable()
         {
-            base.OnEnable();
+
             DeckEvents.OnCardPlayed += ResetSelectedPile;
             _helperText.text = "";
         }
 
-        protected override void OnDisable()
+        protected void OnDisable()
         {
-            base.OnDisable();
+
             DeckEvents.OnCardPlayed -= ResetSelectedPile;
         }
 
@@ -59,10 +63,10 @@ namespace Quackery
         }
 
 
-        protected void SelectPile(CardPileUI pileUI)
+        protected void SelectPile(CardPile pileUI)
         {
             if (pileUI.IsEmpty) return;
-            foreach (var cardPile in _cardPileUIs)
+            foreach (var cardPile in _cardPiles)
                 cardPile.transform.SetAsLastSibling();
             pileUI.transform.SetAsLastSibling();
             _selectedPileUI = pileUI;
@@ -85,17 +89,17 @@ namespace Quackery
             OnCardSelected?.Invoke(pileUI);
         }
 
-        protected override void DestroyCardPile(int index)
+        protected void DestroyCardPile(int index)
         {
             if (_selectedPileUI != null && _selectedPileUI.PileIndex == index)
                 _selectedPileUI = null;
             if (_followTouchPointPileUI != null && _followTouchPointPileUI.PileIndex == index)
                 _followTouchPointPileUI = null;
-            base.DestroyCardPile(index);
+
 
         }
 
-        protected override void OnCardPileTouchPress(CardPileUI pileUI)
+        protected override void OnCardPileTouchPress(CardPile pileUI)
         {
             _helperText.text = "";
             _followTouchPointPileUI = pileUI;
@@ -104,7 +108,7 @@ namespace Quackery
         }
 
 
-        protected override void OnCardPileTouchRelease(CardPileUI ui)
+        protected override void OnCardPileTouchRelease(CardPile ui)
         {
             _helperText.text = "";
             if (_followTouchPointPileUI == null)
@@ -155,7 +159,7 @@ namespace Quackery
             var center = (transform as RectTransform).anchoredPosition;
 
 
-            Vector2 B = new Vector3(center.x, center.y, 0);
+            Vector2 B = center;
             Vector2 A = B - 0.5f * (Screen.width - _sideMargin) * Vector2.right;
             Vector2 C = B + 0.5f * (Screen.width - _sideMargin) * Vector2.right;
             Vector2 D = B + _cardHandRadius * Vector2.down;
@@ -168,18 +172,20 @@ namespace Quackery
 
             var angle = Vector2.Angle(D - B, D - C);
 
-            for (int i = 0; i < _cardPileUIs.Count; i++)
+            var cardPiles = EnabledPiles.ToList();
+
+            for (int i = 0; i < cardPiles.Count; i++)
             {
 
-                var cardPile = _cardPileUIs[i];
+                var cardPile = cardPiles[i];
                 float t, angleOffset = 0f;
-                if (_cardPileUIs.Count == 1)
+                if (cardPiles.Count == 1)
                 {
                     angleOffset = Mathf.Lerp(-angle, angle, 0.5f);
                 }
                 else
                 {
-                    t = (float)i / (_cardPileUIs.Count - 1);
+                    t = (float)i / (cardPiles.Count - 1);
                     angleOffset = Mathf.Lerp(-angle, angle, t);
                 }
                 float selectedOffset = 0f;
@@ -218,21 +224,21 @@ namespace Quackery
 
 
 
-        private void ResetTopCardRotation(CardPileUI cardPile)
+        private void ResetTopCardRotation(CardPile cardPile)
         {
             if (cardPile.IsEmpty) return;
             var topCard = cardPile.TopCard;
             topCard.transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
-        private void SetTopCardStraight(float angleOffset, CardPileUI cardPile)
+        private void SetTopCardStraight(float angleOffset, CardPile cardPile)
         {
             if (cardPile.IsEmpty) return;
             var topCard = cardPile.TopCard;
             topCard.transform.localRotation = Quaternion.Euler(0, 0, -angleOffset);
         }
 
-        private void FollowTouch(CardPileUI cardPile)
+        private void FollowTouch(CardPile cardPile)
         {
 
             var mousePosition = Anchor.Instance.GetLocalMousePosition(cardPile.transform.parent as RectTransform);
@@ -271,5 +277,12 @@ namespace Quackery
 
             //cardPile.transform.position = targetPosition;
         }
+
+        internal bool NoPlayableCards()
+        {
+            return !_cardPiles.Exists(p => !p.IsEmpty && p.Enabled && p.Playable);
+        }
+
+
     }
 }

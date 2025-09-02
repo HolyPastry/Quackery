@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Quackery.Decks
 {
-    public class CartPileUI : CardPileUI, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler
+    public class CartPileUI : CardPile, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler
     {
         [SerializeField] private Image _highlightObject;
         [SerializeField] protected RewardPanel _rewardPanel;

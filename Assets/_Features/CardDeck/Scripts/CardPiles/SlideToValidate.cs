@@ -18,7 +18,7 @@ namespace Quackery.Decks
         [SerializeField] private bool _useDottedLine = true;
         [SerializeField] private float _slideStartThreshold = 10f;
 
-        [SerializeField, Self] private CardPileUI _cardPileUI;
+        [SerializeField, Self] private CardPile _cardPileUI;
 
         private bool _isSliding;
         private bool _isSelected;

@@ -16,16 +16,16 @@ namespace Quackery.Effects
 
         public override IEnumerator ExecutePile(Effect effect, CardPile owningPile)
         {
-            List<CardPile> piles = DeckServices.GetTablePile();
+            // List<CardPileUI> piles = DeckServices.GetTablePile();
 
-            foreach (var pile in piles)
-            {
-                Card card = effect.LinkedObject as Card;
+            // foreach (var pile in piles)
+            // {
+            //     Card card = effect.LinkedObject as Card;
 
-                if (card == null || pile.Category != card.Category) continue;
-                DeckServices.MoveToPile(pile, owningPile);
+            //     if (card == null || pile.Category != card.Category) continue;
+            //     DeckServices.MoveToPile(pile, owningPile);
 
-            }
+            // }
             yield return Tempo.WaitForABeat;
 
         }

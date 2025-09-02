@@ -6,7 +6,7 @@ namespace Quackery.Decks
     {
         public static Action<Card, EnumCardPile, int, bool, bool> OnCardMovedTo
                 = (card, pileType, index, placeOnTop, isInstant) => { };
-        public static Action<EnumCardPile, int> OnPileDestroyed = (pileType, index) => { };
+        // public static Action<EnumCardPile, int> OnPileDestroyed = (pileType, index) => { };
 
         public static Action<EnumCardPile, int, List<Card>> OnShuffle = (pileType, index, cards) => { };
 
@@ -16,9 +16,7 @@ namespace Quackery.Decks
 
         // internal static Action<EnumCardPile> OnCardPoolSizeUpdate = (cardPile) => { };
         public static Action<EnumCardPile> OnCardPoolSizeIncrease = (cardPile) => { };
-        public static Action<EnumCardPile, int> OnCardPoolSizeDecrease = (cardPile, index) => { };
-
-        public static Action<EnumCardPile, int, bool> OnActivatePile = (pileType, index, activate) => { };
+        public static Action<EnumCardPile> OnCardPoolSizeDecrease = (cardPile) => { };
 
         internal static Action<EnumCardPile, int> OnPileUpdated = (pileType, index) => { };
 

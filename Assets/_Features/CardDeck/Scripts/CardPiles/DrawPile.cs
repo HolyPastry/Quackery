@@ -1,40 +1,37 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Quackery.Effects;
+
 using Quackery.Inventories;
 using UnityEngine;
 
 namespace Quackery.Decks
 {
 
-    public class DrawPile : CardPile
+    public class DrawPile : CardPile, IPileController
     {
 
         private List<ItemData> _forcedOnNextDraw;
 
-        public DrawPile() : base(EnumCardPile.Draw, 0)
-        {
-            RegisterServices();
-        }
+        public EnumCardPile CardPileType => EnumCardPile.Draw;
 
-        ~DrawPile()
-        {
-            UnregisterServices();
-        }
+        public DrawPile() => RegisterServices();
+
+        ~DrawPile() => UnregisterServices();
 
         public void Populate()
         {
             var allItems = InventoryServices.GetAllItems();
-            Populate(allItems);
+            foreach (var item in allItems)
+                AddToDeck(item);
+            Shuffle();
         }
+
 
         private void RegisterServices()
         {
 
             DeckServices.ForceOnNextDraw = ForceOnNextDraw;
             DeckServices.DrawCategory = DrawCategoryCard;
-            // DeckServices.Draw = DrawMany;
         }
 
 
@@ -43,15 +40,9 @@ namespace Quackery.Decks
         {
             DeckServices.ForceOnNextDraw = delegate { };
             DeckServices.DrawCategory = category => null;
-            // DeckServices.Draw = number => new List<Card>();
         }
 
-        internal void Populate(List<Item> items)
-        {
-            foreach (var item in items)
-                AddToDeck(item);
-            Shuffle();
-        }
+
         private void AddToDeck(Item item)
         {
             Card card = DeckServices.CreateCard(item.Data);
@@ -123,7 +114,19 @@ namespace Quackery.Decks
 
         internal Card DrawCategoryCard(EnumItemCategory category)
         {
-            return Cards.Find(c => c.Category == category);
+            return _cards.Find(c => c.Category == category);
         }
+
+        public void Teleport(Card card)
+        {
+            AddOnTop(card, isInstant: true);
+        }
+
+        public IEnumerator Move(Card card)
+        {
+            AddOnTop(card, isInstant: false);
+            yield return Tempo.WaitForABeat;
+        }
+
     }
 }

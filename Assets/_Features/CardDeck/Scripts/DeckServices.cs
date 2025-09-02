@@ -26,17 +26,17 @@ namespace Quackery
         public static Func<Coroutine> DiscardHand = () => null;
         public static Func<int, Coroutine> DiscardCards = (amount) => null;
 
-        public static Func<List<CardPile>> GetTablePile = () => new();
+        //public static Func<List<CardPileUI>> GetTablePile = () => new();
 
         public static Action<EnumCardPile, int> SelectCard = (pileType, index) => { };
 
         public static Action<EnumCardPile, EnumCardPile> MovePileType = (sourcePile, targetPile) => { };
-        public static Action<CardPile, CardPile> MoveToPile = (source, target) => { };
+        //public static Action<CardPileUI, CardPileUI> MoveToPile = (source, target) => { };
         public static Func<EnumCardPile, Card> GetTopCard = (pileType) => null;
 
         public static Action<List<Card>> MoveToCardSelect = (cards) => { };
 
-        public static Action<Card> MoveToTable = delegate { };
+        public static Action<Card> MoveToHand = delegate { };
         public static Func<Coroutine> DrawBackToFull = () => null;
 
         public static Func<Card, Coroutine> DestroyCard = (cards) => null;
@@ -51,7 +51,7 @@ namespace Quackery
 
         public static Func<EnumItemCategory, Card> DrawCategory = (category) => null;
 
-        public static Action ActivateTableCards = delegate { };
+        public static Action ActivateHand = delegate { };
 
         public static Func<Card, Card> DuplicateCard = (card) => null;
 
