@@ -1,71 +1,35 @@
 
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
 
 using Quackery.Decks;
 using UnityEngine;
 
 namespace Quackery
 {
-    public class EffectPileController : MonoBehaviour
+    public class EffectPileController : CardPilePool, IPileController
     {
-        private readonly List<CardPile> _piles = new();
-        private List<CardPileUI> _pileUIs = new();
-        //   [SerializeField] private CardPileUI _prefab;
+        public EnumCardPile CardPileType => _cardPileType;
 
-        void Awake()
+        public void Teleport(Card card)
         {
-            GetComponentsInChildren(true, _pileUIs);
-        }
-
-        internal void Teleport(Card card)
-        {
-            CardPile pile = GetPile();
+            CardPile pile = GetEmptyPile(expandIfFull: true);
             pile.AddOnTop(card, isInstant: true);
         }
 
-        internal IEnumerator Move(Card card)
+        public IEnumerator Move(Card card)
         {
-            CardPile pile = GetPile();
+            CardPile pile = GetEmptyPile(expandIfFull: true);
+            yield return null;
             pile.AddOnTop(card, isInstant: false);
             yield return Tempo.WaitForABeat;
         }
 
-        private CardPile GetPile()
+        public override bool RemoveCard(Card card)
         {
-            var newIndex = _piles.Count;
-            var pile = new CardPile(EnumCardPile.Effect, newIndex);
-            _piles.Add(pile);
-
-            var pileUI = _pileUIs[newIndex];
-            pileUI.gameObject.SetActive(true);
-            pileUI.transform.localScale = Vector3.one;
-            pileUI.PileIndex = newIndex;
-            pileUI.Type = EnumCardPile.Effect;
-
-
-
-            return pile;
-        }
-
-        internal void RemoveCard(Card card)
-        {
-            foreach (var pile in _piles)
-                if (pile.RemoveCard(card))
-                    DeckEvents.OnPileUpdated(EnumCardPile.Effect, pile.Index);
-            RemoveEmptyPiles();
-        }
-
-        private void RemoveEmptyPiles()
-        {
-            var toRemove = _piles.FindAll(p => p.IsEmpty);
-            foreach (var pile in toRemove)
-            {
-                _piles.Remove(pile);
-                var ui = _pileUIs.Find(p => p.PileIndex == pile.Index);
-                ui.gameObject.SetActive(true);
-            }
+            bool cardRemoved = base.RemoveCard(card);
+            DisableEmptyPiles();
+            return cardRemoved;
         }
     }
 }

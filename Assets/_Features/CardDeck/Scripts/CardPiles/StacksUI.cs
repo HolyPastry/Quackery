@@ -11,7 +11,7 @@ namespace Quackery
 {
     public class StacksUI : MonoBehaviour
     {
-        [SerializeField] private CartPileUI _cartPileUI;
+        [SerializeField] private CartPile _cartPileUI;
         [SerializeField] private StackInfoUI _herbStackInfo;
         [SerializeField] private StackInfoUI _magicStackInfo;
         [SerializeField] private StackInfoUI _chineseStackInfo;

@@ -229,6 +229,7 @@ namespace Quackery.Decks
             _cardBackground.gameObject.SetActive(!stripCard);
             _cardDescription.gameObject.SetActive(!stripCard);
             _cardTitle.gameObject.SetActive(!stripCard);
+            _outline.gameObject.SetActive(_outline.gameObject.activeSelf && !stripCard);
 
             foreach (var categoryIcon in _categoryIcons)
             {

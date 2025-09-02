@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,7 +7,8 @@ using UnityEngine.UI;
 
 namespace Quackery.Decks
 {
-    public class CartPileUI : CardPileUI, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler
+    [RequireComponent(typeof(Image))]
+    public class CartPile : CardPile, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler
     {
         [SerializeField] private Image _highlightObject;
         [SerializeField] protected RewardPanel _rewardPanel;
@@ -16,6 +16,7 @@ namespace Quackery.Decks
         [SerializeField] private Color _highlightColor = Color.yellow;
         [SerializeField] private Color _defaultColor = Color.green;
         [SerializeField] private Color _backgroundColor = Color.blue;
+
         private bool _highlighted;
 
 
@@ -56,9 +57,9 @@ namespace Quackery.Decks
             _rewardPanel.ShowReward(reward, deltaScore);
         }
 
-        private void HighlightStack(List<int> list)
+        private void HighlightStack(List<CardPile> list)
         {
-            _highlighted = list != null && list.Contains(PileIndex);
+            _highlighted = list != null && list.Contains(this);
 
             if (_highlighted)
             {
@@ -76,14 +77,14 @@ namespace Quackery.Decks
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (!_highlighted) return;
-            CartServices.HoverPile(PileIndex);
+            CartServices.HoverPile(this);
             _highlightObject.color = _highlightColor;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             if (!_highlighted) return;
-            CartServices.UnhoverPile(PileIndex);
+            CartServices.UnhoverPile(this);
             _highlightObject.color = _defaultColor;
         }
 
@@ -91,7 +92,7 @@ namespace Quackery.Decks
         {
             base.OnPointerUp(eventData);
             if (!_highlighted) return;
-            CartServices.HoverPile(PileIndex);
+            CartServices.HoverPile(this);
             DeckServices.StopPlayCardLoop();
         }
     }

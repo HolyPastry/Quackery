@@ -142,7 +142,7 @@ namespace Quackery.GameStats
         {
             CartStats stats = new()
             {
-                NumCards = cart.SelectMany(pile => pile.Cards).Count(),
+                //NumCards = cart.SelectMany(pile => pile._cards).Count(),
                 TotalPrice = amount
             };
             _gameStats.CartStats.Add(stats);

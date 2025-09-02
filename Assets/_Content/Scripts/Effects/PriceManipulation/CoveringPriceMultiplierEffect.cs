@@ -18,7 +18,7 @@ namespace Quackery.Effects
         public override IEnumerator ExecutePile(Effect effect, CardPile pile)
         {
             if (pile.Count <= 1) yield break;
-            if (pile.Cards[1].Category != _category) yield break;
+            // if (pile._cards[1].Category != _category) yield break;
             int price = CardEffectServices.Price(pile.TopCard);
             CartServices.AddToCartValue(price);
         }

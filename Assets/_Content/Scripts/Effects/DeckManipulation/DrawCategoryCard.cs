@@ -18,7 +18,7 @@ namespace Quackery.Effects
 
             DeckServices.MoveCard(drawnCard, EnumCardPile.Effect, EnumPlacement.OnTop, 0);
             yield return Tempo.WaitForABeat;
-            DeckServices.MoveToTable(drawnCard);
+            DeckServices.MoveToHand(drawnCard);
             yield return Tempo.WaitForABeat;
 
         }

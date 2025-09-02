@@ -1353,11 +1353,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pileType: 3
-  _moveSpeed: 0.5
-  _easeType: 27
-  _staggerDelay: 0.1
-  _cardParent: {fileID: 6651892565991337511}
   _stripCard: 1
+  _cardScale: 0.5
+  _cardOffset: {x: 0, y: -100, z: 0}
+  Playable: 1
   _highlightObject: {fileID: 1206179121465467313}
   _rewardPanel: {fileID: 5235328855767992039}
   _highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.5882353}

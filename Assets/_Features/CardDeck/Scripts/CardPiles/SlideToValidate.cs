@@ -18,7 +18,7 @@ namespace Quackery.Decks
         [SerializeField] private bool _useDottedLine = true;
         [SerializeField] private float _slideStartThreshold = 10f;
 
-        [SerializeField, Self] private CardPileUI _cardPileUI;
+        [SerializeField, Self] private CardPile _cardPileUI;
 
         private bool _isSliding;
         private bool _isSelected;
@@ -67,7 +67,7 @@ namespace Quackery.Decks
                 {
                     if (distanceFromOrigin.y > _maxSlideDistanceY)
                     {
-                        DeckServices.SelectCard(_cardPileUI.Type, _cardPileUI.PileIndex);
+                        //  DeckServices.SelectCard(_cardPileUI.Type, _cardPileUI.PileIndex);
                         ResetMovements();
                     }
                 }

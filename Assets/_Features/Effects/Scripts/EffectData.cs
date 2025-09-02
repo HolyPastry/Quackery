@@ -13,7 +13,7 @@ namespace Quackery.Effects
 
     public abstract class EffectData : ScriptableObject
     {
-         public EnumEffectTrigger Trigger;
+        public EnumEffectTrigger Trigger;
 
         public List<EnumEffectTag> Tags;
 
