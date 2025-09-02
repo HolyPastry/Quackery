@@ -19,9 +19,7 @@ MonoBehaviour:
     your draw pile.
   LongDescription: 
   ShopDescription: 
-  Explanations:
-  - {fileID: 11400000, guid: 2c6a8ca528d854daa997ce3aae573eec, type: 2}
-  - {fileID: 11400000, guid: 6a88eaf0137fd44388d07980a3253e71, type: 2}
+  Explanations: []
   ShopPrice: 4
   Category: 2
   Effects: []

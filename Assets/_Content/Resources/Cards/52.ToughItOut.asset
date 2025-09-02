@@ -15,8 +15,8 @@ MonoBehaviour:
   MasterText: Tough It Out
   Icon: {fileID: 21300000, guid: b92b39264596843248db4e097a448776, type: 3}
   BasePrice: 0
-  ShortDescription: ' Apply 1 <b>Excited</b>, Add 1 <b>Fatigue</b> into your discard
-    pile.'
+  ShortDescription: Gain 1 <b>Excited</b>\n Add 1 <b>Fatigue</b> into your discard
+    pile.
   LongDescription: 
   ShopDescription: 
   Explanations:

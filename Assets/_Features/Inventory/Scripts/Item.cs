@@ -44,8 +44,8 @@ namespace Quackery.Inventories
         public int BasePrice => Data.BasePrice;
 
         public string ShortDescription => SwapValues(Data.ShortDescription);
-        public string LongDescription => SwapValues(Data.LongDescription);
-        public string ShopDescription => SwapValues(Data.ShopDescription);
+        //  public string LongDescription => SwapValues(Data.LongDescription);
+        // public string ShopDescription => SwapValues(Data.ShopDescription);
 
 
         public string SwapValues(string text)

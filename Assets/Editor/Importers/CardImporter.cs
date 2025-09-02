@@ -35,6 +35,7 @@ namespace Quackery
 
         private ExplanationParser _parser;
 
+        private int i { get; set; } = 0;
         protected override void Populate(List<string> fields, ScriptableObject @object, int IndexOf)
         {
             _parser ??= new();
@@ -50,12 +51,9 @@ namespace Quackery
 
             itemData.Icon = GetIcon(fields[2], itemData.Category, out string iconLog);
             log += iconLog;
-
-            // ParseExplanations(itemData, explanations);
-
+            log += "\n" + i++;
 
             OnPopulated?.Invoke(log);
-
         }
 
         private Sprite GetIcon(string name, EnumItemCategory category, out string log)

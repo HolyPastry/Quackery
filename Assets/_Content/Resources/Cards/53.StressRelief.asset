@@ -15,10 +15,12 @@ MonoBehaviour:
   MasterText: Stress Relief
   Icon: {fileID: 21300000, guid: bdcf06588347c4e4086132d2f9e53458, type: 3}
   BasePrice: 0
-  ShortDescription: Exhaust all Adversity cards in hand\n Apply 1 Stress \n Exhaust
+  ShortDescription: <b>Exhaust</b> all <b>Adversity</b> cards in hand\n Apply 1 <b>Stress</b>
+    \n <b>Exhaust</b>
   LongDescription: 
   ShopDescription: 
   Explanations:
+  - {fileID: 11400000, guid: 2c10bbb60f20649578412d5672512276, type: 2}
   - {fileID: 11400000, guid: 8940ffcbd8b7a416eb34dcafcd8c4948, type: 2}
   - {fileID: 11400000, guid: 087b2f6255ad244ceaf0e3f2e3391556, type: 2}
   ShopPrice: 0

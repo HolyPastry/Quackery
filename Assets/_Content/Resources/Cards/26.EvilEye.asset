@@ -15,10 +15,11 @@ MonoBehaviour:
   MasterText: Evil Eye
   Icon: {fileID: 21300000, guid: 9c357dc86f50441f1a1e708594283d44, type: 3}
   BasePrice: 0
-  ShortDescription: Exhaust a random Adversity in hand.
+  ShortDescription: <b>Exhaust</b> a random <b>Adversity</b> in hand.
   LongDescription: 
   ShopDescription: 
   Explanations:
+  - {fileID: 11400000, guid: 2c10bbb60f20649578412d5672512276, type: 2}
   - {fileID: 11400000, guid: 8940ffcbd8b7a416eb34dcafcd8c4948, type: 2}
   ShopPrice: 0
   Category: 2

@@ -15,10 +15,11 @@ MonoBehaviour:
   MasterText: Bad Vibes Spray
   Icon: {fileID: 21300000, guid: 5382d34bc060d46718ac124080b204fe, type: 3}
   BasePrice: 0
-  ShortDescription: Removes a random Negative Trait.
+  ShortDescription: Removes a random Negative <b>Trait</b>.
   LongDescription: 
   ShopDescription: 
-  Explanations: []
+  Explanations:
+  - {fileID: 11400000, guid: afb4296a158e943fd93aa654ff71f824, type: 2}
   ShopPrice: 0
   Category: 2
   Effects: []

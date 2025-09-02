@@ -19,8 +19,7 @@ MonoBehaviour:
     a suspicion into your draw pile.
   LongDescription: 
   ShopDescription: 
-  Explanations:
-  - {fileID: 11400000, guid: 8940ffcbd8b7a416eb34dcafcd8c4948, type: 2}
+  Explanations: []
   ShopPrice: 3
   Category: 7
   Effects: []

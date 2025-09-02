@@ -15,7 +15,7 @@ MonoBehaviour:
   MasterText: Keep Smiling
   Icon: {fileID: 21300000, guid: 94807c19913eb2548b7c5470552c0fbb, type: 3}
   BasePrice: 0
-  ShortDescription: Apply 1 Vibe\n Add 1 <b>Fatigue</b> to the discard
+  ShortDescription: Gain 1 Vibe\n Add 1 <b>Fatigue</b> to the discard
   LongDescription: 
   ShopDescription: 
   Explanations:

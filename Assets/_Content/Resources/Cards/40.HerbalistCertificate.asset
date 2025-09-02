@@ -16,11 +16,10 @@ MonoBehaviour:
   Icon: {fileID: 0}
   BasePrice: 0
   ShortDescription: '#Herbs Synergy x2\n If there are only #Herbs in cart, remove
-    all suspicion in hand.\n Exhaust'
+    all suspicion in hand.\n <b>Exhaust</b>'
   LongDescription: 
   ShopDescription: 
   Explanations:
-  - {fileID: 11400000, guid: fd4ecdf56c2524b2eb24773c15db903c, type: 2}
   - {fileID: 11400000, guid: 8940ffcbd8b7a416eb34dcafcd8c4948, type: 2}
   ShopPrice: 9
   Category: 7
