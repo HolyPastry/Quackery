@@ -522,7 +522,7 @@ namespace Quackery.Decks
 
             RemoveFromAllPiles(card);
 
-            if (card.Category == EnumItemCategory.Skill ||
+            if (card.Category == EnumItemCategory.Skills ||
                AddToCart(card, selectedPile))
             {
                 if (selectedPile != null && (selectedPile.TopCard == card))
@@ -536,7 +536,7 @@ namespace Quackery.Decks
                 yield return StartCoroutine(Discard(card));
             }
 
-            if (card.Category == EnumItemCategory.Skill)
+            if (card.Category == EnumItemCategory.Skills)
                 yield return StartCoroutine(Discard(card));
 
             _cardPlayed = true;
@@ -701,7 +701,7 @@ namespace Quackery.Decks
                 if (pile.IsEmpty) continue;
                 var topCard = pile.TopCard;
                 pile.Playable = false;
-                if (topCard.Category == EnumItemCategory.Skill)
+                if (topCard.Category == EnumItemCategory.Skills)
                 {
                     if (topCard.Price > 0) pile.Playable = true;
                     else

@@ -40,7 +40,7 @@ namespace Quackery.Effects
             }
         }
 
-        public float Value { get; internal set; }
+        public float Value { get; internal set; } = 0;
 
         //public EnumEffectTrigger Trigger => Data.Trigger;
 

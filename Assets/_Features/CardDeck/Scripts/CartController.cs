@@ -517,7 +517,7 @@ namespace Quackery.Decks
                 (int)EffectServices.GetModifier(typeof(CartSizeModifierEffect));
 
             newCartSize = Mathf.Max(newCartSize, 2);
-            if (CartSize == newCartSize) return;
+            //if (CartSize == newCartSize) return;
 
             while (_cartPiles.Count < newCartSize)
             {
@@ -679,17 +679,7 @@ namespace Quackery.Decks
             var effectData = effect.Data as MergeWithPileEffect;
             CardPile cardPileRef = null;
 
-            // if (effectData.TargetStack == MergeWithPileEffect.EnumTargetStack.Previous)
-            // {
-            //     if (_lastCartPile == null || _lastCartPile.IsEmpty)
-            //     {
-            //         if (!effectData.AllowEmptyPiles)
-            //             Debug.LogWarning(
-            //                 "MergeWithPreviousPileEffect: No last cart pile to merge with. This card should not be playable");
-            //         return false;
-            //     }
-            //     cardPileRef = _lastCartPile;
-            // }
+
             if (effectData.TargetStack == MergeWithPileEffect.EnumTargetStack.LowestStack)
             {
                 cardPileRef = _cartPiles
@@ -697,12 +687,7 @@ namespace Quackery.Decks
                     .OrderBy(p => p.TopCard.Price)
                     .FirstOrDefault();
             }
-            // else if (effectData.TargetStack == MergeWithPileEffect.EnumTargetStack.SameCategory)
-            // {
-            //     cardPileRef = _cartPiles
-            //         .Where(p => p.Enabled && !p.IsEmpty && p.Category == topCard.Category)
-            //         .FirstOrDefault();
-            // }
+
             if (cardPileRef == null || cardPileRef.IsEmpty)
             {
                 if (!effectData.AllowEmptyPiles)

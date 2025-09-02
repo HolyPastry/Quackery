@@ -17,13 +17,12 @@ namespace Quackery.Effects
         [SerializeField] private PlayerEffects _playerEffects;
         private readonly List<Effect> _effects = new();
 
-        private DataCollection<EffectData> _effectCollection;
-        private List<Effect> _activatedEffect;
+        // private DataCollection<EffectData> _effectCollection;
+        private readonly List<Effect> _activatedEffect = new();
 
         void Awake()
         {
-            _effectCollection = new("Effects");
-            _activatedEffect = new();
+            // _effectCollection = new("Effects");
         }
 
         void OnDisable()
@@ -57,6 +56,8 @@ namespace Quackery.Effects
 
         void OnEnable()
         {
+            _effects.Clear();
+            _activatedEffect.Clear();
             EffectServices.Add = (effectCarrier) => StartCoroutine(AddEffectRoutine(effectCarrier));
             EffectServices.AddToCarrier = (effect, target) => StartCoroutine(AddToCarrierRoutine(effect, target));
             EffectServices.Remove = (predicate) => StartCoroutine(RemoveRoutine(predicate));

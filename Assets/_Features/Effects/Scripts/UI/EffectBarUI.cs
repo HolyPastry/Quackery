@@ -60,7 +60,7 @@ namespace Quackery
                     return;
                 }
             }
-            Debug.LogWarning($"StatusUI for {status.name} not found in pool.", this);
+            //Debug.LogWarning($"StatusUI for {status.name} not found in pool.", this);
         }
 
         private void AddStatus(Status status, int value)

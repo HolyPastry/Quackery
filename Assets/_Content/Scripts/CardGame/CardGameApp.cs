@@ -14,6 +14,8 @@ namespace Quackery.Decks
 
     public class CardGameApp : App
     {
+        private static readonly WaitForSeconds _waitForSeconds1 = new(1f);
+
         [Header("References")]
 
         [SerializeField] private ClientGameUI _clientGameUI;
@@ -118,7 +120,7 @@ namespace Quackery.Decks
                 DialogQueueServices.QueueDialog("MeIntro");
                 yield return DialogQueueServices.WaitUntilAllDialogEnds();
             }
-            yield return new WaitForSeconds(1f);
+            yield return _waitForSeconds1;
             yield return EffectServices.Add(_client);
 
             yield return new WaitForSeconds(1.5f);
@@ -129,7 +131,7 @@ namespace Quackery.Decks
                 _cartValue.Show();
             CartServices.InitCart();
 
-            yield return new WaitForSeconds(1f);
+            yield return _waitForSeconds1;
             yield return EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundStart, null);
             bool firstHand = true;
             while (true)

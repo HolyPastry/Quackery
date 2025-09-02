@@ -66,7 +66,7 @@ namespace Quackery.Decks
             {
                 effect.Initialize();
                 effect.LinkedObject = this;
-                if (Item.Category != EnumItemCategory.Skill)
+                if (Item.Category != EnumItemCategory.Skills)
                     effect.Tags.Add(EnumEffectTag.ItemCard);
             }
         }
@@ -97,7 +97,7 @@ namespace Quackery.Decks
 
         }
 
-        private bool IsSkill => _item.Category == EnumItemCategory.Skill;
+        private bool IsSkill => _item.Category == EnumItemCategory.Skills;
         public string Name => _item.Name;
 
         public EnumItemCategory Category => _item.Category;
@@ -114,7 +114,7 @@ namespace Quackery.Decks
 
         public bool CannotBeCovered => Effects.Exists(e => e.Data is CoverProtection);
 
-        public bool HasCartTarget => Category != EnumItemCategory.Skill;
+        public bool HasCartTarget => Category != EnumItemCategory.Skills;
 
         public List<EffectData> EffectDataList => _item.Data.Effects;
 

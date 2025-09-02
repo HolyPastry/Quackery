@@ -12,7 +12,7 @@ namespace Quackery.Inventories
         Energy = 4,
         Ayurveda = 5,
         Chinese = 6,
-        Skill = 7,
+        Skills = 7,
         Curse = 8,
         TempCurse = 9
     }

@@ -63,7 +63,7 @@ namespace Quackery
             log = string.Empty;
             string path = category switch
             {
-                EnumItemCategory.Skill => _skillPath,
+                EnumItemCategory.Skills => _skillPath,
                 EnumItemCategory.Curse => _cursePath,
                 EnumItemCategory.TempCurse => _tempCursePath,
                 _ => _itemPath
@@ -71,7 +71,7 @@ namespace Quackery
             string prefix = _cardPrefix;
             if (category == EnumItemCategory.Curse ||
                  category == EnumItemCategory.TempCurse ||
-                 category == EnumItemCategory.Skill)
+                 category == EnumItemCategory.Skills)
             {
                 prefix = category.ToString() + '=';
             }
