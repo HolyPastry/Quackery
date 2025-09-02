@@ -23,7 +23,7 @@ namespace Quackery.Effects
                 DeckServices.Discard(new() { randomCard });
                 cards.Remove(randomCard);
                 numCardsToRemove--;
-                yield return DefaultWaitTime;
+                yield return Tempo.WaitForABeat;
             }
 
         }

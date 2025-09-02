@@ -16,10 +16,10 @@ namespace Quackery.Effects
         public override IEnumerator Execute(Effect effect)
         {
             DeckServices.ChangeCardCategory(Category, _cardSelection);
-            yield return DefaultWaitTime;
+            yield return Tempo.WaitForABeat;
         }
 
-        public override void Cancel(Effect effect)
+        public override void OnRemove(Effect effect)
         {
             DeckServices.RestoreCardCategories();
         }

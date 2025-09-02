@@ -116,7 +116,7 @@ namespace Quackery.Decks
                 {
                     card.transform.DOScale(0, 0.5f)
                         .OnComplete(() => Destroy(card.gameObject));
-                    yield return new WaitForSeconds(0.5f);
+                    yield return Tempo.WaitForABeat;
                 }
 
             }

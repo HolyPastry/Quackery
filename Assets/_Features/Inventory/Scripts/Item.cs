@@ -44,8 +44,8 @@ namespace Quackery.Inventories
         public int BasePrice => Data.BasePrice;
 
         public string ShortDescription => SwapValues(Data.ShortDescription);
-        public string LongDescription => SwapValues(Data.LongDescription);
-        public string ShopDescription => SwapValues(Data.ShopDescription);
+        //  public string LongDescription => SwapValues(Data.LongDescription);
+        // public string ShopDescription => SwapValues(Data.ShopDescription);
 
 
         public string SwapValues(string text)
@@ -57,11 +57,15 @@ namespace Quackery.Inventories
                 text = text.Replace("#EffectValue2", Effects[0].Value.ToString());
             if (Effects.Count > 2)
                 text = text.Replace("#EffectValue3", Effects[0].Value.ToString());
+
             if (text.Contains("#NumberDrawRemaining"))
             {
-                //TODO:: really hacky, needs to find a way to do this systematically
-                text = text.Replace("#NumberDrawRemaining",
-                    (Effects[0].Value - NumberOfDraws).ToString());
+                var effect = Effects.Find(e => e.Data is ReplaceCardEffect replaceEffect);
+                if (effect != null)
+                {
+                    text = text.Replace("#NumberDrawRemaining",
+                                           (effect.Value - NumberOfDraws + 1).ToString());
+                }
             }
 
             return text;

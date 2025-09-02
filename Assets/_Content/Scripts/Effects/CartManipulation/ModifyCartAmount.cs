@@ -10,8 +10,8 @@ namespace Quackery.Effects
     {
         public override IEnumerator Execute(Effect effect)
         {
-            CartServices.AddToCartValue(effect.Value);
-            yield return DefaultWaitTime;
+            CartServices.AddToCartValue((int)effect.Value);
+            yield return Tempo.WaitForABeat;
 
         }
     }

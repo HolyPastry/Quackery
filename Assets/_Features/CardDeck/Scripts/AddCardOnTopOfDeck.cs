@@ -2,20 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Quackery.Inventories;
+using System;
 namespace Quackery.Decks
 {
     public class AddCardOnTopOfDeck : MonoBehaviour
     {
         [SerializeField] private List<ItemData> _cards = new();
+        private CardGameApp _cardGame;
 
-        IEnumerator Start()
+        void Awake()
         {
-            yield return FlowServices.WaitUntilEndOfSetup();
-            yield return DeckServices.WaitUntilReady();
-            AddOnTopOfDeck();
+            _cardGame = FindObjectOfType<CardGameApp>(true);
+            _cardGame.OnOpened += DrawCards;
         }
 
-        public void AddOnTopOfDeck()
+        void OnDestroy()
+        {
+            _cardGame.OnOpened -= DrawCards;
+        }
+
+        private void DrawCards()
         {
             DeckServices.ForceOnNextDraw(_cards);
         }

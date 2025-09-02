@@ -20,7 +20,7 @@ MonoBehaviour:
   Level: 4
   Requirements: []
   Explanations: []
-  Effects: []
+  _effectDatas: []
   Price: 52
   FollowersRequirement: 0
   FollowerBonus: 0

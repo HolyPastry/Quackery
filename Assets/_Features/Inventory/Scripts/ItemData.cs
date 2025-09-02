@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Holypastry.Bakery;
 using Quackery.Decks;
-
+using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery.Inventories
@@ -32,14 +32,11 @@ namespace Quackery.Inventories
 
         public List<Explanation> Explanations = new();
 
-        public int SubscriptionCost;
+        public int ShopPrice;
 
         public EnumItemCategory Category;
 
-
-        public List<Effect> Effects = new();
-
-        public ValueEvaluator ValueEvaluator;
+        public List<EffectData> Effects = new();
 
         public EnumRarity Rarity;
 
@@ -47,14 +44,8 @@ namespace Quackery.Inventories
         {
 
             List<CardReward> rewards = new();
-            // {
-            //     new()
-            //     {
-            //         Type = EnumCardReward.BaseReward,
-            //         Value = topCard.Price
-            //     }
-            // };
-            (int multiplier, int bonus) = EffectServices.GetSynergyBonuses(topCard, subItems);
+
+            (int multiplier, int bonus) = CardEffectServices.GetSynergyBonuses(topCard, subItems);
 
             if (subItems.Count > 0 && subItems.TrueForAll(i => i.Category == topCard.Category))
             {
@@ -92,10 +83,10 @@ namespace Quackery.Inventories
             // }
 
 
-            if (ValueEvaluator != null)
-            {
-                rewards.AddRange(ValueEvaluator.Evaluate(topCard, subItems, otherPiles));
-            }
+            // if (ValueEvaluator != null)
+            // {
+            //     rewards.AddRange(ValueEvaluator.Evaluate(topCard, subItems, otherPiles));
+            // }
             return rewards;
         }
 

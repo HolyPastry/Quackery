@@ -8,7 +8,8 @@ namespace Quackery.Effects
         Artifact = 3,
         ItemCard = 4,
         Player = 5,
-        Duration = 6,
+        DecreaseOverTime = 6,
         OneTime = 7,
+        Persistent = 8
     }
 }

@@ -94,5 +94,10 @@ namespace Quackery
         protected virtual void OnCardPileTouchRelease(CardPileUI uI) { }
 
         protected virtual void OnCardPileTouchPress(CardPileUI uI) { }
+
+        internal void Push(Card card)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

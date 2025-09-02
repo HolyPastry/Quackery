@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Holypastry.Bakery.Flow;
+using Quackery.Effects;
 using Quackery.Followers;
 using Quackery.Progression;
 using UnityEngine;
@@ -22,6 +23,7 @@ namespace Quackery.Clients
             ClientServices.WaitUntilReady = () => WaitUntilReady;
             ClientServices.AddKnownClient = AddKnownClient;
             ClientServices.AddUnknownClients = AddUnknownClients;
+            ClientServices.GetClient = () => _selectedClient;
 
             ClientServices.HasNextClient = HasNextClient;
             ClientServices.GetNextClient = GetNextClient;
@@ -284,7 +286,7 @@ namespace Quackery.Clients
             ClientEvents.ClientListUpdated?.Invoke();
         }
 
-        private void AddUnknownClient(Effect effect)
+        private void AddUnknownClient(EffectData effect)
         {
             var client = new Client();
             client.InitUnknown(_clientsData, effect);

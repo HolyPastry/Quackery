@@ -51,9 +51,9 @@ namespace Quackery
             _ratingPanel.gameObject.SetActive(false);
             ClientServices.SwapClients();
 
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             _revealIdentityPanel.SetActive(true);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             _portrait.transform.DOScaleX(0, 1).SetEase(Ease.InOutSine);
             _nameText.transform.DOScaleX(0, 1).SetEase(Ease.InOutSine);
             yield return new WaitForSeconds(1f);

@@ -9,22 +9,15 @@ using Quackery.Effects;
 
 using DG.Tweening;
 using UnityEngine.Assertions;
-using Holypastry.Bakery;
 using System.Collections;
 
 
 namespace Quackery.Decks
 {
-    public class Card : MonoBehaviour, ITooltipTarget
+    public class Card : MonoBehaviour, ITooltipTarget, IEffectCarrier
     {
-        [Serializable]
-        public struct CategoryIcons
-        {
-            public Sprite Icon;
-            public EnumItemCategory Category;
-        }
-        // [Header("Catergory Icons")]
-        // [SerializeField] private List<CategoryIcons> _categoryIcons = new();
+
+
         [Header("Card Components")]
         [SerializeField] private Image _base;
         [SerializeField] private Image _cardBackground;
@@ -32,14 +25,11 @@ namespace Quackery.Decks
 
         [SerializeField] private List<Image> _categoryIcons = new();
         [SerializeField] private Image _cutoutBackground;
-        // [SerializeField] private Image _PriceBackground;
-        // [SerializeField] private Image _categoryIcon;
-        //[SerializeField] private Image _RatingBackground;
+
         [SerializeField] private TextMeshProUGUI _cardTitle;
 
         [SerializeField] private TextMeshProUGUI _cardDescription;
         [SerializeField] private TextMeshProUGUI _cardPrice;
-        //[SerializeField] private TextMeshProUGUI _cardRating;
         [SerializeField] private Image _outline;
 
         public List<Explanation> Explanations => Item.Data.Explanations;
@@ -75,12 +65,9 @@ namespace Quackery.Decks
             foreach (var effect in _item.Effects)
             {
                 effect.Initialize();
-                effect.LinkedCard = this;
-                if (Item.Category != EnumItemCategory.Skill)
+                effect.LinkedObject = this;
+                if (Item.Category != EnumItemCategory.Skills)
                     effect.Tags.Add(EnumEffectTag.ItemCard);
-                if (effect.Trigger == EnumEffectTrigger.Passive)
-                    effect.Tags.AddUnique(EnumEffectTag.Status);
-
             }
         }
 
@@ -110,49 +97,27 @@ namespace Quackery.Decks
 
         }
 
-        // private void SetCategoryIcon()
-        // {
-        //     if (_categoryIcon == null) return;
-
-        //     if (
-        //         _item.Category == EnumItemCategory.Any ||
-        //          _item.Category == EnumItemCategory.Skill)
-        //     {
-        //         _categoryIcon.gameObject.SetActive(false);
-        //     }
-        //     else
-        //     {
-
-        //         if (_categoryIcons.Exists(icon => icon.Category == _item.Category))
-        //         {
-        //             _categoryIcon.gameObject.SetActive(true);
-        //             _categoryIcon.sprite = _categoryIcons.Find(icon => icon.Category == _item.Category).Icon;
-        //         }
-        //         else
-        //         {
-        //             _categoryIcon.gameObject.SetActive(false);
-        //             Debug.LogWarning($"No icon found for category: {_item.Category}", this);
-        //         }
-
-        //     }
-        // }
-
-        private bool IsSkill => _item.Category == EnumItemCategory.Skill;
+        private bool IsSkill => _item.Category == EnumItemCategory.Skills;
         public string Name => _item.Name;
 
         public EnumItemCategory Category => _item.Category;
 
         public List<Effect> Effects => _item.Effects;
 
+        public bool ActivatedCondition(Effect effect) => CartServices.IsTopCard(this);
+
         private Item _item;
 
-        public int Price => EffectServices.GetCardPrice(this) + InHandPriceBonus;
+        public int Price => CardEffectServices.Price(this) + InHandPriceBonus;
 
         public int InHandPriceBonus = 0;
 
         public bool CannotBeCovered => Effects.Exists(e => e.Data is CoverProtection);
 
-        public bool HasCartTarget => Category != EnumItemCategory.Skill;
+        public bool HasCartTarget => Category != EnumItemCategory.Skills;
+
+        public List<EffectData> EffectDataList => _item.Data.Effects;
+
 
         private List<EffectIcon> _effectIconPool = new();
         private bool _toBeDestroyed;
@@ -286,8 +251,11 @@ namespace Quackery.Decks
             _cutoutBackground.material = material;
 
             material.DOFloat(1, "_disolveAmount", duration);
+            _cardTitle.gameObject.SetActive(false);
+            _cardDescription.gameObject.SetActive(false);
 
             yield return new WaitForSeconds(duration);
+            Destroy(gameObject);
         }
 
 

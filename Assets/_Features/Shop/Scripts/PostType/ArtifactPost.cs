@@ -84,7 +84,7 @@ namespace Quackery.Shops
                 {
                     formattedText += "\n";
                 }
-                formattedText += $"{effect.Description}";
+                //formattedText += $"{effect.Description}";
             }
             return Sprites.Replace(formattedText);
         }
@@ -105,13 +105,13 @@ namespace Quackery.Shops
 
             yield return GameMenuController.AddToArtifactRequest(_artifactIcon.transform as RectTransform);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             if (_artifactReward.ArtifactData.Bill != null)
             {
                 BillServices.AddNewBill(_artifactReward.ArtifactData.Bill, true);
                 yield return GameMenuController.AddToBillsRequest(_billBlockParent as RectTransform);
 
-                yield return new WaitForSeconds(0.5f);
+                yield return Tempo.WaitForABeat;
             }
 
         }

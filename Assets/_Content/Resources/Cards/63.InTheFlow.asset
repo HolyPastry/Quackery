@@ -15,21 +15,16 @@ MonoBehaviour:
   MasterText: In The Flow
   Icon: {fileID: 21300000, guid: 08ac45c11db3d344e8b0d2b9c07f5896, type: 3}
   BasePrice: 0
-  ShortDescription: 
+  ShortDescription: Gain 1 Vibe and 1 <b>Excited</b>, <b>Exhaust</b>
   LongDescription: 
   ShopDescription: 
-  Explanations: []
-  SubscriptionCost: 15
+  Explanations:
+  - {fileID: 11400000, guid: 5f01a83e104ee421ba05f62866982f67, type: 2}
+  - {fileID: 11400000, guid: 8940ffcbd8b7a416eb34dcafcd8c4948, type: 2}
+  ShopPrice: 15
   Category: 7
   Effects:
-  - _data: {fileID: 11400000, guid: 3595818e79b0a41709da42f7deae28b8, type: 2}
-    Value: 1
-    Tags: 0200000005000000
-  - _data: {fileID: 11400000, guid: ab38ab34b9e4f40a292f4e187fc18f90, type: 2}
-    Value: 1
-    Tags: 
-  - _data: {fileID: 11400000, guid: 801a0a2ba11034396948a755cdf973ab, type: 2}
-    Value: 0
-    Tags: 
-  ValueEvaluator: {fileID: 0}
+  - {fileID: 11400000, guid: 317c068e9c8814e14aa0536f87731ef7, type: 2}
+  - {fileID: 11400000, guid: 637ca5b8af4d14541935be71faad5a5c, type: 2}
+  - {fileID: 11400000, guid: e7a834274bb4c47e2bb7a31c78c7b7a6, type: 2}
   Rarity: 0

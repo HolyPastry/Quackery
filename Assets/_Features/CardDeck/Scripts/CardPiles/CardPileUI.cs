@@ -13,9 +13,7 @@ namespace Quackery.Decks
     public class CardPileUI : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         [SerializeField] EnumCardPile _pileType;
-        [SerializeField] protected float _moveSpeed = 0.5f;
         [SerializeField] protected Ease _easeType = Ease.OutBack;
-        [SerializeField] protected float _staggerDelay = 0.1f;
         [SerializeField] protected Transform _cardParent;
 
         [SerializeField] protected bool _stripCard = false;
@@ -123,29 +121,29 @@ namespace Quackery.Decks
             // StartCoroutine(ShuffleCardRoutine(cards));
         }
 
-        private IEnumerator ShuffleCardRoutine(List<Card> cards)
-        {
+        // private IEnumerator ShuffleCardRoutine(List<Card> cards)
+        // {
 
-            foreach (var card in GetComponentsInChildren<Card>())
-            {
-                if (!cards.Contains(card)) continue;
-                var rectTransform = card.transform as RectTransform;
+        //     foreach (var card in GetComponentsInChildren<Card>())
+        //     {
+        //         if (!cards.Contains(card)) continue;
+        //         var rectTransform = card.transform as RectTransform;
 
-                rectTransform.DOLocalMoveX(-rectTransform.rect.width, 0.01f)
-                    .SetEase(_easeType)
-                    .OnComplete(() =>
-                    {
-                        transform.SetSiblingIndex(cards.IndexOf(card));
-                        rectTransform.DOLocalMoveX(0, _moveSpeed)
-                            .SetEase(_easeType)
-                            .OnComplete(() =>
-                            {
+        //         rectTransform.DOLocalMoveX(-rectTransform.rect.width, 0.01f)
+        //             .SetEase(_easeType)
+        //             .OnComplete(() =>
+        //             {
+        //                 transform.SetSiblingIndex(cards.IndexOf(card));
+        //                 rectTransform.DOLocalMoveX(0, _moveSpeed)
+        //                     .SetEase(_easeType)
+        //                     .OnComplete(() =>
+        //                     {
 
-                            });
-                    });
-                yield return new WaitForSeconds(_staggerDelay); // Stagger the movement of cards
-            }
-        }
+        //                     });
+        //             });
+        //         yield return new WaitForSeconds(_staggerDelay); // Stagger the movement of cards
+        //     }
+        // }
 
         private IEnumerator StaggeredMoveRoutine()
         {
@@ -158,12 +156,11 @@ namespace Quackery.Decks
                     if (cardTransform == null)
                         continue; // Skip if the card transform is null
 
-                    cardTransform.DOScale(1, _moveSpeed).SetEase(Ease.Linear);
-                    cardTransform.DOAnchorPos(Vector3.zero, _moveSpeed).SetEase(_easeType);
-                    cardTransform.DOLocalRotate(Vector3.zero, _moveSpeed);
+                    cardTransform.DOScale(1, Tempo.WholeBeat).SetEase(Ease.Linear);
+                    cardTransform.DOAnchorPos(Vector3.zero, Tempo.WholeBeat).SetEase(_easeType);
+                    cardTransform.DOLocalRotate(Vector3.zero, Tempo.WholeBeat);
 
-
-                    yield return new WaitForSeconds(_staggerDelay); // Stagger the movement of cards
+                    yield return new WaitForSeconds(Tempo.EighthBeat); // Stagger the movement of cards
                 }
                 else
                 {

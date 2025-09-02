@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery.Clients
@@ -35,7 +36,7 @@ namespace Quackery.Clients
 
         internal static Action SwapClients = () => { };
 
-        internal static Action<Effect> AddUnknownClient = (effect) => { };
+        internal static Action<EffectData> AddUnknownClient = (effect) => { };
 
         internal static Func<int> GetBudget = () => -1;
 
@@ -53,6 +54,8 @@ namespace Quackery.Clients
         internal static Func<CartMode, int> GetThreshold = (mode) => (mode == CartMode.Survival) ? 20 : 40;
 
         internal static Func<int> GetCartSize = () => 3;
+
+        internal static Func<Client> GetClient = () => null;
 
     }
 }

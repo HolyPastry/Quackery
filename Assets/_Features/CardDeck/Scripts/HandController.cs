@@ -73,7 +73,7 @@ namespace Quackery
                 _helperText.text = "Drag onto cart stack to play";
             else
             {
-                if (pileUI.TopCard.Category == Inventories.EnumItemCategory.Skill)
+                if (pileUI.TopCard.Category == Inventories.EnumItemCategory.Skills)
                     _helperText.text = "Slide up to play";
                 if (pileUI.TopCard.Category == Inventories.EnumItemCategory.Curse ||
                     pileUI.TopCard.Category == Inventories.EnumItemCategory.TempCurse)

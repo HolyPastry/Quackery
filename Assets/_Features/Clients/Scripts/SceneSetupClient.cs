@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Holypastry.Bakery.Flow;
+using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery.Clients
@@ -9,7 +10,7 @@ namespace Quackery.Clients
     {
         [SerializeField] private List<ClientData> clients;
 
-        [SerializeField] private List<Effect> UnknownEffectsToAdd;
+        [SerializeField] private List<EffectData> UnknownEffectsToAdd;
         [SerializeField] private bool GenerateDailyQueue = true;
         [SerializeField] private bool InfiniteQueue = false;
         public override IEnumerator Routine()
@@ -28,6 +29,7 @@ namespace Quackery.Clients
             foreach (var effect in UnknownEffectsToAdd)
             {
                 ClientServices.AddUnknownClient(effect);
+
             }
             if (GenerateDailyQueue)
             {

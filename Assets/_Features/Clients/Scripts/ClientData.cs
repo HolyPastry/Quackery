@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Bakery.Dialogs;
 using Holypastry.Bakery.Quests;
+using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery.Clients
@@ -22,13 +23,15 @@ namespace Quackery.Clients
         }
         public CharacterData CharacterData;
         public Sprite Icon;
-        public List<Effect> Effects;
+        public List<EffectData> Effects;
 
         public Reward FirstReward;
 
         public QuestData FirstQuest;
 
         public string Name => CharacterData.MasterText;
+
+
 
         public int Budget = -1;
     }

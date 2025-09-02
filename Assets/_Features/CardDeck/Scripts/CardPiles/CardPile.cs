@@ -212,9 +212,6 @@ namespace Quackery.Decks
             int index = UnityEngine.Random.Range(0, Cards.Count);
             Cards.Insert(index, card);
             DeckEvents.OnCardMovedTo(card, Type, Index, true, false);
-
         }
-
-
     }
 }

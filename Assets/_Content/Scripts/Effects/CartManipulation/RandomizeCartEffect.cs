@@ -11,7 +11,7 @@ namespace Quackery.Effects
         public override IEnumerator Execute(Effect effect)
         {
             CartServices.RandomizeCart();
-            yield return DefaultWaitTime;
+            yield return Tempo.WaitForABeat;
         }
     }
 }

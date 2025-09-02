@@ -21,10 +21,7 @@ MonoBehaviour:
   Requirements: []
   Explanations:
   - {fileID: 11400000, guid: 2f0e355eba1d5463bba296c340dc7b39, type: 2}
-  Effects:
-  - _data: {fileID: 11400000, guid: a82a46cf1d1404d578bfb6217ae720a7, type: 2}
-    Value: 1
-    Tags: 0500000002000000
+  _effectDatas: []
   Price: 14
   FollowersRequirement: 0
   FollowerBonus: 0

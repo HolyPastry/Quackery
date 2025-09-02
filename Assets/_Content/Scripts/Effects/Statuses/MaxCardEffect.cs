@@ -17,7 +17,7 @@ namespace Quackery.Effects
             var numCardInHand =
                 DeckServices.GetMatchingCards(card => card.Item.Data == CardData, CardPile);
 
-            yield return DefaultWaitTime;
+            yield return Tempo.WaitForABeat;
             if (numCardInHand.Count + 1 >= effect.Value) CardGameApp.InterruptRoundRequest();
         }
     }

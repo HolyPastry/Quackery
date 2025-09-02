@@ -121,7 +121,7 @@ namespace Quackery.Shops
             _subscriptionPrice.text = "";
             _description.text = "";
             _title.text = "";
-            yield return new WaitForSeconds(0.2f);
+            yield return Tempo.WaitForABeat;
             _cardAnimated.RectTransform = _card.transform as RectTransform;
             _cardAnimated.SlideOut(Direction.Left);
 
@@ -208,7 +208,7 @@ namespace Quackery.Shops
             _card = DeckServices.CreateCard(cardReward.ItemData);
             _card.transform.SetParent(_cardRoot, false);
             _card.transform.localPosition = Vector3.zero;
-            _subscriptionPrice.text = Sprites.Replace("Free for a week,\n then " + cardReward.ItemData.SubscriptionCost + " #Coin per week");
+            _subscriptionPrice.text = Sprites.Replace("Free for a week,\n then " + cardReward.ItemData.ShopPrice + " #Coin per week");
 
             string text = cardReward.ItemData.LongDescription;
             foreach (var line in cardReward.ItemData.Explanations)

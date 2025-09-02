@@ -120,7 +120,7 @@ namespace Quackery.Notifications
         private IEnumerator StaggeredDisplayRoutine()
         {
             _slideToUnlock.gameObject.SetActive(false);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             var waitForSeconds = new WaitForSeconds(_minimumDisplayInterval);
             while (true)
             {

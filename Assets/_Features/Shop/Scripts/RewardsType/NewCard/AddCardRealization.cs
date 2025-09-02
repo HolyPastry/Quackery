@@ -23,7 +23,7 @@ namespace Quackery.Shops
             card.transform.localPosition = Vector3.zero;
 
             _textTransform.DOPunchScale(Vector3.one * 1.1f, 1f, 1, 1);
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             _animatedCard.SlideOut(Direction.Left);
 
             yield return _animatedCard.WaitForAnimation();

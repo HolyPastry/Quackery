@@ -13,7 +13,7 @@ namespace Quackery.Bills
         private int CalculateSubscriptionPrice()
         {
             var allItems = InventoryServices.GetAllItems();
-            return allItems.Sum(item => item.Data.SubscriptionCost);
+            return allItems.Sum(item => item.Data.ShopPrice);
         }
     }
 }

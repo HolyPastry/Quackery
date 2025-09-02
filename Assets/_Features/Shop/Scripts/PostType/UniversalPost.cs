@@ -132,7 +132,7 @@ namespace Quackery.Shops
             foreach (var itemData in artifactData.BonusItems)
             {
                 // SpawnCard(itemData);
-                yield return new WaitForSeconds(0.5f);
+                yield return Tempo.WaitForABeat;
             }
             foreach (var itemData in artifactData.BonusItems)
             {

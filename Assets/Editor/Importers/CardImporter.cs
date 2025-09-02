@@ -22,7 +22,7 @@ namespace Quackery
         [SerializeField] private string _tempCursePath = "Assets/_Content/2DArt/Sprites/TempCurses";
 
         [Header("Collections Keys")]
-        [SerializeField] private string EffectCollectionKey = "Effects";
+        // [SerializeField] private string EffectCollectionKey = "Effects";
         [SerializeField] private string ExplanationCollectionKey = "Explanations";
 
         [Header("Card Prefixes")]
@@ -33,48 +33,27 @@ namespace Quackery
 
         public event Action<string> OnPopulated = delegate { };
 
+        private ExplanationParser _parser;
+
+        private int i { get; set; } = 0;
         protected override void Populate(List<string> fields, ScriptableObject @object, int IndexOf)
         {
+            _parser ??= new();
             string log = string.Empty;
             ItemData itemData = @object as ItemData;
             itemData.MasterText = fields[3];
             itemData.Category = (EnumItemCategory)Enum.Parse(typeof(EnumItemCategory), fields[6]);
             itemData.BasePrice = IntParse(fields[7]);
             itemData.Rarity = (EnumRarity)Enum.Parse(typeof(EnumRarity), fields[4]);
+            itemData.ShopPrice = IntParse(fields[8]);
+
+            _parser.Parse(fields[9], out itemData.ShortDescription, out itemData.Explanations);
+
             itemData.Icon = GetIcon(fields[2], itemData.Category, out string iconLog);
             log += iconLog;
-
-
-            itemData.SubscriptionCost = IntParse(fields[8]);
-
-            int index = 9;
-            itemData.Effects.Clear();
-            for (int i = 0; i < 3; i++)
-            {
-                var effectName = fields[index++];
-                int effectValue = IntParse(fields[index++]);
-
-                if (string.IsNullOrEmpty(effectName))
-                    continue;
-                _effectCollection ??= new(EffectCollectionKey);
-                var effectData = _effectCollection.GetFromName(effectName);
-                if (effectData == null)
-                {
-                    log += $" - Effect: '{effectName}'\n";
-                    continue;
-                }
-                var newEffect = new Effect(effectData, effectValue);
-
-                itemData.Effects.Add(newEffect);
-            }
-            var explanations = fields[index++];
-            ParseExplanations(itemData, explanations);
-            itemData.ShortDescription = fields[index++];
-            itemData.LongDescription = fields[index++];
-            itemData.ShopDescription = fields[index++];
+            log += "\n" + i++;
 
             OnPopulated?.Invoke(log);
-
         }
 
         private Sprite GetIcon(string name, EnumItemCategory category, out string log)
@@ -82,7 +61,7 @@ namespace Quackery
             log = string.Empty;
             string path = category switch
             {
-                EnumItemCategory.Skill => _skillPath,
+                EnumItemCategory.Skills => _skillPath,
                 EnumItemCategory.Curse => _cursePath,
                 EnumItemCategory.TempCurse => _tempCursePath,
                 _ => _itemPath
@@ -90,7 +69,7 @@ namespace Quackery
             string prefix = _cardPrefix;
             if (category == EnumItemCategory.Curse ||
                  category == EnumItemCategory.TempCurse ||
-                 category == EnumItemCategory.Skill)
+                 category == EnumItemCategory.Skills)
             {
                 prefix = category.ToString() + '=';
             }

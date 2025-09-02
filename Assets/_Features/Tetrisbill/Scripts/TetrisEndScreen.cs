@@ -53,7 +53,7 @@ namespace Quackery.TetrisBill
         {
             yield return new WaitForSeconds(0.1f);
             _resultText.text = $"<b>Well Done!</b>";
-            yield return new WaitForSeconds(0.2f);
+            yield return Tempo.WaitForABeat;
 
             _resultText.text += $"\nAmount Due: {MoneyScale.GetMoneyAmount()}";
             if (MoneyLost > 0)
@@ -67,7 +67,7 @@ namespace Quackery.TetrisBill
             if (numCrossAdded > 0)
             {
                 _resultText.text += $"\n<color=red>Debt Due: <b>{numCrossAdded}</b></color>";
-                yield return new WaitForSeconds(0.5f);
+                yield return Tempo.WaitForABeat;
 
                 yield return new WaitForSeconds(0.8f);
                 Card card = DeckServices.CreateCard(_overdueCurse);

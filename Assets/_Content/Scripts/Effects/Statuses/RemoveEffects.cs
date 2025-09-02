@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Quackery.Effects
 {
+
     [CreateAssetMenu(
         fileName = "RemoveEffects",
         menuName = "Quackery/Effects/Status/RemoveEffects",
@@ -16,15 +17,10 @@ namespace Quackery.Effects
         [Tooltip("Effect to remove.")]
         [SerializeField] private List<EffectData> _effectsToRemove;
 
-        // public override string GetDescription() => $"Remove effects";
-
         public override IEnumerator Execute(Effect effect)
         {
-            foreach (var effectToRemove in _effectsToRemove)
-            {
-                EffectServices.Cancel(effectToRemove);
-                yield return new WaitForSeconds(0.5f);
-            }
+            yield return null;
+            EffectServices.Remove(e => _effectsToRemove.Contains(e.Data));
         }
     }
 }

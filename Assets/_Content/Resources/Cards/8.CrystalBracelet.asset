@@ -15,19 +15,13 @@ MonoBehaviour:
   MasterText: Crystal Bracelet
   Icon: {fileID: 21300000, guid: bacc1733b4e994cd4bce074c80a513c5, type: 3}
   BasePrice: 0
-  ShortDescription: Stacks\n Apply 1 #Crystals Preference
+  ShortDescription: <b>Stack</b>s\n Apply 1 #Crystals <b>Preference</b>
   LongDescription: 
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: b94da696da3ea4e2e9adc1504cf09538, type: 2}
-  SubscriptionCost: 0
+  - {fileID: 11400000, guid: 2c6a8ca528d854daa997ce3aae573eec, type: 2}
+  ShopPrice: 0
   Category: 3
-  Effects:
-  - _data: {fileID: 11400000, guid: 901e4069cc85042abbf89bc5a2794e12, type: 2}
-    Value: 0
-    Tags: 
-  - _data: {fileID: 11400000, guid: 0c626a7a36b8a460b8d88aab4412ca1c, type: 2}
-    Value: 0
-    Tags: 0200000001000000
-  ValueEvaluator: {fileID: 0}
+  Effects: []
   Rarity: 0

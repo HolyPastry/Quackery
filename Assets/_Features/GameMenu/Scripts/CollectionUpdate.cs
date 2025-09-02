@@ -14,7 +14,7 @@ namespace Quackery.GameMenu
     internal class CollectionUpdate : MonoBehaviour
     {
         [SerializeField] private Ease _easeIn = Ease.InCubic;
-        [SerializeField] private Ease _easeOut = Ease.OutCubic;
+        // [SerializeField] private Ease _easeOut = Ease.OutCubic;
         [SerializeField] private float _animationDuration = 0.5f;
 
         [SerializeField] private Transform _parent;

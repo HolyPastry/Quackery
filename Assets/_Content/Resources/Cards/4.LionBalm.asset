@@ -19,8 +19,7 @@ MonoBehaviour:
   LongDescription: 
   ShopDescription: 
   Explanations: []
-  SubscriptionCost: 0
+  ShopPrice: 0
   Category: 6
   Effects: []
-  ValueEvaluator: {fileID: 0}
   Rarity: -1

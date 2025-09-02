@@ -71,7 +71,7 @@ namespace Quackery.TetrisBill
                 _tetrisGame.AddOneStartingBlock();
                 yield return new WaitForSeconds(0.3f);
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             _tetrisGame.StartGame();
         }
 
@@ -84,7 +84,7 @@ namespace Quackery.TetrisBill
         private IEnumerator GameOverRoutine(List<TetrisCube> cubesOverTheLine)
         {
 
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
 
             int numCrossAdded = 0;
             foreach (var cube in cubesOverTheLine)
@@ -101,7 +101,7 @@ namespace Quackery.TetrisBill
                 }
                 _overdueUI.AddOneCross();
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             _endScreen.Show(numCrossAdded, MoneyScale.GetMoneyAmount());
 
 

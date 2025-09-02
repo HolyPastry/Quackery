@@ -6,14 +6,13 @@ using Quackery.Decks;
 using Quackery.Effects;
 using UnityEngine;
 
-namespace Quackery
+namespace Quackery.Effects
 {
 
     [Serializable]
     public class Effect
     {
         private bool _isInitialized;
-        public Effect(string[] defaults) { Debug.Log(defaults); }
         [SerializeField] private EffectData _data;
         public EffectData Data
         {
@@ -41,20 +40,16 @@ namespace Quackery
             }
         }
 
-        public int Value;
-        public EnumEffectTrigger Trigger => Data.Trigger;
+        public float Value { get; internal set; } = 0;
+
+        //public EnumEffectTrigger Trigger => Data.Trigger;
 
         [HideInInspector]
         public List<EnumEffectTag> Tags = new();
 
-        public Sprite Icon => Data.Icon;
+        //public Sprite Icon => Data.Icon;
 
-        public Card LinkedCard { get; set; }
-        public ArtifactData LinkedArtifact { get; internal set; }
-
-        public string Description => Data == null ?
-                         "No Effect Data Assigned" :
-                 Data.Description.Replace("#Value", Value.ToString());
+        public IEffectCarrier LinkedObject;
 
         public Effect()
         {
@@ -63,6 +58,8 @@ namespace Quackery
         public Effect(EffectData data)
         {
             Data = data;
+            if (data is IValueEffect valueEffect)
+                Value = valueEffect.Value;
         }
 
         public Effect(Effect effect)
@@ -70,8 +67,7 @@ namespace Quackery
             Data = effect.Data;
             Value = effect.Value;
             Tags = new List<EnumEffectTag>(effect.Tags);
-            LinkedCard = effect.LinkedCard;
-            LinkedArtifact = effect.LinkedArtifact;
+            LinkedObject = effect.LinkedObject;
 
         }
 
@@ -94,9 +90,6 @@ namespace Quackery
                 return;
             }
             Data.CheckValidity();
-
         }
-
-
     }
 }

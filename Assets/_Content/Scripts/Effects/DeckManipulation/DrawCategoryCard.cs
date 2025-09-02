@@ -17,9 +17,9 @@ namespace Quackery.Effects
             if (drawnCard == null) yield break;
 
             DeckServices.MoveCard(drawnCard, EnumCardPile.Effect, EnumPlacement.OnTop, 0);
-            yield return DefaultWaitTime;
+            yield return Tempo.WaitForABeat;
             DeckServices.MoveToTable(drawnCard);
-            yield return DefaultWaitTime;
+            yield return Tempo.WaitForABeat;
 
         }
     }

@@ -15,18 +15,14 @@ MonoBehaviour:
   MasterText: Gecko
   Icon: {fileID: 21300000, guid: 7635d12d95a71491aa13b50c91fdad03, type: 3}
   BasePrice: 5
-  ShortDescription: Tuck\n Draw a skill card
+  ShortDescription: <b>Tuck</b>\n Draw a skill card
   LongDescription: 
   ShopDescription: 
-  Explanations: []
-  SubscriptionCost: 2
+  Explanations:
+  - {fileID: 11400000, guid: 983c0d4bfc73a498d89b8f49b39d70c3, type: 2}
+  ShopPrice: 2
   Category: 6
   Effects:
-  - _data: {fileID: 11400000, guid: b93a9d0ee4da14f49aaae9e0dbb5cc69, type: 2}
-    Value: 0
-    Tags: 
-  - _data: {fileID: 11400000, guid: a614d15718c3c44329ce4d1644cc8146, type: 2}
-    Value: 1
-    Tags: 
-  ValueEvaluator: {fileID: 0}
+  - {fileID: 11400000, guid: 6323d4ed340124d8bb38843388a93ca7, type: 2}
+  - {fileID: 11400000, guid: 63fe3437e15974bf0b1355139e7ff538, type: 2}
   Rarity: 0

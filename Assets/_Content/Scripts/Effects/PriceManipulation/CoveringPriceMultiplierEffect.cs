@@ -19,7 +19,7 @@ namespace Quackery.Effects
         {
             if (pile.Count <= 1) yield break;
             if (pile.Cards[1].Category != _category) yield break;
-            int price = EffectServices.GetCardPrice(pile.TopCard);
+            int price = CardEffectServices.Price(pile.TopCard);
             CartServices.AddToCartValue(price);
         }
     }

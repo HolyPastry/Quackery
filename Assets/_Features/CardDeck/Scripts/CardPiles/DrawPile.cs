@@ -34,7 +34,7 @@ namespace Quackery.Decks
 
             DeckServices.ForceOnNextDraw = ForceOnNextDraw;
             DeckServices.DrawCategory = DrawCategoryCard;
-            DeckServices.Draw = DrawMany;
+            // DeckServices.Draw = DrawMany;
         }
 
 
@@ -43,7 +43,7 @@ namespace Quackery.Decks
         {
             DeckServices.ForceOnNextDraw = delegate { };
             DeckServices.DrawCategory = category => null;
-            DeckServices.Draw = number => new List<Card>();
+            // DeckServices.Draw = number => new List<Card>();
         }
 
         internal void Populate(List<Item> items)
@@ -101,9 +101,10 @@ namespace Quackery.Decks
                 }
             }
 
+
             card.UpdateUI();
             card.Item.NumberOfDraws++;
-            EffectServices.Execute(EnumEffectTrigger.OnDraw, card);
+
             return card;
         }
 

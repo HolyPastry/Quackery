@@ -11,8 +11,8 @@ namespace Quackery.Effects
 
         public override IEnumerator Execute(Effect effect)
         {
-            DeckServices.BoostPriceOfCardsInHand(effect.Value, Card => Card.Price == _priceToMatch);
-            yield return DefaultWaitTime;
+            DeckServices.BoostPriceOfCardsInHand((int)effect.Value, Card => Card.Price == _priceToMatch);
+            yield return Tempo.WaitForABeat;
         }
     }
 }

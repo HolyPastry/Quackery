@@ -56,7 +56,7 @@ namespace Quackery.GameMenu
 
             _textGUI.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0), 0.5f, 10, 1);
             UpdateUI();
-            yield return new WaitForSeconds(0.5f);
+            yield return Tempo.WaitForABeat;
             _bonusTextGUI.gameObject.SetActive(false);
 
         }

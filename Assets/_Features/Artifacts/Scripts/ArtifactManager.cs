@@ -5,6 +5,7 @@ using System.Linq;
 using Bakery.Saves;
 using Holypastry.Bakery;
 using Holypastry.Bakery.Flow;
+using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery.Artifacts
@@ -28,6 +29,7 @@ namespace Quackery.Artifacts
             ArtifactServices.GetAllArtifacts = () => _ownedArtifacts.All;
             ArtifactServices.GetRandomSuitable = GetRandomMatching;
             ArtifactServices.Owns = (artifactData) => _ownedArtifacts.Contains(artifactData);
+            ArtifactServices.TakeArtifactsOut = () => StartCoroutine(TakeArtifactsOutRoutine());
         }
 
 
@@ -38,6 +40,7 @@ namespace Quackery.Artifacts
             ArtifactServices.GetAllArtifacts = () => new();
             ArtifactServices.GetRandomSuitable = (level, amount) => new();
             ArtifactServices.Owns = (artifactData) => false;
+            ArtifactServices.TakeArtifactsOut = () => null;
         }
 
         protected override IEnumerator Start()
@@ -66,16 +69,31 @@ namespace Quackery.Artifacts
             ArtifactEvents.OnArtifactAdded(data);
         }
 
-        private void RemoveArtifact(ArtifactData data)
+        private IEnumerator TakeArtifactsOutRoutine()
         {
-            if (_ownedArtifacts.Remove(data))
+            var artifacts = ArtifactServices.GetAllArtifacts();
+            if (artifacts.Count == 0) yield break;
+
+            foreach (var artifact in artifacts)
             {
-                EffectServices.RemoveArtifactEffects(data);
+                ArtifactEvents.OnArtifactOut(artifact);
+
+                yield return EffectServices.Add(artifact);
+            }
+
+
+        }
+
+        private void RemoveArtifact(ArtifactData artifactData)
+        {
+            if (_ownedArtifacts.Remove(artifactData))
+            {
+                EffectServices.Remove(e => e.LinkedObject == (object)artifactData);
                 Save();
             }
             else
             {
-                Debug.LogWarning($"Artifact {data.name} not found in collection.");
+                Debug.LogWarning($"Artifact {artifactData.name} not found in collection.");
             }
         }
 

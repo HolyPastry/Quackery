@@ -13,5 +13,6 @@ namespace Quackery.Effects
         OnNewCartPileUsed = 10,
         OnStartWeek = 11,
         OnArtifactAcquired = 12,
+        OnActivated = 13
     }
 }

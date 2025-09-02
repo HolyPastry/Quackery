@@ -36,7 +36,6 @@ namespace Quackery
                 _clientImageTransform.localScale = Vector3.one;
             _animatable.Show();
             _animatable.SlideToZero();
-            //_animatable.SlideIn(Direction.Bottom);
             yield return _animatable.WaitForAnimation();
         }
 

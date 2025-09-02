@@ -14,7 +14,7 @@ namespace Quackery
 
     public static class DeckServices
     {
-        public static Func<WaitUntil> WaitUntilReady = () => new WaitUntil(() => true);
+        public static Func<WaitUntil> WaitUntilReady = () => new WaitUntil(() => false);
 
         public static Func<ItemData, Card> CreateCard = (itemData) => null;
         internal static Func<ItemData, Coroutine> DestroyCardType = (itemData) => null;
@@ -22,8 +22,10 @@ namespace Quackery
         public static Action<Card> RemoveFromAllPiles = (card) => { };
 
         public static Action Shuffle = () => { };
-        public static Action<List<Card>> Discard = (card) => { };
-        public static Func<IEnumerator> DiscardHand = () => null;
+        public static Func<List<Card>, Coroutine> Discard = (card) => null;
+        public static Func<Coroutine> DiscardHand = () => null;
+        public static Func<int, Coroutine> DiscardCards = (amount) => null;
+
         public static Func<List<CardPile>> GetTablePile = () => new();
 
         public static Action<EnumCardPile, int> SelectCard = (pileType, index) => { };
@@ -33,23 +35,19 @@ namespace Quackery
         public static Func<EnumCardPile, Card> GetTopCard = (pileType) => null;
 
         public static Action<List<Card>> MoveToCardSelect = (cards) => { };
-        //  public static Action InterruptDraw = delegate { };
 
-        //  public static Action ResumeDraw = delegate { };
         public static Action<Card> MoveToTable = delegate { };
         public static Func<Coroutine> DrawBackToFull = () => null;
-        public static Func<int, List<Card>> Draw = (numberCards) => new();
 
-        public static Action<Card> DestroyCard = (cards) => { };
+        public static Func<Card, Coroutine> DestroyCard = (cards) => null;
 
         public static Action<List<ItemData>> ForceOnNextDraw = (cards) => { };
 
         public static Action<EnumItemCategory, EnumCardSelection> ChangeCardCategory = delegate { };
 
-        public static Action<int> DiscardCards = (amount) => { };
+
 
         public static Action RestoreCardCategories = () => { };
-
 
         public static Func<EnumItemCategory, Card> DrawCategory = (category) => null;
 
@@ -72,8 +70,7 @@ namespace Quackery
         public static Func<ItemData, EnumCardPile, EnumPlacement, EnumLifetime, Card>
                                 AddNew = (itemData, pileType, pileLocation, lifetime) => null;
 
-        public static Action<Card, EnumCardPile, EnumPlacement, float> MoveCard = (card, pileType, placement, delay) => { };
-        public static Action<Card, ItemData> ReplaceCard = (card, replacementCard) => { };
+        public static Func<Card, EnumCardPile, EnumPlacement, float, Coroutine> MoveCard = (card, pileType, placement, delay) => null;
 
         internal static Func<Predicate<Card>, EnumCardPile, List<Card>> GetMatchingCards = (condition, pile) => new List<Card>();
 
@@ -81,7 +78,6 @@ namespace Quackery
 
         internal static Action<int> SetCustomDraw = (numCard) => { };
 
-        internal static Action<int> ModifyHandSize = (handSizeModifier) => { };
 
         internal static Func<EnumCardPile, int, bool> IsPilePlayable = (pile, index) => true;
 

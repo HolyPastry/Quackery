@@ -4,7 +4,7 @@ namespace Quackery.Notifications
     {
         public override void GenerateDailyNotification()
         {
-            var cashEarned = EffectServices.GetModifier(
+            var cashEarned = (int)EffectServices.GetModifier(
                                 typeof(FollowerMonetizationEffect));
 
             if (cashEarned <= 0) return;

@@ -62,7 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _listenToChange: 0
   _clientSpeechBubble: {fileID: 0}
-  _tagFilters: 
+  _targetFilter: 00000000
 --- !u!114 &3079129981738943784
 MonoBehaviour:
   m_ObjectHideFlags: 0

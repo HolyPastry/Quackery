@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Holypastry.Bakery;
 using Quackery.Bills;
+using Quackery.Effects;
 using Quackery.Inventories;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace Quackery.Artifacts
 
 
     [CreateAssetMenu(menuName = "Quackery/ArtifactData")]
-    public class ArtifactData : ContentTag
+    public class ArtifactData : ContentTag, IEffectCarrier
     {
         public Sprite Icon;
 
@@ -29,7 +30,11 @@ namespace Quackery.Artifacts
         public List<Explanation> Explanations = new();
         public bool IsUpgrade => UpgradeFor != null;
 
-        public List<Effect> Effects = new();
+        public List<EffectData> EffectDataList => _effectDatas;
+        public bool ActivatedCondition(Effect effect) => true;
+        
+
+        [SerializeField] private List<EffectData> _effectDatas = new();
 
         public int Price = 0;
 

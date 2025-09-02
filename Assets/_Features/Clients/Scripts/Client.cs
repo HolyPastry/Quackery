@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using Holypastry.Bakery;
 using Holypastry.Bakery.Quests;
-using Quackery.Decks;
+
+using Quackery.Effects;
 using UnityEngine;
 
 namespace Quackery.Clients
 {
-    public record Client
+    public class Client : IEffectCarrier
     {
         public enum EnumState
         {
@@ -24,7 +25,8 @@ namespace Quackery.Clients
         public bool IsInQueue;
         public bool Served;
 
-        public List<Effect> Effects;
+        public List<EffectData> Effects;
+          public bool ActivatedCondition(Effect effect) => true;
 
         public string ChatLastLine
         {
@@ -68,12 +70,14 @@ namespace Quackery.Clients
 
         public Condition RevealCondition { get; internal set; }
 
-        public void InitUnknown(ClientsData unknownClientsData, Effect effect = null)
+        public List<EffectData> EffectDataList => Effects;
+
+        public void InitUnknown(ClientsData unknownClientsData, EffectData effect = null)
         {
 
             Key = unknownClientsData.RandomName;
             if (effect != null)
-                Effects = new List<Effect> { effect };
+                Effects = new() { effect };
             else
                 Effects = unknownClientsData.RandomEffects;
 
@@ -84,18 +88,7 @@ namespace Quackery.Clients
             IsNew = true;
             ChatHistory = string.Empty;
 
-            InitEffects();
 
-        }
-
-        private void InitEffects()
-        {
-            foreach (var effect in Effects)
-            {
-                effect.Initialize();
-                effect.Tags.AddUnique(Quackery.Effects.EnumEffectTag.Client);
-                effect.Tags.AddUnique(Quackery.Effects.EnumEffectTag.Status);
-            }
         }
 
         public void InitKnownClient(ClientData data)
@@ -111,16 +104,16 @@ namespace Quackery.Clients
             State = EnumState.Revealed;
 
             if (data.Effects != null)
-                Effects = new List<Effect>(data.Effects);
+                Effects = new(data.Effects);
             else
-                Effects = new List<Effect>();
+                Effects = new();
 
             LoginName = data.CharacterData.MasterText;
             Portrait = data.Icon;
             LastReviewText = data.FirstReward.Review;
             LastRating = data.FirstReward.Rating;
             LastFollowersBonus = data.FirstReward.FollowerBonus;
-            InitEffects();
+
         }
 
         internal void GoodReview()

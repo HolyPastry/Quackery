@@ -22,16 +22,7 @@ MonoBehaviour:
   Explanations:
   - {fileID: 11400000, guid: 2f0e355eba1d5463bba296c340dc7b39, type: 2}
   - {fileID: 11400000, guid: 48f617e1041c14b9d855f83da3a9fb1e, type: 2}
-  Effects:
-  - _data: {fileID: 11400000, guid: 466366b3442e64e92baa2e8c3a1e6cdf, type: 2}
-    Value: 0
-    Tags: 
-  - _data: {fileID: 11400000, guid: a82a46cf1d1404d578bfb6217ae720a7, type: 2}
-    Value: 1
-    Tags: 0500000002000000
-  - _data: {fileID: 11400000, guid: 3595818e79b0a41709da42f7deae28b8, type: 2}
-    Value: 1
-    Tags: 0200000005000000
+  _effectDatas: []
   Price: 18
   FollowersRequirement: 0
   FollowerBonus: 0

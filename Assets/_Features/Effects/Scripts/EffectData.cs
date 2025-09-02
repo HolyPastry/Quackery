@@ -11,29 +11,21 @@ using UnityEngine;
 namespace Quackery.Effects
 {
 
-    public abstract class EffectData : ContentTag
+    public abstract class EffectData : ScriptableObject
     {
-        public Sprite Icon;
+         public EnumEffectTrigger Trigger;
 
-        public string Description;
-
-        public bool CanBeNegative = false;
-
-        public EnumEffectTrigger Trigger = EnumEffectTrigger.OnCardPlayed;
-
-        public List<EnumEffectTag> _tags;
-        public List<Explanation> Explanations;
-        public WaitForSeconds DefaultWaitTime = new(0.5f);
+        public List<EnumEffectTag> Tags;
 
         public virtual IEnumerator Execute(Effect effect) { yield break; }
         public virtual IEnumerator ExecutePile(Effect effect, CardPile pile) => null;
 
-        public virtual void Cancel(Effect effect) { }
+        public virtual void OnRemove(Effect effect) { }
         internal virtual void CheckValidity() { }
 
         public virtual void Setup(Effect effect)
         {
-            effect.Tags.AddUniqueRange(_tags);
+            effect.Tags.AddUniqueRange(Tags);
         }
     }
 }

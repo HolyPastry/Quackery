@@ -35,9 +35,9 @@ namespace Quackery.Effects
             if (card == null) yield break;
 
             Card duplicate = DeckServices.DuplicateCard(card);
-            yield return DefaultWaitTime;
+            yield return Tempo.WaitForABeat;
             DeckServices.Discard(new() { duplicate });
-            yield return DefaultWaitTime;
+            yield return Tempo.WaitForABeat;
 
 
         }

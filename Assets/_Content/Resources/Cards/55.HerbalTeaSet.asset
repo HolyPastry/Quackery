@@ -15,16 +15,13 @@ MonoBehaviour:
   MasterText: Herbal Tea Set
   Icon: {fileID: 21300000, guid: 37b0ae2a393f2984182d7f0bcdad2593, type: 3}
   BasePrice: 10
-  ShortDescription: Bundle
+  ShortDescription: <b>Bundle</b>
   LongDescription: 
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 760c3bfef0017439c9584611bb013c30, type: 2}
-  SubscriptionCost: 4
+  ShopPrice: 4
   Category: 1
   Effects:
-  - _data: {fileID: 11400000, guid: a2e4d2b3d89f04044832a2dc19348d5d, type: 2}
-    Value: 0
-    Tags: 
-  ValueEvaluator: {fileID: 0}
+  - {fileID: 11400000, guid: e4c287622f9df4c5ba22d2840a5378ef, type: 2}
   Rarity: 0

@@ -11,10 +11,6 @@ namespace Quackery.Effects
          order = 1)]
     public class BundleEffect : EffectData
     {
-        public override void Cancel(Effect effect)
-        {
-
-        }
 
         // public override string Description => "<b>Bundle:</b> Allows you to bundle up to #Value cards together.";
 
@@ -24,11 +20,13 @@ namespace Quackery.Effects
 
             foreach (var pile in piles)
             {
-                if (pile.Category != effect.LinkedCard.Category) continue;
+                Card card = effect.LinkedObject as Card;
+
+                if (card == null || pile.Category != card.Category) continue;
                 DeckServices.MoveToPile(pile, owningPile);
 
             }
-            yield return null;
+            yield return Tempo.WaitForABeat;
 
         }
     }

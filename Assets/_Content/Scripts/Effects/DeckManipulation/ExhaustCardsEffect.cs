@@ -25,7 +25,7 @@ namespace Quackery
             {
                 DeckServices.MoveCard(card, EnumCardPile.Effect, EnumPlacement.OnTop, 0);
                 DeckServices.MoveCard(card, EnumCardPile.Exhaust, EnumPlacement.OnTop, 2);
-                yield return DefaultWaitTime;
+                yield return Tempo.WaitForABeat;
             }
         }
     }

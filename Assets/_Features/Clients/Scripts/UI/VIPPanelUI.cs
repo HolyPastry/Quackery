@@ -24,7 +24,7 @@ namespace Quackery
         [SerializeField] private GameObject _offlineBadge;
         [SerializeField] private GameObject _newBadge;
 
-        [SerializeField] private EffectBarUI _effectBarUI;
+        [SerializeField] private StatusBarUI _effectBarUI;
 
         public Client Client
         {
@@ -78,8 +78,8 @@ namespace Quackery
 
         private void SetEffectBar()
         {
-            foreach (var effect in _client.Effects)
-                _effectBarUI.AddStatusUI(effect);
+            // foreach (var effect in _client.Effects)
+            //     _effectBarUI.AddStatusUI(effect);
         }
 
         private void SetQuestInfo()

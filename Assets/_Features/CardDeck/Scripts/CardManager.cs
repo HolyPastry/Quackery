@@ -17,6 +17,9 @@ namespace Quackery.Decks
         [SerializeField] private Card _skillCardPrefab;
         [SerializeField] private Card _curseCardPrefab;
         [SerializeField] private Card _tempCurseCardPrefab;
+
+        [SerializeField] private Material _destroyMaterial;
+
         private CardFactory _cardFactory;
         void Awake()
         {
@@ -28,7 +31,7 @@ namespace Quackery.Decks
 
         void OnDisable()
         {
-            DeckServices.DestroyCard = (cards) => { };
+            DeckServices.DestroyCard = (cards) => null;
             DeckServices.DuplicateCard = (card) => null;
 
             DeckServices.CreateCard = (itemData) => null;
@@ -36,19 +39,19 @@ namespace Quackery.Decks
         }
         void OnEnable()
         {
-            DeckServices.DestroyCard = DestroyCard;
+            DeckServices.DestroyCard = (card) => StartCoroutine(DestroyCard(card));
             DeckServices.DuplicateCard = DuplicateCard;
 
             DeckServices.CreateCard = CreateCard;
 
         }
         private Card CreateCard(ItemData data) => _cardFactory.Create(data);
-        private void DestroyCard(Card card)
+        private IEnumerator DestroyCard(Card card)
         {
-            if (card == null) return;
+            if (card == null) yield break;
             DeckServices.RemoveFromAllPiles(card);
             card.transform.DOKill();
-            card.Destroy();
+            yield return card.PlayDestroyEffect(Tempo.WholeBeat, Instantiate(_destroyMaterial));
         }
 
         private Card DuplicateCard(Card card)

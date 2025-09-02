@@ -18,13 +18,9 @@ MonoBehaviour:
   ShortDescription: Cannot be stacked on
   LongDescription: 
   ShopDescription: 
-  Explanations:
-  - {fileID: 11400000, guid: fc90056fb1ad44e9b83d0e7f04267673, type: 2}
-  SubscriptionCost: 4
+  Explanations: []
+  ShopPrice: 4
   Category: 6
   Effects:
-  - _data: {fileID: 11400000, guid: adebfe52fa3534da98d932315d404ff1, type: 2}
-    Value: 0
-    Tags: 
-  ValueEvaluator: {fileID: 0}
+  - {fileID: 11400000, guid: 596b9250fda5f44c0bc780b285596577, type: 2}
   Rarity: 0
