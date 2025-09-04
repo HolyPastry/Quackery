@@ -5,7 +5,6 @@ namespace Quackery.Decks
 {
     public static class CartEvents
     {
-        public static Action OnValueChanged = delegate { };
         public static Action<List<CardPile>, int> OnCartValidated = delegate { };
         public static Action OnCartCleared = delegate { };
         internal static Action<List<CardPile>> OnStacksHighlighted = delegate { };
@@ -15,5 +14,10 @@ namespace Quackery.Decks
         public static Action<CartMode> OnModeChanged = delegate { };
 
         internal static Action<int> OnBonusChanged = (deltaScore) => { };
+        public static Action OnValueChanged = delegate { };
+
+        public static Action OnTotalValueChanged = delegate { };
+
+        public static Action OnCalculationCompleted = delegate { };
     }
 }

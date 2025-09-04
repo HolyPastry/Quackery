@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Magic Mushrooms
   Icon: {fileID: 21300000, guid: d136a5748f04548d8936bc4edf153594, type: 3}
-  BasePrice: 0
+  BasePrice: 5
   ShortDescription: 
   LongDescription: 
   ShopDescription: 

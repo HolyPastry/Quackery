@@ -30,6 +30,8 @@ namespace Quackery
         [SerializeField] private float _selectedCardOffset = 150f;
         [SerializeField] private float _slideStartThreshold = 10f;
 
+        [SerializeField] private float _maxAngleOffset = 10f;
+
 
         private const float NightyDegree = 90f;
 
@@ -37,13 +39,15 @@ namespace Quackery
         private CardPile _followTouchPointPileUI;
         private Vector2 _originalPosition;
 
+
         public IEnumerable<Card> Cards => _cardPiles.SelectMany(pile => pile.Cards);
+
+
 
         public static event Action<CardPile> OnCardSelected = delegate { };
 
         protected void OnEnable()
         {
-
             DeckEvents.OnCardPlayed += ResetSelectedPile;
             _helperText.text = "";
         }
@@ -149,7 +153,6 @@ namespace Quackery
                 else
                 {
                     SelectPile(ui);
-
                 }
             }
         }
@@ -174,20 +177,25 @@ namespace Quackery
 
             var cardPiles = EnabledPiles.ToList();
 
-            for (int i = 0; i < cardPiles.Count; i++)
+            int numCards = cardPiles.Count;
+
+            if (numCards == 2) angle /= 3;
+            if (numCards == 3) angle /= 1.5f;
+
+            for (int i = 0; i < numCards; i++)
             {
 
                 var cardPile = cardPiles[i];
                 float t, angleOffset = 0f;
-                if (cardPiles.Count == 1)
-                {
-                    angleOffset = Mathf.Lerp(-angle, angle, 0.5f);
-                }
+
+                if (numCards == 1)
+                    t = 0.5f;
                 else
-                {
-                    t = (float)i / (cardPiles.Count - 1);
-                    angleOffset = Mathf.Lerp(-angle, angle, t);
-                }
+                    t = (float)i / (numCards - 1);
+
+
+
+                angleOffset = Mathf.Lerp(-angle, angle, t);
                 float selectedOffset = 0f;
                 float scale = 1f;
                 if (cardPile == _selectedPileUI)

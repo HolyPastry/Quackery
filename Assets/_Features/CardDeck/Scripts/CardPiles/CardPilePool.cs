@@ -18,9 +18,9 @@ namespace Quackery.Decks
         [SerializeField] protected EnumCardPile _cardPileType;
         protected readonly List<CardPile> _cardPiles = new();
 
-        public List<CardPile> EmptyPiles => _cardPiles.FindAll(cp => cp.Enabled && cp.IsEmpty);
-        public IEnumerable<CardPile> EnabledPiles => _cardPiles.Where(pile => pile.Enabled);
 
+        public IEnumerable<CardPile> OccupiedPiles => _cardPiles.Where(pile => pile.Enabled && !pile.IsEmpty);
+        public IEnumerable<CardPile> EnabledPiles => _cardPiles.Where(pile => pile.Enabled);
         public IEnumerable<Card> TopCards => _cardPiles.Where(pile => pile.Enabled && !pile.IsEmpty)
                                                 .Select(pile => pile.TopCard);
 

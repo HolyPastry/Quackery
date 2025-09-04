@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: A Big Crystal
   Icon: {fileID: 21300000, guid: 924378c9a205d4ae4a6da4df1f61810c, type: 3}
-  BasePrice: 12
+  BasePrice: 8
   ShortDescription: Apply 2 <b>Vibes</b>\n Apply 1 <b>Stress</b>
   LongDescription: 
   ShopDescription: 

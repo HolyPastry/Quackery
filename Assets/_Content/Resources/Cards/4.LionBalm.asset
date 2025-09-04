@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Lion Balm
   Icon: {fileID: 0}
-  BasePrice: 0
+  BasePrice: 4
   ShortDescription: 
   LongDescription: 
   ShopDescription: 

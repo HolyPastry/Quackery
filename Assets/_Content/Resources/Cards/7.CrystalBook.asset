@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Crystal Book
   Icon: {fileID: 0}
-  BasePrice: 0
+  BasePrice: 2
   ShortDescription: Card value = No. of #Crystals in Cart x2.
   LongDescription: 
   ShopDescription: 

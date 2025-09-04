@@ -14,14 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Crystal Ring
   Icon: {fileID: 21300000, guid: ebc18aa93726541bab4c09558a4afd9c, type: 3}
-  BasePrice: 11
+  BasePrice: 4
   ShortDescription: Active. Crystal <b>Event</b>
   LongDescription: 
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: fd4ecdf56c2524b2eb24773c15db903c, type: 2}
-  ShopPrice: 4
+  ShopPrice: 2
   Category: 3
-  Effects:
-  - {fileID: 11400000, guid: 09431d6ca767c416c8830b4adbffed3a, type: 2}
+  Effects: []
   Rarity: 0

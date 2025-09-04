@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Lavender Perfume
   Icon: {fileID: 21300000, guid: 0478222ce942c4157aab867f40a3d7a2, type: 3}
-  BasePrice: 8
+  BasePrice: 4
   ShortDescription: <b>Bundle</b>\nRemove <b>Stress</b>
   LongDescription: 
   ShopDescription: 

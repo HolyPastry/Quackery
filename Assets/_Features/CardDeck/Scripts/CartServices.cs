@@ -69,7 +69,8 @@ namespace Quackery.Decks
 
         internal static Func<Card, bool> IsTopCard = (card) => true;
 
-        // internal static Action<int> ModifyValue = (value) => { };
+        internal static Func<int> GetTotalValue = () => 20;
+
 
     }
 }

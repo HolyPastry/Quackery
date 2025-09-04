@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Nettle Tonic
   Icon: {fileID: 21300000, guid: 95edcf3181a981847b83d815e81c1eab, type: 3}
-  BasePrice: 0
+  BasePrice: 1
   ShortDescription: 
   LongDescription: 
   ShopDescription: 

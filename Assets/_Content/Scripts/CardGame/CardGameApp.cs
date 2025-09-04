@@ -19,14 +19,18 @@ namespace Quackery.Decks
         [Header("References")]
 
         [SerializeField] private ClientGameUI _clientGameUI;
-        [SerializeField] private CartGauge _cartValue;
+        //  [SerializeField] private CartGauge _cartValue;
         [SerializeField] private BudgetCartValueUI _budgetCartValue;
+
+        [SerializeField] private int _initialNumOfDraw;
+        [SerializeField] private int _initialNumOfDiscard;
 
         //TODO:: Shouldn't be a CardPilePool, I think it is the Effect Pile Controller
         // To be confirmed
         [SerializeField] private CardPilePool _cardSelectPanel;
-
         [SerializeReference] private Button _EndRoundButton;
+        [SerializeReference] private CounterButton _drawButton;
+        [SerializeReference] private CounterButton _discardButton;
         [SerializeField] private EndOfRoundScreen _endRoundScreen;
 
         private Client _client;
@@ -37,7 +41,6 @@ namespace Quackery.Decks
         public static Action InterruptRoundRequest = delegate { };
         public static Action EndTransactionRequest = delegate { };
         private bool _endOfRound;
-
 
         void Awake()
         {
@@ -56,7 +59,12 @@ namespace Quackery.Decks
             EndTransactionRequest = () => _endButtonPressed = true;
 
             _EndRoundButton.onClick.AddListener(() => _endButtonPressed = true);
+            _discardButton.OnClicked += DiscardHand;
+            _drawButton.OnClicked += DrawBackToFull;
+
+
         }
+
 
         void OnDisable()
         {
@@ -67,6 +75,8 @@ namespace Quackery.Decks
             InterruptRoundRequest = delegate { };
             EndTransactionRequest = delegate { };
             _EndRoundButton.onClick.RemoveAllListeners();
+            _drawButton.OnClicked -= DrawBackToFull;
+            _discardButton.OnClicked -= DiscardHand;
             StopAllCoroutines();
 
         }
@@ -74,10 +84,45 @@ namespace Quackery.Decks
         public void Reset()
         {
             CartServices.ResetCart();
-            _cartValue.HideValue();
+            //  _cartValue.HideValue();
             _clientGameUI.Hide(instant: true);
             _EndRoundButton.gameObject.SetActive(false);
             _endRoundScreen.Hide(instant: true);
+            _drawButton.gameObject.SetActive(false);
+            _discardButton.gameObject.SetActive(false);
+
+
+        }
+
+
+        private void DrawBackToFull()
+        {
+            StartCoroutine(DrawBackToFullRoutine());
+
+        }
+
+        private IEnumerator DrawBackToFullRoutine()
+        {
+            SetButtonsInteractable(false);
+            DeckServices.DeactivateHand();
+            yield return DeckServices.DrawBackToFull();
+            DeckServices.ActivateHand();
+            SetButtonsInteractable(true);
+        }
+
+        private void DiscardHand()
+        {
+            StartCoroutine(DiscardHandRoutine());
+        }
+
+        private IEnumerator DiscardHandRoutine()
+        {
+            SetButtonsInteractable(false);
+            DeckServices.DeactivateHand();
+            yield return DeckServices.DiscardHand();
+            // yield return DeckServices.DrawBackToFull();
+            DeckServices.ActivateHand();
+            SetButtonsInteractable(true);
         }
 
         private void OnCardSelected(Card card, List<Card> list)
@@ -107,7 +152,8 @@ namespace Quackery.Decks
             RoundInterrupted = false;
             _endButtonPressed = false;
             _endOfRound = false;
-
+            _drawButton.gameObject.SetActive(true);
+            _discardButton.gameObject.SetActive(true);
             _client = client;
             StartCoroutine(RoundRoutine());
 
@@ -115,7 +161,9 @@ namespace Quackery.Decks
 
         private IEnumerator RoundRoutine()
         {
-            yield return new WaitForSeconds(1f);
+            _drawButton.Counter = _initialNumOfDraw;
+            _discardButton.Counter = _initialNumOfDiscard;
+            yield return Tempo.WaitForABeat;
             yield return StartCoroutine(_clientGameUI.Show(_client));
             if (_client.IsAnonymous)
             {
@@ -125,33 +173,34 @@ namespace Quackery.Decks
             yield return _waitForSeconds1;
             yield return EffectServices.Add(_client);
 
-            yield return new WaitForSeconds(1.5f);
+            yield return Tempo.WaitForABeat;
 
-            if (_client.Budget > 0)
-                _budgetCartValue.Show();
-            else
-                _cartValue.Show();
+            // if (_client.Budget > 0)
+            //     _budgetCartValue.Show();
+            // else
+            //     _cartValue.Show();
             CartServices.InitCart();
 
             yield return _waitForSeconds1;
             yield return EffectServices.Execute(Effects.EnumEffectTrigger.OnRoundStart, null);
             bool firstHand = true;
+            yield return DeckServices.DrawBackToFull();
+
             while (true)
             {
                 if (!firstHand)
                     yield return EffectServices.UpdateDurationEffects();
                 firstHand = false;
 
-                yield return DeckServices.DrawBackToFull();
-
                 DeckServices.ActivateHand();
 
-                SetEndRoundButtonInteractable(true);
+                SetButtonsInteractable(true);
+
 
                 yield return new WaitUntil(() => DeckServices.CardPlayed() ||
                                                  _endButtonPressed ||
                                                  RoundInterrupted);
-                SetEndRoundButtonInteractable(false);
+                SetButtonsInteractable(false);
 
 
                 if (RoundInterrupted)
@@ -169,8 +218,11 @@ namespace Quackery.Decks
             _endOfRound = true;
         }
 
-        private void SetEndRoundButtonInteractable(bool isOn)
+        private void SetButtonsInteractable(bool isOn)
         {
+            _drawButton.Interactable = isOn && !DeckServices.IsHandFull();
+            _discardButton.Interactable = isOn && !DeckServices.IsHandEmpty();
+
             _EndRoundButton.gameObject.SetActive(true);
             _EndRoundButton.interactable = isOn;
             if (isOn && DeckServices.NoPlayableCards())

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Tiger Eye Essence
   Icon: {fileID: 21300000, guid: 905a226248a9644aaa48d72d14360ef0, type: 3}
-  BasePrice: 4
+  BasePrice: 9
   ShortDescription: <b>Stack</b>s\n #Coin x2 if covers #Magic
   LongDescription: 
   ShopDescription: 

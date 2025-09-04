@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Fire Cider
   Icon: {fileID: 21300000, guid: 1a37e7223f6374a7abc18d10e376e98f, type: 3}
-  BasePrice: 1
+  BasePrice: 3
   ShortDescription: <b>Activated</b>\n  #Herbs synergy bonus X2
   LongDescription: 
   ShopDescription: 

@@ -14,15 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Sea Horse
   Icon: {fileID: 21300000, guid: 15dc33facf1fb4d61965e3db742dcd84, type: 3}
-  BasePrice: 8
+  BasePrice: 5
   ShortDescription: <b>Tuck</b>\n Shuffle a suspicion into your draw pile.
   LongDescription: 
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 983c0d4bfc73a498d89b8f49b39d70c3, type: 2}
-  ShopPrice: 3
+  ShopPrice: 2
   Category: 6
-  Effects:
-  - {fileID: 11400000, guid: b9557c2abc4f6405c82f541ad04e3162, type: 2}
-  - {fileID: 11400000, guid: e118b9259ed90459fa6dc7b7112e3d1c, type: 2}
+  Effects: []
   Rarity: 0

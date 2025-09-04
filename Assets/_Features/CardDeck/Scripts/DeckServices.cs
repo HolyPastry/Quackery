@@ -52,6 +52,7 @@ namespace Quackery
         public static Func<EnumItemCategory, Card> DrawCategory = (category) => null;
 
         public static Action ActivateHand = delegate { };
+        public static Action DeactivateHand = delegate { };
 
         public static Func<Card, Card> DuplicateCard = (card) => null;
 
@@ -82,6 +83,9 @@ namespace Quackery
         internal static Func<EnumCardPile, int, bool> IsPilePlayable = (pile, index) => true;
 
         internal static Action DestroyEffemeralCards = () => { };
+
+        internal static Func<bool> IsHandFull = () => false;
+        internal static Func<bool> IsHandEmpty = () => false;
 
     }
 }
