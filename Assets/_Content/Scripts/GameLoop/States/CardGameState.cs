@@ -35,6 +35,10 @@ namespace Quackery
 
                 yield return _cardGame.WaitUntilEndOfRound();
 
+                if (_cardGame.IsGameOver())
+                    break;
+
+
                 if (_cardGame.RoundInterrupted)
                 {
                     CartServices.ResetCart();
@@ -51,14 +55,15 @@ namespace Quackery
                     yield return DialogQueueServices.WaitUntilAllDialogEnds();
                 }
 
+
                 _cardGame.ShowEndRoundScreen(out bool wasBoss);
-                yield return new WaitForSeconds(1f);
+                yield return Tempo.WaitForABeat;
                 _cardGame.TransfertCartToPurse();
                 yield return _cardGame.WaitUntilEndOfRoundScreenClosed();
                 _cardGame.HideEndRoundScreen();
 
                 EffectServices.CleanEffects();
-                yield return new WaitForSeconds(1f);
+                yield return Tempo.WaitForABeat;
 
                 if (!ClientServices.HasNextClient() || wasBoss)
                 {
@@ -72,13 +77,14 @@ namespace Quackery
                 {
                     yield return DeckServices.DiscardHand();
                     CartServices.ResetCart();
-                    yield return new WaitForSeconds(1f);
+                    yield return Tempo.WaitForABeat;
                 }
             }
         }
 
         public override void Exit()
         {
+
             base.Exit();
             _cardGame.Close();
         }

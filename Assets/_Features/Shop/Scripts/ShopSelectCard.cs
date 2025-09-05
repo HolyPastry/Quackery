@@ -68,17 +68,18 @@ namespace Quackery.Shops
             }
             _cards.Clear();
 
-            var cards = DeckServices.GetMatchingCards(card =>
-                            card.Category != Inventories.EnumItemCategory.Curse &&
-                            card.Category != Inventories.EnumItemCategory.TempCurse, EnumCardPile.Draw);
+
+            var items = InventoryServices.GetAllItems()
+                            .FindAll(item => item.Category != Inventories.EnumItemCategory.Curse &&
+                            item.Category != Inventories.EnumItemCategory.TempCurse);
 
 
-            foreach (var card in cards)
+            foreach (var item in items)
             {
-                var cardInstance = DeckServices.CreateCard(card.Item.Data);
+                var cardInstance = DeckServices.CreateCard(item.Data);
                 cardInstance.transform.localScale = Vector3.one * 0.75f;
                 cardInstance.transform.SetParent(_cardParent, false);
-                cardInstance.Item = card.Item;
+                cardInstance.Item = item;
                 var overlay = Instantiate(_clickableOverlay, cardInstance.transform);
                 overlay.Init(cardInstance);
                 overlay.OnClicked += SelectCard;

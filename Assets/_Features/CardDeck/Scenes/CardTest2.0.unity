@@ -2277,7 +2277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &768067985
 Transform:
   m_ObjectHideFlags: 0
@@ -3115,7 +3115,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &901023757
 Transform:
   m_ObjectHideFlags: 0
@@ -3930,6 +3930,7 @@ GameObject:
   - component: {fileID: 1097710105}
   - component: {fileID: 1097710104}
   - component: {fileID: 1097710103}
+  - component: {fileID: 1097710106}
   m_Layer: 0
   m_Name: 16. ElderberryJam
   m_TagString: Untagged
@@ -3966,9 +3967,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _disable: 0
   clients: []
-  UnknownEffectsToAdd:
-  - {fileID: 0}
-  - {fileID: 0}
+  UnknownEffectsToAdd: []
   GenerateDailyQueue: 1
   InfiniteQueue: 0
 --- !u!114 &1097710104
@@ -3984,7 +3983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _disable: 0
-  _deck: {fileID: 11400000, guid: 63373c9f699884c0a8cccee147f0975b, type: 2}
+  _deck: {fileID: 11400000, guid: 8ee86352a5e8743fe86c0ee51e154452, type: 2}
 --- !u!114 &1097710105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3997,6 +3996,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5505d8ef7e3d148dbb8fe703f6ec7913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1097710106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097710101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf930161a52164c398a30e25c2fe379c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cards:
+  - {fileID: 11400000, guid: 587beb3a50f5f405e9af09d99d962e43, type: 2}
+  - {fileID: 11400000, guid: f6940872ebe534c18a20c744fb0f2210, type: 2}
+  - {fileID: 11400000, guid: 9f1ede9a0fa20454baf46129446812a7, type: 2}
 --- !u!1 &1125951048
 GameObject:
   m_ObjectHideFlags: 0

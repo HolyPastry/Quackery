@@ -21,9 +21,9 @@ namespace Quackery
             CartEvents.OnValueChanged += UpdateValue;
             CartEvents.OnBonusChanged += UpdateBonus;
             CartEvents.OnTotalValueChanged += UpdateTotalValue;
-            CartEvents.OnCalculationCompleted += HideGUIs;
+            // CartEvents.OnCalculationCompleted += HideGUIs;
 
-            HideGUIs();
+            //HideGUIs();
         }
 
 
@@ -33,7 +33,7 @@ namespace Quackery
             CartEvents.OnValueChanged -= UpdateValue;
             CartEvents.OnBonusChanged -= UpdateBonus;
             CartEvents.OnTotalValueChanged -= UpdateTotalValue;
-            CartEvents.OnCalculationCompleted -= HideGUIs;
+            //CartEvents.OnCalculationCompleted -= HideGUIs;
         }
 
         private void HideGUIs()
@@ -64,19 +64,21 @@ namespace Quackery
         static IEnumerator UpdateTextGUI(TextMeshProUGUI gui, int newValue)
         {
             gui.gameObject.SetActive(true);
-            yield return null;
-            int oldValue = int.Parse(gui.text);
-            int delta = newValue - oldValue;
-
-            float startTime = Time.time;
-
-            while (Time.time - startTime <= Tempo.WholeBeat)
-            {
-                int value = (int)Mathf.Lerp(oldValue, newValue, Time.time - startTime / Tempo.WholeBeat);
-                gui.text = value.ToString();
-                yield return null;
-            }
             gui.text = newValue.ToString();
+            yield return null;
+
+            // int oldValue = int.Parse(gui.text);
+            // int delta = newValue - oldValue;
+
+            // float startTime = Time.time;
+
+            // while (Time.time - startTime <= Tempo.WholeBeat)
+            // {
+            //     int value = (int)Mathf.Lerp(oldValue, newValue, Time.time - startTime / Tempo.WholeBeat);
+            //     gui.text = value.ToString();
+            //     yield return null;
+            // }
+            // gui.text = newValue.ToString();
         }
 
 

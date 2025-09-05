@@ -87,5 +87,7 @@ namespace Quackery
         internal static Func<bool> IsHandFull = () => false;
         internal static Func<bool> IsHandEmpty = () => false;
 
+        internal static Func<IEnumerable<Card>, CardPile, Coroutine> MoveToPile
+                 = (cards, targetPile) => null;
     }
 }

@@ -55,7 +55,11 @@ namespace Quackery
             At(notificationState, clientListState, () => !NotificationApp.IsOpened);
 
             At(clientListState, cardGameState, () => ActiveClientSelected);
+
+            At(cardGameState, gameOverState, () => CardGameApp.GameOver);
             At(cardGameState, endOfWeekState, () => SelectedClient == null);
+
+
             At(endOfWeekState, billState, () => !EndOfWeekApp.IsOpened);
 
 

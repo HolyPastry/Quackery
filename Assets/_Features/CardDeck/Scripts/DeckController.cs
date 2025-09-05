@@ -7,6 +7,8 @@ using Quackery.Inventories;
 using Quackery.Effects;
 using System.Linq;
 using UnityEngine.Assertions;
+using DG.Tweening;
+using System;
 
 
 
@@ -95,6 +97,8 @@ namespace Quackery.Decks
             // DeckServices.AddNew =
             //     (itemData, pileType, pileLocation, lifetime) => null;
             DeckServices.MoveCard = (card, pileType, placement, delay) => null;
+            DeckServices.MoveToPile = (cards, targetPile) => null;
+
 
             DeckServices.GetMatchingCards = (condition, pile) => new List<Card>();
             DeckServices.ResetDecks = () => { };
@@ -158,6 +162,7 @@ namespace Quackery.Decks
             DeckServices.BoostPriceOfCardsInHand = BoostPriceOfCardsInHand;
             DeckServices.AddNew = AddNew;
             DeckServices.MoveCard = (card, enumPile, EnumPlacement, delay) => StartCoroutine(DelayedMoveCard(card, enumPile, EnumPlacement, delay));
+            DeckServices.MoveToPile = (cards, targetPile) => StartCoroutine(MoveToPileRoutine(cards, targetPile));
 
             DeckServices.GetMatchingCards = GetMatchingCards;
             DeckServices.SetCustomDraw = (numDraw) => _customDraw = Mathf.Max(numDraw, _customDraw);
@@ -175,6 +180,8 @@ namespace Quackery.Decks
             EffectEvents.OnUpdated += UpdateCardUI;
             Initialize();
         }
+
+
 
         public void Initialize()
         {
@@ -226,7 +233,15 @@ namespace Quackery.Decks
             yield return new WaitForSeconds(delay);
             MoveCard(card, pile, placement);
         }
-
+        private IEnumerator MoveToPileRoutine(IEnumerable<Card> cards, CardPile targetPile)
+        {
+            foreach (var card in cards.ToList())
+            {
+                RemoveFromAllPiles(card);
+                targetPile.AddAtTheBottom(card, isInstant: false);
+            }
+            yield return Tempo.WaitForABeat;
+        }
 
 
         private void MoveCard(Card card, EnumCardPile pile, EnumPlacement placement)
@@ -264,8 +279,9 @@ namespace Quackery.Decks
                 InventoryServices.AddItem(card.Item);
 
             card.Item.Lifetime = lifetime;
-
+            card.transform.localScale = Vector3.zero;
             MoveCard(card, pile, placement);
+            card.transform.DOScale(1, Tempo.EighthBeat);
             return card;
         }
 
@@ -512,19 +528,22 @@ namespace Quackery.Decks
 
             RemoveFromAllPiles(card);
 
-            //  yield return _effectPileController.Move(card);
 
-            //  yield return EffectServices.Execute(EnumEffectTrigger.OnCardPlayed, card);
-
-            //  CartServices.AddToCartValue(card.Price);
-
-            //  RemoveFromAllPiles(card);
-
-            if (card.Category == EnumItemCategory.Skills ||
-               AddToCart(card, selectedPile))
+            if (card.Category == EnumItemCategory.Skills)
             {
+                yield return _effectPileController.Move(card);
+                yield return EffectServices.Execute(EnumEffectTrigger.OnCardPlayed, card);
+                yield return StartCoroutine(Discard(card));
+
+            }
+            else if (AddToCart(card, selectedPile))
+            {
+                yield return EffectServices.Execute(EnumEffectTrigger.OnCardPlayed, card);
                 if (selectedPile != null && (selectedPile.TopCard == card))
+                {
                     yield return EffectServices.ExecutePile(EnumEffectTrigger.BeforeCartCalculation, selectedPile);
+                    yield return Tempo.WaitForEighthBeat;
+                }
 
                 yield return CartServices.CalculateCart();
 
@@ -535,8 +554,8 @@ namespace Quackery.Decks
                 yield return StartCoroutine(Discard(card));
             }
 
-            if (card.Category == EnumItemCategory.Skills)
-                yield return StartCoroutine(Discard(card));
+
+
 
             _handController.DisableEmptyPiles();
             _cardPlayed = true;

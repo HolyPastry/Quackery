@@ -71,10 +71,7 @@ namespace Quackery.Inventories
             return text;
         }
 
-        internal List<CardReward> CalculateCardRewards(Card card, List<Item> subItems, List<CardPile> otherPiles)
-        {
-            return Data.CalculateCardRewards(card, subItems, otherPiles);
-        }
+
 
 
     }

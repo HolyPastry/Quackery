@@ -33,9 +33,9 @@ namespace Quackery.Effects
                                         EnumCardPile.Effect,
                                        Placement,
                                         Lifetime);
+                yield return Tempo.WaitForABeat;
+                yield return DeckServices.MoveCard(card, TargetDeck, Placement, 0);
 
-                DeckServices.MoveCard(card, TargetDeck, Placement, 2f);
-                yield return new WaitForSeconds(2f);
             }
         }
     }

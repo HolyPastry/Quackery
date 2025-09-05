@@ -40,61 +40,6 @@ namespace Quackery.Inventories
 
         public EnumRarity Rarity;
 
-        internal List<CardReward> CalculateCardRewards(Card topCard, List<Item> subItems, List<CardPile> otherPiles)
-        {
-
-            List<CardReward> rewards = new();
-
-            (int multiplier, int bonusValue) = CardEffectServices.GetSynergyBonuses(topCard, subItems);
-            rewards.Add(new()
-            {
-                Type = EnumCardReward.BaseReward,
-                Value = topCard.Price
-            });
-
-            if (subItems.Count > 0 && subItems.TrueForAll(i => i.Category == topCard.Category))
-            {
-                rewards.Add(new()
-                {
-                    Type = EnumCardReward.Synergy,
-                    Multiplier = multiplier
-                });
-            }
-
-            // int value = EffectServices.GetStackPrice(topCard, subItems);
-            // if (value > 0)
-            // {
-            //     rewards.Add(new()
-            //     {
-            //         Type = EnumCardReward.StackReward,
-            //         Value = value
-            //     });
-            // }
-            // int numSameCategory = 0;
-            // foreach (var pile in otherPiles)
-            // {
-            //     if (pile.Category == topCard.Item.Category)
-            //     {
-            //         numSameCategory++;
-            //     }
-            // }
-            // if (numSameCategory > 0)
-            // {
-            //     rewards.Add(new()
-            //     {
-            //         Type = EnumCardReward.NeighborReward,
-            //         Value = numSameCategory
-            //     });
-            // }
-
-
-            // if (ValueEvaluator != null)
-            // {
-            //     rewards.AddRange(ValueEvaluator.Evaluate(topCard, subItems, otherPiles));
-            // }
-            return rewards;
-        }
-
         internal void CheckValidity()
         {
             if (string.IsNullOrEmpty(name))

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Quackery.Decks;
 using UnityEngine;
 
@@ -16,17 +17,18 @@ namespace Quackery.Effects
 
         public override IEnumerator ExecutePile(Effect effect, CardPile owningPile)
         {
-            // List<CardPileUI> piles = DeckServices.GetTablePile();
 
-            // foreach (var pile in piles)
-            // {
-            //     Card card = effect.LinkedObject as Card;
+            if (effect.LinkedObject == null || (effect.LinkedObject as Card) == null)
+            {
+                Debug.LogWarning("Bundle Effect not setup properly: " + effect.Data.name);
+                yield break;
+            }
+            var cards = DeckServices
+                    .GetMatchingCards((card) => card.Category == (effect.LinkedObject as Card).Category
+                        , EnumCardPile.Hand);
 
-            //     if (card == null || pile.Category != card.Category) continue;
-            //     DeckServices.MoveToPile(pile, owningPile);
 
-            // }
-            yield return Tempo.WaitForABeat;
+            yield return DeckServices.MoveToPile(cards, owningPile);
 
         }
     }

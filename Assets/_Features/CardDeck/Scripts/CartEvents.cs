@@ -10,7 +10,7 @@ namespace Quackery.Decks
         internal static Action<List<CardPile>> OnStacksHighlighted = delegate { };
         public static Action<Card> OnNewCartPileUsed = delegate { };
         public static Action<Card, CardPile> OnStackHovered = delegate { };
-        internal static Action<int, CardReward, int, float> OnCartRewardCalculated = (pileIndex, reward, deltaScore, duration) => { };
+        internal static Action<CardReward, CartPile> OnCartRewardCalculated = (reward, pile) => { };
         public static Action<CartMode> OnModeChanged = delegate { };
 
         internal static Action<int> OnBonusChanged = (deltaScore) => { };

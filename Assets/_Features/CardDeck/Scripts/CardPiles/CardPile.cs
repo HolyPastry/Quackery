@@ -177,15 +177,6 @@ namespace Quackery.Decks
             pile.Clear();
         }
 
-        internal List<CardReward> CalculateCartRewards(List<CardPile> otherPiles)
-        {
-            if (IsEmpty || !Enabled) return new();
-            var allCards = new List<Card>(_cards);
-            allCards.Remove(TopCard);
-            return TopCard.CalculateCardReward(allCards, otherPiles);
-
-        }
-
         public void RestoreCategory()
         {
             foreach (var card in _cards)
@@ -265,7 +256,7 @@ namespace Quackery.Decks
             MoveCardToPile(card, atTheTop, isInstant);
         }
 
-        internal void MoveCardToPile(Card card, bool atTheTop, bool isInstant)
+        private void MoveCardToPile(Card card, bool atTheTop, bool isInstant)
         {
             card.transform.SetParent(transform);
             card.transform.localScale = Vector3.one;

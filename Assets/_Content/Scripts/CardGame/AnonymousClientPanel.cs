@@ -27,8 +27,8 @@ namespace Quackery
             _portrait.color = Color.white;
             _nameText.text = client.LoginName;
 
-            var cartValue = CartServices.GetValue();
-            var cartBonus = CartServices.GetBonus();
+            var cartValue = CartServices.GetTotalValue();
+            // var cartBonus = CartServices.GetBonus();
 
             string evaluation = cartMode switch
             {
@@ -46,7 +46,7 @@ namespace Quackery
             if (concluded)
             {
                 _resultString.text = Sprites.Replace($"{evaluation} Transaction");
-                _cartAmount.text = Sprites.Replace($"{cartValue + cartBonus}#Coin");
+                _cartAmount.text = Sprites.Replace($"{cartValue}#Coin");
                 StartCoroutine(_followerBadge.CountFollowersUpRoutine(newFollowers));
             }
             else
