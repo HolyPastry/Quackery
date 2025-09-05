@@ -25,5 +25,4 @@ MonoBehaviour:
   Category: 1
   Effects:
   - {fileID: 11400000, guid: eba1b266e0afb4ffe8d65a37994daf43, type: 2}
-  - {fileID: 11400000, guid: 45a8a28777ecf4d2b9fd2cfd22a4ccdf, type: 2}
   Rarity: 0

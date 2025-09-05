@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Plantain Gummy
   Icon: {fileID: 21300000, guid: 840b364ad9dea43bc9dcceceedc19579, type: 3}
-  BasePrice: 4
+  BasePrice: 7
   ShortDescription: <b>Bundle</b>\nTransmute Cart to #Herbs
   LongDescription: 
   ShopDescription: 

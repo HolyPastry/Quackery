@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Cordyceps
   Icon: {fileID: 21300000, guid: 16fc71f9a417f4393bebad3d39cbbdf1, type: 3}
-  BasePrice: 33
+  BasePrice: 2
   ShortDescription: <b>Tuck</b>\n Add <b>Suspicion</b> to your draw Pile
   LongDescription: 
   ShopDescription: 
   Explanations:
   - {fileID: 11400000, guid: 6a88eaf0137fd44388d07980a3253e71, type: 2}
   - {fileID: 11400000, guid: 983c0d4bfc73a498d89b8f49b39d70c3, type: 2}
-  ShopPrice: 11
+  ShopPrice: 1
   Category: 6
   Effects:
-  - {fileID: 11400000, guid: 04925b8bd46f8494f96832cee45fcadf, type: 2}
   - {fileID: 11400000, guid: 30582c39f067f4a1aa49976c4a8c39a6, type: 2}
+  - {fileID: 11400000, guid: 04925b8bd46f8494f96832cee45fcadf, type: 2}
   Rarity: 0

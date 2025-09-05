@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Love Spell
   Icon: {fileID: 21300000, guid: 789cf631c479441afac785f139eb7c1b, type: 3}
-  BasePrice: 0
+  BasePrice: 12
   ShortDescription: 
   LongDescription: 
   ShopDescription: 

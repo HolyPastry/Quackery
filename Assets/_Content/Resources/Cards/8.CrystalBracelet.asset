@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Crystal Bracelet
   Icon: {fileID: 21300000, guid: bacc1733b4e994cd4bce074c80a513c5, type: 3}
-  BasePrice: 0
+  BasePrice: 3
   ShortDescription: <b>Stack</b>s\n Apply 1 #Crystals <b>Preference</b>
   LongDescription: 
   ShopDescription: 

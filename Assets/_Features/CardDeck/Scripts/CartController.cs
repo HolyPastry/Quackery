@@ -20,6 +20,8 @@ namespace Quackery.Decks
         private int _cartBonus;
         private int _cartValue;
 
+        private int _cartTotalValue;
+
         private readonly Dictionary<int, int> RewardHistory = new();
 
         public bool CartIsFull => _cardPiles.TrueForAll(p => !p.IsEmpty || !p.Enabled);
@@ -33,6 +35,27 @@ namespace Quackery.Decks
             {
                 _cartValue = value;
                 CartEvents.OnValueChanged?.Invoke();
+            }
+        }
+
+        public int CartBonus
+        {
+            get => _cartBonus;
+            private set
+            {
+                var delta = _cartBonus - value;
+                _cartBonus = value;
+                CartEvents.OnBonusChanged?.Invoke(delta);
+            }
+        }
+
+        public int TotalValue
+        {
+            get => _cartTotalValue;
+            private set
+            {
+                _cartTotalValue = value;
+                CartEvents.OnTotalValueChanged?.Invoke();
             }
         }
 
@@ -69,13 +92,14 @@ namespace Quackery.Decks
             CartServices.RemoveCard = RemoveCard;
 
             CartServices.CalculateCart = () => StartCoroutine(CalculateCart());
-            CartServices.GetBonus = () => _cartBonus;
+            CartServices.GetBonus = () => CartBonus;
 
 
             CartServices.AddToCartValue = value => CartValue += value;
 
             CartServices.GetValue = () => CartValue;
-            CartServices.CanCartAfford = value => CartValue + _cartBonus >= value;
+            CartServices.GetTotalValue = () => _cartTotalValue;
+            CartServices.CanCartAfford = value => CartValue + CartBonus >= value;
 
 
             CartServices.ReplaceTopCard = ReplaceTopCard;
@@ -132,7 +156,7 @@ namespace Quackery.Decks
             CartServices.AddToCartValue = value => { };
             CartServices.ResetCart = () => { };
             CartServices.GetValue = () => 0;
-            CartServices.CanCartAfford = value => true;
+            CartServices.CanCartAfford = value => false;
 
             CartServices.ReplaceTopCard = delegate { };
             CartServices.GetTopCard = () => null;
@@ -176,8 +200,9 @@ namespace Quackery.Decks
         }
         private void ResetCart()
         {
-            _cartBonus = 0;
-            _cartValue = 0;
+            CartBonus = 1;
+            CartValue = 0;
+            TotalValue = 0;
             RewardHistory.Clear();
             UpdateCartMode();
             DiscardCart();
@@ -371,51 +396,50 @@ namespace Quackery.Decks
         private IEnumerator CalculateCart()
         {
 
-            // CartEvents.OnValueChanged?.Invoke();
+
+            CartBonus = 1;
+            CartValue = 0;
             yield return Tempo.WaitForABeat;
             foreach (var cartPile in _cardPiles)
             {
                 if (cartPile.IsEmpty || !cartPile.Enabled) continue;
-                int pileIndex = _cardPiles.IndexOf(cartPile);
+
                 var rewards = GetPileRewards(cartPile as CartPile);
-                CardReward reward;
-                if (rewards.Count > 0)
-                    reward = rewards[0];
-                else
-                    reward = new CardReward()
-                    {
-                        Type = EnumCardReward.Synergy,
-                        Value = 0
-                    };
+                foreach (var reward in rewards)
+                    yield return StartCoroutine(GiveReward(reward, cartPile as CartPile));
 
-
-                int deltaScore = 0;
-
-                if (RewardHistory.ContainsKey(pileIndex))
-                {
-                    deltaScore = reward.Value - RewardHistory[pileIndex];
-                    RewardHistory[pileIndex] = reward.Value;
-                }
-                else
-                {
-                    RewardHistory.Add(pileIndex, reward.Value);
-                    deltaScore = reward.Value;
-                }
-
-                _cartBonus += deltaScore;
-                CartEvents.OnCartRewardCalculated(pileIndex, reward, deltaScore, 0.5f);
-                if (deltaScore != 0)
-                {
-                    yield return Tempo.WaitForABeat;
-                    CartEvents.OnBonusChanged(deltaScore);
-                }
             }
+            yield return Tempo.WaitForHalfABeat;
+            TotalValue += CartValue * CartBonus;
+            CartValue = 0;
+            CartBonus = 1;
+
             UpdateCartMode();
+            CartEvents.OnCalculationCompleted();
+            yield return Tempo.WaitForABeat;
+        }
+
+        private IEnumerator GiveReward(CardReward reward, CartPile cartPile)
+        {
+            yield return cartPile.ShowRewardLabel(reward);
+            if (reward.Multiplier > 0)
+            {
+                CartBonus += reward.Multiplier;
+                yield return cartPile.PunchRewardNumber($"x{reward.Multiplier}");
+
+            }
+            if (reward.Value > 0)
+            {
+                CartValue += reward.Value;
+                yield return cartPile.PunchRewardNumber($"+{reward.Value}");
+            }
+            cartPile.HideRewardLabel();
+
         }
 
         private void UpdateCartMode()
         {
-            if (_cartValue + _cartBonus < ClientServices.GetThreshold(CartMode.Survival))
+            if (CartValue + CartBonus < ClientServices.GetThreshold(CartMode.Survival))
             {
                 if (_cartMode != CartMode.Survival)
                 {
@@ -425,7 +449,7 @@ namespace Quackery.Decks
                 }
 
             }
-            else if (_cartValue + _cartBonus < ClientServices.GetThreshold(CartMode.Normal))
+            else if (CartValue + CartBonus < ClientServices.GetThreshold(CartMode.Normal))
             {
                 if (_cartMode != CartMode.Normal)
                 {
@@ -576,14 +600,84 @@ namespace Quackery.Decks
             return piles.Count >= 2;
         }
 
-        private List<CardReward> GetPileRewards(CartPile pile)
+        private List<CardReward> GetPileRewards(CartPile cardPile)
         {
+            var topCard = cardPile.TopCard;
+            var subItems = cardPile.Cards.Where(c => c != topCard).Select(c => c.Item).ToList();
+            List<CardReward> rewards = new();
 
-            List<CardPile> otherCartPiles =
-                _cardPiles.Where((p) => p != pile).ToList();
+            (int multiplier, int bonusValue) = CardEffectServices.GetSynergyBonuses(topCard, subItems);
+            rewards.Add(new()
+            {
+                Type = EnumCardReward.BaseReward,
+                Value = topCard.Price
+            });
 
-            return pile.CalculateCartRewards(otherCartPiles);
+            if (subItems.Count > 0 && subItems.TrueForAll(i => i.Category == topCard.Category))
+            {
+                rewards.Add(new()
+                {
+                    Type = EnumCardReward.Synergy,
+                    Multiplier = multiplier,
+                    ShowLabel = true
+                });
+            }
+
+            int numMatching = GetNumMatchingNeighbors(cardPile);
+
+            if (numMatching > 0)
+            {
+                EnumCardReward type = numMatching switch
+                {
+                    1 => EnumCardReward.Pair,
+                    2 => EnumCardReward.ThreeOfAKind,
+                    3 => EnumCardReward.FourOfAKind,
+                    _ => EnumCardReward.FourOfAKind,
+                };
+                rewards.Add(new()
+                {
+                    Type = type,
+                    Multiplier = Mathf.Min(4, numMatching + 1),
+                    ShowLabel = true,
+                });
+            }
+
+
+
+            return rewards;
         }
+
+        private int GetNumMatchingNeighbors(CardPile cardPile)
+        {
+            var price = cardPile.TopCard.Price;
+            var enabledPiles = EnabledPiles.ToList();
+            int index = enabledPiles.IndexOf(cardPile);
+
+            int numMatchingNeightbor = 0;
+            int range = 1;
+            while (index + range < enabledPiles.Count &&
+                    !enabledPiles[index + range].IsEmpty &&
+                    enabledPiles[index + range].Enabled &&
+                    enabledPiles[index + range].TopCard.Price == price
+                    )
+            {
+                numMatchingNeightbor++;
+                range++;
+            }
+            // range = -1;
+            // while (index + range >= 0 &&
+            //        !enabledPiles[index + range].IsEmpty &&
+            //        enabledPiles[index + range].Enabled &&
+            //        enabledPiles[index + range].TopCard.Price == price
+            //        )
+            // {
+            //     numMatchingNeightbor++;
+            //     range--;
+            // }
+
+            return numMatchingNeightbor;
+        }
+
         private void UpdateEffects()
         {
             var topCards = _cardPiles.FindAll(p => p.Enabled && !p.IsEmpty)
@@ -712,6 +806,8 @@ namespace Quackery.Decks
         private List<CardPile> CompatibleCardPile(Card card)
         {
             if (!card.HasCartTarget) return new();
+            // return _cardPiles.FindAll(p => p.Enabled);
+
             var emptyPiles = _cardPiles.FindAll(p => p.Enabled && p.IsEmpty);
             var mergeEffects = card.Effects.FindAll(effect => effect.Data is MergeWithPileEffect);
             if (mergeEffects.Count == 0)

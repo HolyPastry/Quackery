@@ -14,9 +14,17 @@ namespace Quackery.Decks
 
         public EnumCardPile CardPileType => EnumCardPile.Draw;
 
-        public DrawPile() => RegisterServices();
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            RegisterServices();
+        }
 
-        ~DrawPile() => UnregisterServices();
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            UnregisterServices();
+        }
 
         public void Populate()
         {

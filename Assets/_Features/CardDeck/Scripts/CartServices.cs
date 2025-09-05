@@ -32,7 +32,7 @@ namespace Quackery.Decks
 
         public static Func<int> GetValue = () => 0;
         public static Action ResetCart = () => { };
-        public static Func<int, bool> CanCartAfford = (value) => { return true; };
+        public static Func<int, bool> CanCartAfford = (value) => { return false; };
 
         // internal static Action ResetCartSizeCardModifier = () => { };
 
@@ -69,7 +69,8 @@ namespace Quackery.Decks
 
         internal static Func<Card, bool> IsTopCard = (card) => true;
 
-        // internal static Action<int> ModifyValue = (value) => { };
+        internal static Func<int> GetTotalValue = () => 20;
+
 
     }
 }

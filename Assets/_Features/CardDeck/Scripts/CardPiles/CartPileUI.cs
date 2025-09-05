@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -23,7 +24,7 @@ namespace Quackery.Decks
         protected override void OnEnable()
         {
             base.OnEnable();
-            CartEvents.OnCartRewardCalculated += ShowReward;
+
             CartEvents.OnStacksHighlighted += HighlightStack;
             OnCardMovedIn += UpdateBackground;
             OnCardMovedOut += UpdateBackground;
@@ -32,7 +33,7 @@ namespace Quackery.Decks
         protected override void OnDisable()
         {
             base.OnDisable();
-            CartEvents.OnCartRewardCalculated -= ShowReward;
+
             CartEvents.OnStacksHighlighted -= HighlightStack;
             OnCardMovedIn -= UpdateBackground;
             OnCardMovedOut -= UpdateBackground;
@@ -49,12 +50,6 @@ namespace Quackery.Decks
             {
                 image.color = Color.clear;
             }
-        }
-
-        private void ShowReward(int index, CardReward reward, int deltaScore, float duration)
-        {
-            if (!IsItMe(EnumCardPile.Cart, index)) return;
-            _rewardPanel.ShowReward(reward, deltaScore);
         }
 
         private void HighlightStack(List<CardPile> list)
@@ -95,5 +90,15 @@ namespace Quackery.Decks
             CartServices.HoverPile(this);
             DeckServices.StopPlayCardLoop();
         }
+
+        internal Coroutine ShowRewardLabel(CardReward reward) =>
+            StartCoroutine(_rewardPanel.ShowLabel(reward));
+
+
+        internal Coroutine PunchRewardNumber(string numberString)
+            => StartCoroutine(_rewardPanel.PunchNumberRoutine(numberString));
+
+        internal void HideRewardLabel() => _rewardPanel.Hide();
+
     }
 }

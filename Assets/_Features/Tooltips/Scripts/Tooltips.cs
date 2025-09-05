@@ -76,7 +76,7 @@ namespace Quackery
         }
         protected void Position(RectTransform targetRectTransform)
         {
-            bool isOnTheRight = targetRectTransform.position.x > Screen.width / 2;
+            bool isOnTheRight = targetRectTransform.position.x > 0;
 
             if (!isOnTheRight)
             {

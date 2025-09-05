@@ -159,10 +159,7 @@ namespace Quackery.Decks
         //     }
         // }
 
-        internal List<CardReward> CalculateCardReward(List<Card> allCards, List<CardPile> otherPiles)
-        {
-            return _item.CalculateCardRewards(this, allCards.ConvertAll(c => c.Item), otherPiles);
-        }
+
 
         public void Discard()
         {

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Elderberry Jam
   Icon: {fileID: 21300000, guid: 5d5ba604b2dca47fe866e12044587027, type: 3}
-  BasePrice: 4
+  BasePrice: 2
   ShortDescription: <b>Bundle</b>.\n Apply 1 <b>Vibes</b>
   LongDescription: 
   ShopDescription: 
@@ -23,5 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 48f617e1041c14b9d855f83da3a9fb1e, type: 2}
   ShopPrice: 4
   Category: 1
-  Effects: []
+  Effects:
+  - {fileID: 11400000, guid: 637ca5b8af4d14541935be71faad5a5c, type: 2}
+  - {fileID: 11400000, guid: e4c287622f9df4c5ba22d2840a5378ef, type: 2}
   Rarity: 1

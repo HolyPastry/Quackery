@@ -4,6 +4,9 @@ namespace Quackery.Decks
     {
         public EnumCardReward Type;
         public int Value;
+        public int Multiplier;
+
+        public bool ShowLabel;
     }
 
 }

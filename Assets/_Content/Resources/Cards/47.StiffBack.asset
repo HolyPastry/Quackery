@@ -22,6 +22,5 @@ MonoBehaviour:
   Explanations: []
   ShopPrice: 0
   Category: 8
-  Effects:
-  - {fileID: 11400000, guid: 13fb9496ce6c3458e976b6930ff5b5da, type: 2}
+  Effects: []
   Rarity: 0

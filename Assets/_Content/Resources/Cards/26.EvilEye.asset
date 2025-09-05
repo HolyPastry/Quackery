@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Evil Eye
   Icon: {fileID: 21300000, guid: 9c357dc86f50441f1a1e708594283d44, type: 3}
-  BasePrice: 0
+  BasePrice: 2
   ShortDescription: <b>Exhaust</b> a random <b>Adversity</b> in hand.
   LongDescription: 
   ShopDescription: 

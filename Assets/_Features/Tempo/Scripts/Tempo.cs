@@ -12,5 +12,9 @@ namespace Quackery
         public const float EighthBeat = WholeBeat / 8;
 
         public static YieldInstruction WaitForABeat => new WaitForSeconds(WholeBeat);
+
+        public static YieldInstruction WaitForEighthBeat => new WaitForSeconds(EighthBeat);
+
+        public static YieldInstruction WaitForHalfABeat => new WaitForSeconds(HalfBeat);
     }
 }

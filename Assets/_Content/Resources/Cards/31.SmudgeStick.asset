@@ -14,13 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterText: Smudge Stick
   Icon: {fileID: 21300000, guid: 88e6d1260908e4d749b51e6a255ba295, type: 3}
-  BasePrice: 9
+  BasePrice: 7
   ShortDescription: Discard & redraw hand.
   LongDescription: 
   ShopDescription: 
   Explanations: []
   ShopPrice: 3
   Category: 2
-  Effects:
-  - {fileID: 11400000, guid: 98b740570138847c29f56f0c33650f4e, type: 2}
+  Effects: []
   Rarity: 1
