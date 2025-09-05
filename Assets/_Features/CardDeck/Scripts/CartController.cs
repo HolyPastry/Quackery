@@ -396,7 +396,6 @@ namespace Quackery.Decks
         private IEnumerator CalculateCart()
         {
 
-            // CartEvents.OnValueChanged?.Invoke();
 
             CartBonus = 1;
             CartValue = 0;
@@ -404,41 +403,11 @@ namespace Quackery.Decks
             foreach (var cartPile in _cardPiles)
             {
                 if (cartPile.IsEmpty || !cartPile.Enabled) continue;
-                int pileIndex = _cardPiles.IndexOf(cartPile);
+
                 var rewards = GetPileRewards(cartPile as CartPile);
                 foreach (var reward in rewards)
                     yield return StartCoroutine(GiveReward(reward, cartPile as CartPile));
-                // CardReward reward;
-                // if (rewards.Count > 0)
-                //     reward = rewards[0];
-                // else
-                //     reward = new CardReward()
-                //     {
-                //         Type = EnumCardReward.Synergy,
-                //         Value = 0
-                //     };
 
-
-                // int deltaScore = 0;
-
-                // if (RewardHistory.ContainsKey(pileIndex))
-                // {
-                //     deltaScore = reward.Value - RewardHistory[pileIndex];
-                //     RewardHistory[pileIndex] = reward.Value;
-                // }
-                // else
-                // {
-                //     RewardHistory.Add(pileIndex, reward.Value);
-                //     deltaScore = reward.Value;
-                // }
-
-                // _cartBonus += deltaScore;
-                // CartEvents.OnCartRewardCalculated(pileIndex, reward, deltaScore, 0.5f);
-                // if (deltaScore != 0)
-                // {
-                //     yield return Tempo.WaitForABeat;
-                //     CartEvents.OnBonusChanged(deltaScore);
-                // }
             }
             yield return Tempo.WaitForHalfABeat;
             TotalValue += CartValue * CartBonus;
@@ -695,16 +664,16 @@ namespace Quackery.Decks
                 numMatchingNeightbor++;
                 range++;
             }
-            range = -1;
-            while (index + range >= 0 &&
-                   !enabledPiles[index + range].IsEmpty &&
-                   enabledPiles[index + range].Enabled &&
-                   enabledPiles[index + range].TopCard.Price == price
-                   )
-            {
-                numMatchingNeightbor++;
-                range--;
-            }
+            // range = -1;
+            // while (index + range >= 0 &&
+            //        !enabledPiles[index + range].IsEmpty &&
+            //        enabledPiles[index + range].Enabled &&
+            //        enabledPiles[index + range].TopCard.Price == price
+            //        )
+            // {
+            //     numMatchingNeightbor++;
+            //     range--;
+            // }
 
             return numMatchingNeightbor;
         }
